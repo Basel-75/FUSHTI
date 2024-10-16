@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// import 'package:get_all_pkg/get_all_pkg.dart';
+import 'package:get_all_pkg/get_all_pkg.dart';
 
 
 
@@ -9,9 +9,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
 
-      body: Text("data" style: googlef,),
+      body: Text('data',style: GoogleFonts.aBeeZee(),)
     );
   }
 }
