@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
@@ -15,16 +17,43 @@ class AuthCubit extends Cubit<AuthStatee> {
   TextEditingController nameCon = TextEditingController();
   TextEditingController phoneCon = TextEditingController();
 
+  String otp = "";
+
   singup() async {
     try {
       emit(LoadingState());
       if (formKey.currentState!.validate()) {
-        await SuperMain().createUser(email: emailCon.text,phone: phoneCon.text);
+        log("${phoneCon.text}");
+        await SuperMain()
+            .createUser(email: emailCon.text, phone: phoneCon.text);
 
         emit(SuccessState());
       } else {
         emit(NoLoadingState());
       }
+    } catch (er) {
+      emit(ErrorState(msg: er.toString()));
+    }
+  }
+
+  otpCheck({
+    required String email,
+    required String? name,
+  }) async {
+    try {
+      emit(LoadingState());
+      if (otp.isEmpty) {
+        emit(ErrorState(msg: "enter otp first"));
+        return;
+      }
+
+      await SuperMain().verifyOtp(
+        email: email,
+        otp: otp,
+        name: name,
+      );
+
+      emit(SuccessState());
     } catch (er) {
       emit(ErrorState(msg: er.toString()));
     }
