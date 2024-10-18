@@ -7,7 +7,9 @@ class CustomTextFormFelid extends StatelessWidget {
   final Color? backgroundColor;
   final bool isPassword;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
   const CustomTextFormFelid({
+    this.validator,
     super.key,
     required this.label,
     required this.hintText,
@@ -49,6 +51,7 @@ class CustomTextFormFelid extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: TextFormField(
+              validator: validator ,
               obscureText: isPassword,
               controller: controller,
               keyboardType: keyboardType,

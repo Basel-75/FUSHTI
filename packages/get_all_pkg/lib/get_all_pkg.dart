@@ -8,10 +8,12 @@ export 'package:get_storage/get_storage.dart';
 export 'package:get_it/get_it.dart';
 export 'package:google_fonts/google_fonts.dart';
 export  'package:icons_plus/icons_plus.dart';
+export 'package:supabase_flutter/supabase_flutter.dart';
+export 'package:pinput/pinput.dart';
 
 
 
-meth(){
+methhh(){
   
 }
 

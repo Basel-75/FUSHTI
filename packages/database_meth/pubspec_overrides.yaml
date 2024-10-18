@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: get_all_pkg
+dependency_overrides:
+  get_all_pkg:
+    path: ..\\get_all_pkg

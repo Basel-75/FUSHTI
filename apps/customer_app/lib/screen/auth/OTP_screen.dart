@@ -1,6 +1,3 @@
-
-
-
 import 'package:customer_app/widget/button/custom_button.dart';
 
 import 'package:customer_app/widget/button/custom_text_button.dart';
@@ -10,13 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class OTPScreen extends StatelessWidget {
-  const OTPScreen({super.key});
+  const OTPScreen({super.key, required this.email, this.name, this.phone});
 
-  fin() {
-    methhh();
-
-    pin;
-  }
+  final String email;
+  final String? name;
+  final String? phone;
 
   @override
   Widget build(BuildContext context) {
