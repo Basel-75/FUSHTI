@@ -96,6 +96,7 @@ class LoginScreen extends StatelessWidget {
                                   color: Color(0xff103C37)),
                             ),
                             CustomTextFormFelid(
+                              controller: cubit.emailCon,
                               hintText: 'example@gmail.com',
                               keyboardType: TextInputType.emailAddress,
                               isPassword: false,

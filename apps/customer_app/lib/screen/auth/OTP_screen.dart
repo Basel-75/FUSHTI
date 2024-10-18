@@ -127,7 +127,7 @@ class OTPScreen extends StatelessWidget {
                           ),
                           CustomButton(
                             onPressed: () {
-                              cubit.otpCheck(email: email, name: name);
+                              cubit.otpCheck(email: email, name: name , phone: phone);
                               
                             },
                             title: 'تحقق',

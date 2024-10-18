@@ -24,8 +24,7 @@ class AuthCubit extends Cubit<AuthStatee> {
       emit(LoadingState());
       if (formKey.currentState!.validate()) {
         log("${phoneCon.text}");
-        await SuperMain()
-            .createUser(email: emailCon.text, phone: phoneCon.text);
+        await SuperMain().createUser(email: emailCon.text);
 
         emit(SuccessState());
       } else {
@@ -39,23 +38,23 @@ class AuthCubit extends Cubit<AuthStatee> {
   otpCheck({
     required String email,
     required String? name,
+    required String? phone,
   }) async {
-    try {
-      emit(LoadingState());
-      if (otp.isEmpty) {
-        emit(ErrorState(msg: "enter otp first"));
-        return;
-      }
-
-      await SuperMain().verifyOtp(
-        email: email,
-        otp: otp,
-        name: name,
-      );
-
-      emit(SuccessState());
-    } catch (er) {
-      emit(ErrorState(msg: er.toString()));
+    // try {
+    emit(LoadingState());
+    if (otp.isEmpty) {
+      emit(ErrorState(msg: "enter otp first"));
+      return;
     }
+
+    await SuperMain()
+        .verifyOtp(email: email, otp: otp, name: name, phone: phone);
+
+    emit(SuccessState());
+    // }
+
+    // catch (er) {
+    //   emit(ErrorState(msg: er.toString()));
+    // }
   }
 }
