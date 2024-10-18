@@ -14,9 +14,9 @@ class BrandRow extends StatelessWidget {
         Container(
           width: 47,
           height: 47,
-          padding: EdgeInsets.all(6),
+          padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: Color(0xffEFEFEF),
+            color: const Color(0xffEFEFEF),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Brand(Brands.google),
@@ -27,9 +27,9 @@ class BrandRow extends StatelessWidget {
         Container(
           width: 47,
           height: 47,
-          padding: EdgeInsets.all(6),
+          padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: Color(0xffEFEFEF),
+            color: const Color(0xffEFEFEF),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Brand(Brands.facebook_circled),
@@ -40,9 +40,9 @@ class BrandRow extends StatelessWidget {
         Container(
           width: 47,
           height: 47,
-          padding: EdgeInsets.all(6),
+          padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: Color(0xffEFEFEF),
+            color: const Color(0xffEFEFEF),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Brand(Brands.apple_logo),

@@ -1,5 +1,5 @@
 name: Graduation_Project
 
 packages:
-  - apps/
-  - packages/
+  - apps/**
+  - packages/**

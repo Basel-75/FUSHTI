@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: database_meth
+dependency_overrides:
+  database_meth:
+    path: ..\\database_meth
