@@ -1,9 +1,14 @@
-import 'package:customer_app/screen/auth/OTP_screen.dart';
+import 'package:customer_app/screen/auth/otp_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
+import 'package:database_meth/database_meth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-void main() {
+void main() async {
+  
+   WidgetsFlutterBinding.ensureInitialized();
+
+   await initPkg();
   runApp(const MainApp());
 }
 
@@ -20,9 +25,9 @@ class MainApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff34673F)))),
+                      backgroundColor: const Color(0xff34673F)))),
           debugShowCheckedModeBanner: false,
-          home: OTPScreen(),
+          home: const OTPScreen(),
         ),
       ),
     );

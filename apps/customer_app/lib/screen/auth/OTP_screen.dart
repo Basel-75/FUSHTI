@@ -1,14 +1,22 @@
-import 'package:customer_app/screen/auth/signup_screen.dart';
+
+
+
 import 'package:customer_app/widget/button/custom_button.dart';
+
 import 'package:customer_app/widget/button/custom_text_button.dart';
-import 'package:customer_app/widget/row/brand_row.dart';
-import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class OTPScreen extends StatelessWidget {
   const OTPScreen({super.key});
+
+  fin() {
+    methhh();
+
+    pin;
+  }
 
   @override
   Widget build(BuildContext context) {
