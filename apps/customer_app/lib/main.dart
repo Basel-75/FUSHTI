@@ -1,5 +1,6 @@
 import 'package:customer_app/screen/auth/OTP_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
+import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -22,7 +23,7 @@ class MainApp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xff34673F)))),
           debugShowCheckedModeBanner: false,
-          home: OTPScreen(),
+          home: HomeScreen(),
         ),
       ),
     );
