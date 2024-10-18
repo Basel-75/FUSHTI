@@ -1,7 +1,11 @@
 import 'package:customer_app/screen/auth/login_screen.dart';
+
+import 'package:customer_app/screen/home/home_screen.dart';
+
 import 'package:customer_app/screen/auth/otp_screen.dart';
 import 'package:customer_app/screen/auth/signup_screen.dart';
 import 'package:database_meth/database_meth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -30,7 +34,9 @@ class MainApp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff34673F)))),
           debugShowCheckedModeBanner: false,
-          home: const LoginScreen(),
+
+          home: HomeScreen(),
+
         ),
       ),
     );
