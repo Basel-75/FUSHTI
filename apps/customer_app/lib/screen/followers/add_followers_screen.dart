@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:customer_app/component/job.dart';
+import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/main.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
