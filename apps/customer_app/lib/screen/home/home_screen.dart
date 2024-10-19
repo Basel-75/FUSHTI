@@ -175,8 +175,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'ليز',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -184,8 +182,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'ليز',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -193,8 +189,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'ليز',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -202,8 +196,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'ليز',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -275,8 +267,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'بوكس السعادة',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -284,8 +274,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'بوكس التغذية',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -293,8 +281,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'بوكس المفرحات',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -302,8 +288,6 @@ class HomeScreen extends StatelessWidget {
                             cal: 30,
                             imagePath: 'assets/image/lez.png',
                             itemName: 'ليز',
-                            onAdd: () {},
-                            onRestrict: () {},
                             price: 2,
                             rate: '4.8',
                           ),
@@ -365,7 +349,9 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 2.h,),
+              SizedBox(
+                height: 2.h,
+              ),
             ],
           ),
         ),
@@ -378,7 +364,7 @@ class HomeCard extends StatelessWidget {
   final String imagePath, itemName, rate;
   final double price;
   final int cal;
-  final void Function() onRestrict, onAdd;
+
   const HomeCard({
     super.key,
     required this.imagePath,
@@ -386,8 +372,6 @@ class HomeCard extends StatelessWidget {
     required this.price,
     required this.cal,
     required this.rate,
-    required this.onRestrict,
-    required this.onAdd,
   });
 
   @override
@@ -405,7 +389,8 @@ class HomeCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: onRestrict,
+            //!Send restriction logic here
+            onTap: () {},
             child: Container(
               margin: EdgeInsets.only(bottom: 1.h),
               decoration: BoxDecoration(
@@ -431,7 +416,8 @@ class HomeCard extends StatelessWidget {
               ),
               Spacer(),
               InkWell(
-                onTap: onAdd,
+                //!Send add logic here
+                onTap: () {},
                 child: Container(
                   width: 8.w,
                   decoration: BoxDecoration(

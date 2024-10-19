@@ -1,4 +1,5 @@
 import 'package:customer_app/screen/auth/login_screen.dart';
+import 'package:customer_app/screen/followers/add_followers_screen.dart';
 
 import 'package:customer_app/screen/home/home_screen.dart';
 
@@ -15,7 +16,6 @@ void main() async {
 
   await setup();
 
-  
   runApp(const MainApp());
 }
 
@@ -29,14 +29,12 @@ class MainApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: MaterialApp(
           theme: ThemeData(
-              scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff34673F)))),
+                      backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
-
-          home: HomeScreen(),
-
+          home: AddFollowersScreen(),
         ),
       ),
     );
