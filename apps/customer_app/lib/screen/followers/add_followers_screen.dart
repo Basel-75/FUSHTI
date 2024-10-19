@@ -11,12 +11,6 @@ import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-const List<DropDownItem> school = [
-  DropDownItem('ثانوية الامير عبد المجيد'),
-  DropDownItem('المتوسطة الرابعة للبنات'),
-  DropDownItem('ابتدائية عمر بن الخطاب'),
-  DropDownItem('الروضة الثانية بالمدينة'),
-];
 const List<DropDownItem> alergy = [
   DropDownItem('الفول السوداني'),
   DropDownItem('المحار'),
@@ -39,6 +33,7 @@ class AddFollowersScreen extends StatelessWidget {
       create: (context) => AddFollowersCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<AddFollowersCubit>();
+        cubit.initVal();
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Form(
@@ -113,7 +108,7 @@ class AddFollowersScreen extends StatelessWidget {
                         },
                         label: 'المدرسة',
                         hintText: 'اختر المدرسة',
-                        items: school,
+                        items: cubit.school,
                         onChanged: (p0) {
                           cubit.schoolCon.text = p0!.name;
                         },
