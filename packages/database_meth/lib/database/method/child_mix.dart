@@ -17,7 +17,7 @@ mixin ChildMix {
     }
   ) async {
     try {
-      SuperMain().supabase.from("followers").insert({
+     await  SuperMain().supabase.from("followers").insert({
 
         "name" : name,
         "user_id": userId ,

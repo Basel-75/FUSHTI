@@ -13,110 +13,11 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                height: 28.h,
-                padding: EdgeInsets.symmetric(horizontal: 2.h),
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(40),
-                      bottomRight: Radius.circular(40),
-                    )),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 7.h,
-                    ),
-                    const Text(
-                      'المدرسة',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.location_on,
-                          color: Color(0xff854811),
-                        ),
-                        const Text(
-                          'الرياض, النموذجية السابعة',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        Container(
-                          width: 43,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: const Color(0xffE0D2BC),
-                          ),
-                          child: const Icon(Iconsax.shopping_cart_outline),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 43,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: const Color(0xffE0D2BC),
-                          ),
-                          child: const Column(
-                            children: [
-                              Icon(
-                                Iconsax.wallet_2_outline,
-                              ),
-                              Text('200')
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    Row(
-                      children: [
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'أهلا',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  ' أنس',
-                                  style: TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              'نظم وجبات ابنائك',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Image.asset('assets/image/homeicon.png')
-                      ],
-                    ),
-                  ],
-                ),
+              const ScreenHeader(
+                inHomeScreen: true,
+                parentName: 'باسل',
+                //title use if isHomeScreen = false
+                title: '',
               ),
               //?=========Header End================
               SizedBox(
@@ -135,9 +36,9 @@ class HomeScreen extends StatelessWidget {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ChildAvatar(
-                          childName: 'أنس',
-                          imagePath: 'assets/image/kid1.png',
+                        FollowersAvatar(
+                          childImage: 'assets/image/kid1.png',
+                          childName: 'انس',
                         ),
                         ChildAvatar(
                           childName: 'يارا',
@@ -168,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.symmetric(vertical: 1.h),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           HomeCard(
@@ -220,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                               margin: EdgeInsets.symmetric(horizontal: 2.w),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffe7c7c5)),
+                                  color: const Color(0xffe7c7c5)),
                               child: Image.asset('assets/image/breakfast.png'),
                             ),
                           ),
@@ -230,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                               margin: EdgeInsets.symmetric(horizontal: 2.w),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffe7c7c5)),
+                                  color: const Color(0xffe7c7c5)),
                               child: Image.asset('assets/image/launch.png'),
                             ),
                           ),
@@ -242,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                               margin: EdgeInsets.symmetric(horizontal: 2.w),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffd7bf9c)),
+                                  color: const Color(0xffd7bf9c)),
                               child: Image.asset('assets/image/snack.png'),
                             ),
                           ),
@@ -260,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.symmetric(vertical: 1.h),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           HomeCard(
@@ -307,7 +208,7 @@ class HomeScreen extends StatelessWidget {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(vertical: 1.h),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     HomeCard(
@@ -352,6 +253,174 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class FollowersAvatar extends StatelessWidget {
+  final String childName;
+  final String childImage;
+  const FollowersAvatar({
+    super.key,
+    required this.childName,
+    required this.childImage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: ChildAvatar(
+        childName: childName,
+        imagePath: childImage,
+      ),
+    );
+  }
+}
+
+class ScreenHeader extends StatelessWidget {
+  final String parentName, title;
+  final bool inHomeScreen;
+  const ScreenHeader({
+    super.key,
+    required this.parentName,
+    required this.title,
+    required this.inHomeScreen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 28.h,
+      padding: EdgeInsets.symmetric(horizontal: 2.h),
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
+          ),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(40),
+            bottomRight: Radius.circular(40),
+          )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 7.h,
+          ),
+          const Text(
+            'المدرسة',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: Color(0xff854811),
+              ),
+              Text(
+                'الرياض, النموذجية السابعة',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
+              AppBarRowButton(
+                walletAmount: '200',
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 3.h,
+          ),
+          Row(
+            children: [
+              inHomeScreen
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              'أهلا',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              parentName,
+                              style: const TextStyle(
+                                  fontSize: 28, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          'نظم وجبات ابنائك',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      title,
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+              const Spacer(),
+              Image.asset('assets/image/homeicon.png')
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AppBarRowButton extends StatelessWidget {
+  final String walletAmount;
+  const AppBarRowButton({
+    super.key,
+    required this.walletAmount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        InkWell(
+          onTap: () {},
+          child: Container(
+            width: 43,
+            height: 44,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: const Color(0xffE0D2BC),
+            ),
+            child: const Icon(Iconsax.shopping_cart_outline),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        InkWell(
+          onTap: () {},
+          child: Container(
+            width: 43,
+            height: 44,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: const Color(0xffE0D2BC),
+            ),
+            child: Column(
+              children: [
+                const Icon(
+                  Iconsax.wallet_2_outline,
+                ),
+                Text(walletAmount)
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class HomeCard extends StatelessWidget {
   final String imagePath, itemName, rate;
   final double price;
@@ -385,28 +454,28 @@ class HomeCard extends StatelessWidget {
             onTap: () {},
             child: Container(
               margin: EdgeInsets.only(bottom: 1.h),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.no_food_outlined, color: Colors.red),
+              child: const Icon(Icons.no_food_outlined, color: Colors.red),
             ),
           ),
           //!Change it later to image network
           Center(child: Image.asset(imagePath)),
           Text(
             itemName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           Row(
             children: [
               Text(
                 '$cal سعرة',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0x50000000)),
               ),
-              Spacer(),
+              const Spacer(),
               InkWell(
                 //!Send add logic here
                 onTap: () {},
@@ -415,8 +484,8 @@ class HomeCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       boxShadow: kElevationToShadow[2],
-                      color: Color(0xffBA9773)),
-                  child: Icon(
+                      color: const Color(0xffBA9773)),
+                  child: const Icon(
                     Icons.add,
                     color: Colors.white,
                   ),
@@ -431,17 +500,18 @@ class HomeCard extends StatelessWidget {
             children: [
               Text(
                 '$price ريال',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 '$rate/5',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xffFFE500)),
               ),
-              Icon(Icons.star_rate_rounded, color: Color(0xffFFE500))
+              const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500))
             ],
           ),
         ],
