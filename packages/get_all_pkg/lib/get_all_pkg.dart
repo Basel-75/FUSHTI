@@ -12,7 +12,7 @@ export 'package:supabase_flutter/supabase_flutter.dart';
 export 'package:pinput/pinput.dart';
 export 'package:animated_custom_dropdown/custom_dropdown.dart';
 export 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
-
+export 'package:dotted_line/dotted_line.dart';
 
 
 methhh(){

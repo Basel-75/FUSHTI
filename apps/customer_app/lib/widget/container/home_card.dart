@@ -91,7 +91,7 @@ class HomeCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Color(0xffFFE500)),
               ),
-              const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500))
+              const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500)),
             ],
           ),
         ],
