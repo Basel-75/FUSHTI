@@ -1,6 +1,7 @@
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
+import 'package:customer_app/widget/container/screen_header.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
@@ -18,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
         body: Column(
           children: [
             const ScreenHeader(
-                parentName: '', title: 'صفحتي', inHomeScreen: false),
+                parentName: '', title: 'صفحتي', inHomeScreen: false,childSchollName: '',funds: '',),
             SizedBox(
               height: 12.h,
             ),

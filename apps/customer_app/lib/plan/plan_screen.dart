@@ -2,6 +2,7 @@ import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/plan_item_container.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
+import 'package:customer_app/widget/container/screen_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -24,7 +25,7 @@ class PlanScreen extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ScreenHeader(parentName: '', title: 'الخطط', inHomeScreen: false),
+            ScreenHeader(parentName: '', title: 'الخطط', inHomeScreen: false,funds: '',childSchollName: '',),
             SizedBox(
               height: 1.h,
             ),
