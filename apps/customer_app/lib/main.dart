@@ -1,4 +1,5 @@
 import 'package:customer_app/plan/plan_screen.dart';
+import 'package:customer_app/product/product_screen.dart';
 import 'package:customer_app/profile/profile_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/followers/add_followers_screen.dart';
@@ -33,14 +34,14 @@ class MainApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: MaterialApp(
           theme: ThemeData(
-            
+            fontFamily: 'Readex Pro',
             scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
 
-          home: const FollowersScreen(),
+          home: const ProductScreen(),
 
         ),
       ),
