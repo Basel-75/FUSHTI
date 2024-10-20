@@ -4,12 +4,13 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 class UserInfoRow extends StatelessWidget {
   final String name, schoolName;
   final void Function() onEdit, onDelete;
+  final bool isParent;
   const UserInfoRow({
     super.key,
     required this.name,
     required this.schoolName,
     required this.onEdit,
-    required this.onDelete,
+    required this.onDelete, required this.isParent,
   });
 
   @override
@@ -42,6 +43,7 @@ class UserInfoRow extends StatelessWidget {
               Icons.edit_outlined,
               color: Colors.blueGrey,
             )),
+            isParent ?Text(''):
         IconButton(
             onPressed: onDelete,
             icon: Icon(
