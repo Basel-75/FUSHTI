@@ -3,6 +3,7 @@ import 'package:customer_app/profile/profile_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/followers/add_followers_screen.dart';
 import 'package:customer_app/screen/followers/followers_profile_screen.dart';
+import 'package:customer_app/screen/followers/followers_screen.dart';
 
 import 'package:customer_app/screen/home/home_screen.dart';
 
@@ -32,13 +33,14 @@ class MainApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: MaterialApp(
           theme: ThemeData(
+            
             scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
 
-          home: PlanScreen(),
+          home: const FollowersScreen(),
 
         ),
       ),
