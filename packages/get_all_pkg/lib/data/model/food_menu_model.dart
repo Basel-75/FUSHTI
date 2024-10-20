@@ -7,7 +7,7 @@ class FoodMenuModel {
   final String category;
   final bool available;
   final int cal;
-  final List<String> allergy;
+  final List<String>? allergy;
 
   FoodMenuModel({
     required this.id,
@@ -31,7 +31,7 @@ class FoodMenuModel {
       category: json['category'],
       available: json['available'],
       cal: json['cal'],
-      allergy: List<String>.from(json['allergy']),
+      allergy: (json['allergy']),
     );
   }
 

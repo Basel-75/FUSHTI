@@ -1,3 +1,6 @@
+
+import 'package:get_all_pkg/data/model/school_model.dart';
+
 class ChildModel {
   final String id;
   final String name;
@@ -7,6 +10,7 @@ class ChildModel {
   final String studentClass;
   final List<String> allergy;
   final num funds;
+  late final SchoolModel schoolModel;
 
   ChildModel({
     required this.id,

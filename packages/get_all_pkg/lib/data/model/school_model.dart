@@ -1,12 +1,15 @@
 
 
 
+import 'package:get_all_pkg/data/model/food_menu_model.dart';
+
 class SchoolModel {
 
   final String id;
   final String name;
   final String adders;
   final String contactNumber;
+  final List<FoodMenuModel> foodMenuModelList = [];
 
   SchoolModel({
     required this.id,
