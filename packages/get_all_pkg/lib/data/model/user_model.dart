@@ -1,3 +1,5 @@
+import 'package:get_all_pkg/data/model/child_model.dart';
+
 class UserModel {
   final String id;
   final String name;
@@ -5,6 +7,7 @@ class UserModel {
   final int numberFollowers;
   final String phone;
   final String authId;
+  final List<ChildModel> childModelList = [];
 
   UserModel({
     required this.id,
