@@ -23,6 +23,7 @@ dependencies:
   database_meth: ^0.0.1
   animated_custom_dropdown: ^3.1.1
   custom_radio_grouped_button: any
+  dotted_line: ^3.2.3
 
 dev_dependencies:
   flutter_test:
