@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:customer_app/screen/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -19,13 +21,17 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ScreenHeader(
-                    childSchollName: cubit.currentChild.schoolModel.name,
-                    funds: cubit.appModel.userModel!.funds.toString(),
-                    inHomeScreen: true,
-                    parentName: cubit.appModel.userModel!.name,
-                    //title use if isHomeScreen = false
-                    title: '',
+                  BlocBuilder<HomeCubit, HomeState>(
+                    builder: (context, state) {
+                      return ScreenHeader(
+                        childSchollName: cubit.currentChild.schoolModel.name,
+                        funds: cubit.appModel.userModel!.funds.toString(),
+                        inHomeScreen: true,
+                        parentName: cubit.appModel.userModel!.name,
+                        //title use if isHomeScreen = false
+                        title: '',
+                      );
+                    },
                   ),
                   //?=========Header End================
                   SizedBox(
@@ -41,23 +47,34 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: List.generate(
-                              cubit.childModelList.length,
-                              (index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: FollowersAvatar(
-                                    childImage: 'assets/image/kid1.png',
-                                    childName: cubit.childModelList[index].name,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                        BlocBuilder<HomeCubit, HomeState>(
+                          builder: (context, state) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: List.generate(
+                                  cubit.childModelList.length,
+                                  (index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: FollowersAvatar(
+                                        onTap: () {
+                                          log("chnageChild start");
+                                          cubit.chnageChild(
+                                              cubit.childModelList[index]);
+                                        },
+                                        childImage: 'assets/image/kid1.png',
+                                        childName:
+                                            cubit.childModelList[index].name,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(
                           height: 2.h,
@@ -67,25 +84,36 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(vertical: 1.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: List.generate(
-                              cubit.currentChild.schoolModel.foodMenuModelList
-                                  .length,
-                              (index) {
-                                return HomeCard(
-                                  cal: cubit.currentChild.schoolModel.foodMenuModelList[index].cal,
-                                  imagePath: 'assets/image/lez.png',
-                                  itemName: cubit.currentChild.schoolModel.foodMenuModelList[index].foodName ,
-                                  price: cubit.currentChild.schoolModel.foodMenuModelList[index].price as double,
-                                  rate: '4.8',
-                                );
-                              },
-                            ),
-                          ),
+                        BlocBuilder<HomeCubit, HomeState>(
+                          builder: (context, state) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.symmetric(vertical: 1.h),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: List.generate(
+                                  cubit.currentChild.schoolModel
+                                      .foodMenuModelList.length,
+                                  (index) {
+                                    return HomeCard(
+                                      cal: cubit.currentChild.schoolModel
+                                          .foodMenuModelList[index].cal,
+                                      imagePath: 'assets/image/lez.png',
+                                      itemName: cubit.currentChild.schoolModel
+                                          .foodMenuModelList[index].foodName,
+                                      price: cubit
+                                          .currentChild
+                                          .schoolModel
+                                          .foodMenuModelList[index]
+                                          .price as double,
+                                      rate: '4.8',
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(
                           height: 2.h,
@@ -243,8 +271,10 @@ class HomeScreen extends StatelessWidget {
 class FollowersAvatar extends StatelessWidget {
   final String childName;
   final String childImage;
+  final Function()? onTap;
   const FollowersAvatar({
     super.key,
+    required this.onTap,
     required this.childName,
     required this.childImage,
   });
@@ -252,7 +282,7 @@ class FollowersAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: ChildAvatar(
         childName: childName,
         imagePath: childImage,
@@ -262,7 +292,7 @@ class FollowersAvatar extends StatelessWidget {
 }
 
 class ScreenHeader extends StatelessWidget {
-  final String parentName, title , funds, childSchollName;
+  final String parentName, title, funds, childSchollName;
   final bool inHomeScreen;
   const ScreenHeader({
     super.key,
@@ -299,7 +329,7 @@ class ScreenHeader extends StatelessWidget {
             'المدرسة',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-           Row(
+          Row(
             children: [
               const Icon(
                 Icons.location_on,
@@ -307,11 +337,11 @@ class ScreenHeader extends StatelessWidget {
               ),
               Text(
                 childSchollName,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const Spacer(),
               AppBarRowButton(
-                
                 walletAmount: funds,
               ),
             ],

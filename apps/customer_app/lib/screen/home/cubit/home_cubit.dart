@@ -25,5 +25,11 @@ class HomeCubit extends Cubit<HomeState> {
     currentChild = childModelList.first;
   }
 
-  chnageChild() {}
+  chnageChild(ChildModel child) {
+    if (child != currentChild) {
+      log("in if change child");
+      currentChild = child;
+      emit(ChnageChildState());
+    }
+  }
 }
