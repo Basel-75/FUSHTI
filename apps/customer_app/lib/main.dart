@@ -1,5 +1,8 @@
+import 'package:customer_app/plan/plan_screen.dart';
+import 'package:customer_app/profile/profile_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/followers/add_followers_screen.dart';
+import 'package:customer_app/screen/followers/followers_profile_screen.dart';
 
 import 'package:customer_app/screen/home/home_screen.dart';
 
@@ -34,7 +37,9 @@ class MainApp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
-          home: const HomeScreen(),
+
+          home: PlanScreen(),
+
         ),
       ),
     );

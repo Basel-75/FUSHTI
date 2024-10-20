@@ -7,13 +7,14 @@ class CustomSelect extends StatelessWidget {
   final dynamic Function(DropDownItem?)? onChanged;
   final String label, hintText;
   final String? Function(DropDownItem?)?  validator;
+  final Color? backgroundColor;
   const CustomSelect({
     super.key,
     this.items,
     this.onChanged,
     required this.label,
     required this.hintText,
-    this.validator
+    this.validator, this.backgroundColor
   });
 
   @override
@@ -41,7 +42,7 @@ class CustomSelect extends StatelessWidget {
               
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
-                    closedFillColor: Color(0xffF6F5DF),
+                    closedFillColor:backgroundColor ?? Color(0xffF6F5DF),
                     closedBorder: Border.all(width: 0.8),
                     closedShadow: kElevationToShadow[2]),
                 hintText: hintText,

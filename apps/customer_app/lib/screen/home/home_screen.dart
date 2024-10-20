@@ -307,7 +307,7 @@ class ScreenHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 28.h,
+      height:inHomeScreen? 28.h:25.h,
       padding: EdgeInsets.symmetric(horizontal: 2.h),
       decoration: const BoxDecoration(
           gradient: LinearGradient(
