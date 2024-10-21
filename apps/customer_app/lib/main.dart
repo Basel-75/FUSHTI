@@ -1,3 +1,4 @@
+import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
@@ -36,15 +37,13 @@ class MainApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: MaterialApp(
           theme: ThemeData(
-            fontFamily: 'Readex Pro',
-            scaffoldBackgroundColor: Colors.white,
+              fontFamily: 'Readex Pro',
+              scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
-          debugShowCheckedModeBanner: false,
-
-          home: const AddPlanScreen(),
-
+          // debugShowCheckedModeBanner: false,
+          home: const HistoryScreen(),
         ),
       ),
     );
