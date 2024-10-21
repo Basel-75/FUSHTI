@@ -1,5 +1,6 @@
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
+import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/screen/plan/plan_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/screen/profile/profile_screen.dart';

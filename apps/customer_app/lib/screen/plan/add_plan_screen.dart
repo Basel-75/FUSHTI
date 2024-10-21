@@ -86,6 +86,7 @@ class AddPlanScreen extends StatelessWidget {
                         onAdd: () {},
                         onMinus: () {},
                         onDelete: () {},
+                        withoutDelete: false,
                       ),
                       AddPlanCard(
                         productName: 'بوكس السعادة',
@@ -96,6 +97,7 @@ class AddPlanScreen extends StatelessWidget {
                         onAdd: () {},
                         onMinus: () {},
                         onDelete: () {},
+                        withoutDelete: false,
                       ),
                       AddPlanCard(
                         productName: 'بوكس السعادة',
@@ -106,6 +108,7 @@ class AddPlanScreen extends StatelessWidget {
                         onAdd: () {},
                         onMinus: () {},
                         onDelete: () {},
+                        withoutDelete: false,
                       ),
                     ],
                   ),
@@ -143,7 +146,9 @@ class AddPlanScreen extends StatelessWidget {
                   ),
                 ],
               ),
-             SizedBox(height: 5.h,),
+              SizedBox(
+                height: 5.h,
+              ),
               CustomButton(onPressed: () {}, title: 'اضافة الخطة'),
               SizedBox(
                 height: 2.h,
