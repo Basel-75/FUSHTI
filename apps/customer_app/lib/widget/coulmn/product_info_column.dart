@@ -1,4 +1,4 @@
-import 'package:customer_app/product/product_screen.dart';
+import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
