@@ -17,7 +17,8 @@ class CustomTextFormFelid extends StatelessWidget {
     this.controller,
     this.backgroundColor,
     required this.isPassword,
-    this.keyboardType, this.textDirection,
+    this.keyboardType,
+    this.textDirection,
   });
 
   @override
@@ -25,14 +26,13 @@ class CustomTextFormFelid extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+            style:  TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
                 color: Color(0xff103C37)),
           ),
           SizedBox(
@@ -53,7 +53,7 @@ class CustomTextFormFelid extends StatelessWidget {
             ),
             child: TextFormField(
               textDirection: textDirection ?? TextDirection.rtl,
-              validator: validator ,
+              validator: validator,
               obscureText: isPassword,
               controller: controller,
               keyboardType: keyboardType,

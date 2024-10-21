@@ -33,18 +33,18 @@ class ProfileSmallContainer extends StatelessWidget {
                 children: [
                   Text(
                     title!,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
                   ),
                   Text(
                     number,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
                   ),
                 ],
               )
             : Center(
                 child: Text(
                   number,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
                 ),
               ),
       ),

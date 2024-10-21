@@ -103,10 +103,12 @@ class ProductScreen extends StatelessWidget {
                         ProductSmallContainer(
                           isForCal: true,
                           amount: '200',
+                          isCallWithText: true,
                         ),
                         ProductSmallContainer(
                           isForCal: false,
                           amount: '18',
+                          isCallWithText: false,
                         ),
                       ],
                     ),

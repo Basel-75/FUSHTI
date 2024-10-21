@@ -1,3 +1,4 @@
+import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/screen/profile/profile_screen.dart';
@@ -42,7 +43,7 @@ class MainApp extends StatelessWidget {
                       backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
 
-          home: const RestrictionsScreen(),
+          home: const AddPlanScreen(),
 
         ),
       ),

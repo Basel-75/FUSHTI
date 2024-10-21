@@ -1,4 +1,5 @@
 import 'package:customer_app/component/drop_down_item.dart';
+import 'package:customer_app/widget/container/info_container_with_button.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
@@ -101,36 +102,10 @@ class FollowersProfileScreen extends StatelessWidget {
                   top: 25.h,
                   left: 0.2.w,
                   right: 0.2.w,
-                  child: Container(
-                    width: 100.w,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
-                    margin: EdgeInsets.symmetric(horizontal: 3.w),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(11),
-                        boxShadow: kElevationToShadow[4],
-                        border: Border.all(width: 0.2, color: Colors.grey)),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'الوجبات المحظورة',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.info_outline,
-                              color: const Color.fromARGB(255, 9, 85, 148),
-                            )),
-                        const Spacer(),
-                        const ProfileSmallContainer(
-                          number: '6',
-                          backgroundColor: Color(0xffc9adab),
-                        ),
-                      ],
-                    ),
+                  child: InfoContainerWithButton(
+                    title: 'الوجبات المحظورة',
+                    amount: '6',
+                    onPressedInfo: () {},
                   ),
                 ),
                 Positioned(

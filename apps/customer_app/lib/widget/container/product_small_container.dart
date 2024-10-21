@@ -3,11 +3,13 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class ProductSmallContainer extends StatelessWidget {
   final bool isForCal;
+  final bool isCallWithText;
   final String amount;
   const ProductSmallContainer({
     super.key,
     required this.isForCal,
     required this.amount,
+    required this.isCallWithText,
   });
 
   @override
@@ -31,7 +33,7 @@ class ProductSmallContainer extends StatelessWidget {
                       TextStyle(fontWeight: FontWeight.w300, fontSize: 16.sp),
                 ),
                 Text(
-                  'سعرة',
+                  isCallWithText?'سعرة':'',
                   style:
                       TextStyle(fontWeight: FontWeight.w300, fontSize: 16.sp),
                 ),
