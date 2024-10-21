@@ -58,7 +58,7 @@ class RestrictionCard extends StatelessWidget {
                     Icons.delete_outline,
                     color: Colors.red,
                   )),
-              ProductSmallContainer(isForCal: false, amount: price)
+              ProductSmallContainer(isForCal: false, amount: price,isCallWithText: false,)
             ],
           ),
         ],
