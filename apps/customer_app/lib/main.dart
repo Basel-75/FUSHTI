@@ -1,6 +1,6 @@
-import 'package:customer_app/plan/plan_screen.dart';
-import 'package:customer_app/product/product_screen.dart';
-import 'package:customer_app/profile/profile_screen.dart';
+import 'package:customer_app/screen/plan/plan_screen.dart';
+import 'package:customer_app/screen/product/product_screen.dart';
+import 'package:customer_app/screen/profile/profile_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/followers/add_followers_screen.dart';
 import 'package:customer_app/screen/followers/followers_profile_screen.dart';
@@ -10,6 +10,7 @@ import 'package:customer_app/screen/home/home_screen.dart';
 
 import 'package:customer_app/screen/auth/otp_screen.dart';
 import 'package:customer_app/screen/auth/signup_screen.dart';
+import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
 import 'package:database_meth/database_meth.dart';
 
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class MainApp extends StatelessWidget {
                       backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
 
-          home: const ProductScreen(),
+          home: const RestrictionsScreen(),
 
         ),
       ),
