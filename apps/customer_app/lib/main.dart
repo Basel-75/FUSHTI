@@ -1,3 +1,4 @@
+import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/screen/plan/plan_screen.dart';
@@ -42,8 +43,8 @@ class MainApp extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
-          debugShowCheckedModeBanner: false,
-          home: const PlanCartScreen(),
+          // debugShowCheckedModeBanner: false,
+          home: const HistoryScreen(),
         ),
       ),
     );
