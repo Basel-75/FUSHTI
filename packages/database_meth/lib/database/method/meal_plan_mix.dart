@@ -9,7 +9,7 @@ import 'package:get_all_pkg/data/setup.dart';
 
 mixin MealPlanMix {
   getChildernPlan() async {
-    // try {
+    try {
       AppModel appModel = getIt.get<AppModel>();
 
       for (var child in appModel.userModel!.childModelList) {
@@ -54,8 +54,8 @@ mixin MealPlanMix {
       log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis.length}");
       log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].toJson()}");
       log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].foodMenuModel.toJson()}");
-    // } catch (er) {
-    //   log("$er");
-    // }
+    } catch (er) {
+      log("$er");
+    }
   }
 }
