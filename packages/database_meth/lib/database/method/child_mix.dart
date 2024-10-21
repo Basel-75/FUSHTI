@@ -10,7 +10,7 @@ import 'package:get_all_pkg/data/setup.dart';
 mixin ChildMix {
   getChilds() async {
     AppModel appModel = getIt.get<AppModel>();
-    // try {
+    try {
       final childLis = await SuperMain()
           .supabase
           .from("followers")
@@ -42,12 +42,12 @@ mixin ChildMix {
         }
       }
 
-      log("${appModel.userModel!.childModelList[0].toJson()}");
-      log("${appModel.userModel!.childModelList[0].schoolModel.toJson()}");
-      log("${appModel.userModel!.childModelList[0].schoolModel.foodMenuModelList[0].toJson()}");
-    // } catch (er) {
-    //   log("$er");
-    // }
+      // log("${appModel.userModel!.childModelList[0].toJson()}");
+      // log("${appModel.userModel!.childModelList[0].schoolModel.toJson()}");
+      // log("${appModel.userModel!.childModelList[0].schoolModel.foodMenuModelList[0].toJson()}");
+    } catch (er) {
+      log("$er");
+    }
   }
 
   addChild(

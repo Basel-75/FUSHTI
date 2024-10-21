@@ -14,5 +14,6 @@ Future<void> setup() async {
 // get all child for user and same time get there scholl food menu
   if (getIt.get<AppModel>().userModel != null) {
     await SuperMain().getChilds();
+    await SuperMain().getChildernPlan();
   }
 }

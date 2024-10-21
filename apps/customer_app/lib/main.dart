@@ -43,7 +43,7 @@ class MainApp extends StatelessWidget {
                       backgroundColor: const Color(0xffBA9773)))),
           debugShowCheckedModeBanner: false,
 
-          home: const HomeScreen(),
+          home: const PlanScreen(),
 
         ),
       ),
