@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/home/cubit/home_cubit.dart';
+import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
 import 'package:customer_app/widget/container/home_card.dart';
 import 'package:customer_app/widget/container/screen_header.dart';
@@ -102,6 +103,20 @@ class HomeScreen extends StatelessWidget {
                                       .foodMenuModelList.length,
                                   (index) {
                                     return HomeCard(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) {
+                                            return ProductScreen(
+
+                                              childModel:  cubit.currentChild,
+                                              foodMenuModel:  cubit.currentChild.schoolModel
+                                          .foodMenuModelList[index],
+                                           
+                                            );
+                                          },
+                                        ));
+                                      },
                                       cal: cubit.currentChild.schoolModel
                                           .foodMenuModelList[index].cal,
                                       imagePath: 'assets/image/lez.png',

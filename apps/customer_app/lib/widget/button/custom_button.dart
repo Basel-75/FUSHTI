@@ -6,12 +6,14 @@ class CustomButton extends StatelessWidget {
   final String title;
   final Size? fixedSize;
   final Color? backgroundColor;
+  final double? fontsize;
   const CustomButton({
     super.key,
     required this.onPressed,
     required this.title,
     this.fixedSize,
     this.backgroundColor,
+    this.fontsize
   });
 
   @override
@@ -19,16 +21,16 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          fixedSize: Size(80.w, 0.5.h),
+          fixedSize: fixedSize ?? Size(80.w, 0.5.h),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       onPressed: onPressed,
       child: Text(
         title,
-        style: const TextStyle(
+        style:  TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 18,
+          fontSize:fontsize ?? 18,
         ),
       ),
     );
