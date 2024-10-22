@@ -20,3 +20,7 @@ class ProfileLoadedState extends ProfileState {
     required this.funds,
   });
 }
+
+class ProfileUpdatedState extends ProfileState {}
+
+class ErrorState extends ProfileState {}

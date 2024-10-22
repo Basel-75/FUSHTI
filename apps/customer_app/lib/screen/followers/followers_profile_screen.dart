@@ -79,7 +79,7 @@ class FollowersProfileScreen extends StatelessWidget {
 
                 UserInfoRow(
                   name: 'سارة العوفي',
-                  schoolName: 'النموذجية السادسة والثلاثون',
+                  schoolNameOrParentPhone: 'النموذجية السادسة والثلاثون',
                   isParent: false,
                   onEdit: () {},
                   onDelete: () {},
