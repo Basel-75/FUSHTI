@@ -47,10 +47,10 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'التابعين',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
+                              fontSize: 18.sp, fontWeight: FontWeight.w500),
                         ),
                         BlocBuilder<HomeCubit, HomeState>(
                           builder: (context, state) {
@@ -84,10 +84,10 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
-                        const Text(
+                        Text(
                           'الأفضل مبيعا',
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
+                              fontSize: 20.sp, fontWeight: FontWeight.bold),
                         ),
                         BlocBuilder<HomeCubit, HomeState>(
                           builder: (context, state) {

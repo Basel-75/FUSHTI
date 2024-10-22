@@ -36,9 +36,9 @@ class ScreenHeader extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          const Text(
+          Text(
             'المدرسة',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
           ),
           Row(
             children: [
@@ -48,8 +48,7 @@ class ScreenHeader extends StatelessWidget {
               ),
               Text(
                 childSchollName,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
               ),
               const Spacer(),
               AppBarRowButton(
@@ -68,22 +67,22 @@ class ScreenHeader extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'أهلا',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500),
+                                  fontSize: 18.sp, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              parentName,
-                              style: const TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
+                              ' $parentName',
+                              style: TextStyle(
+                                  fontSize: 19.sp, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                        const Text(
+                        Text(
                           'نظم وجبات ابنائك',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18.sp, fontWeight: FontWeight.w500),
                         ),
                       ],
                     )

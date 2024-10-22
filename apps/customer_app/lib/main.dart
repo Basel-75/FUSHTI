@@ -45,7 +45,7 @@ class MainApp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
           // debugShowCheckedModeBanner: false,
-          home: const BillScreen(),
+          home: const HomeScreen(),
         ),
       ),
     );
