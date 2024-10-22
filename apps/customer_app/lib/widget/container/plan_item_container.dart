@@ -40,9 +40,9 @@ class PlanItemContainer extends StatelessWidget {
           ),
           Positioned(
             bottom: 13.h,
-            left: 14.w,
+            left: 12.w,
             child: IconButton(
-                onPressed: () {},
+                onPressed: onDelete,
                 icon: Icon(
                   Icons.disabled_by_default_outlined,
                   color: Colors.red,

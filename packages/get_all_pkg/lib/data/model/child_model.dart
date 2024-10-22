@@ -1,4 +1,4 @@
-
+import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 
 class ChildModel {
@@ -11,6 +11,7 @@ class ChildModel {
   final List<String> allergy;
   final num funds;
   late final SchoolModel schoolModel;
+  final List<PlanModel> planList = [];
 
   ChildModel({
     required this.id,

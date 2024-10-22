@@ -5,6 +5,7 @@ class HomeCard extends StatelessWidget {
   final String imagePath, itemName, rate;
   final double price;
   final int cal;
+  final Function()? onTap;
 
   const HomeCard({
     super.key,
@@ -13,32 +14,37 @@ class HomeCard extends StatelessWidget {
     required this.price,
     required this.cal,
     required this.rate,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 30.w,
-      //height: 22.h,
-      padding: EdgeInsets.symmetric(horizontal: 0.8.h, vertical: 0.8.h),
-      margin: EdgeInsets.only(left: 3.w),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          boxShadow: kElevationToShadow[4]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            //!Send restriction logic here
-            onTap: () {},
-            child: Container(
-              margin: EdgeInsets.only(bottom: 1.h),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: onTap ,
+      child: Container(
+        width: 30.w,
+        //height: 22.h,
+        padding: EdgeInsets.symmetric(horizontal: 0.8.h, vertical: 0.8.h),
+        margin: EdgeInsets.only(left: 3.w),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+            boxShadow: kElevationToShadow[4]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              //!Send restriction logic here
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(bottom: 1.h),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.no_food_outlined, color: Colors.red),
               ),
-              child: const Icon(Icons.no_food_outlined, color: Colors.red),
             ),
+
           ),
           //!Change it later to image network
           Center(child: Image.asset(imagePath)),
@@ -94,6 +100,7 @@ class HomeCard extends StatelessWidget {
             ],
           ),
         ],
+
       ),
     );
   }

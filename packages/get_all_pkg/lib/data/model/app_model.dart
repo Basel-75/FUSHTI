@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/model/user_model.dart';
 
@@ -14,6 +15,8 @@ class AppModel {
 
   List<SchoolModel> schoolModelList = [];
   List<String> alergy = ['الفول السوداني', "الذرة"];
+
+  List<CartItem> cartList = [];
 
   saveUser(UserModel newUser) {
     userModel = newUser;

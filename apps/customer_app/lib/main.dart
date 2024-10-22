@@ -45,8 +45,10 @@ class MainApp extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
+
           // debugShowCheckedModeBanner: false,
           home: const BottomNavigatorScreen(),
+
         ),
       ),
     );

@@ -14,8 +14,12 @@ export 'package:animated_custom_dropdown/custom_dropdown.dart';
 export 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 export 'package:dotted_line/dotted_line.dart';
 export 'package:easy_date_timeline/easy_date_timeline.dart';
+
+export 'package:connectivity_plus/connectivity_plus.dart';
+
 export 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 export 'package:add_to_cart_animation/add_to_cart_animation.dart';
 export 'package:quickalert/quickalert.dart';
+
 
 methhh() {}
