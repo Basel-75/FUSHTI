@@ -25,6 +25,7 @@ dependencies:
   custom_radio_grouped_button: any
   dotted_line: ^3.2.3
   easy_date_timeline: ^1.1.3
+  flashy_tab_bar2: ^0.0.10
 
 dev_dependencies:
   flutter_test:
