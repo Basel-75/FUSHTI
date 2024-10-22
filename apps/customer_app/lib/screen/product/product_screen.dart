@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/product_small_container.dart';
@@ -27,14 +28,15 @@ class ProductScreen extends StatelessWidget {
       create: (context) => ProductCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<ProductCubit>();
+        cubit.childModel = childModel;
+        cubit.foodMenuModel = foodMenuModel;
         return Directionality(
           textDirection: TextDirection.rtl,
           child: BlocListener<ProductCubit, ProductState>(
             listener: (context, state) {
               if (state is DoneAddState) {
                 Navigator.of(context).pop();
-                log("${cubit.appModel.cartList.length}");
-                log("${cubit.appModel.cartList[0].toJson()}");
+             
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('product has been add to the cart'),
                   backgroundColor: Colors.green,
@@ -43,12 +45,23 @@ class ProductScreen extends StatelessWidget {
 
               if (state is CartThereState) {
                 Navigator.of(context).pop();
-                log("${cubit.appModel.cartList.length}");
-                log("${cubit.appModel.cartList[0].toJson()}");
+              
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('you arldy add to the cart'),
                   backgroundColor: Colors.red,
                 ));
+              }
+
+
+              if(state is EorrState){
+
+                Navigator.of(context).pop();
+              
+                ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+                  content: Text(state.msg),
+                  backgroundColor: Colors.red,
+                ));
+
               }
             },
             child: Scaffold(
@@ -170,7 +183,25 @@ class ProductScreen extends StatelessWidget {
                                                 SizedBox(
                                                   height: 3.h,
                                                 ),
-                                                const CustomSelect(
+                                                CustomSelect(
+                                                    onChanged: (p0) {
+                                                      log("$p0");
+
+                                                      
+
+                                                      cubit.planItemCOn.text =
+                                                          p0!.name;
+                                                    },
+                                                    items: List.generate(
+                                                      childModel
+                                                          .planList.length,
+                                                      (index) {
+                                                        return DropDownItem(
+                                                            childModel
+                                                                .planList[index]
+                                                                .name!);
+                                                      },
+                                                    ),
                                                     label: "الخطة",
                                                     hintText: "enter"),
                                                 SizedBox(
@@ -197,7 +228,9 @@ class ProductScreen extends StatelessWidget {
                                                         fontsize: 15.sp,
                                                         fixedSize:
                                                             Size(34.w, 7.h),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          cubit.addToPlan();
+                                                        },
                                                         title: "أضافة للخطة")
                                                   ],
                                                 )

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
@@ -84,18 +85,14 @@ mixin MealPlanMix {
       //   },
       // );
 
-      final res = await SuperMain()
-          .supabase
-          .from("meal_plan_templates")
-          .insert({
-            "child_id" : childId,
-            "name" : name,
-            "start_date" : DateTime.now().toIso8601String(),
-            "end_date" : DateTime.now().toIso8601String(),
-            "total_meals" : 0
-
-          })
-          .select();
+      final res =
+          await SuperMain().supabase.from("meal_plan_templates").insert({
+        "child_id": childId,
+        "name": name,
+        "start_date": DateTime.now().toIso8601String(),
+        "end_date": DateTime.now().toIso8601String(),
+        "total_meals": 0
+      }).select();
 
       log("${res[0]}");
 
@@ -103,6 +100,40 @@ mixin MealPlanMix {
     } catch (er) {
       log("$er");
 
+      throw "";
+    }
+  }
+
+  addPlanItem(
+      {required String name,
+      required ChildModel childModel,
+      required FoodMenuModel foodMenuModel}) async {
+    try {
+      late PlanModel plan;
+      for (var val in childModel.planList) {
+        if (val.name == name) {
+          plan = val;
+
+          break;
+        }
+      }
+
+      final res = await SuperMain()
+          .supabase
+          .from("meal_plan_template_items")
+          .insert({
+        "meal_plan_id": plan.id,
+        "menu_item_id": foodMenuModel.id,
+        "quantity": 1
+      }).select();
+
+      MealPlanItemModel temp = MealPlanItemModel.fromJson(res[0]);
+
+      temp.foodMenuModel = foodMenuModel;
+
+      plan.mealPlanItemLis.add(temp);
+    } catch (er) {
+      log("$er");
       throw "";
     }
   }
