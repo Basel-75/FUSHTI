@@ -6,7 +6,7 @@ class PlanModel {
   final String startDate;
   final String endDate;
   final int totalMeals;
-  final String status;
+  final String? status;
   final String? name;
 
   final List<MealPlanItemModel> mealPlanItemLis = [];

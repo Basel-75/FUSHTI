@@ -58,4 +58,37 @@ mixin MealPlanMix {
       log("$er");
     }
   }
+
+  delMealItem({required String id}) async {
+    try {
+      await SuperMain().supabase.rpc("del_mel_item", params: {"row_id": id});
+      log("very good del");
+    } catch (er) {
+      log("$er");
+    }
+  }
+
+  Future<Map<String, dynamic>> addPlan({
+    required String childId,
+    required String name,
+  }) async {
+    try {
+      final response = await SuperMain().supabase.rpc(
+        'add_meal_plan_template',
+        params: {
+          '_child_id': childId,
+          '_name': name,
+          '_start_date': DateTime.now(),
+          '_end_date': DateTime.now(),
+          '_total_meals': 0,
+        },
+      );
+
+      return response;
+    } catch (er) {
+      log("$er");
+
+      throw "";
+    }
+  }
 }
