@@ -1,4 +1,5 @@
 import 'package:customer_app/screen/bill/bill_screen.dart';
+import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
@@ -45,7 +46,7 @@ class MainApp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffBA9773)))),
           // debugShowCheckedModeBanner: false,
-          home: const BillScreen(),
+          home: const BottomNavigatorScreen(),
         ),
       ),
     );

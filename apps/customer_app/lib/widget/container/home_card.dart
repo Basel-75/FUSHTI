@@ -44,14 +44,14 @@ class HomeCard extends StatelessWidget {
           Center(child: Image.asset(imagePath)),
           Text(
             itemName,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
           ),
           Row(
             children: [
               Text(
                 '$cal سعرة',
-                style: const TextStyle(
-                    fontSize: 14,
+                style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: Color(0x50000000)),
               ),
@@ -80,14 +80,13 @@ class HomeCard extends StatelessWidget {
             children: [
               Text(
                 '$price ريال',
-                style:
-                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
               ),
               const Spacer(),
               Text(
                 '$rate/5',
-                style: const TextStyle(
-                    fontSize: 14,
+                style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                     color: Color(0xffFFE500)),
               ),
