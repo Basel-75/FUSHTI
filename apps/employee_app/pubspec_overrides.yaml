@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: database_meth,get_all_pkg
+dependency_overrides:
+  database_meth:
+    path: ..\\..\\packages\\database_meth
+  get_all_pkg:
+    path: ..\\..\\packages\\get_all_pkg

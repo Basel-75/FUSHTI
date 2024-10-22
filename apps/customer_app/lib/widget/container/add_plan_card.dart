@@ -4,7 +4,9 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class AddPlanCard extends StatelessWidget {
   final String productName, quantity, price, cal, imagePath;
-  final Function() onAdd, onMinus, onDelete;
+  final Function() onAdd, onMinus;
+  final Function()? onDelete;
+  final bool withoutDelete;
   const AddPlanCard({
     super.key,
     required this.productName,
@@ -13,8 +15,9 @@ class AddPlanCard extends StatelessWidget {
     required this.cal,
     required this.onAdd,
     required this.onMinus,
-    required this.onDelete,
+    this.onDelete,
     required this.imagePath,
+    required this.withoutDelete,
   });
 
   @override
@@ -90,12 +93,14 @@ class AddPlanCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              IconButton(
-                  onPressed: onDelete,
-                  icon: const Icon(
-                    Icons.delete_outline,
-                    color: Colors.red,
-                  )),
+              !withoutDelete
+                  ? IconButton(
+                      onPressed: onDelete,
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                      ))
+                  : const Text(''),
               Row(
                 children: [
                   ProductSmallContainer(

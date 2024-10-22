@@ -18,7 +18,7 @@ class ScreenHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: inHomeScreen ? 30.h : 30.h,
+      height: inHomeScreen ? 30.h : 22.h,
       padding: EdgeInsets.symmetric(horizontal: 2.h),
       decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -36,21 +36,28 @@ class ScreenHeader extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          const Text(
-            'المدرسة',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          inHomeScreen
+              ? Text(
+                  'المدرسة',
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                )
+              : const SizedBox(),
           Row(
             children: [
-              const Icon(
-                Icons.location_on,
-                color: Color(0xff854811),
-              ),
-              Text(
-                childSchollName,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+              inHomeScreen
+                  ? const Icon(
+                      Icons.location_on,
+                      color: Color(0xff854811),
+                    )
+                  : const SizedBox(),
+              inHomeScreen
+                  ? Text(
+                      childSchollName,
+                      style: TextStyle(
+                          fontSize: 14.sp, fontWeight: FontWeight.w500),
+                    )
+                  : const SizedBox(),
               const Spacer(),
               AppBarRowButton(
                 walletAmount: funds,
@@ -68,29 +75,29 @@ class ScreenHeader extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'أهلا',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500),
+                                  fontSize: 18.sp, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              parentName,
-                              style: const TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
+                              ' $parentName',
+                              style: TextStyle(
+                                  fontSize: 19.sp, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                        const Text(
+                        Text(
                           'نظم وجبات ابنائك',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18.sp, fontWeight: FontWeight.w500),
                         ),
                       ],
                     )
                   : Text(
                       title,
-                      style: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 19.sp, fontWeight: FontWeight.w600),
                     ),
               const Spacer(),
               Image.asset('assets/image/homeicon.png')

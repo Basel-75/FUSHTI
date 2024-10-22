@@ -5,7 +5,9 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 class ChildCard extends StatelessWidget {
   final ChildModel childModel;
   final Function()? onTap;
-  const ChildCard({super.key, required this.childModel, this.onTap});
+  final void Function()? onPressedQR;
+  const ChildCard(
+      {super.key, required this.childModel, this.onTap, this.onPressedQR});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class ChildCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 90.w,
-        height: 17.h,
+        height: 12.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: const Color(0xffFFFFFF),
@@ -46,14 +48,7 @@ class ChildCard extends StatelessWidget {
                         Text(
                           childModel.name,
                           style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.bold),
-                        ),
-                        Spacer(),
-                        const Padding(
-                          padding: EdgeInsets.all(4),
-                          child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Icon(Iconsax.scan_barcode_outline)),
+                              fontSize: 14.sp, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -64,18 +59,26 @@ class ChildCard extends StatelessWidget {
                       children: [
                         const Icon(Icons.school_outlined),
                         SizedBox(
-                          width: 3.w,
+                          width: 1.w,
                         ),
                         Text(
                           childModel.schoolModel.name,
                           style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.bold),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
+            ),
+            Column(
+              children: [
+                IconButton(
+                    onPressed: () {}, icon: Icon(Iconsax.scan_barcode_outline)),
+              ],
             ),
           ],
         ),
