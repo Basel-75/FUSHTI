@@ -73,18 +73,33 @@ mixin MealPlanMix {
     required String name,
   }) async {
     try {
-      final response = await SuperMain().supabase.rpc(
-        'add_meal_plan_template',
-        params: {
-          '_child_id': childId,
-          '_name': name,
-          '_start_date': DateTime.now(),
-          '_end_date': DateTime.now(),
-          '_total_meals': 0,
-        },
-      );
+      // final response = await SuperMain().supabase.rpc(
+      //   'add_meal_plan_template',
+      //   params: {
+      //     '_child_id': childId,
+      //     '_name': name,
+      //     '_start_date': DateTime.now().toIso8601String(),
+      //     '_end_date': DateTime.now().toIso8601String(),
+      //     '_total_meals': 0,
+      //   },
+      // );
 
-      return response;
+      final res = await SuperMain()
+          .supabase
+          .from("meal_plan_templates")
+          .insert({
+            "child_id" : childId,
+            "name" : name,
+            "start_date" : DateTime.now().toIso8601String(),
+            "end_date" : DateTime.now().toIso8601String(),
+            "total_meals" : 0
+
+          })
+          .select();
+
+      log("${res[0]}");
+
+      return res[0];
     } catch (er) {
       log("$er");
 

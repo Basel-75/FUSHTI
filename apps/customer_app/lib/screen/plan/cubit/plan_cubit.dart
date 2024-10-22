@@ -90,9 +90,19 @@ class PlanCubit extends Cubit<PlanState> {
     }
 
     try {
-      await SuperMain()
+      emit(LodingState());
+      final res = await SuperMain()
           .addPlan(childId: childModelSelcted!.id, name: planNameCOn.text);
+
+      childModelSelcted!.planList.add(PlanModel.fromJson(res));
+
+
+      emit(NoLodingState());
+      emit(PlanChnageState());
+
+      log("plan has been add");
     } catch (er) {
+      emit(NoLodingState());
       emit(EorrPlanState(msg: "there was eorr"));
     }
   }
