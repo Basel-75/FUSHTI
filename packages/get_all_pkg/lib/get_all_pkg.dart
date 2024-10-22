@@ -14,6 +14,7 @@ export 'package:animated_custom_dropdown/custom_dropdown.dart';
 export 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 export 'package:dotted_line/dotted_line.dart';
 export 'package:easy_date_timeline/easy_date_timeline.dart';
+export 'package:connectivity_plus/connectivity_plus.dart';
 
 methhh(){
   

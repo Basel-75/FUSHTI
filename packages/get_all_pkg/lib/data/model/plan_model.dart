@@ -7,6 +7,7 @@ class PlanModel {
   final String endDate;
   final int totalMeals;
   final String status;
+  final String? name;
 
   final List<MealPlanItemModel> mealPlanItemLis = [];
 
@@ -17,6 +18,7 @@ class PlanModel {
     required this.endDate,
     required this.totalMeals,
     required this.status,
+    required this.name
   });
 
   factory PlanModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class PlanModel {
       endDate: json['end_date'],
       totalMeals: json['total_meals'],
       status: json['status'],
+      name: json['name'],
     );
   }
 
