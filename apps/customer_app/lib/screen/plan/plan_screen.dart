@@ -36,6 +36,22 @@ class PlanScreen extends StatelessWidget {
                   backgroundColor: Colors.red,
                 ));
               }
+
+              if(state is LodingState){
+                 showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              );
+              }
+
+              if(state is NoLodingState){
+                   Navigator.pop(context);
+              }
             },
             child: Scaffold(
               floatingActionButton: FloatingActionButton(

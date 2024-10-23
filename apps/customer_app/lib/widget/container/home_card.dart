@@ -7,6 +7,7 @@ class HomeCard extends StatelessWidget {
   final int cal;
   final Function()? onTap;
 
+
   const HomeCard(
       {super.key,
       required this.imagePath,
@@ -16,24 +17,25 @@ class HomeCard extends StatelessWidget {
       required this.rate,
       this.onTap});
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 30.w,
-        //height: 22.h,
         padding: EdgeInsets.symmetric(horizontal: 0.8.h, vertical: 0.8.h),
         margin: EdgeInsets.only(left: 3.w),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white,
-            boxShadow: kElevationToShadow[4]),
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: kElevationToShadow[4],
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              //!Send restriction logic here
+              //! Send restriction logic here
               onTap: () {},
               child: Container(
                 margin: EdgeInsets.only(bottom: 1.h),
@@ -44,7 +46,9 @@ class HomeCard extends StatelessWidget {
               ),
             ),
 
+
             //!Change it later to image network
+
             Center(child: Image.asset(imagePath)),
             Text(
               itemName,
@@ -61,14 +65,18 @@ class HomeCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
+
                   //!Send add logic here
+
                   onTap: () {},
                   child: Container(
                     width: 8.w,
                     decoration: BoxDecoration(
+
                         borderRadius: BorderRadius.circular(6),
                         boxShadow: kElevationToShadow[2],
                         color: const Color(0xffBA9773)),
+
                     child: const Icon(
                       Icons.add,
                       color: Colors.white,
@@ -77,23 +85,29 @@ class HomeCard extends StatelessWidget {
                 ),
               ],
             ),
+
             SizedBox(
               height: 1.h,
             ),
+
             Row(
               children: [
                 Text(
                   '$price ريال',
+
                   style:
                       TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+
                 ),
                 const Spacer(),
                 Text(
                   '$rate/5',
                   style: TextStyle(
+
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xffFFE500)),
+
                 ),
                 const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500)),
               ],
