@@ -9,8 +9,8 @@ import 'package:customer_app/screen/plan/plan_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/screen/profile/profile_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
-import 'package:customer_app/screen/followers/edit_followers_screen.dart';
-import 'package:customer_app/screen/followers/followers_profile_screen.dart';
+import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
+import 'package:customer_app/screen/followers/profile/followers_profile_screen.dart';
 import 'package:customer_app/screen/followers/followers_screen.dart';
 
 import 'package:customer_app/screen/home/home_screen.dart';

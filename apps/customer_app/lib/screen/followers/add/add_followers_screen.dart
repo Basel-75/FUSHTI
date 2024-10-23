@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/main.dart';
 import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
-import 'package:customer_app/screen/followers/cubit/add_followers_cubit/add_followers_cubit.dart';
+import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';

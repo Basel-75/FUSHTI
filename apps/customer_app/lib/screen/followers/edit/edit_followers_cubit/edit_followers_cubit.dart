@@ -40,9 +40,9 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
     ).toList();
   }
 
-  addChild() async {
+  editChild({required String childId}) async {
     log("${fundsCon.text}");
-    emit(LodingState());
+    emit(LoadingState());
     if (formKey.currentState!.validate()) {
       late String schoolId;
 
@@ -51,56 +51,52 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
           schoolId = val.id;
         }
       }
-
-      await SuperMain().addChild(
-          name: nameCon.text,
-          userId: appModel.userModel!.id,
-          allergy: allgyList.map(
-            (e) {
-              return e.name;
-            },
-          ).toList(),
-          clas: classCon.text,
-          imgPath: "imgPath",
-          schoolId: schoolId,
-          funds: double.parse(fundsCon.text));
-
-      emit(DoenAddState());
-    } else {
-      log("not good vaild");
-      emit(NoLodingState());
-    }
-  }
-
-  editChild() async {
-    log("${fundsCon.text}");
-    emit(LodingState());
-    if (formKey.currentState!.validate()) {
-      late String schoolId;
-
-      for (var val in appModel.schoolModelList) {
-        if (val.name == schoolCon.text) {
-          schoolId = val.id;
-        }
-      }
-
+      //Update in DB
       await SuperMain().editChild(
           name: nameCon.text,
-          userId: appModel.userModel!.id,
+          id: childId,
           allergy: allgyList.map(
             (e) {
               return e.name;
             },
           ).toList(),
-          clas: classCon.text,
+          childClass: classCon.text,
           imgPath: "imgPath",
           schoolId: schoolId,
           funds: double.parse(fundsCon.text));
-
-      emit(DoenAddState());
+      //Update locale
+      try {
+        //sure not empty
+        if (appModel.userModel!.childModelList.isNotEmpty) {
+          for (var i = 0; i < appModel.userModel!.childModelList.length; i++) {
+            //find correct child
+            if (appModel.userModel?.childModelList[i].id==childId) {
+              //update
+              appModel.userModel?.childModelList[i].name = nameCon.text.trim();
+              appModel.userModel?.childModelList[i].studentClass =
+                  classCon.text.trim();
+              appModel.userModel?.childModelList[i].schoolId = schoolId;
+              appModel.userModel?.childModelList[i].imgPath = 'image path';
+              appModel.userModel?.childModelList[i].funds =
+                  double.parse(fundsCon.text);
+              appModel.userModel?.childModelList[i].allergy = allgyList.map(
+                (e) {
+                  return e.name;
+                },
+              ).toList();
+              //to make sure
+              log('${appModel.userModel?.childModelList[i].toJson()}');
+              log('${appModel.userModel?.childModelList[i].id}|$childId');
+            }
+          }
+        }
+      } catch (e) {
+        log('$e');
+      }
+      emit(SuccessEditState());
     } else {
-      log("Wrong");
-      emit(NoLodingState());
+      log("حدث خطأ");
+      emit(UnLoadingState());
     }
   }
 }
