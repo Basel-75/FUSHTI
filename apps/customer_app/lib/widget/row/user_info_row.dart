@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class UserInfoRow extends StatelessWidget {
-  final String name, schoolName;
+  final String name, schoolNameOrParentPhone;
   final void Function() onEdit, onDelete;
   final bool isParent;
   const UserInfoRow({
     super.key,
     required this.name,
-    required this.schoolName,
+    required this.schoolNameOrParentPhone,
     required this.onEdit,
     required this.onDelete, required this.isParent,
   });
@@ -28,7 +28,7 @@ class UserInfoRow extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text(
-              schoolName,
+              schoolNameOrParentPhone,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,

@@ -1,10 +1,12 @@
+import 'package:employee_app/screen/add_product/add_product_screen.dart';
+import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() {
-  // debugPaintSizeEnabled = true;
+  //debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }
 

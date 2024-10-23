@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
+import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 
 import 'package:customer_app/widget/button/custom_text_button.dart';
@@ -56,11 +57,11 @@ class OTPScreen extends StatelessWidget {
               Navigator.pop(context);
 
               log("very good otp");
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => const HomeScreen(),
-              //     ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ));
             }
           },
           child: Scaffold(
