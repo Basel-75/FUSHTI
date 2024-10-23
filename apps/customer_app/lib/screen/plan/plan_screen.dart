@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/home/home_screen.dart';
+import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cubit.dart';
+import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/plan_item_container.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
@@ -37,20 +39,20 @@ class PlanScreen extends StatelessWidget {
                 ));
               }
 
-              if(state is LodingState){
-                 showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              );
+              if (state is LodingState) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
               }
 
-              if(state is NoLodingState){
-                   Navigator.pop(context);
+              if (state is NoLodingState) {
+                Navigator.pop(context);
               }
             },
             child: Scaffold(
@@ -275,7 +277,15 @@ class PlanScreen extends StatelessWidget {
                           const Divider(),
                           Center(
                               child: CustomButton(
-                                  onPressed: () {}, title: 'الدفع'))
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) {
+                                        return PlanCartScreen();
+                                      },
+                                    ));
+                                  },
+                                  title: 'الدفع'))
                         ],
                       ),
                     ),
