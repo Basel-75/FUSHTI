@@ -5,11 +5,12 @@ class EmployeeHeader extends StatelessWidget {
   const EmployeeHeader({
     super.key,
     required this.isTitle,
-    this.title,
+    this.title, required this.textSize,
   });
 
   final bool isTitle;
   final String? title;
+  final double textSize;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +65,7 @@ class EmployeeHeader extends StatelessWidget {
                         child: Text(
                           title ?? '',
                           style: TextStyle(
-                              fontSize: 23.sp, fontWeight: FontWeight.bold),
+                              fontSize: textSize, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Image.asset('assets/image/emp_icon_title.png'),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:customer_app/screen/bill/bill_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
@@ -19,6 +21,7 @@ import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
 import 'package:database_meth/database_meth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -26,7 +29,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await setup();
-
+  log('======================\nCurrent user : \n');
+  log('${getIt.get<AppModel>().userModel?.toJson()}');
+  log('===========================');
+  log('======================\nChildren : \n');
+  for (var element in getIt.get<AppModel>().userModel!.childModelList) {
+    log('${element.toJson()}');
+   
+  }
+   log('===========================');
   runApp(const MainApp());
 }
 
