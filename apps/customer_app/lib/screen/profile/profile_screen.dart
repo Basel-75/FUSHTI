@@ -39,8 +39,9 @@ class ProfileScreen extends StatelessWidget {
               //showLoadingDialog(context: context);
             }
             if (state is ProfileUpdatedState) {
+              log("iam lis");
               bloc.add(GetUserInfoEvent());
-              Navigator.pop(context);
+              // Navigator.pop(context);
             }
           },
           child: Directionality(

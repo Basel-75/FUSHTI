@@ -76,4 +76,27 @@ mixin ChildMix {
       log("$er");
     }
   }
+
+  editChild(
+      {required String name,
+      required String userId,
+      required List<String> allergy,
+      required String clas,
+      required String imgPath,
+      required String schoolId,
+      required double funds}) async {
+    try {
+      await SuperMain().supabase.from("followers").update({
+        "name": name,
+        "user_id": userId,
+        "funds": funds,
+        "allergy": allergy,
+        "class": clas,
+        "img_path": imgPath,
+        "school_id": schoolId,
+      }).eq('id', userId);
+    } catch (er) {
+      log("$er");
+    }
+  }
 }

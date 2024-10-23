@@ -38,16 +38,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           id: appModel.userModel!.id,
           name: usernameController.text.trim(),
           phone: phoneNumController.text.trim());
+
       // update model locale
-      // appModel.userModel = appModel.userModel?.copyWith(
-      //     name: usernameController.text.trim(),
-      //     phone: phoneNumController.text.trim());
-      log('${appModel.userModel?.toJson()}0');
-      appModel.userModel=await SuperMain().getUser(id: appModel.userModel!.id);
-      log('${SuperMain().getUser(id: appModel.userModel!.id)}1');
-      log('${appModel.userModel?.toJson()}2');
-      log('${appModel.schoolModelList.first.toJson()}3');
-      log('${appModel.userModel?.childModelList.first.toJson()}4');
+      appModel.userModel!.name = usernameController.text.trim();
+      appModel.userModel!.phone = phoneNumController.text.trim();
+
       emit(ProfileUpdatedState());
     } else {
       emit(ErrorState(msg: 'هناك خطأ يرجى اعادة المحاولة لاحقا'));
