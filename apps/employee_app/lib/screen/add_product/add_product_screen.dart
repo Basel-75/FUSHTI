@@ -63,14 +63,14 @@ class AddProductScreen extends StatelessWidget {
                           content: Text('ارجوا منك أضافة اسم المنتج'),
                           backgroundColor: Colors.red,
                         ));
-                        return "";
+                        return "لابد وضع اسم المنتج";
                       } else if (RegExp(r'[0-9]').hasMatch(value)) {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
                           content: Text('الاسم لا يحتوي على أرقام'),
                           backgroundColor: Colors.red,
                         ));
-                        return "";
+                        return "بدون أرقام";
                       }
                       return null;
                     }),
@@ -101,7 +101,7 @@ class AddProductScreen extends StatelessWidget {
                               content: Text('ارجوا منك أضافة السعر'),
                               backgroundColor: Colors.red,
                             ));
-                            return "";
+                            return "يجب أضافة السعر";
                           }
                           return null;
                         }),
@@ -123,10 +123,10 @@ class AddProductScreen extends StatelessWidget {
                           if (value == null || value.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text('Please enter a phone number'),
+                              content: Text('يجب كتابة السعرات'),
                               backgroundColor: Colors.red,
                             ));
-                            return "";
+                            return "يجب كتابة السعرات";
                           }
                           return null;
                         }),
@@ -184,7 +184,7 @@ class AddProductScreen extends StatelessWidget {
                         content: Text('ارجوا منك أضافة وصف المنتج'),
                         backgroundColor: Colors.red,
                       ));
-                      return "";
+                      return "يجب كتابة وصف المنتج";
                     }
                     return null;
                   },
@@ -199,7 +199,7 @@ class AddProductScreen extends StatelessWidget {
                 ),
                 CustomImage(
                     onTap: () {
-                      print('click image');
+                      print('clicked image');
                       //addImg();
                     },
                     //controller:
@@ -217,7 +217,7 @@ class AddProductScreen extends StatelessWidget {
                           content: Text('ضع صورة المنتج'),
                           backgroundColor: Colors.red,
                         ));
-                        return "";
+                        return "يجب وضع صورة للمنتج";
                       }
                       return null;
                     }),

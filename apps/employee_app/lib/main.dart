@@ -1,5 +1,5 @@
 import 'package:employee_app/screen/add_product/add_product_screen.dart';
-import 'package:employee_app/screen/boxes/boxes_screen.dart';
+import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
                     elevatedButtonTheme: ElevatedButtonThemeData(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xffBA9773)))),
-                home: const BoxesScreen(),
+                home: const HomeScreen(),
               ),
             ));
   }

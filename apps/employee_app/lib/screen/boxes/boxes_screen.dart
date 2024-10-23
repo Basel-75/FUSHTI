@@ -1,8 +1,9 @@
 import 'dart:developer';
 
 import 'package:employee_app/screen/add_product/add_product_screen.dart';
+import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/widget/appbar_emp_header.dart';
-import 'package:employee_app/widget/cardProduct/card_prodct_widget.dart';
+import 'package:employee_app/widget/container/card_home_product.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -88,7 +89,12 @@ class BoxesScreen extends StatelessWidget {
           preferredSize: Size.fromHeight(19.h),
           child: AppBar(
             leading: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.chat_outlined)),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (builder) {
+                    return const FeedBackScreen();
+                  }));
+                }, icon: const Icon(Icons.chat_outlined)),
             flexibleSpace: EmployeeHeader(
               isTitle: false,
               title: 'اضافة منتج',
@@ -122,7 +128,7 @@ class BoxesScreen extends StatelessWidget {
                 padding: EdgeInsets.all(3.h),
                 children: List.generate(products.length, (index) {
                   var product = products[index];
-                  return ProductWidgets(
+                  return ProductCards(
                     deleteButton: () {
                       log('delete done');
                     },
