@@ -5,10 +5,12 @@ import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class FollowersProfileScreen extends StatelessWidget {
-  const FollowersProfileScreen({super.key});
+  final ChildModel? childInfo;
+  const FollowersProfileScreen({super.key, required this.childInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,7 @@ class FollowersProfileScreen extends StatelessWidget {
                         color: const Color.fromARGB(255, 218, 220, 218),
                         shape: BoxShape.circle,
                         border: Border.all(width: 0.2, color: Colors.grey)),
+                    //!provide image later
                     child: const CircleAvatar(
                         backgroundImage: AssetImage(
                       'assets/image/kid2.png',
@@ -78,8 +81,8 @@ class FollowersProfileScreen extends StatelessWidget {
                 //=========Info and edit button==========
 
                 UserInfoRow(
-                  name: 'سارة العوفي',
-                  schoolNameOrParentPhone: 'النموذجية السادسة والثلاثون',
+                  name: childInfo?.name ?? '',
+                  schoolNameOrParentPhone: childInfo?.schoolModel.name ?? '',
                   isParent: false,
                   onEdit: () {},
                   onDelete: () {},
@@ -89,13 +92,13 @@ class FollowersProfileScreen extends StatelessWidget {
                 Positioned(
                   top: 10.h,
                   left: 3.w,
-                  child: const InfoContainerRow(
+                  child: InfoContainerRow(
                     titleOne: 'الوجبات',
-                    numOne: '6',
+                    numOne:childInfo!.planList.isNotEmpty ? childInfo!.planList.first.totalMeals.toString():'0',
                     titleTow: 'الخطط',
-                    numTow: '2',
+                    numTow: childInfo?.planList.length.toString() ?? '0',
                     titleThree: 'المصروف',
-                    numThree: '20',
+                    numThree: childInfo?.funds.toString()??'0',
                   ),
                 ),
                 Positioned(
@@ -114,14 +117,14 @@ class FollowersProfileScreen extends StatelessWidget {
                   right: 0.2.w,
                   child: SizedBox(
                     width: 100.w,
-                    child: const CustomSelect(
+                    child: CustomSelect(
                       label: 'الحساسية',
                       hintText: 'عرض الحساسية',
-                      items: [
-                        DropDownItem('اللوز'),
-                        DropDownItem('الفستق'),
-                        DropDownItem('الموز'),
-                      ],
+                      items:childInfo!.allergy.isEmpty ? List.generate(
+                          childInfo!.allergy.length,
+                          (index) => DropDownItem(
+                                childInfo!.allergy[index],
+                              )):[DropDownItem('لا يوجد')],
                       backgroundColor: Colors.white,
                     ),
                   ),
