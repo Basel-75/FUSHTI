@@ -2,54 +2,55 @@ import 'dart:developer';
 
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/main.dart';
-import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
-import 'package:customer_app/screen/followers/cubit/add_followers_cubit/add_followers_cubit.dart';
+
+import 'package:customer_app/screen/followers/edit/edit_followers_cubit/edit_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/imagePicker/select_image_widget.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-class AddFollowersScreen extends StatelessWidget {
-  const AddFollowersScreen({super.key});
-
+class EditFollowersScreen extends StatelessWidget {
+  const EditFollowersScreen({super.key, required this.childInfo});
+  final ChildModel? childInfo;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddFollowersCubit(),
+      create: (context) => EditFollowersCubit(),
       child: Builder(builder: (context) {
-        final cubit = context.read<AddFollowersCubit>();
+        final cubit = context.read<EditFollowersCubit>();
         cubit.initVal();
         return Directionality(
           textDirection: TextDirection.rtl,
-          child: BlocListener<AddFollowersCubit, AddFollowersState>(
+          child: BlocListener<EditFollowersCubit, EditFollowersState>(
             listener: (context, state) {
-              if (state is LodingState) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+              if (state is LoadingState) {
+                showLoadingDialog(context: context);
               }
 
-              if (state is DoenAddState) {
+              if (state is SuccessEditState) {
                 Navigator.pop(context);
-
-                log("very Good add child");
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'تم تحديث معلومات التابع بنجاح',
+                      textDirection: TextDirection.rtl,
+                    ),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+                log("very Good Edit child");
               }
 
-              if(state is NoLodingState){
-                  Navigator.pop(context);
-
+              if (state is UnLoadingState) {
+                Navigator.pop(context);
               }
 
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
@@ -66,7 +67,7 @@ class AddFollowersScreen extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: const Text(
-                    'اضافة تابع',
+                    'تعديل التابع',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   centerTitle: true,
@@ -188,10 +189,9 @@ class AddFollowersScreen extends StatelessWidget {
                         ),
                         CustomButton(
                           onPressed: () {
-                            cubit.addChild();
+                            cubit.editChild(childId: '${childInfo?.id}');
                           },
-                          title: 'اضافة التابع',
-                          fixedSize: Size(40.w, 20.h),
+                          title: 'تعديل التابع',
                         ),
                       ],
                     ),

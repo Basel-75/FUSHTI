@@ -9,8 +9,8 @@ import 'package:customer_app/screen/plan/plan_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/screen/profile/profile_screen.dart';
 import 'package:customer_app/screen/auth/login_screen.dart';
-import 'package:customer_app/screen/followers/add_followers_screen.dart';
-import 'package:customer_app/screen/followers/followers_profile_screen.dart';
+import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
+import 'package:customer_app/screen/followers/profile/followers_profile_screen.dart';
 import 'package:customer_app/screen/followers/followers_screen.dart';
 
 import 'package:customer_app/screen/home/home_screen.dart';
@@ -26,6 +26,7 @@ import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() async {
+  //!change the default user model in melos
   WidgetsFlutterBinding.ensureInitialized();
 
   await setup();
@@ -35,9 +36,8 @@ void main() async {
   log('======================\nChildren : \n');
   for (var element in getIt.get<AppModel>().userModel!.childModelList) {
     log('${element.toJson()}');
-   
   }
-   log('===========================');
+  log('===========================');
   runApp(const MainApp());
 }
 
@@ -59,7 +59,6 @@ class MainApp extends StatelessWidget {
 
           // debugShowCheckedModeBanner: false,
           home: const BottomNavigatorScreen(),
-
         ),
       ),
     );

@@ -1,4 +1,6 @@
-import 'package:customer_app/screen/followers/cubit/followers_profile_cubit/followers_profile_cubit.dart';
+import 'package:customer_app/screen/followers/add/add_followers_screen.dart';
+import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
+import 'package:customer_app/screen/followers/profile/followers_profile_screen.dart';
 import 'package:customer_app/widget/container/child_card.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -18,6 +20,16 @@ class FollowersScreen extends StatelessWidget {
         final cubit = context.read<FollowersProfileCubit>();
 
         return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.white,
+            shape: const CircleBorder(),
+            child: const Icon(Icons.add),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddFollowersScreen(),
+                )),
+          ),
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: SingleChildScrollView(
@@ -40,7 +52,20 @@ class FollowersScreen extends StatelessWidget {
                         return Padding(
                           padding: EdgeInsets.only(bottom: 3.h),
                           child: ChildCard(
-                            childModel: cubit.appModel.userModel!.childModelList[index],
+                            childModel:
+                                cubit.appModel.userModel!.childModelList[index],
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FollowersProfileScreen(
+                                    childInfo: cubit.appModel.userModel!
+                                        .childModelList[index],
+                                  ),
+                                )).then(
+                              (value) {
+                                cubit.appModel = getIt.get<AppModel>();
+                              },
+                            ),
                           ),
                         );
                       },

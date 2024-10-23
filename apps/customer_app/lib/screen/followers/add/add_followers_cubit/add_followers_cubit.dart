@@ -60,7 +60,7 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
               return e.name;
             },
           ).toList(),
-          clas: classCon.text,
+          childClass: classCon.text,
           imgPath: "imgPath",
           schoolId: schoolId,
           funds: double.parse(fundsCon.text));
