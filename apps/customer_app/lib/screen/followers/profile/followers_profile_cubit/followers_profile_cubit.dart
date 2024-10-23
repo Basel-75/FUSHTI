@@ -23,8 +23,11 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
 
   deleteChild({required String childId}) async {
     try {
+      //Delete in DB
       emit(LoadingState());
       await SuperMain().deleteChild(id: childId);
+      //Delete Locale
+      appModel.userModel?.childModelList.removeWhere((element) => element.id==childId,);
       emit(SuccessState(msg: 'تم حذف التابع بنجاح'));
     } catch (e) {
       emit(ErrorState(msg: 'تعذر حذف التابع اعد المحاولة لاحقا'));
