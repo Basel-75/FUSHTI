@@ -23,4 +23,10 @@ class ProfileLoadedState extends ProfileState {
 
 class ProfileUpdatedState extends ProfileState {}
 
-class ErrorState extends ProfileState {}
+class LoadingState extends ProfileState {}
+
+class ErrorState extends ProfileState {
+  final String msg;
+
+  ErrorState({required this.msg});
+}

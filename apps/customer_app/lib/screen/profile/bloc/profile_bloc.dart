@@ -13,8 +13,10 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   AppModel appModel = getIt.get<AppModel>();
-  TextEditingController usernameController = TextEditingController(text: '');
-  TextEditingController phoneNumController = TextEditingController(text: '');
+  TextEditingController usernameController =
+      TextEditingController(text: 'باسل العلوي');
+  TextEditingController phoneNumController =
+      TextEditingController(text: '0512345678');
   String? userName = '';
   String? phoneNum = '';
   String? followersNum = '';
@@ -30,13 +32,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     log('${usernameController.text}|${phoneNumController.text}');
     final inter = await CheckIntent().checkInternetConnection();
     if (inter) {
-      await SuperMain().updateUserProfile(
+      emit(LoadingState());
+      //update in DB
+      SuperMain().updateUserProfile(
           id: appModel.userModel!.id,
           name: usernameController.text.trim(),
           phone: phoneNumController.text.trim());
+      // update model locale
+      // appModel.userModel = appModel.userModel?.copyWith(
+      //     name: usernameController.text.trim(),
+      //     phone: phoneNumController.text.trim());
+      log('${appModel.userModel?.toJson()}0');
+      appModel.userModel=await SuperMain().getUser(id: appModel.userModel!.id);
+      log('${SuperMain().getUser(id: appModel.userModel!.id)}1');
+      log('${appModel.userModel?.toJson()}2');
+      log('${appModel.schoolModelList.first.toJson()}3');
+      log('${appModel.userModel?.childModelList.first.toJson()}4');
       emit(ProfileUpdatedState());
     } else {
-      emit(ErrorState());
+      emit(ErrorState(msg: 'هناك خطأ يرجى اعادة المحاولة لاحقا'));
     }
     usernameController.clear();
     phoneNumController.clear();
