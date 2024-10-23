@@ -114,6 +114,12 @@ mixin MealPlanMix {
         if (val.name == name) {
           plan = val;
 
+          for (var item in plan.mealPlanItemLis) {
+            if (foodMenuModel.id == item.menuItemId) {
+              throw "This item in your cart";
+            }
+          }
+
           break;
         }
       }
@@ -134,7 +140,7 @@ mixin MealPlanMix {
       plan.mealPlanItemLis.add(temp);
     } catch (er) {
       log("$er");
-      throw "";
+      rethrow;
     }
   }
 }
