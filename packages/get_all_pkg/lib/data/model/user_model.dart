@@ -38,4 +38,23 @@ class UserModel {
       'phone': phone,
     };
   }
+
+  UserModel copyWith({
+    String? id,
+    String? name,
+    num? funds,
+    int? numberFollowers,
+    String? phone,
+    String? authId,
+    List<ChildModel>? childModelList,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      funds: funds ?? this.funds,
+      numberFollowers: numberFollowers ?? this.numberFollowers,
+      phone: phone ?? this.phone,
+      authId: authId ?? this.authId,
+    );
+  }
 }
