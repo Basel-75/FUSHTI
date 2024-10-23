@@ -27,6 +27,8 @@ class PlanCubit extends Cubit<PlanState> {
 
   ChildModel? childModelSelcted;
 
+  late PlanModel planModelSelcted;
+
   clickInChild({required ChildModel childModel}) {
     mealPlanItemLisUi.clear();
     planListUi = childModel.planList;
@@ -40,7 +42,8 @@ class PlanCubit extends Cubit<PlanState> {
     mealPlanItemLisUi.clear();
     log("${planModel.name}");
     log("${mealPlanItemLisUi.length}");
-    // mealPlanItemLisUi. = planModel.mealPlanItemLis;
+
+    planModelSelcted = planModel;
     mealPlanItemLisUi.addAll(planModel.mealPlanItemLis);
 
     log("after");
@@ -61,6 +64,7 @@ class PlanCubit extends Cubit<PlanState> {
       for (int i = 0; i < mealPlanItemLisUi.length; i++) {
         if (mealPlanItemLisUi[i].id == mealPlanItemModel.id) {
           mealPlanItemLisUi.removeAt(i);
+          planModelSelcted.mealPlanItemLis.removeAt(i);
           emit(DelItemState());
           return;
         }
@@ -95,7 +99,6 @@ class PlanCubit extends Cubit<PlanState> {
           .addPlan(childId: childModelSelcted!.id, name: planNameCOn.text);
 
       childModelSelcted!.planList.add(PlanModel.fromJson(res));
-
 
       emit(NoLodingState());
       emit(PlanChnageState());

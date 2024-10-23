@@ -43,6 +43,9 @@ class ProductCubit extends Cubit<ProductState> {
       emit(EorrState(msg: "chose plan"));
       return;
     }
+
+
+   
     try {
       await SuperMain().addPlanItem(
           name: planItemCOn.text,
@@ -52,7 +55,7 @@ class ProductCubit extends Cubit<ProductState> {
       emit(DoneAddState());
     } catch (er) {
       log("$er");
-      emit(EorrState(msg: "thre was eorr"));
+      emit(EorrState(msg: er.toString()));
     }
   }
 }

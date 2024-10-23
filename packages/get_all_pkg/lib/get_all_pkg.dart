@@ -25,6 +25,10 @@ export 'package:add_to_cart_animation/add_to_cart_animation.dart';
 export 'package:quickalert/quickalert.dart';
 export 'package:glass_kit/glass_kit.dart';
 
+<<<<<<< HEAD
+export 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+=======
 showLoadingDialog({required BuildContext context}) {
   showDialog(
     barrierDismissible: false,
@@ -36,5 +40,6 @@ showLoadingDialog({required BuildContext context}) {
     ),
   );
 }
+>>>>>>> ba4409631bf0c6cdedbb6b069135a86d05b25138
 
 methhh() {}

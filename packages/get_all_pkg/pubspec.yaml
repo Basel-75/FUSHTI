@@ -33,6 +33,7 @@ dependencies:
   flashy_tab_bar2: ^0.0.10
   add_to_cart_animation: ^2.0.4
   quickalert: ^1.1.0
+  syncfusion_flutter_datepicker: ^27.1.55
 
 
 dev_dependencies:
