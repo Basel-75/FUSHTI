@@ -27,7 +27,7 @@ class PlanCubit extends Cubit<PlanState> {
 
   ChildModel? childModelSelcted;
 
-  late PlanModel planModelSelcted;
+  PlanModel? planModelSelcted;
 
   clickInChild({required ChildModel childModel}) {
     mealPlanItemLisUi.clear();
@@ -64,7 +64,7 @@ class PlanCubit extends Cubit<PlanState> {
       for (int i = 0; i < mealPlanItemLisUi.length; i++) {
         if (mealPlanItemLisUi[i].id == mealPlanItemModel.id) {
           mealPlanItemLisUi.removeAt(i);
-          planModelSelcted.mealPlanItemLis.removeAt(i);
+          planModelSelcted!.mealPlanItemLis.removeAt(i);
           emit(DelItemState());
           return;
         }
@@ -118,5 +118,17 @@ class PlanCubit extends Cubit<PlanState> {
     } else {
       return true;
     }
+  }
+
+  toCart() {
+    if (planModelSelcted == null) {
+      emit(EorrPlanState(msg: "chose plan"));
+      return;
+    } else if (planModelSelcted!.mealPlanItemLis.isEmpty) {
+      emit(EorrPlanState(msg: "your plan is emty"));
+      return;
+    }
+
+    emit(ToCartState());
   }
 }

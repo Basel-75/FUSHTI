@@ -21,3 +21,7 @@ final class EorrPlanState extends PlanState {
 
   EorrPlanState({required this.msg});
 }
+
+final class ToCartState extends PlanState{
+
+}
