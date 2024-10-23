@@ -54,7 +54,7 @@ mixin ChildMix {
       {required String name,
       required String userId,
       required List<String> allergy,
-      required String clas,
+      required String childClass,
       required String imgPath,
       required String schoolId,
       required double funds}) async {
@@ -64,7 +64,7 @@ mixin ChildMix {
         "user_id": userId,
         "funds": funds,
         "allergy": allergy,
-        "class": clas,
+        "class": childClass,
         "img_path": imgPath,
         "school_id": schoolId,
       });
@@ -79,24 +79,32 @@ mixin ChildMix {
 
   editChild(
       {required String name,
-      required String userId,
+      required String id,
       required List<String> allergy,
-      required String clas,
+      required String childClass,
       required String imgPath,
       required String schoolId,
       required double funds}) async {
     try {
       await SuperMain().supabase.from("followers").update({
         "name": name,
-        "user_id": userId,
+        "id": id,
         "funds": funds,
         "allergy": allergy,
-        "class": clas,
+        "class": childClass,
         "img_path": imgPath,
         "school_id": schoolId,
-      }).eq('id', userId);
+      }).eq('id', id);
     } catch (er) {
       log("$er");
+    }
+  }
+
+  deleteChild({required String id}) async {
+    try {
+      await SuperMain().supabase.from('followers').delete().eq('id', id);
+    } catch (e) {
+      log('$e');
     }
   }
 }

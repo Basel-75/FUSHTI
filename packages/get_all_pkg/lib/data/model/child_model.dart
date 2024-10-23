@@ -3,13 +3,13 @@ import 'package:get_all_pkg/data/model/school_model.dart';
 
 class ChildModel {
   final String id;
-  final String name;
+  String name;
   final String userId;
-  final String schoolId;
-  final String imgPath;
-  final String studentClass;
-  final List<String> allergy;
-  final num funds;
+  String schoolId;
+  String imgPath;
+  String studentClass;
+  List<String> allergy;
+  num funds;
   late final SchoolModel schoolModel;
   final List<PlanModel> planList = [];
 
