@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-class ProductWidgets extends StatelessWidget {
-  const ProductWidgets({
+class ProductCards extends StatelessWidget {
+  const ProductCards({
     super.key,
-    // required this.products,
-    // required this.product,
     this.onTap,
     this.editButton,
     this.deleteButton,
@@ -17,9 +15,6 @@ class ProductWidgets extends StatelessWidget {
     required this.sizeBorder,
     required this.borderColor,
   });
-
-  // final List<Map<String, dynamic>> products;
-  // final Map<String, dynamic> product;
   final void Function()? onTap;
   final void Function()? editButton;
   final void Function()? deleteButton;
