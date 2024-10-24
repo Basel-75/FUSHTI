@@ -45,19 +45,19 @@ class PlanCartScreen extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
-              SfDateRangePicker(
-                view: DateRangePickerView.month,
-                selectionMode: DateRangePickerSelectionMode.range,
-                showNavigationArrow: true,
-                enableMultiView: false, // Single view in horizontal row
+              // SfDateRangePicker(
+              //   view: DateRangePickerView.month,
+              //   selectionMode: DateRangePickerSelectionMode.range,
+              //   showNavigationArrow: true,
+              //   enableMultiView: false, // Single view in horizontal row
 
-                selectionShape: DateRangePickerSelectionShape.rectangle,
-                headerStyle: DateRangePickerHeaderStyle(
-                  textAlign: TextAlign.center, // Center header text
-                ),
-                navigationDirection: DateRangePickerNavigationDirection
-                    .horizontal, // Horizontal scro
-              ),
+              //   selectionShape: DateRangePickerSelectionShape.rectangle,
+              //   headerStyle: DateRangePickerHeaderStyle(
+              //     textAlign: TextAlign.center, // Center header text
+              //   ),
+              //   navigationDirection: DateRangePickerNavigationDirection
+              //       .horizontal, // Horizontal scro
+              // ),
               SizedBox(
                 height: 4.h,
               ),

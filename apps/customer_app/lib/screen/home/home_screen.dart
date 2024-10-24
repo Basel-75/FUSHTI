@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'الأفضل مبيعا',
                           style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.bold),
+                              fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
                         BlocBuilder<HomeCubit, HomeState>(
                           builder: (context, state) {
@@ -108,11 +108,11 @@ class HomeScreen extends StatelessWidget {
                                             .push(MaterialPageRoute(
                                           builder: (context) {
                                             return ProductScreen(
-
-                                              childModel:  cubit.currentChild,
-                                              foodMenuModel:  cubit.currentChild.schoolModel
-                                          .foodMenuModelList[index],
-                                           
+                                              childModel: cubit.currentChild,
+                                              foodMenuModel: cubit
+                                                  .currentChild
+                                                  .schoolModel
+                                                  .foodMenuModelList[index],
                                             );
                                           },
                                         ));
