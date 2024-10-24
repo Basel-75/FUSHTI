@@ -25,7 +25,11 @@ export 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 export 'package:add_to_cart_animation/add_to_cart_animation.dart';
 export 'package:quickalert/quickalert.dart';
 export 'package:glass_kit/glass_kit.dart';
+
 export 'package:pdf/pdf.dart';
+
+export 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
+
 
 showLoadingDialog({required BuildContext context}) {
   showDialog(

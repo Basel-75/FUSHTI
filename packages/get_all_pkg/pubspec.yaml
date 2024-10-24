@@ -37,6 +37,7 @@ dependencies:
   qr_flutter: ^4.1.0
   barcode_scan2: ^4.3.3
   pdf: ^3.11.1
+  flutter_advanced_switch: ^3.1.0
 
 
 dev_dependencies:
