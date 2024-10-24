@@ -30,7 +30,6 @@ export 'package:pdf/pdf.dart';
 
 export 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 
-
 showLoadingDialog({required BuildContext context}) {
   showDialog(
     barrierDismissible: false,
