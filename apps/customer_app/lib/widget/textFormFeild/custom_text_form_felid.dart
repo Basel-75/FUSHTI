@@ -30,7 +30,7 @@ class CustomTextFormFelid extends StatelessWidget {
         children: [
           Text(
             label,
-            style:  TextStyle(
+            style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: Color(0xff103C37)),
@@ -40,7 +40,7 @@ class CustomTextFormFelid extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: backgroundColor ?? const Color(0xFFf5f6e1),
+              color: backgroundColor ?? Colors.white,
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
