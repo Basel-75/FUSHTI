@@ -34,6 +34,9 @@ dependencies:
   add_to_cart_animation: ^2.0.4
   quickalert: ^1.1.0
   syncfusion_flutter_datepicker: ^27.1.55
+  qr_flutter: ^4.1.0
+  barcode_scan2: ^4.3.3
+  pdf: ^3.11.1
 
 
 dev_dependencies:

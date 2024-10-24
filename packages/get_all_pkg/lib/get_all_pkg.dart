@@ -13,22 +13,20 @@ export 'package:google_fonts/google_fonts.dart';
 export 'package:icons_plus/icons_plus.dart';
 export 'package:supabase_flutter/supabase_flutter.dart';
 export 'package:pinput/pinput.dart';
+export 'package:barcode_scan2/barcode_scan2.dart';
 export 'package:animated_custom_dropdown/custom_dropdown.dart';
 export 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 export 'package:dotted_line/dotted_line.dart';
 export 'package:easy_date_timeline/easy_date_timeline.dart';
-
+export 'package:qr_flutter/qr_flutter.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:loading_animation_widget/loading_animation_widget.dart';
 export 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 export 'package:add_to_cart_animation/add_to_cart_animation.dart';
 export 'package:quickalert/quickalert.dart';
 export 'package:glass_kit/glass_kit.dart';
+export 'package:pdf/pdf.dart';
 
-<<<<<<< HEAD
-export 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
-=======
 showLoadingDialog({required BuildContext context}) {
   showDialog(
     barrierDismissible: false,
@@ -40,6 +38,5 @@ showLoadingDialog({required BuildContext context}) {
     ),
   );
 }
->>>>>>> ba4409631bf0c6cdedbb6b069135a86d05b25138
 
 methhh() {}
