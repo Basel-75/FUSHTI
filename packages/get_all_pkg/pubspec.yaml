@@ -33,7 +33,7 @@ dependencies:
   flashy_tab_bar2: ^0.0.10
   add_to_cart_animation: ^2.0.4
   quickalert: ^1.1.0
-
+  flutter_advanced_switch: ^3.1.0
 
 dev_dependencies:
   flutter_test:
