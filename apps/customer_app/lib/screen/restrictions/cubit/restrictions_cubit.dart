@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/restriction_food_model.dart';
@@ -16,7 +17,9 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
   RestrictionsCubit() : super(RestrictionsInitial());
 
   getRestrictionFoodList({required String childId}) {
-    restrictionsFood.forEach((element) => log('${element.toJson()}'),);
+    restrictionsFood.forEach(
+      (element) => log('${element.toJson()}'),
+    );
     try {
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
@@ -27,13 +30,30 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
               (element) => element.id == food.menuItemId,
             ));
           }
-          foodMenuModelList = element.schoolModel.foodMenuModelList;
+          
         }
       }
     } catch (e) {
       log('$e');
     }
   }
+
+  deleteRestrictionFood({required String productId}) async {
+    try {
+      emit(LoadingState());
+      //Delete in DB
+      await SuperMain().deleteRestrictionFood(productId: productId);
+      //Delete Locale
+      restrictionsFood.removeWhere(
+        (element) => element.menuItemId == productId,
+      );
+      emit(SuccessDeleteState(msg: 'تم ازالة الوجبة من الوجبات المحظورة بنجاح'));
+    } catch (e) {
+      log('$e');
+      emit(ErrorState(msg: 'حدث خطأ ما يرجى اعادة المحاولة لاحقا'));
+    }
+  }
+
   @override
   Future<void> close() {
     // restrictionsFood.clear();

@@ -16,59 +16,108 @@ class RestrictionsScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final cubit = context.read<RestrictionsCubit>();
         cubit.getRestrictionFoodList(childId: childId);
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                'الوجبات المحظورة',
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+        return BlocListener<RestrictionsCubit, RestrictionsState>(
+          listener: (context, state) {
+            if (state is LoadingState) {
+              showLoadingDialog(context: context);
+            }
+            if (state is SuccessDeleteState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.msg),
+                backgroundColor: Colors.green,
+              ));
+            }
+            if (state is ErrorState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.msg),
+                backgroundColor: Colors.red,
+              ));
+            }
+          },
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  'الوجبات المحظورة',
+                  style:
+                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                ),
+                centerTitle: true,
+                actions: [
+                  Image.asset('assets/image/homeicon.png'),
+                  SizedBox(
+                    width: 2.h,
+                  )
+                ],
+                flexibleSpace: Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40),
+                      )),
+                ),
               ),
-              centerTitle: true,
-              actions: [
-                Image.asset('assets/image/homeicon.png'),
-                SizedBox(
-                  width: 2.h,
-                )
-              ],
-              flexibleSpace: Container(
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
+              body: Column(
+                children: [
+                  SizedBox(
+                    height: 77.h,
+                    child: SingleChildScrollView(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 6.h),
+                      child: BlocBuilder<RestrictionsCubit, RestrictionsState>(
+                        builder: (context, state) {
+                          return Column(
+                              //'assets/image/boxImage.png'
+                              children: List.generate(
+                            cubit.restrictionsFood.length,
+                            (index) => RestrictionCard(
+                              productName:
+                                  cubit.foodMenuModelList[index].foodName,
+                              cal:
+                                  cubit.foodMenuModelList[index].cal.toString(),
+                              imagePath: 'assets/image/boxImage.png',
+                              price: cubit.foodMenuModelList[index].price
+                                  .toString(),
+                              onDelete: () {
+                                QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.confirm,
+                                    text: 'هل انت متأكد',
+                                    confirmBtnText: 'نعم',
+                                    cancelBtnText: 'لا',
+                                    confirmBtnColor: Colors.green,
+                                    onCancelBtnTap: () =>
+                                        Navigator.pop(context),
+                                    onConfirmBtnTap: () {
+                                      cubit.deleteRestrictionFood(
+                                          productId: '${cubit.restrictionsFood[index].menuItemId}');
+                                      cubit.getRestrictionFoodList(
+                                          childId: childId);
+                                    });
+                              },
+                            ),
+                          ));
+                        },
+                      ),
                     ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(40),
-                      bottomRight: Radius.circular(40),
-                    )),
-              ),
-            ),
-            body: Column(
-              children: [
-                SizedBox(
-                  height: 77.h,
-                  child: SingleChildScrollView(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 4.w, vertical: 6.h),
-                    child: Column(
-                        //'assets/image/boxImage.png'
-                        children: List.generate(
-                      cubit.restrictionsFood.length,
-                      (index) => RestrictionCard(
-                          productName: cubit.foodMenuModelList[index].foodName,
-                          cal: cubit.foodMenuModelList[index].cal.toString(),
-                          imagePath: 'assets/image/boxImage.png',
-                          price: cubit.foodMenuModelList[index].price.toString()),
-                    )),
                   ),
-                ),
-                const Spacer(),
-                CustomButton(onPressed: () {}, title: 'تأكيد'),
-                SizedBox(
-                  height: 5.h,
-                ),
-              ],
+                  const Spacer(),
+                  CustomButton(onPressed: () {}, title: 'تأكيد'),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                ],
+              ),
             ),
           ),
         );

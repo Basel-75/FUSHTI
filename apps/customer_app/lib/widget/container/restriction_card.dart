@@ -4,12 +4,14 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class RestrictionCard extends StatelessWidget {
   final String productName, cal, imagePath, price;
+  final void Function()? onDelete;
   const RestrictionCard({
     super.key,
     required this.productName,
     required this.cal,
     required this.imagePath,
     required this.price,
+    this.onDelete,
   });
 
   @override
@@ -53,12 +55,16 @@ class RestrictionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: onDelete,
                   icon: const Icon(
                     Icons.delete_outline,
                     color: Colors.red,
                   )),
-              ProductSmallContainer(isForCal: false, amount: price,isCallWithText: false,)
+              ProductSmallContainer(
+                isForCal: false,
+                amount: price,
+                isCallWithText: false,
+              )
             ],
           ),
         ],

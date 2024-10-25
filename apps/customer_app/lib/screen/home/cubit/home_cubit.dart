@@ -39,14 +39,13 @@ class HomeCubit extends Cubit<HomeState> {
       {required String childId, required String productId}) async {
     //update in DB
     await SuperMain()
-        .supabase
-        .from('food_restriction')
-        .insert({'child_id': childId, 'menu_item_id': productId});
+        .addToRestrictionsFood(childId: childId, productId: productId,);
+
     //update locale
     for (var element in appModel.userModel!.childModelList) {
       if (element.id == childId) {
         element.restrictionFood
-            .add(RestrictionFoodModel(childId: childId, menuItemId: productId));
+            .add(RestrictionFoodModel(childId: childId, menuItemId: productId,));
       }
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:database_meth/database/super_main.dart';
 import 'package:database_meth/database_meth.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -10,10 +12,11 @@ Future<void> setup() async {
 
   await initPkg();
   await SuperMain().getSchool();
-
+  
 // get all child for user and same time get there scholl food menu
   if (getIt.get<AppModel>().userModel != null) {
     await SuperMain().getChilds();
-    await SuperMain().getChildernPlan();
+     await SuperMain().getChildernPlan();
+     await SuperMain().getRestrictionFood();
   }
 }

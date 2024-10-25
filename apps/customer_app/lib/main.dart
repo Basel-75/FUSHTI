@@ -47,7 +47,7 @@ void main() async {
   } catch (e) {
     log('No restrictionFood');
   }
-  ;
+  
 
   log('===========================');
   runApp(const MainApp());
