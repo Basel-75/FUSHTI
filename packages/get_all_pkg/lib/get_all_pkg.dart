@@ -30,6 +30,7 @@ export 'package:syncfusion_flutter_datepicker/datepicker.dart';
 export 'package:table_calendar/table_calendar.dart';
 
 // export 'package:intl/intl.dart';
+export 'package:intl/intl.dart' hide TextDirection;
 
 showLoadingDialog({required BuildContext context}) {
   showDialog(

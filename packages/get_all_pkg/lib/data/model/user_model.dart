@@ -3,7 +3,7 @@ import 'package:get_all_pkg/data/model/child_model.dart';
 class UserModel {
   final String id;
   final String name;
-  final num funds;
+   num funds;
   final int numberFollowers;
   final String phone;
   final String authId;

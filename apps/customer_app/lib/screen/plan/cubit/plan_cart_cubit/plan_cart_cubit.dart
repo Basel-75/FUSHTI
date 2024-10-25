@@ -2,7 +2,11 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:customer_app/screen/product/cubit/product_cubit.dart';
+import 'package:database_meth/database/super_main.dart';
+import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
+import 'package:get_all_pkg/data/model/plan_model.dart';
+import 'package:get_all_pkg/data/setup.dart';
 import 'package:meta/meta.dart';
 
 part 'plan_cart_state.dart';
@@ -10,11 +14,15 @@ part 'plan_cart_state.dart';
 class PlanCartCubit extends Cubit<PlanCartState> {
   PlanCartCubit() : super(PlanCartInitial());
 
+  AppModel appModel = getIt.get<AppModel>();
+
   DateTime focusedDay = DateTime.now();
   DateTime? startDate;
   DateTime? endDate;
 
   int dayNume = 0;
+
+  double totalPrice = 0;
 
 // can used when you call superbase with  holidays
   List<DateTime> holidays = [
@@ -50,7 +58,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
     startDate = start;
     endDate = end;
 
-    calculateBusinessDays();
+    calculateDays();
 
     emit(DateChnageState());
   }
@@ -59,7 +67,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
     emit(DateChnageState());
   }
 
-  calculateBusinessDays() {
+  calculateDays() {
     dayNume = 0;
 
     if (startDate != null && endDate != null) {
@@ -85,11 +93,46 @@ class PlanCartCubit extends Cubit<PlanCartState> {
     log("This is how many business days: $dayNume");
   }
 
-  payPlan() {
+  String calculateCal({required PlanModel planModel}) {
+    int totalCal = 0;
+
+    for (var val in planModel.mealPlanItemLis) {
+      totalCal += val.foodMenuModel.cal * val.quantity;
+    }
+
+    return totalCal.toString();
+  }
+
+  String calculateTotal({required PlanModel planModel}) {
+    totalPrice = 0;
+
+    for (var val in planModel.mealPlanItemLis) {
+      totalPrice += val.foodMenuModel.price * val.quantity;
+    }
+
+    return totalPrice.toString();
+  }
+
+  payPlan({required PlanModel planModel}) async {
     try {
+      log("user funds :::: ${appModel.userModel!.funds}");
       if (dayNume == 0) {
         emit(ErorrState(msg: "chose date"));
+        return;
       }
+
+      if (appModel.userModel!.funds < totalPrice) {
+        emit(ErorrState(msg: "you dont have money"));
+      }
+
+      await SuperMain().payForPlan(
+          planModel: planModel,
+          stratDate: startDate!,
+          endDate: endDate!,
+          totalPrice: totalPrice);
+
+      log("user funds :::: ${appModel.userModel!.funds}");
+      log("very good plan pay");
     } catch (er) {
       log("$er");
       emit(ErorrState(msg: "there was eorr"));

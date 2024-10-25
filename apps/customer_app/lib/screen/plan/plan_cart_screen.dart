@@ -12,6 +12,7 @@ import 'package:customer_app/widget/row/plan_date_row.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
+import 'package:get_all_pkg/helper/format_date.dart';
 
 class PlanCartScreen extends StatelessWidget {
   final PlanModel planModel;
@@ -182,26 +183,34 @@ class PlanCartScreen extends StatelessWidget {
                                 height: 1.h,
                               ),
                               //coulmn for order
-                              const Column(
-                                children: [
-                                  ItemDetails(
-                                    productName: 'بوكس السعادة',
-                                    price: '12',
-                                    quantity: '2',
-                                  ),
-                                  ItemDetails(
-                                    productName: 'بوكس السعادة',
-                                    price: '12',
-                                    quantity: '2',
-                                  ),
-                                ],
+                              BlocBuilder<PlanCartCubit, PlanCartState>(
+                                builder: (context, state) {
+                                  return Column(
+                                      children: planModel.mealPlanItemLis.map(
+                                    (e) {
+                                      return ItemDetails(
+                                        productName: e.foodMenuModel.foodName,
+                                        price:
+                                            (e.foodMenuModel.price * e.quantity)
+                                                .toString(),
+                                        quantity: e.quantity.toString(),
+                                      );
+                                    },
+                                  ).toList());
+                                },
                               ),
                               SizedBox(
                                 height: 2.h,
                               ),
-                              PlanDateRow(
-                                startDate: '2024/10/5',
-                                endDate: '2024/10/9',
+                              BlocBuilder<PlanCartCubit, PlanCartState>(
+                                builder: (context, state) {
+                                  return PlanDateRow(
+                                    startDate: formatDate(cubit.startDate) ??
+                                        "لم يحدد",
+                                    endDate:
+                                        formatDate(cubit.endDate) ?? "لم يحدد",
+                                  );
+                                },
                               ),
                               SizedBox(
                                 height: 2.h,
@@ -213,17 +222,26 @@ class PlanCartScreen extends StatelessWidget {
                                     style: TextStyle(fontSize: 13.sp),
                                   ),
                                   Spacer(),
-                                  Text(
-                                    '4 أيام',
-                                    style: TextStyle(fontSize: 13.sp),
+                                  BlocBuilder<PlanCartCubit, PlanCartState>(
+                                    builder: (context, state) {
+                                      return Text(
+                                        '${cubit.dayNume} أيام',
+                                        style: TextStyle(fontSize: 13.sp),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
                               SizedBox(
                                 height: 2.h,
                               ),
-                              CalRow(
-                                totalCal: '120',
+                              BlocBuilder<PlanCartCubit, PlanCartState>(
+                                builder: (context, state) {
+                                  return CalRow(
+                                    totalCal: cubit.calculateCal(
+                                        planModel: planModel),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -231,10 +249,14 @@ class PlanCartScreen extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    PayPlanBottom(
-                      totalPrice: '24',
-                      onPressed: () {
-                        cubit.payPlan();
+                    BlocBuilder<PlanCartCubit, PlanCartState>(
+                      builder: (context, state) {
+                        return PayPlanBottom(
+                          totalPrice: cubit.calculateTotal(planModel: planModel),
+                          onPressed: () {
+                            cubit.payPlan(planModel: planModel);
+                          },
+                        );
                       },
                     ),
                   ],
