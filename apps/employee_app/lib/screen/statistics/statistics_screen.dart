@@ -1,5 +1,6 @@
 import 'package:employee_app/screen/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
+import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class StatisticsScreen extends StatelessWidget {
                     ),
                     statisticsNameTxtSize: 16.sp,
                     statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black26,
+                    txtColor: Colors.black,
                     containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
                 ContainerStatistics(
                     containerHeight: 11.h,
@@ -87,7 +88,7 @@ class StatisticsScreen extends StatelessWidget {
                     statisticsIcon: const Icon(Icons.monetization_on),
                     statisticsNameTxtSize: 16.sp,
                     statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black26,
+                    txtColor: Colors.black,
                     containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
               ],
             ),
@@ -105,7 +106,7 @@ class StatisticsScreen extends StatelessWidget {
                     statisticsIcon: const Icon(Icons.monetization_on),
                     statisticsNameTxtSize: 16.sp,
                     statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black26,
+                    txtColor: Colors.black,
                     containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
                 ContainerStatistics(
                     containerHeight: 11.h,
@@ -115,10 +116,36 @@ class StatisticsScreen extends StatelessWidget {
                     statisticsIcon: const Icon(Icons.monetization_on),
                     statisticsNameTxtSize: 16.sp,
                     statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black26,
+                    txtColor: Colors.black,
                     containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
               ],
             ),
+            SizedBox(
+              height: 1.5.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('الاحصائيات',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StorageScreen(),
+                            ));
+                      },
+                      child: const Text(
+                        'إدارة المخزون',
+                        style: TextStyle(fontSize: 16, color: Colors.black38),
+                      ))
+                ],
+              ),
+            )
           ],
         ),
       ),

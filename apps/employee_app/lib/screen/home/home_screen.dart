@@ -78,7 +78,7 @@ class HomeScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xffFDCB6A),
-          tooltip: 'Increment',
+          tooltip: 'add Saving',
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
               return const AddProductScreen();
@@ -96,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                     return const FeedBackScreen();
                   }));
                 },
-                icon: const Icon(Icons.chat_outlined)),
+                icon: const Icon(Iconsax.message_2_bold)),
             flexibleSpace: EmployeeHeader(
               isTitle: false,
               title: 'اضافة منتج',
