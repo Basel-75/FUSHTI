@@ -117,6 +117,15 @@ class HomeScreen extends StatelessWidget {
                                           },
                                         ));
                                       },
+                                      onRestriction: () {
+                                        cubit.addToRestrictionsFood(
+                                            childId: cubit.currentChild.id,
+                                            productId: cubit
+                                                .currentChild
+                                                .schoolModel
+                                                .foodMenuModelList[index]
+                                                .id);
+                                      },
                                       cal: cubit.currentChild.schoolModel
                                           .foodMenuModelList[index].cal,
                                       imagePath: 'assets/image/lez.png',
