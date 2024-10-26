@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:get_all_pkg/data/model/cart_item.dart';
+import 'package:get_all_pkg/data/model/emp_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/model/user_model.dart';
 
@@ -13,6 +14,8 @@ class AppModel {
     authId: "a2e2bb17-c48a-4ff2-bec3-072cb2bbb0f0",
     phone: "0544111111",
   );
+
+  EmpModel? empModel;
 
   List<SchoolModel> schoolModelList = [];
   List<String> alergy = ['الفول السوداني', "الذرة"];
