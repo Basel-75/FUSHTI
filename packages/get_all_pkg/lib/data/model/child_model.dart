@@ -1,3 +1,4 @@
+import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 
@@ -11,6 +12,7 @@ class ChildModel {
   List<String> allergy;
   num funds;
   late final SchoolModel schoolModel;
+  List<CartItem> cartList = [];
   final List<PlanModel> planList = [];
 
   ChildModel({

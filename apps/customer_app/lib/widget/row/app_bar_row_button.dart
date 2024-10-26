@@ -1,11 +1,14 @@
+import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class AppBarRowButton extends StatelessWidget {
   final String walletAmount;
+  final ChildModel childModel;
   const AppBarRowButton({
     super.key,
-    required this.walletAmount,
+    required this.walletAmount, required this.childModel,
   });
 
   @override
@@ -13,7 +16,13 @@ class AppBarRowButton extends StatelessWidget {
     return Row(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) {
+                return  OrderCartScreen(childModel:childModel ,);
+              },
+            ));
+          },
           child: Container(
             width: 43,
             height: 44,

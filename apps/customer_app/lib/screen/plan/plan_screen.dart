@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
-import 'package:customer_app/screen/plan/cubit/plan_cubit.dart';
+import 'package:customer_app/screen/plan/cubit/plan_cubit/plan_cubit.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/plan_item_container.dart';
@@ -53,6 +53,14 @@ class PlanScreen extends StatelessWidget {
 
               if (state is NoLodingState) {
                 Navigator.pop(context);
+              }
+
+              if (state is ToCartState) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return PlanCartScreen(planModel: cubit.planModelSelcted!,);
+                  },
+                ));
               }
             },
             child: Scaffold(
@@ -278,12 +286,7 @@ class PlanScreen extends StatelessWidget {
                           Center(
                               child: CustomButton(
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return PlanCartScreen();
-                                      },
-                                    ));
+                                    cubit.toCart();
                                   },
                                   title: 'الدفع'))
                         ],

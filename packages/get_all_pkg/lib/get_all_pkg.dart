@@ -26,9 +26,19 @@ export 'package:add_to_cart_animation/add_to_cart_animation.dart';
 export 'package:quickalert/quickalert.dart';
 export 'package:glass_kit/glass_kit.dart';
 
+
+export 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+export 'package:table_calendar/table_calendar.dart';
+
+// export 'package:intl/intl.dart';
+export 'package:intl/intl.dart' hide TextDirection;
+
+
 export 'package:pdf/pdf.dart';
 
 export 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
+
 
 showLoadingDialog({required BuildContext context}) {
   showDialog(

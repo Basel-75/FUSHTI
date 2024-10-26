@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
                   BlocBuilder<HomeCubit, HomeState>(
                     builder: (context, state) {
                       return ScreenHeader(
+                        childModel: cubit.currentChild,
                         childSchollName: cubit.currentChild.schoolModel.name,
                         funds: cubit.appModel.userModel!.funds.toString(),
                         inHomeScreen: true,
