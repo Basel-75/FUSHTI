@@ -6,8 +6,7 @@ class HomeCard extends StatelessWidget {
   final double price;
   final int cal;
   final Function()? onTap;
-
-
+  final Function()? onRestriction;
   const HomeCard(
       {super.key,
       required this.imagePath,
@@ -15,8 +14,8 @@ class HomeCard extends StatelessWidget {
       required this.price,
       required this.cal,
       required this.rate,
-      this.onTap});
-
+      this.onTap,
+      this.onRestriction});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +34,7 @@ class HomeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              //! Send restriction logic here
-              onTap: () {},
+              onTap: onRestriction,
               child: Container(
                 margin: EdgeInsets.only(bottom: 1.h),
                 decoration: const BoxDecoration(
@@ -45,7 +43,6 @@ class HomeCard extends StatelessWidget {
                 child: const Icon(Icons.no_food_outlined, color: Colors.red),
               ),
             ),
-
 
             //!Change it later to image network
 
@@ -65,18 +62,15 @@ class HomeCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-
                   //!Send add logic here
 
                   onTap: () {},
                   child: Container(
                     width: 8.w,
                     decoration: BoxDecoration(
-
                         borderRadius: BorderRadius.circular(6),
                         boxShadow: kElevationToShadow[2],
                         color: const Color(0xffBA9773)),
-
                     child: const Icon(
                       Icons.add,
                       color: Colors.white,
@@ -94,20 +88,16 @@ class HomeCard extends StatelessWidget {
               children: [
                 Text(
                   '$price ريال',
-
                   style:
                       TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
-
                 ),
                 const Spacer(),
                 Text(
                   '$rate/5',
                   style: TextStyle(
-
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xffFFE500)),
-
                 ),
                 const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500)),
               ],

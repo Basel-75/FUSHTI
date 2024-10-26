@@ -2,6 +2,7 @@ import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
+import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
 import 'package:customer_app/widget/container/info_container_with_button.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
@@ -169,7 +170,13 @@ class FollowersProfileScreen extends StatelessWidget {
                         child: InfoContainerWithButton(
                           title: 'الوجبات المحظورة',
                           amount: '6',
-                          onPressedInfo: () {},
+                          onPressedInfo: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RestrictionsScreen(
+                                  childId: childInfo!.id,
+                                ),
+                              )),
                         ),
                       ),
                       Positioned(

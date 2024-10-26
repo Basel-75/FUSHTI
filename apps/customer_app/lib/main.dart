@@ -38,13 +38,19 @@ void main() async {
     log('${element.toJson()}');
   }
 
-   log('===========================');
-   log('===========================');
-   log('===========================');
-   log('===========================');
-   log('===========================');
+  log('======================\nrestrictionFood : \n');
+  try {
+    for (var element in getIt.get<AppModel>().userModel!.childModelList) {
+      for (var food in element.restrictionFood) {
+        log('${food.toJson()}');
+      }
+    }
+  } catch (e) {
+    log('No restrictionFood');
+  }
+  
 
-   
+  log('===========================');
 
   runApp(const MainApp());
 }
