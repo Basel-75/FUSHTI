@@ -117,18 +117,34 @@ class HomeScreen extends StatelessWidget {
                                           },
                                         ));
                                       },
-                                      onRestriction: () {
-                                        cubit.addToRestrictionsFood(
-                                            childId: cubit.currentChild.id,
-                                            productId: cubit
-                                                .currentChild
-                                                .schoolModel
-                                                .foodMenuModelList[index]
-                                                .id);
-                                      },
+                                      onRestriction: !cubit
+                                              .checkRestrictionsFood(
+                                                  productId: cubit
+                                                      .currentChild
+                                                      .schoolModel
+                                                      .foodMenuModelList[index]
+                                                      .id)
+                                          ? () {
+                                              cubit.addToRestrictionsFood(
+                                                  childId:
+                                                      cubit.currentChild.id,
+                                                  productId: cubit
+                                                      .currentChild
+                                                      .schoolModel
+                                                      .foodMenuModelList[index]
+                                                      .id);
+                                            }
+                                          : null,
                                       cal: cubit.currentChild.schoolModel
                                           .foodMenuModelList[index].cal,
-                                      imagePath: 'assets/image/lez.png',
+                                      imagePath: cubit.checkRestrictionsFood(
+                                              productId: cubit
+                                                  .currentChild
+                                                  .schoolModel
+                                                  .foodMenuModelList[index]
+                                                  .id)
+                                          ? 'assets/image/no.png'
+                                          : 'assets/image/lez.png',
                                       itemName: cubit.currentChild.schoolModel
                                           .foodMenuModelList[index].foodName,
                                       price: cubit
