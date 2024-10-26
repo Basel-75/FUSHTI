@@ -24,14 +24,14 @@ class ProductCubit extends Cubit<ProductState> {
 
   addToCart(
       {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {
-    for (var val in appModel.cartList) {
+    for (var val in childModel.cartList) {
       if (val.foodMenuModel.id == foodMenuModel.id) {
         emit(CartThereState());
         return;
       }
     }
 
-    appModel.cartList.add(
+        childModel.cartList.add(
         CartItem(childModel: childModel, foodMenuModel: foodMenuModel, que: 1));
 
     emit(DoneAddState());

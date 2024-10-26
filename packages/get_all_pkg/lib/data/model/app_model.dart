@@ -16,7 +16,7 @@ class AppModel {
   List<SchoolModel> schoolModelList = [];
   List<String> alergy = ['الفول السوداني', "الذرة"];
 
-  List<CartItem> cartList = [];
+  // List<CartItem> cartList = [];
 
   saveUser(UserModel newUser) {
     userModel = newUser;

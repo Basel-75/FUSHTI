@@ -123,6 +123,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
 
       if (appModel.userModel!.funds < totalPrice) {
         emit(ErorrState(msg: "you dont have money"));
+        return;
       }
 
       await SuperMain().payForPlan(
