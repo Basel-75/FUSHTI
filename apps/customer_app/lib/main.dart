@@ -37,6 +37,7 @@ void main() async {
   for (var element in getIt.get<AppModel>().userModel!.childModelList) {
     log('${element.toJson()}');
   }
+
   log('======================\nrestrictionFood : \n');
   try {
     for (var element in getIt.get<AppModel>().userModel!.childModelList) {
@@ -50,6 +51,7 @@ void main() async {
   
 
   log('===========================');
+
   runApp(const MainApp());
 }
 

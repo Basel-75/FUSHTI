@@ -9,6 +9,43 @@ import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin MealPlanMix {
+  payForPlan(
+      {required PlanModel planModel,
+      required DateTime stratDate,
+      required DateTime endDate,
+      required double totalPrice}) async {
+    try {
+      AppModel appModel = getIt.get<AppModel>();
+      await SuperMain().supabase.rpc("decrement_funds",
+          params: {"user_id": appModel.userModel!.id, "amount": totalPrice});
+
+      appModel.userModel!.funds -= totalPrice;
+
+      int totalMeals = 0;
+      for (var val in planModel.mealPlanItemLis) {
+        totalMeals += val.quantity;
+      }
+      final planRes = await SuperMain().supabase.from("meal_plans").insert({
+        "child_id": planModel.childId,
+        "start_date": stratDate.toIso8601String(),
+        "end_date": endDate.toIso8601String(),
+        "total_meals": totalMeals,
+        "status": "active",
+      }).select();
+
+      for (var val in planModel.mealPlanItemLis) {
+        final mealRes =
+            await SuperMain().supabase.from("meal_plan_items").insert({
+          "meal_plan_id": planRes[0]["id"],
+          "menu_item_id": val.menuItemId,
+          "quantity": val.quantity
+        }).select();
+      }
+    } catch (er) {
+      log("$er");
+    }
+  }
+
   getChildernPlan() async {
     try {
       AppModel appModel = getIt.get<AppModel>();

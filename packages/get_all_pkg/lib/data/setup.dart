@@ -12,7 +12,11 @@ Future<void> setup() async {
 
   await initPkg();
   await SuperMain().getSchool();
-  
+
+
+  await SuperMain().getUserTempData();
+
+
 // get all child for user and same time get there scholl food menu
   if (getIt.get<AppModel>().userModel != null) {
     await SuperMain().getChilds();
