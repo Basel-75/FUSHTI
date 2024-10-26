@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:get_all_pkg/get_all_pkg.dart';
+
+class CardStorage extends StatelessWidget {
+  const CardStorage({
+    super.key,
+    required this.name,
+    required this.quantity,
+    required this.image,
+    this.onTap,
+    this.controller,
+    this.onChanged,
+    required this.activeText,
+    required this.inactiveText,
+    required this.sizeSwitch,
+  });
+
+  final String name;
+  final String quantity;
+  final String image;
+  final void Function()? onTap;
+  final ValueNotifier<bool>? controller;
+  final void Function(dynamic)? onChanged;
+  final String activeText;
+  final String inactiveText;
+  final double sizeSwitch;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 1.h),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 5,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: ListTile(
+            leading: Image.asset(
+              image,
+            ),
+            title: Text(
+              name,
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            subtitle: Text(
+              'الكمية: $quantity',
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+            trailing: AdvancedSwitch(
+              controller: controller,
+              activeColor: Colors.green,
+              inactiveColor: const Color.fromARGB(255, 204, 108, 108),
+              activeChild: Text(activeText),
+              inactiveChild: Text(inactiveText),
+              width: 20.w,
+              onChanged: onChanged,
+            )),
+      ),
+    );
+  }
+}

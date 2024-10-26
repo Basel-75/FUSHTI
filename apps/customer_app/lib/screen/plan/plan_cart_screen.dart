@@ -21,6 +21,7 @@ class PlanCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       create: (context) => PlanCartCubit(),
       child: Directionality(
@@ -56,6 +57,7 @@ class PlanCartScreen extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
+
                       ),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40),

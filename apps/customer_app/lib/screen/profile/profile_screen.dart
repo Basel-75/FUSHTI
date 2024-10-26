@@ -39,8 +39,9 @@ class ProfileScreen extends StatelessWidget {
               //showLoadingDialog(context: context);
             }
             if (state is ProfileUpdatedState) {
+              log("iam lis");
               bloc.add(GetUserInfoEvent());
-              Navigator.pop(context);
+              // Navigator.pop(context);
             }
           },
           child: Directionality(
@@ -113,64 +114,65 @@ class ProfileScreen extends StatelessWidget {
                                   barrierDismissible: false,
                                   context: context,
                                   builder: (context) => Dialog(
-                                      backgroundColor: Colors.transparent,
-                                      child: GlassContainer(
-                                        height: 80.w,
-                                        width: 40.h,
-                                        borderRadius: BorderRadius.circular(12),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.40),
-                                            Colors.white.withOpacity(0.10)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
+                                    backgroundColor: Colors.transparent,
+                                    child: GlassContainer(
+                                      height: 80.w,
+                                      width: 40.h,
+                                      borderRadius: BorderRadius.circular(12),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.white.withOpacity(0.40),
+                                          Colors.white.withOpacity(0.10)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderGradient: LinearGradient(
+                                        colors: [
+                                          Colors.white.withOpacity(0.60),
+                                          Colors.white.withOpacity(0.10),
+                                          Colors.lightBlueAccent
+                                              .withOpacity(0.05),
+                                          Colors.lightBlueAccent
+                                              .withOpacity(0.6)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        stops: [0.0, 0.39, 0.40, 1.0],
+                                      ),
+                                      blur: 15.0,
+                                      borderWidth: 1.5,
+                                      elevation: 3.0,
+                                      isFrostedGlass: true,
+                                      shadowColor:
+                                          Colors.black.withOpacity(0.20),
+                                      alignment: Alignment.center,
+                                      frostedOpacity: 0.12,
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.h),
+                                      child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: EditUserProfileForm(
+                                          usernameController:
+                                              bloc.usernameController,
+                                          phoneNumController:
+                                              bloc.phoneNumController,
+                                          onSubmit: () {
+                                            bloc.add(UpdateProfileEvent());
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'تم تحديث الملف الشخصي بنجاح'),
+                                                backgroundColor: Colors.green,
+                                              ),
+                                            );
+                                          },
                                         ),
-                                        borderGradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.60),
-                                            Colors.white.withOpacity(0.10),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.05),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.6)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          stops: [0.0, 0.39, 0.40, 1.0],
-                                        ),
-                                        blur: 15.0,
-                                        borderWidth: 1.5,
-                                        elevation: 3.0,
-                                        isFrostedGlass: true,
-                                        shadowColor:
-                                            Colors.black.withOpacity(0.20),
-                                        alignment: Alignment.center,
-                                        frostedOpacity: 0.12,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 2.h),
-                                        child: Directionality(
-                                          textDirection: TextDirection.rtl,
-                                          child: EditUserProfileForm(
-                                            usernameController:
-                                                bloc.usernameController,
-                                            phoneNumController:
-                                                bloc.phoneNumController,
-                                            onSubmit: () {
-                                              bloc.add(UpdateProfileEvent());
-                                              Navigator.pop(context);
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                      'تم تحديث الملف الشخصي بنجاح'),
-                                                  backgroundColor: Colors.green,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      )),
+                                      ),
+                                    ),
+                                  ),
                                 );
                               },
                               onDelete: () {},
@@ -245,7 +247,7 @@ class ProfileScreen extends StatelessWidget {
                                       'عن فسحتي',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14.sp),
+                                          fontSize: 15.sp),
                                     ),
                                     trailing: const Icon(
                                         Icons.arrow_forward_ios_rounded),

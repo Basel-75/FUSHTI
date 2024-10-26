@@ -6,16 +6,16 @@ class CustomSelect extends StatelessWidget {
   final List<DropDownItem>? items;
   final dynamic Function(DropDownItem?)? onChanged;
   final String label, hintText;
-  final String? Function(DropDownItem?)?  validator;
+  final String? Function(DropDownItem?)? validator;
   final Color? backgroundColor;
-  const CustomSelect({
-    super.key,
-    this.items,
-    this.onChanged,
-    required this.label,
-    required this.hintText,
-    this.validator, this.backgroundColor
-  });
+  const CustomSelect(
+      {super.key,
+      this.items,
+      this.onChanged,
+      required this.label,
+      required this.hintText,
+      this.validator,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,10 @@ class CustomSelect extends StatelessWidget {
               height: 0.5.h,
             ),
             CustomDropdown<DropDownItem>.search(
-              validator: validator ,
-              
+                validator: validator,
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
-                    closedFillColor:backgroundColor ?? Color(0xffF6F5DF),
+                    closedFillColor: backgroundColor ?? Colors.white,
                     closedBorder: Border.all(width: 0.8),
                     closedShadow: kElevationToShadow[2]),
                 hintText: hintText,
