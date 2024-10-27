@@ -16,7 +16,8 @@ void main() async {
   
 
   log("${getIt.get<AppModel>().empModel!.toJson()}");
-  log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
+  // log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
+  
   //debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }

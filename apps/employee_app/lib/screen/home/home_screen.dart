@@ -77,6 +77,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
+           heroTag: "homeFloat",
           backgroundColor: const Color(0xffFDCB6A),
           tooltip: 'add Saving',
           onPressed: () {

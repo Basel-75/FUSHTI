@@ -3,20 +3,21 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class CardStorage extends StatelessWidget {
   const CardStorage({
+    
     super.key,
     required this.name,
-    required this.quantity,
+    
     required this.image,
     this.onTap,
     this.controller,
     this.onChanged,
     required this.activeText,
     required this.inactiveText,
-    required this.sizeSwitch,
+    required this.sizeSwitch, required this.isAvailable,
   });
 
   final String name;
-  final String quantity;
+  
   final String image;
   final void Function()? onTap;
   final ValueNotifier<bool>? controller;
@@ -24,6 +25,7 @@ class CardStorage extends StatelessWidget {
   final String activeText;
   final String inactiveText;
   final double sizeSwitch;
+  final bool isAvailable;
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +55,15 @@ class CardStorage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            subtitle: Text(
-              'الكمية: $quantity',
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                color: Colors.grey,
-              ),
-            ),
+            // subtitle: Text(
+            //   'الكمية: $quantity',
+            //   textAlign: TextAlign.right,
+            //   style: const TextStyle(
+            //     color: Colors.grey,
+            //   ),
+            // ),
             trailing: AdvancedSwitch(
+              initialValue: isAvailable ,
               controller: controller,
               activeColor: Colors.green,
               inactiveColor: const Color.fromARGB(255, 204, 108, 108),

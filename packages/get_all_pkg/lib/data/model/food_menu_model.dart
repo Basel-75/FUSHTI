@@ -5,7 +5,7 @@ class FoodMenuModel {
   final String? description;
   final num price;
   final String category;
-  final bool available;
+   bool available;
   final int cal;
   final List<String>? allergy;
 
