@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:employee_app/screen/bottomnavigator/bottom_navigator_screen.dart';
+import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,8 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 void main() async {
   await empSetup();
 
-  
-
-  log("${getIt.get<AppModel>().empModel!.toJson()}");
-  log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
+  // log("${getIt.get<AppModel>().empModel!.toJson()}");
+  // log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
   //debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
                     elevatedButtonTheme: ElevatedButtonThemeData(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xffBA9773)))),
-                home: BottomNavigatorScreen(),
+                home: OrderScreen(),
               ),
             ));
   }
