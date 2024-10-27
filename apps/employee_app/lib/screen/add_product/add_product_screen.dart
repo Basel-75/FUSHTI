@@ -37,7 +37,18 @@ class AddProductScreen extends StatelessWidget {
         final cubit = context.read<AddCubit>();
         return BlocListener<AddCubit, AddState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is LoadingState) {
+              showLoadingDialog(context: context);
+            }
+            if (state is ErrorState) {
+              Navigator.pop(context);
+              showSnackBar(context: context, msg: state.msg, isError: true);
+            }
+            if (state is SussesState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              showSnackBar(context: context, msg: state.msg, isError: false);
+            }
           },
           child: Directionality(
             textDirection: TextDirection.rtl,
@@ -61,7 +72,7 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextFormFelid(
-                          controller: cubit.foodName,
+                          controller: cubit.foodNameController,
                           iconText: const Icon(Bootstrap.github),
                           keyboardType: TextInputType.text,
                           hasIcon: false,
@@ -96,7 +107,7 @@ class AddProductScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomTextFormFelid(
-                              controller: cubit.price,
+                              controller: cubit.priceController,
                               keyboardType: TextInputType.number,
                               iconText: const Icon(
                                 Bootstrap.currency_dollar,
@@ -122,7 +133,7 @@ class AddProductScreen extends StatelessWidget {
                                 return null;
                               }),
                           CustomTextFormFelid(
-                              controller: cubit.cal,
+                              controller: cubit.calController,
                               keyboardType: TextInputType.number,
                               iconText: const Icon(
                                 Bootstrap.fire,
@@ -260,35 +271,33 @@ class AddProductScreen extends StatelessWidget {
                       ),
                       CustomButton(
                           onPressed: () async {
-                            if (cubit.selectedImage != null) {
-                              // Create the product model
-                              final product = FoodMenuModel(
-                                id: '',
-                                schoolId: cubit.appModel.empModel!.schoolId,
-                                foodName: cubit.foodName.text,
-                                description: cubit.description.text,
-                                price: num.tryParse(cubit.price.text) ?? 0,
-                                category: 'none',
-                                available: true,
-                                cal: int.tryParse(cubit.cal.text) ?? 0,
-                                allergy: cubit.allergyList.map(
-                                  (e) {
-                                    return e.name;
-                                  },
-                                ).toList(),
-                                imageUrl: '',
-                              );
+                            if (formKey.currentState!.validate()) {
+                              if (cubit.selectedImage != null) {
+                                // Create the product model
+                                final product = FoodMenuModel(
+                                  id: '',
+                                  schoolId: cubit.appModel.empModel!.schoolId,
+                                  foodName: cubit.foodNameController.text,
+                                  description: cubit.descriptionController.text,
+                                  price: num.tryParse(cubit.priceController.text) ?? 0,
+                                  category: 'none',
+                                  available: true,
+                                  cal: int.tryParse(cubit.calController.text) ?? 0,
+                                  allergy: cubit.allergyList.map(
+                                    (e) {
+                                      return e.name;
+                                    },
+                                  ).toList(),
+                                  imageUrl: '',
+                                );
 
-                              // Add the new product
-                              await cubit.addNewProduct(product);
-                            } else {
-                              log('ffffffffffff');
-                            }
-                            {
-                              if (formKey.currentState?.validate() ?? false) {
-                                ;
+                                // Add the new product
+                                await cubit.addNewProduct(product);
                               } else {
-                                print("test not");
+                                showSnackBar(
+                                    context: context,
+                                    msg: 'يرجى اضافة صورة المنتج',
+                                    isError: true);
                               }
                             }
                           },

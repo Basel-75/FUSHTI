@@ -44,7 +44,7 @@ mixin EmpMix {
     }
   }
 
-  Future<void> addProduct({required FoodMenuModel product}) async {
+   addProduct({required FoodMenuModel product}) async {
     try {
       final response = await SuperMain().supabase.from('food_menu').insert({
         'school_id': product.schoolId,

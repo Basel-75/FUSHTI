@@ -14,10 +14,10 @@ part 'add_state.dart';
 class AddCubit extends Cubit<AddState> {
   AddCubit() : super(AddInitial());
   AppModel appModel = getIt.get<AppModel>();
-  TextEditingController foodName = TextEditingController();
-  TextEditingController description = TextEditingController();
-  TextEditingController price = TextEditingController();
-  TextEditingController cal = TextEditingController();
+  TextEditingController foodNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController calController = TextEditingController();
   String category = '';
   File? selectedImage;
   List<DropDownItem> allergyList = [];
@@ -34,13 +34,13 @@ class AddCubit extends Cubit<AddState> {
       selectedImage = File(pickedFile.path);
       emit(ImagePickedState(selectedImage!));
     } else {
-      emit(ErrorState(msg: 'No image selected'));
+      emit(ErrorState(msg: 'لم يتم اختيار صور للمنتج'));
     }
   }
 
   Future<void> addNewProduct(FoodMenuModel product) async {
     emit(LoadingState());
-
+   //add in DB
     try {
       if (selectedImage == null) {
         emit(ErrorState(msg: 'No image selected'));
@@ -64,10 +64,20 @@ class AddCubit extends Cubit<AddState> {
         ).toList(),
         imageUrl: imageUrl,
       );
-      await SuperMain().addProduct(product: updatedProduct);
-      emit(SussesState(msg: 'Product added successfully'));
+      final newProduct= await SuperMain().addProduct(product: updatedProduct);
+      //Add Locale
+      appModel.empModel?.schoolModel.foodMenuModelList.add(FoodMenuModel.fromJson(newProduct));
+      emit(SussesState(msg: 'تمت اضافة المنتج بنجاح'));
     } catch (e) {
-      emit(ErrorState(msg: e.toString()));
+      emit(ErrorState(msg: 'حدث خطأ ما يرجى المحاولة مرة اخرى'));
     }
+  }
+  @override
+  Future<void> close() {
+    foodNameController.clear();
+    priceController.clear();
+    descriptionController.clear();
+    calController.clear();
+    return super.close();
   }
 }
