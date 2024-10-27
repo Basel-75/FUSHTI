@@ -18,3 +18,8 @@ final class ErrorState extends AddState {
 
   ErrorState({required this.msg});
 }
+
+class ImagePickedState extends AddState {
+  final File image;
+  ImagePickedState(this.image);
+}

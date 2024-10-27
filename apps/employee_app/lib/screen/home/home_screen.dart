@@ -114,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                                     onCancelBtnTap: () =>
                                         Navigator.pop(context),
                                     onConfirmBtnTap: () => cubit.deleteProduct(
-                                        productId: cubit.menu[index].id),
+                                        productId: cubit.menu[index].id!),
                                   ),
                                 ),
                               ),
