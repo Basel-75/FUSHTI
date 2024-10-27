@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
@@ -21,13 +24,25 @@ class StorageCubit extends Cubit<StorageState> {
   // }
 
   onAdvChange({required FoodMenuModel foodModel}) {
-    foodAdvChangeList.add(foodModel);
+    if (!foodAdvChangeList.contains(foodModel)) {
+      foodModel.available = !foodModel.available;
+      foodAdvChangeList.add(foodModel);
+    }
   }
 
+  updateAdv() async {
+    try {
+      emit(LodingState());
+      log("${foodAdvChangeList.length}");
+      await SuperMain().chnageFoodAdv(foodAdvChangeList: foodAdvChangeList);
 
+      foodAdvChangeList.clear();
 
-  updateAdv(){
+      emit(DoneState());
+    } catch (er) {
+      log("$er");
 
-    
+      emit(ErorState(msg: er.toString()));
+    }
   }
 }

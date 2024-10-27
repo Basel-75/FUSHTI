@@ -13,109 +13,105 @@ class StorageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> data = [
-      {
-        'name': 'ساندوتش بيض',
-        'description': '13',
-        'image': 'assets/image/egg.png',
-        'status': true,
-      },
-      {
-        'name': 'ليز',
-        'description': '7',
-        'image': 'assets/image/lez.png',
-        'status': true,
-      },
-      {
-        'name': 'وجبة السعادة',
-        'description': '9',
-        'image': 'assets/image/boxImage.png',
-        'status': false,
-      },
-      {
-        'name': 'ساندوتش بيض',
-        'description': '31',
-        'image': 'assets/image/egg.png',
-        'status': true,
-      },
-      {
-        'name': 'ليز',
-        'description': '2',
-        'image': 'assets/image/lez.png',
-        'status': false,
-      },
-      {
-        'name': 'وجبة السعادة',
-        'description': '10',
-        'image': 'assets/image/boxImage.png',
-        'status': false,
-      },
-    ];
     return BlocProvider(
       create: (context) => StorageCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<StorageCubit>();
         return Directionality(
           textDirection: TextDirection.rtl,
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(19.h),
-              child: AppBar(
-                flexibleSpace: EmployeeHeader(
-                  isTitle: true,
-                  title: 'إدارة المخزون',
-                  textSize: 20.sp,
+          child: BlocListener<StorageCubit, StorageState>(
+            listener: (context, state) {
+              if (state is LodingState) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
+              }
+              if (state is DoneState) {
+                Navigator.pop(context);
+                log("very good update adv of food");
+              }
+
+              if (state is ErorState) {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    state.msg,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.red,
+                ));
+              }
+            },
+            child: Scaffold(
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(19.h),
+                child: AppBar(
+                  flexibleSpace: EmployeeHeader(
+                    isTitle: true,
+                    title: 'إدارة المخزون',
+                    textSize: 20.sp,
+                  ),
                 ),
               ),
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Image.asset('assets/image/storage_img.png'),
-                  EmpTitleName(
-                    paddingTop: 0.6.h,
-                    paddingRight: 2.h,
-                    textSize: 18.sp,
-                    schoolName: 'منتجاتي',
-                  ),
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                    child: ListView.builder(
-                      itemCount: cubit.schoolModel.foodMenuModelList.length,
-                      itemBuilder: (context, index) {
-                        return CardStorage(
-                          isAvailable: cubit
-                              .schoolModel.foodMenuModelList[index].available,
-                          activeText: 'OOS',
-                          inactiveText: 'avail',
-                          sizeSwitch: 20.w,
-                          onChanged: (value) {
-                            if (value == true) {
-                              log('Item is available');
-                            } else {
-                              log('Item is out of stock');
-                            }
-                          },
-                          image: "assets/image/egg.png",
-                          name: cubit
-                              .schoolModel.foodMenuModelList[index].foodName,
-                          onTap: () {
-                            cubit.onAdvChange(
-                                foodModel:
-                                    cubit.schoolModel.foodMenuModelList[index]);
-                          },
-                        );
-                      },
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 3.h,
                     ),
-                  ),
-                  CustomButton(onPressed: () {}, title: "حفظ")
-                ],
+                    Image.asset('assets/image/storage_img.png'),
+                    EmpTitleName(
+                      paddingTop: 0.6.h,
+                      paddingRight: 2.h,
+                      textSize: 18.sp,
+                      schoolName: 'منتجاتي',
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                      child: ListView.builder(
+                        itemCount: cubit.schoolModel.foodMenuModelList.length,
+                        itemBuilder: (context, index) {
+                          return CardStorage(
+                            isAvailable: cubit
+                                .schoolModel.foodMenuModelList[index].available,
+                            activeText: 'OOS',
+                            inactiveText: 'avail',
+                            sizeSwitch: 20.w,
+                            onChanged: (value) {
+                               cubit.onAdvChange(
+                                  foodModel: cubit
+                                      .schoolModel.foodMenuModelList[index]);
+                              if (value == true) {
+                                log('Item is available');
+                              } else {
+                                log('Item is out of stock');
+                              }
+                            },
+                            image: "assets/image/egg.png",
+                            name: cubit
+                                .schoolModel.foodMenuModelList[index].foodName,
+                          
+                          );
+                        },
+                      ),
+                    ),
+                    CustomButton(
+                        onPressed: () {
+                          cubit.updateAdv();
+                        },
+                        title: "حفظ")
+                  ],
+                ),
               ),
             ),
           ),
