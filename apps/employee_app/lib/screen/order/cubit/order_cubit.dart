@@ -20,20 +20,19 @@ class OrderCubit extends Cubit<OrderState> {
     final res = await SuperMain().getChildOrder(childModel: childModel);
 
 //  first order model
-    for(var val in res){
-
+    for (var val in res) {
       orderLis.add(OrderModel.fromJson(val));
-
     }
 
 // then orderItem
 
+    for (var val in orderLis) {
+      await SuperMain().orderInfo(orderModel: val);
+    }
 
-for(var val in orderLis){
+    final planRes = await SuperMain().getChildPlan(childModel: childModel);
 
-  await  SuperMain().orderInfo(orderModel: val );
 
-}
-   
+    
   }
 }

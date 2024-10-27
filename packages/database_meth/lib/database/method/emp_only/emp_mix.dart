@@ -25,6 +25,22 @@ mixin EmpMix {
   //     rethrow;
   //   }
 
+  Future<List<Map<String, dynamic>>> getChildPlan({required ChildModel childModel}) async {
+    try {
+      final res = await SuperMain()
+          .supabase
+          .from("meal_plans")
+          .select()
+          .eq("child_id", childModel.id).eq("status", "active");
+
+      return res;
+    } catch (er) {
+      log("$er");
+
+      rethrow;
+    }
+  }
+
   orderInfo({required OrderModel orderModel}) async {
     try {
       final res = await SuperMain()
