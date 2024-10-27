@@ -3,7 +3,7 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class ContainerFunds extends StatelessWidget {
   final String label;
-  final int amount;
+  final String amount;
 
   const ContainerFunds({super.key, required this.label, required this.amount});
 
