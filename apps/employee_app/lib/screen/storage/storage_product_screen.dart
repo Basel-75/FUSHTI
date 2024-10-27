@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:employee_app/screen/storage/cubit/storage_cubit.dart';
 import 'package:employee_app/widget/appbar_emp_header.dart';
+import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/container/card_storage.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
@@ -49,67 +51,77 @@ class StorageScreen extends StatelessWidget {
         'status': false,
       },
     ];
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(19.h),
-          child: AppBar(
-            flexibleSpace: EmployeeHeader(
-              isTitle: true,
-              title: 'إدارة المخزون',
-              textSize: 20.sp,
+    return BlocProvider(
+      create: (context) => StorageCubit(),
+      child: Builder(builder: (context) {
+        final cubit = context.read<StorageCubit>();
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(19.h),
+              child: AppBar(
+                flexibleSpace: EmployeeHeader(
+                  isTitle: true,
+                  title: 'إدارة المخزون',
+                  textSize: 20.sp,
+                ),
+              ),
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Image.asset('assets/image/storage_img.png'),
+                  EmpTitleName(
+                    paddingTop: 0.6.h,
+                    paddingRight: 2.h,
+                    textSize: 18.sp,
+                    schoolName: 'منتجاتي',
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  SizedBox(
+                    height: 40.h,
+                    child: ListView.builder(
+                      itemCount: cubit.schoolModel.foodMenuModelList.length,
+                      itemBuilder: (context, index) {
+
+
+                        return CardStorage(
+                          
+                          activeText: 'OOS',
+                          inactiveText: 'avail',
+                          sizeSwitch: 20.w,
+                          onChanged: (value) {
+                            if (value == true) {
+                              log('Item is available');
+                            } else {
+                              log('Item is out of stock');
+                            }
+                          },
+                        
+                          image: "assets/image/egg.png",
+                          name: cubit.schoolModel.foodMenuModelList[index].foodName,
+                          onTap: () {
+                           
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  CustomButton(onPressed: () {
+
+                  }, title: "حفظ")
+                ],
+              ),
             ),
           ),
-        ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 3.h,
-            ),
-            Image.asset('assets/image/storage_img.png'),
-            EmpTitleName(
-              paddingTop: 0.6.h,
-              paddingRight: 2.h,
-              textSize: 18.sp,
-              schoolName: 'منتجاتي',
-            ),
-            SizedBox(
-              height: 3.h,
-            ),
-            SizedBox(
-              height: 40.h,
-              child: ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  var feedBack = data[index];
-
-                  return CardStorage(
-                    activeText: 'OOS',
-                    inactiveText: 'avail',
-                    sizeSwitch: 20.w,
-                    
-                    onChanged: (value) {
-                      if (value == true) {
-                        log('Item is available');
-                      } else {
-                        log('Item is out of stock');
-
-                      }
-                    },
-                    quantity: feedBack['description'],
-                    image: feedBack['image'],
-                    name: feedBack['name'],
-                    onTap: () {
-                      log('feedBack ${feedBack['name']} Deleted');
-                    },
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

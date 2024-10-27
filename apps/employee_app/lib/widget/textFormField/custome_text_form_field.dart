@@ -9,11 +9,11 @@ class CustomTextFormFelid extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final TextDirection? textDirection;
-  final double containerSize;
+  final double width;
   final double paddingRightSide;
   final double paddingLeftSide;
-  final bool hasIcon;
-  final Icon iconText;
+
+  final Icon? iconText;
   const CustomTextFormFelid({
     this.validator,
     super.key,
@@ -24,11 +24,10 @@ class CustomTextFormFelid extends StatelessWidget {
     required this.isPassword,
     this.keyboardType,
     this.textDirection,
-    required this.containerSize,
-    required this.paddingRightSide,
-    required this.paddingLeftSide,
-    required this.hasIcon,
-    required this.iconText,
+    required this.width,
+    this.paddingRightSide = 0,
+    this.paddingLeftSide = 0,
+    this.iconText,
   });
 
   @override
@@ -49,7 +48,7 @@ class CustomTextFormFelid extends StatelessWidget {
             height: 1.h,
           ),
           Container(
-            width: containerSize,
+            width: width,
             decoration: BoxDecoration(
               color: backgroundColor ?? const Color(0xFFf5f6e1),
               boxShadow: [
@@ -69,7 +68,7 @@ class CustomTextFormFelid extends StatelessWidget {
               controller: controller,
               keyboardType: keyboardType,
               decoration: InputDecoration(
-                  prefixIcon: hasIcon != false ? iconText : null,
+                  prefixIcon: iconText,
                   hintStyle: const TextStyle(color: Color(0xffB9B9B9)),
                   hintText: hintText,
                   hintTextDirection: TextDirection.rtl,
