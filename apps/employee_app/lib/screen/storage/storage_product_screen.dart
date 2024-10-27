@@ -89,10 +89,9 @@ class StorageScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: cubit.schoolModel.foodMenuModelList.length,
                       itemBuilder: (context, index) {
-
-
                         return CardStorage(
-                          
+                          isAvailable: cubit
+                              .schoolModel.foodMenuModelList[index].available,
                           activeText: 'OOS',
                           inactiveText: 'avail',
                           sizeSwitch: 20.w,
@@ -103,19 +102,19 @@ class StorageScreen extends StatelessWidget {
                               log('Item is out of stock');
                             }
                           },
-                        
                           image: "assets/image/egg.png",
-                          name: cubit.schoolModel.foodMenuModelList[index].foodName,
+                          name: cubit
+                              .schoolModel.foodMenuModelList[index].foodName,
                           onTap: () {
-                           
+                            cubit.onAdvChange(
+                                foodModel:
+                                    cubit.schoolModel.foodMenuModelList[index]);
                           },
                         );
                       },
                     ),
                   ),
-                  CustomButton(onPressed: () {
-
-                  }, title: "حفظ")
+                  CustomButton(onPressed: () {}, title: "حفظ")
                 ],
               ),
             ),
