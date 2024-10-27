@@ -2,6 +2,7 @@ import 'package:employee_app/screen/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
 import 'package:employee_app/screen/boxes/boxes_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
+import 'package:employee_app/screen/profile/profile_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +26,7 @@ class BottomNavigatorScreen extends StatelessWidget {
     HomeScreen(),
     BoxesScreen(),
     StatisticsScreen(),
-    //profile
+    ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
