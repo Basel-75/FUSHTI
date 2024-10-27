@@ -49,10 +49,10 @@ class AddProductScreen extends StatelessWidget {
                     //controller: ,
                     iconText: const Icon(Bootstrap.github),
                     keyboardType: TextInputType.text,
-                    hasIcon: false,
+                    
                     paddingRightSide: 8.w,
                     paddingLeftSide: 8.w,
-                    containerSize: 85.w,
+                    width: 85.w,
                     hintText: 'بكس السعادة',
                     isPassword: false,
                     label: 'اسم المنتج',
@@ -86,10 +86,10 @@ class AddProductScreen extends StatelessWidget {
                           Bootstrap.currency_dollar,
                           color: Colors.black38,
                         ),
-                        hasIcon: true,
+                        
                         paddingRightSide: 8.w,
                         paddingLeftSide: 0.w,
-                        containerSize: 40.w,
+                        width: 40.w,
                         //controller:
                         hintText: '210',
                         isPassword: false,
@@ -111,10 +111,10 @@ class AddProductScreen extends StatelessWidget {
                           Bootstrap.fire,
                           color: Colors.black38,
                         ),
-                        hasIcon: true,
+
                         paddingRightSide: 0.w,
                         paddingLeftSide: 8.w,
-                        containerSize: 40.w,
+                        width: 40.w,
                         //controller:
                         hintText: '300',
                         isPassword: false,

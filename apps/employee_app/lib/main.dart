@@ -14,8 +14,10 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 void main() async {
   await empSetup();
 
-  // log("${getIt.get<AppModel>().empModel!.toJson()}");
+
+  log("${getIt.get<AppModel>().empModel!.toJson()}");
   // log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
+  
   //debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }

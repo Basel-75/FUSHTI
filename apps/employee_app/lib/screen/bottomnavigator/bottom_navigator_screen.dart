@@ -1,8 +1,11 @@
 import 'package:employee_app/screen/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
+import 'package:employee_app/screen/bottomnavigator/cubit/scan_cubit.dart';
 import 'package:employee_app/screen/boxes/boxes_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
+import 'package:employee_app/widget/button/custome_button.dart';
+import 'package:employee_app/widget/textFormField/custome_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -29,16 +32,25 @@ class BottomNavigatorScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BottomnavigatorBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => BottomnavigatorBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ScanCubit(),
+        ),
+      ],
       child: Builder(builder: (context) {
         final bloc = context.read<BottomnavigatorBloc>();
+        final cubit = context.read<ScanCubit>();
         int selectedIndex = 0;
         return Scaffold(
           //extendBody: true,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.miniCenterDocked,
           floatingActionButton: FloatingActionButton(
+            heroTag: "navFloat",
             backgroundColor: const Color(0xffFDCB6A),
             tooltip: 'add Saving',
             onPressed: () {
@@ -48,43 +60,96 @@ class BottomNavigatorScreen extends StatelessWidget {
             },
             child: IconButton(
                 onPressed: () async {
-                  try {
-                    final result = await BarcodeScanner.scan(
-                      options: ScanOptions(
-                        strings: {
-                          'cancel': _cancelController.text,
-                          'flash_on': _flashOnController.text,
-                          'flash_off': _flashOffController.text,
-                        },
-                        restrictFormat: [BarcodeFormat.qr],
-                        useCamera: _selectedCamera,
-                        autoEnableFlash: _autoEnableFlash,
-                        android: AndroidOptions(
-                          aspectTolerance: _aspectTolerance,
-                          useAutoFocus: _useAutoFocus,
-                        ),
-                      ),
-                    );
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: Container(
+                          height: 50.h,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              CustomTextFormFelid(
+                                label: "اسم الطالب",
+                                hintText: "الاسم",
+                                isPassword: false,
+                                width: 60.w,
+                              ),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              CustomTextFormFelid(
+                                label: "فصل الطالب",
+                                hintText: "الفصل",
+                                isPassword: false,
+                                width: 60.w,
+                              ),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              CustomButton(
+                                onPressed: () async {
+                                  // here scan
 
-                    if (result.rawContent.isNotEmpty) {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => RatingScreen(
-                      //           projectId: result.rawContent),
-                      //     ));
-                    }
-                  } on PlatformException catch (e) {
-                    scanResult = ScanResult(
-                      rawContent: e.code == BarcodeScanner.cameraAccessDenied
-                          ? 'The user did not grant the camera permission!'
-                          : 'Unknown error: $e',
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(scanResult!.rawContent),
-                      backgroundColor: Colors.red[300],
-                    ));
-                  }
+                                  try {
+                                    final result = await BarcodeScanner.scan(
+                                      options: ScanOptions(
+                                        strings: {
+                                          'cancel': _cancelController.text,
+                                          'flash_on': _flashOnController.text,
+                                          'flash_off': _flashOffController.text,
+                                        },
+                                        restrictFormat: [BarcodeFormat.qr],
+                                        useCamera: _selectedCamera,
+                                        autoEnableFlash: _autoEnableFlash,
+                                        android: AndroidOptions(
+                                          aspectTolerance: _aspectTolerance,
+                                          useAutoFocus: _useAutoFocus,
+                                        ),
+                                      ),
+                                    );
+
+                                    if (result.rawContent.isNotEmpty) {
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //       builder: (context) => RatingScreen(
+                                      //           projectId: result.rawContent),
+                                      //     ));
+                                    }
+                                  } on PlatformException catch (e) {
+                                    scanResult = ScanResult(
+                                      rawContent: e.code ==
+                                              BarcodeScanner.cameraAccessDenied
+                                          ? 'The user did not grant the camera permission!'
+                                          : 'Unknown error: //',
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(scanResult!.rawContent),
+                                      backgroundColor: Colors.red[300],
+                                    ));
+                                  }
+                                },
+                                title: "مسح باركود",
+                                fixedSize: Size(40.w, 4.h),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              CustomButton(
+                                onPressed: () {},
+                                title: "ابحث",
+                                fixedSize: Size(40.w, 4.h),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
                 icon: const Icon(Iconsax.scan_barcode_outline)),
           ),
