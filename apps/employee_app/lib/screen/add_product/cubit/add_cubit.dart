@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
+import 'package:employee_app/component/drop_down_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
@@ -19,10 +20,15 @@ class AddCubit extends Cubit<AddState> {
   TextEditingController cal = TextEditingController();
   String category = '';
   File? selectedImage;
-
+  List<DropDownItem> allergyList = [];
+  List<DropDownItem> allergy = getIt.get<AppModel>().alergy.map(
+    (e) {
+      return DropDownItem(e);
+    },
+  ).toList();
   Future<void> pickImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery); 
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       selectedImage = File(pickedFile.path);
@@ -51,7 +57,11 @@ class AddCubit extends Cubit<AddState> {
         category: product.category,
         available: product.available,
         cal: product.cal,
-        allergy: product.allergy,
+        allergy: allergyList.map(
+          (e) {
+            return e.name;
+          },
+        ).toList(),
         imageUrl: imageUrl,
       );
       await SuperMain().addProduct(product: updatedProduct);
