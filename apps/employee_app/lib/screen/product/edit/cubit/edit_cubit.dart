@@ -50,7 +50,7 @@ class EditCubit extends Cubit<EditState> {
         return;
       }
 
-      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!);
+      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!,isProductImage: true);
       final updatedProduct = FoodMenuModel(
         id: productInfo.id,
         schoolId: appModel.empModel!.schoolId,
