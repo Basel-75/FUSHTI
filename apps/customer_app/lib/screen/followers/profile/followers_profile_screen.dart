@@ -43,7 +43,25 @@ class FollowersProfileScreen extends StatelessWidget {
                 ),
               );
             }
+            if (state is SuccessUpdateImageState) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.msg),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            }
             if (state is ErrorState) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.msg),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+            if (state is ErrorUpdateImageState) {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -112,11 +130,50 @@ class FollowersProfileScreen extends StatelessWidget {
                               border:
                                   Border.all(width: 0.2, color: Colors.grey)),
                           //!provide image later
-                          child: const CircleAvatar(
-                              backgroundImage: AssetImage(
-                            'assets/image/kid2.png',
-                          )),
+                          child: BlocBuilder<FollowersProfileCubit,
+                              FollowersProfileState>(
+                            builder: (context, state) {
+                              return CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: ClipOval(
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      Image.network(
+                                        childInfo!.imgPath,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error,
+                                                stackTrace) =>
+                                            Image.asset('assets/image/kid2.png',
+                                                fit: BoxFit.cover),
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) {
+                                          if (loadingProgress == null)
+                                            return child;
+                                          return const Center(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
+                      ),
+                      Positioned(
+                        left: 20.w,
+                        child: IconButton(
+                            onPressed: () async {
+                              await cubit.pickImage();
+                              await cubit.updateChildImage(
+                                  childId: childInfo!.id);
+                            },
+                            icon: const Icon(Icons.add_a_photo)),
                       ),
                       //=========Info and edit button==========
 

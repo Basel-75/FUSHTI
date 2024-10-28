@@ -27,12 +27,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? funds = '';
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) {});
-    on<ProfileEvent>(updateImage);
+    on<UpdateImageEvent>(updateImage);
     on<GetUserInfoEvent>(getUserInfoMethod);
     on<UpdateProfileEvent>(updateProfileMethod);
     on<PickImageEvent>(pickImage);
   }
-
+//!Remove it later if we do not want change profile image
   FutureOr<void> updateImage(event, emit) async {
     emit(LoadingState());
     //Update in DB
@@ -42,7 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         return;
       }
 
-      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!);
+      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!,isProductImage: false);
 
       final newProduct = await SuperMain().updateUserProfileImage(
           id: appModel.userModel!.id, imageUrl: imageUrl);

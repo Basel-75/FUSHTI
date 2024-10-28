@@ -14,6 +14,7 @@ part 'followers_profile_state.dart';
 
 class FollowersProfileCubit extends Cubit<FollowersProfileState> {
   FollowersProfileCubit() : super(FollowersProfileInitial());
+  File? selectedImage;
   int totalMealsInPlan = 0;
   countTotal({required String id}) {
     for (var i in appModel.userModel!.childModelList) {
@@ -90,6 +91,46 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     emit(SuccessState(msg: 'تم انشاء البار كود بنجاح'));
     final pdfFile = await _generatePdf(childName: childName);
     OpenFile.open(pdfFile.path);
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      selectedImage = File(pickedFile.path);
+      emit(ImagePickedState(selectedImage!));
+    } else {
+      emit(ErrorState(msg: 'لم يتم اختيار صور للتابع'));
+    }
+  }
+
+  Future<void> updateChildImage({required String childId}) async {
+    emit(LoadingState());
+    //Update in DB
+    try {
+      if (selectedImage == null) {
+        emit(ErrorState(msg: 'لم يتم اختيار صورة'));
+        return;
+      }
+
+      final imageUrl = await SuperMain()
+          .uploadImage(imageFile: selectedImage!, isProductImage: false);
+      log('$imageUrl');
+      final updateImageResponse = await SuperMain()
+          .updateFollowersImage(childId: childId, imageUrl: imageUrl);
+          log('$updateImageResponse');
+      //Update Locale
+      for (var element in appModel.userModel!.childModelList) {
+        if (element.id == childId) {
+          element.imgPath = imageUrl;
+        }
+      }
+      emit(SuccessUpdateImageState(msg: 'تم تحديث صورة التابع بنجاح'));
+    } catch (e) {
+      log('$e');
+      emit(ErrorUpdateImageState(msg: 'حدث خطأ ما يرجى المحاولة مرة اخرى'));
+    }
   }
 
   AppModel appModel = getIt.get<AppModel>();
