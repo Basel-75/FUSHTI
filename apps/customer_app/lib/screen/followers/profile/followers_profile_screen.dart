@@ -5,13 +5,12 @@ import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
 import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
-import 'package:customer_app/widget/button/custom_button.dart';
+import 'package:customer_app/widget/container/fonds_info_dailog.dart';
 import 'package:customer_app/widget/container/info_container_with_button.dart';
-import 'package:customer_app/widget/container/profile_small_container.dart';
+import 'package:customer_app/widget/container/open_days_bottomsheet.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
-import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -249,6 +248,7 @@ class FollowersProfileScreen extends StatelessWidget {
                                   Icons.arrow_forward_ios_rounded,
                                   size: 2.h,
                                 ),
+                                //! button dialog
                                 onTap: () {
                                   showDialog(
                                     barrierDismissible: false,
@@ -291,6 +291,7 @@ class FollowersProfileScreen extends StatelessWidget {
                                         padding:
                                             EdgeInsets.symmetric(vertical: 2.h),
                                         child: fondsInfoDailog(
+                                          //controller: ,
                                           cancelOnPressed: () {
                                             Navigator.pop(context);
                                           },
@@ -315,6 +316,7 @@ class FollowersProfileScreen extends StatelessWidget {
                                   Icons.arrow_forward_ios_rounded,
                                   size: 2.h,
                                 ),
+                                //! bottomsheet activate plan
                                 onTap: () {
                                   showModalBottomSheet(
                                       context: context,
@@ -359,131 +361,6 @@ class FollowersProfileScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-}
-
-class fondsInfoDailog extends StatelessWidget {
-  const fondsInfoDailog({
-    super.key,
-    this.controller,
-    required this.cancelOnPressed,
-    required this.okOnPressed,
-  });
-  final TextEditingController? controller;
-  final Function() cancelOnPressed, okOnPressed;
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          children: [
-            const Text(
-              'اضافة رصيد الى المحفظة',
-              style: TextStyle(color: Colors.white),
-            ),
-            CustomTextFormFelid(
-              controller: controller,
-              label: 'المبلغ',
-              hintText: '50',
-              isPassword: false,
-              keyboardType: TextInputType.number,
-              // controller: amount,
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomButton(
-                  onPressed: () => cancelOnPressed,
-                  title: 'الغاء',
-                  fixedSize: Size(30.w, 5.h),
-                  backgroundColor: Colors.red,
-                ),
-                CustomButton(
-                  onPressed: () => okOnPressed,
-                  title: 'تأكيد',
-                  fixedSize: Size(30.w, 5.h),
-                  backgroundColor: Colors.green,
-                ),
-              ],
-            ),
-          ],
-        ));
-  }
-}
-
-class OpenDaysBottomSheet extends StatelessWidget {
-  const OpenDaysBottomSheet({
-    super.key,
-    this.onChangedSwitch,
-    this.validator,
-    this.controller,
-    required this.onPressedButton,
-  });
-  final Function(dynamic)? onChangedSwitch;
-  final String? Function(String?)? validator;
-  final TextEditingController? controller;
-  final void Function() onPressedButton;
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        height: 30.h,
-        decoration: const BoxDecoration(boxShadow: []),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.h),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 2.h,
-                ),
-                const Text('الأيام المفتوحة'),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('حالة اليوم'),
-                    AdvancedSwitch(
-                        initialValue: true,
-                        activeColor: Colors.green,
-                        inactiveColor: const Color.fromARGB(255, 204, 108, 108),
-                        width: 14.w,
-                        onChanged: onChangedSwitch),
-                  ],
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                CustomTextFormFelid(
-                  validator: validator,
-                  horizontal: 0.w,
-                  label: 'المصروف',
-                  hintText: '25',
-                  isPassword: false,
-                  keyboardType: TextInputType.number,
-                  controller: controller,
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: CustomButton(
-                    onPressed: onPressedButton,
-                    title: 'اضافة التابع',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
