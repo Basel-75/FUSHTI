@@ -50,7 +50,7 @@ class CustomTextFormFelid extends StatelessWidget {
           Container(
             width: width,
             decoration: BoxDecoration(
-              color: backgroundColor ?? const Color(0xFFf5f6e1),
+              color: backgroundColor ?? Colors.white,
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),

@@ -1,10 +1,16 @@
 import 'package:database_meth/database/super_main.dart';
-import 'package:employee_app/screen/add_product/add_product_screen.dart';
+
+import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
+
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
 import 'package:employee_app/screen/bottomnavigator/cubit/scan_cubit.dart';
 import 'package:employee_app/screen/boxes/boxes_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
+
 import 'package:employee_app/screen/order/order_screen.dart';
+
+import 'package:employee_app/screen/profile/profile_screen.dart';
+
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/textFormField/custome_text_form_field.dart';
@@ -30,7 +36,7 @@ class BottomNavigatorScreen extends StatelessWidget {
     HomeScreen(),
     BoxesScreen(),
     StatisticsScreen(),
-    //profile
+    ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -147,7 +153,7 @@ class BottomNavigatorScreen extends StatelessWidget {
                               ),
                               CustomButton(
                                 onPressed: () async {
-                                await  cubit.getchild();
+                                  await cubit.getchild();
 
                                   Navigator.push(
                                       context,
