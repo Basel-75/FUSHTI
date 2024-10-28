@@ -1,8 +1,10 @@
+import 'package:database_meth/database/super_main.dart';
 import 'package:employee_app/screen/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
 import 'package:employee_app/screen/bottomnavigator/cubit/scan_cubit.dart';
 import 'package:employee_app/screen/boxes/boxes_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
+import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/textFormField/custome_text_form_field.dart';
@@ -60,6 +62,7 @@ class BottomNavigatorScreen extends StatelessWidget {
             },
             child: IconButton(
                 onPressed: () async {
+                  // here scan
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -112,11 +115,14 @@ class BottomNavigatorScreen extends StatelessWidget {
                                     );
 
                                     if (result.rawContent.isNotEmpty) {
+                                      // change it to take the value from databse later
+                                      //  result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
                                       // Navigator.push(
                                       //     context,
                                       //     MaterialPageRoute(
-                                      //       builder: (context) => RatingScreen(
-                                      //           projectId: result.rawContent),
+                                      //       builder: (context) => OrderScreen(
+                                      //         childModel: childm ,
+                                      //          ),
                                       //     ));
                                     }
                                   } on PlatformException catch (e) {
@@ -140,7 +146,17 @@ class BottomNavigatorScreen extends StatelessWidget {
                                 height: 2.h,
                               ),
                               CustomButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                await  cubit.getchild();
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => OrderScreen(
+                                          childModel: cubit.childModel!,
+                                        ),
+                                      ));
+                                },
                                 title: "ابحث",
                                 fixedSize: Size(40.w, 4.h),
                               ),

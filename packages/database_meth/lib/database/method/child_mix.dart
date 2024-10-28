@@ -8,6 +8,21 @@ import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin ChildMix {
+  Future<Map<String, dynamic>> getChildById({required String childId}) async {
+    try {
+      final res = await SuperMain()
+          .supabase
+          .from("followers")
+          .select()
+          .eq("id", childId);
+
+      return res[0];
+    } catch (er) {
+      log("$er");
+      throw "there was eorr";
+    }
+  }
+
   getChilds() async {
     AppModel appModel = getIt.get<AppModel>();
     try {

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:employee_app/screen/bottomnavigator/bottom_navigator_screen.dart';
+import 'package:employee_app/screen/home/home_screen.dart';
 import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
                     elevatedButtonTheme: ElevatedButtonThemeData(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xffBA9773)))),
-                home: OrderScreen(),
+                home: BottomNavigatorScreen(),
               ),
             ));
   }

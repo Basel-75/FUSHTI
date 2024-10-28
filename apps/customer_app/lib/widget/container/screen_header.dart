@@ -62,8 +62,9 @@ class ScreenHeader extends StatelessWidget {
                     )
                   : const SizedBox(),
               const Spacer(),
+              // here erorr
               AppBarRowButton(
-                childModel: childModel!,
+                childModel: childModel,
                 walletAmount: funds,
               ),
             ],
