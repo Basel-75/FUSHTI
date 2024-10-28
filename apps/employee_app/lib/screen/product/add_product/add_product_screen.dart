@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-
 class AddProductScreen extends StatelessWidget {
   const AddProductScreen({super.key});
 
@@ -65,10 +64,9 @@ class AddProductScreen extends StatelessWidget {
                           controller: cubit.foodNameController,
                           iconText: const Icon(Bootstrap.github),
                           keyboardType: TextInputType.text,
-                          hasIcon: false,
+                          width: 40.w,
                           paddingRightSide: 8.w,
                           paddingLeftSide: 8.w,
-                          containerSize: 85.w,
                           hintText: 'بكس السعادة',
                           isPassword: false,
                           label: 'اسم المنتج',
@@ -103,10 +101,10 @@ class AddProductScreen extends StatelessWidget {
                                 Bootstrap.currency_dollar,
                                 color: Colors.black38,
                               ),
-                              hasIcon: true,
+                              width: 40.w,
                               paddingRightSide: 8.w,
                               paddingLeftSide: 0.w,
-                              containerSize: 40.w,
+
                               //controller:
                               hintText: '210',
                               isPassword: false,
@@ -129,10 +127,9 @@ class AddProductScreen extends StatelessWidget {
                                 Bootstrap.fire,
                                 color: Colors.black38,
                               ),
-                              hasIcon: true,
                               paddingRightSide: 0.w,
                               paddingLeftSide: 8.w,
-                              containerSize: 40.w,
+                              width: 40.w,
                               //controller:
                               hintText: '300',
                               isPassword: false,
@@ -269,10 +266,13 @@ class AddProductScreen extends StatelessWidget {
                                   schoolId: cubit.appModel.empModel!.schoolId,
                                   foodName: cubit.foodNameController.text,
                                   description: cubit.descriptionController.text,
-                                  price: num.tryParse(cubit.priceController.text) ?? 0,
+                                  price: num.tryParse(
+                                          cubit.priceController.text) ??
+                                      0,
                                   category: 'none',
                                   available: true,
-                                  cal: int.tryParse(cubit.calController.text) ?? 0,
+                                  cal: int.tryParse(cubit.calController.text) ??
+                                      0,
                                   allergy: cubit.allergyList.map(
                                     (e) {
                                       return e.name;
