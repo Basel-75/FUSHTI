@@ -8,7 +8,7 @@ class UserModel {
   String phone;
   String authId;
   List<ChildModel> childModelList = [];
-  final String? imageUrl;
+  String? imageUrl;
 
   UserModel(
       {required this.id,
