@@ -11,7 +11,7 @@ import 'package:get_all_pkg/data/model/food_menu_model.dart';
 
 part 'add_state.dart';
 
-class AddCubit extends Cubit<AddState> {
+class AddCubit extends Cubit<EditState> {
   AddCubit() : super(AddInitial());
   AppModel appModel = getIt.get<AppModel>();
   TextEditingController foodNameController = TextEditingController();

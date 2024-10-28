@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:employee_app/component/drop_down_item.dart';
-import 'package:employee_app/screen/add_product/cubit/add_cubit.dart';
+import 'package:employee_app/screen/product/add_product/cubit/add_cubit.dart';
 import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/dropDownList/custom_drop_down_list.dart';
@@ -14,16 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-// addImg() async {
-//     final ImagePicker picker = ImagePicker();
-//     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-//     if (image != null) {
-//       imgfiel = File(image.path);
-
-//       imgcontroller.text = image.name;
-//     }
-//   }
 
 class AddProductScreen extends StatelessWidget {
   const AddProductScreen({super.key});
@@ -35,7 +25,7 @@ class AddProductScreen extends StatelessWidget {
       create: (context) => AddCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<AddCubit>();
-        return BlocListener<AddCubit, AddState>(
+        return BlocListener<AddCubit, EditState>(
           listener: (context, state) {
             if (state is LoadingState) {
               showLoadingDialog(context: context);
@@ -222,7 +212,7 @@ class AddProductScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      BlocBuilder<AddCubit, AddState>(
+                      BlocBuilder<AddCubit, EditState>(
                         builder: (context, state) {
                           return InkWell(
                             onTap: () async => await cubit.pickImage(),

@@ -44,7 +44,7 @@ mixin EmpMix {
     }
   }
 
-   addProduct({required FoodMenuModel product}) async {
+  addProduct({required FoodMenuModel product}) async {
     try {
       final response = await SuperMain().supabase.from('food_menu').insert({
         'school_id': product.schoolId,
@@ -57,6 +57,32 @@ mixin EmpMix {
         'allergy': product.allergy,
         'image_url': product.imageUrl,
       }).select();
+
+      log('$response');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+  editProduct({required FoodMenuModel product}) async {
+     log('${product.toJson()}');
+    try {
+      final response = await SuperMain()
+          .supabase
+          .from('food_menu')
+          .update({
+            'school_id': product.schoolId,
+            'food_name': product.foodName,
+            'description': product.description,
+            'price': product.price,
+            'category': product.category,
+            'available': product.available,
+            'cal': product.cal,
+            'allergy': product.allergy,
+            'image_url': product.imageUrl,
+          })
+          .eq('id', product.id)
+          .select();
 
       log('$response');
     } catch (e) {
