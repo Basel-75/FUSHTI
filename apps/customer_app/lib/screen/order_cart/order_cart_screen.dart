@@ -9,7 +9,7 @@ import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class OrderCartScreen extends StatelessWidget {
-  final ChildModel childModel;
+  final ChildModel? childModel;
   const OrderCartScreen({super.key, required this.childModel});
 
   @override
@@ -21,7 +21,7 @@ class OrderCartScreen extends StatelessWidget {
         child: Builder(builder: (context) {
           final cubit = context.read<OrderCartCubit>();
 
-          cubit.childModel = childModel;
+          cubit.childModel = childModel!;
           return BlocListener<OrderCartCubit, OrderCartState>(
             listener: (context, state) {
               if (state is ErorrState) {

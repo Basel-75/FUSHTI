@@ -5,7 +5,7 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class AppBarRowButton extends StatelessWidget {
   final String walletAmount;
-  final ChildModel childModel;
+  final ChildModel? childModel;
   const AppBarRowButton({
     super.key,
     required this.walletAmount, required this.childModel,
