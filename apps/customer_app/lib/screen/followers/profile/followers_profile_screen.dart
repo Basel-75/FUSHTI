@@ -132,7 +132,7 @@ class FollowersProfileScreen extends StatelessWidget {
                               shape: BoxShape.circle,
                               border:
                                   Border.all(width: 0.2, color: Colors.grey)),
-                          //!provide image later
+                          //Image
                           child: BlocBuilder<FollowersProfileCubit,
                               FollowersProfileState>(
                             builder: (context, state) {
