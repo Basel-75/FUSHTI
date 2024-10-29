@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class CardOrder extends StatelessWidget {
-  const CardOrder({
-    super.key,
-    required this.name,
-    required this.quantity,
-    required this.onAdd,
-    required this.onMinus,
-    required this.image,
-    required this.isOpenDays,
-  });
+  const CardOrder(
+      {super.key,
+      required this.name,
+      required this.quantity,
+      required this.onAdd,
+      required this.onMinus,
+      required this.image,
+      required this.isOpenDays,
+   required    this.price});
   final String name;
   final String quantity;
   final String image;
   final Function() onAdd, onMinus;
   final bool isOpenDays;
+  final String price;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,6 +60,11 @@ class CardOrder extends StatelessWidget {
             isOpenDays != false
                 ? Row(
                     children: [
+                      Text(
+                        price,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 18.sp),
+                      ),
                       InkWell(
                         onTap: onAdd,
                         child: Container(

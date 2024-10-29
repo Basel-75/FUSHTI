@@ -34,11 +34,12 @@ class OrderScreen extends StatelessWidget {
       },
     ];
     return BlocProvider(
-      create: (context) => OrderCubit(),
+      create: (context) => OrderCubit()..childModel = childModel,
       child: Builder(builder: (context) {
         final cubit = context.read<OrderCubit>();
 
-        cubit.childModel = childModel;
+        cubit.getAllCHildOrder();
+
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
@@ -68,35 +69,46 @@ class OrderScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'روان احمد',
-                      style: TextStyle(
+                    Text(
+                      cubit.childModel.name,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      '٢/ب',
-                      style: TextStyle(
+                    Text(
+                      cubit.childModel.studentClass,
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.brown,
                       ),
                     ),
                     SizedBox(height: 2.h),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ContainerFunds(label: 'المصروف', amount: "22"),
-                        SizedBox(width: 20),
-                        ContainerFunds(label: 'الحد اليومي', amount: "33"),
+                        ContainerFunds(
+                            label: 'المصروف',
+                            amount: cubit.childModel.funds.toString()),
+                        const SizedBox(width: 20),
+                        BlocBuilder<OrderCubit, OrderState>(
+                          builder: (context, state) {
+                            return ContainerFunds(
+                                label: 'الحد اليومي',
+                                amount:
+                                    "${cubit.childModel.dailyLimits}/${cubit.dailyLimitTotal}");
+                          },
+                        ),
                       ],
                     ),
                     SizedBox(height: 2.h),
                     CustomMultiSelect(
                       label: 'الاختيارات',
                       hintText: 'اختر الوجبات',
-                      items: const [],
-                      onListChanged: (val) {},
+                      items: cubit.foodDropList,
+                      onListChanged: (val) {
+                        cubit.addFromDrop(dropList: val);
+                      },
                     ),
                     SizedBox(
                       height: 2.h,
@@ -107,30 +119,42 @@ class OrderScreen extends StatelessWidget {
                       textSize: 16.sp,
                       schoolName: 'قائمة الطعام',
                     ),
-                    SizedBox(
-                      height: 40.h,
-                      child: BlocBuilder<OrderCubit, OrderState>(
-                        builder: (context, state) {
-                          return ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              var feedBack = data[index];
-                              return CardOrder(
-                                onAdd: () {},
-                                onMinus: () {},
-                                quantity: feedBack['description'],
-                                image: feedBack['image'],
-                                name: feedBack['name'],
-                                isOpenDays: false,
-                              );
-                            },
-                          );
-                        },
-                      ),
+                    BlocBuilder<OrderCubit, OrderState>(
+                      builder: (context, state) {
+                        return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: cubit.scanLis.length,
+                          itemBuilder: (context, index) {
+                            return CardOrder(
+                              onAdd: () {
+                                cubit.queAdd(
+                                    orderItem:
+                                        cubit.scanLis[index].orderItemModel!);
+                              },
+                              onMinus: () {
+
+                                  cubit.queMin(
+                                    orderItem:
+                                        cubit.scanLis[index].orderItemModel!);
+                              },
+                              quantity: cubit
+                                      .scanLis[index].orderItemModel?.quantity
+                                      .toString() ??
+                                  cubit.scanLis[index].que.toString(),
+                              image: "assets/image/egg.png",
+                              name: cubit.scanLis[index].foodMenuModel.foodName,
+                              isOpenDays: cubit.scanLis[index].isDily,
+                              price:
+                                  "${(cubit.scanLis[index].orderItemModel?.foodMenuModel.price ?? 0) * (cubit.scanLis[index].orderItemModel?.quantity ?? 1)}",
+                            );
+                          },
+                        );
+                      },
                     ),
                     CustomButton(
                         onPressed: () {
-                          cubit.getAllCHildOrder();
+                          // cubit.getAllCHildOrder();
                         },
                         title: "تأكيد الطلب")
                   ],

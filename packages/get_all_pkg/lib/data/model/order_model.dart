@@ -5,13 +5,16 @@ class OrderModel {
   final String childId;
   final String status;
   final num totalPrice;
-   final List<OrderItemModel> orderItemModelLis = [];
+  final List<OrderItemModel> orderItemModelLis = [];
+
+  final String createDate;
 
   OrderModel({
     required this.id,
     required this.childId,
     required this.status,
     required this.totalPrice,
+    required this.createDate,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,7 @@ class OrderModel {
       childId: json['child_id'],
       status: json['status'],
       totalPrice: json['total_price'],
+      createDate: json["create_date"]
     );
   }
 
@@ -29,6 +33,7 @@ class OrderModel {
       'child_id': childId,
       'status': status,
       'total_price': totalPrice,
+      "create_date" : createDate
     };
   }
 }

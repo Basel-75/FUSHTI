@@ -8,6 +8,7 @@ import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 import 'package:get_all_pkg/data/model/order_item_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
+import 'package:get_all_pkg/data/model/scan_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
@@ -27,9 +28,10 @@ mixin EmpMix {
   //     rethrow;
   //   }
 
-  Future<List<PlanModel>> getChildPlan({required ChildModel childModel}) async {
+  Future<PlanModel?> getChildPlan({required ChildModel childModel}) async {
     // try {
-    List<PlanModel> planModelLis = [];
+    // List<PlanModel> planModelLis = [];
+    PlanModel? plan;
     final date = DateTime.now().toIso8601String().split('T')[0];
     // log(date);
 
@@ -45,7 +47,7 @@ mixin EmpMix {
 
     for (var val in res) {
       log("in plan for");
-      PlanModel plan = PlanModel.fromJson(val);
+      plan = PlanModel.fromJson(val);
 
       final mealItem = await SuperMain()
           .supabase
@@ -71,15 +73,15 @@ mixin EmpMix {
         plan.mealPlanItemLis.add(mealPlanItemModel);
       }
 
-      planModelLis.add(plan);
-      planModelLis.length;
+      // planModelLis.add(plan);
+      // planModelLis.length;
 
-      log("${planModelLis.length}");
+      // log("${planModelLis.length}");
     }
 
-    // log("$res");   
+    // log("$res");
 
-    return planModelLis;
+    return plan;
     // } catch (er) {
     //   log("$er");
 
@@ -107,6 +109,7 @@ mixin EmpMix {
           .eq("id", val.menuId);
 
       val.foodMenuModel = FoodMenuModel.fromJson(food[0]);
+      print(val.foodMenuModel?.foodName);
     }
     // } catch (er) {
     //   log("$er");
