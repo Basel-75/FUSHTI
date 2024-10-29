@@ -5,7 +5,7 @@ class OrderModel {
   final String childId;
   final String status;
   final num totalPrice;
-  late final List<OrderItemModel> orderItemModelLis;
+   final List<OrderItemModel> orderItemModelLis = [];
 
   OrderModel({
     required this.id,

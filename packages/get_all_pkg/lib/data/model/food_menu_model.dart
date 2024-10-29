@@ -31,7 +31,7 @@ class FoodMenuModel {
       category: json['category'],
       available: json['available'],
       cal: json['cal'],
-      allergy: (json['allergy']),
+      allergy: (json['allergy'] as List<dynamic>?)?.cast<String>(),
     );
   }
 
