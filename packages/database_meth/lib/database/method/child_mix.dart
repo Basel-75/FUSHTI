@@ -97,7 +97,6 @@ mixin ChildMix {
       required String id,
       required List<String> allergy,
       required String childClass,
-      required String imgPath,
       required String schoolId,
       required double funds}) async {
     try {
@@ -107,7 +106,6 @@ mixin ChildMix {
         "funds": funds,
         "allergy": allergy,
         "class": childClass,
-        "img_path": imgPath,
         "school_id": schoolId,
       }).eq('id', id);
     } catch (er) {
@@ -118,6 +116,19 @@ mixin ChildMix {
   deleteChild({required String id}) async {
     try {
       await SuperMain().supabase.from('followers').delete().eq('id', id);
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+  updateFollowersImage(
+      {required String childId, required String imageUrl}) async {
+    try {
+      final response = await SuperMain()
+          .supabase
+          .from('followers')
+          .update({'img_path': imageUrl}).eq('id', childId);
+      log('$response');
     } catch (e) {
       log('$e');
     }

@@ -18,6 +18,22 @@ mixin UserMix {
     }
   }
 
+  updateUserProfileImage({required String id, required String imageUrl}) async {
+    try {
+      final test = await SuperMain()
+          .supabase
+          .from('users')
+          .update({
+            'image_url': imageUrl,
+          })
+          .eq('id', id)
+          .select();
+      log('$test');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
   getUser({required String id}) async {
     try {
       final response = await SuperMain()

@@ -15,4 +15,8 @@ final class DoneState extends OrderState {}
 
 final class LodingState extends OrderState {}
 
+
 final class NoLodingState extends OrderState {}
+
+final class QueUpdateState extends OrderState {}
+

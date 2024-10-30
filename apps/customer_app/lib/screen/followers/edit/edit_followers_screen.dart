@@ -98,11 +98,42 @@ class EditFollowersScreen extends StatelessWidget {
                         SizedBox(
                           height: 6.h,
                         ),
-                        SelectImageWidget(
-                          onDelete: () {
-                            log('message');
-                          },
-                          onTapInCamera: () {},
+                        Container(
+                          width: 30.w,
+                          height: 30.w,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 218, 220, 218),
+                              shape: BoxShape.circle,
+                              border:
+                                  Border.all(width: 0.2, color: Colors.grey)),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: ClipOval(
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.network(
+                                    childInfo!.imgPath,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Image.asset('assets/image/kid2.png',
+                                                fit: BoxFit.cover),
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                         CustomTextFormFelid(
                             validator: (val) {
