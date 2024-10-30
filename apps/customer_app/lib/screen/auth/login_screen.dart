@@ -84,47 +84,57 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+
                             Image.asset(
-                              'assets/image/logo.png',
+                              'assets/image/mainLogo2.png',
                             ),
-                            const Text(
+                            // SizedBox(
+                            //   height: 3.h,
+                            // ),
+                            Text(
                               'تسجيل الدخول',
                               style: TextStyle(
                                   fontFamily: 'Inter',
-                                  fontSize: 20,
+                                  fontSize: 22.sp,
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xff103C37)),
                             ),
-                            CustomTextFormFelid(
-                              controller: cubit.emailCon,
-                              hintText: 'example@gmail.com',
-                              keyboardType: TextInputType.emailAddress,
-                              isPassword: false,
-                              label: 'الايميل',
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content:
-                                        Text('Please enter an email address'),
-                                    backgroundColor: Colors.red,
-                                  ));
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: CustomTextFormFelid(
+                                controller: cubit.emailCon,
+                                hintText: 'example@gmail.com',
+                                keyboardType: TextInputType.emailAddress,
+                                isPassword: false,
+                                label: 'الايميل',
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content:
+                                          Text('Please enter an email address'),
+                                      backgroundColor: Colors.red,
+                                    ));
 
-                                  return "";
-                                } else if (!RegExp(
-                                        r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                                    .hasMatch(value)) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text(
-                                        'Please enter a valid email address'),
-                                    backgroundColor: Colors.red,
-                                  ));
+                                    return "";
+                                  } else if (!RegExp(
+                                          r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                                      .hasMatch(value)) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text(
+                                          'Please enter a valid email address'),
+                                      backgroundColor: Colors.red,
+                                    ));
 
-                                  return "";
-                                }
-                                return null;
-                              },
+                                    return "";
+                                  }
+                                  return null;
+                                },
+                              ),
                             ),
                             SizedBox(
                               height: 2.h,
@@ -145,7 +155,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             CustomTextButton(
                               buttonTitle: 'تسجيل',
-                              question: 'انشاء حساب جديد',
+                              question: 'ليس لديك حساب',
                               onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(

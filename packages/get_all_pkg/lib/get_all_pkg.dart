@@ -38,6 +38,7 @@ export 'package:intl/intl.dart' hide TextDirection;
 export 'package:pdf/pdf.dart';
 
 export 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
+export 'package:onesignal_flutter/onesignal_flutter.dart';
 
 showLoadingDialog({required BuildContext context}) {
   showDialog(

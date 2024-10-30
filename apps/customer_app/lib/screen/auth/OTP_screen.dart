@@ -88,13 +88,13 @@ class OTPScreen extends StatelessWidget {
                             ],
                           ),
                           Image.asset(
-                            'assets/image/logo.png',
+                            'assets/image/mainLogo2.png',
                           ),
-                          const Text(
+                          Text(
                             'رمز التحقق',
                             style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: 20,
+                                fontSize: 22.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xff103C37)),
                           ),
@@ -111,10 +111,10 @@ class OTPScreen extends StatelessWidget {
                                 width: 56,
                                 height: 56,
                                 decoration: BoxDecoration(
-                                    color: const Color(0xffF3F2D7),
+                                    color: const Color(0xffF6FAFD),
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
-                                        color: const Color(0xff34673F)))),
+                                        color: const Color(0xff6FBAE5)))),
                           ),
                           SizedBox(
                             height: 2.h,
@@ -128,8 +128,8 @@ class OTPScreen extends StatelessWidget {
                           ),
                           CustomButton(
                             onPressed: () {
-                              cubit.otpCheck(email: email, name: name , phone: phone);
-                              
+                              cubit.otpCheck(
+                                  email: email, name: name, phone: phone);
                             },
                             title: 'تحقق',
                           ),

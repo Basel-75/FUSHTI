@@ -21,6 +21,7 @@ import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
 import 'package:database_meth/database_meth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -48,10 +49,10 @@ void main() async {
   } catch (e) {
     log('No restrictionFood');
   }
-  
 
   log('===========================');
 
+  //debugPaintSizeEnabled = true;
   runApp(const MainApp());
 }
 
@@ -69,10 +70,9 @@ class MainApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffBA9773)))),
-
-          // debugShowCheckedModeBanner: false,
-          home: const BottomNavigatorScreen(),
+                      backgroundColor: const Color(0xffFEC87F)))),
+          debugShowCheckedModeBanner: false,
+          home: const LoginScreen(),
         ),
       ),
     );
