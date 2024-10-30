@@ -61,7 +61,6 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
             },
           ).toList(),
           childClass: classCon.text,
-          imgPath: "imgPath",
           schoolId: schoolId,
           funds: double.parse(fundsCon.text));
       //Update locale
@@ -70,13 +69,13 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
         if (appModel.userModel!.childModelList.isNotEmpty) {
           for (var i = 0; i < appModel.userModel!.childModelList.length; i++) {
             //find correct child
-            if (appModel.userModel?.childModelList[i].id==childId) {
+            if (appModel.userModel?.childModelList[i].id == childId) {
               //update
               appModel.userModel?.childModelList[i].name = nameCon.text.trim();
               appModel.userModel?.childModelList[i].studentClass =
                   classCon.text.trim();
               appModel.userModel?.childModelList[i].schoolId = schoolId;
-              appModel.userModel?.childModelList[i].imgPath = 'image path';
+
               appModel.userModel?.childModelList[i].funds =
                   double.parse(fundsCon.text);
               appModel.userModel?.childModelList[i].allergy = allgyList.map(

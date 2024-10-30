@@ -9,6 +9,7 @@ class CustomTextFormFelid extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final TextDirection? textDirection;
+  final double? horizontal;
   const CustomTextFormFelid({
     this.validator,
     super.key,
@@ -19,12 +20,13 @@ class CustomTextFormFelid extends StatelessWidget {
     required this.isPassword,
     this.keyboardType,
     this.textDirection,
+    this.horizontal,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      padding: EdgeInsets.symmetric(horizontal: horizontal ?? 8.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +35,7 @@ class CustomTextFormFelid extends StatelessWidget {
             style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
-                color: Color(0xff103C37)),
+                color: const Color(0xff103C37)),
           ),
           SizedBox(
             height: 0.5.h,

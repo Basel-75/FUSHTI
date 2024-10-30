@@ -11,7 +11,9 @@ class ProfileSmallContainer extends StatelessWidget {
     super.key,
     this.title,
     required this.number,
-    this.backgroundColor, this.onTap, this.margin,
+    this.backgroundColor,
+    this.onTap,
+    this.margin,
   });
 
   @override
@@ -33,18 +35,21 @@ class ProfileSmallContainer extends StatelessWidget {
                 children: [
                   Text(
                     title!,
-                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
                   ),
                   Text(
                     number,
-                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
                   ),
                 ],
               )
             : Center(
                 child: Text(
                   number,
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+                  style:
+                      TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
                 ),
               ),
       ),

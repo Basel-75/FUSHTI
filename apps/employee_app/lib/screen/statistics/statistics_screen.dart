@@ -1,4 +1,4 @@
-import 'package:employee_app/screen/add_product/add_product_screen.dart';
+import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:employee_app/widget/appbar_emp_header.dart';
