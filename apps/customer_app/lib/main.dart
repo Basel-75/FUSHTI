@@ -72,7 +72,7 @@ class MainApp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffFEC87F)))),
           debugShowCheckedModeBanner: false,
-          home: const LoginScreen(),
+          home: const BottomNavigatorScreen(),
         ),
       ),
     );

@@ -130,6 +130,7 @@ class SignupScreen extends StatelessWidget {
                                     }
                                     return null;
                                   },
+                                  backgroundColor: const Color(0xffF6FAFD),
                                   hintText: 'example@gmail.com',
                                   keyboardType: TextInputType.emailAddress,
                                   isPassword: false,
@@ -140,6 +141,7 @@ class SignupScreen extends StatelessWidget {
                                   height: 2.h,
                                 ),
                                 CustomTextFormFelid(
+                                    backgroundColor: const Color(0xffF6FAFD),
                                     controller: cubit.nameCon,
                                     hintText: 'فهد',
                                     isPassword: false,
@@ -168,6 +170,7 @@ class SignupScreen extends StatelessWidget {
                                   height: 2.h,
                                 ),
                                 CustomTextFormFelid(
+                                    backgroundColor: const Color(0xffF6FAFD),
                                     controller: cubit.phoneCon,
                                     hintText: '0512345678',
                                     isPassword: false,
