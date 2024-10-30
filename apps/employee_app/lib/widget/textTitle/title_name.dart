@@ -20,7 +20,10 @@ class EmpTitleName extends StatelessWidget {
         alignment: Alignment.centerRight,
         child: Text(
           schoolName,
-          style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: textSize,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xff546F66)),
         ),
       ),
     );

@@ -4,8 +4,12 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 class ContainerFunds extends StatelessWidget {
   final String label;
   final String amount;
-
-  const ContainerFunds({super.key, required this.label, required this.amount});
+  final Color? backgroundColor;
+  const ContainerFunds(
+      {super.key,
+      required this.label,
+      required this.amount,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +23,9 @@ class ContainerFunds extends StatelessWidget {
         SizedBox(height: 1.h),
         Container(
           width: 30.w,
-          height: 7.h,
+          height: 6.h,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: backgroundColor ?? Colors.white,
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(

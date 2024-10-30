@@ -41,9 +41,18 @@ class CustomSelect extends StatelessWidget {
                 validator: validator,
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
-                    closedFillColor: backgroundColor ?? Colors.white,
-                    closedBorder: Border.all(width: 0.8),
-                    closedShadow: kElevationToShadow[2]),
+                  closedFillColor: backgroundColor ?? Colors.white,
+                  closedBorder: Border.all(
+                      width: 0.8, color: Colors.grey.withOpacity(0.2)),
+                  closedShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.2,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
                 hintText: hintText,
                 items: items,
                 excludeSelected: false,

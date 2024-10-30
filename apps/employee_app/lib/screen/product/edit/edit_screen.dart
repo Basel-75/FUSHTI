@@ -47,15 +47,30 @@ class EditScreen extends StatelessWidget {
             child: Form(
               key: formKey,
               child: Scaffold(
-                appBar: PreferredSize(
-                  preferredSize: Size.fromHeight(19.h),
-                  child: AppBar(
-                    flexibleSpace: EmployeeHeader(
-                      isTitle: true,
-                      title: 'تعديل منتج',
-                      textSize: 19.sp,
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white, //change your color here
+                  ),
+                  title: Text(
+                    'تعديل منتج',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  centerTitle: true,
+                  flexibleSpace: Container(
+                    height: 13.h,
+                    decoration: const BoxDecoration(
+                      color: Color(0xff6FBAE5),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
                     ),
                   ),
+                  toolbarHeight: 11.h,
                 ),
                 body: SingleChildScrollView(
                   child: Column(
@@ -64,6 +79,7 @@ class EditScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextFormFelid(
+                          backgroundColor: const Color(0xffF6FAFD),
                           controller: cubit.foodNameController,
                           iconText: const Icon(Bootstrap.github),
                           keyboardType: TextInputType.text,
@@ -98,6 +114,7 @@ class EditScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomTextFormFelid(
+                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.priceController,
                               keyboardType: TextInputType.number,
                               iconText: const Icon(
@@ -124,6 +141,7 @@ class EditScreen extends StatelessWidget {
                                 return null;
                               }),
                           CustomTextFormFelid(
+                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.calController,
                               keyboardType: TextInputType.number,
                               iconText: const Icon(
@@ -153,7 +171,8 @@ class EditScreen extends StatelessWidget {
                       SizedBox(
                         height: 3.h,
                       ),
-                      CustomMultiSelect(
+                      CustomMultiSelects(
+                        backgroundColor: const Color(0xffF6FAFD),
                         label: 'الحساسية',
                         hintText:
                             '${productInfo.allergy!.isNotEmpty ? productInfo.allergy : 'لا توجد حساسية'}',

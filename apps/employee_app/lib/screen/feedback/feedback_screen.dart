@@ -80,15 +80,30 @@ class FeedBackScreen extends StatelessWidget {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(19.h),
-              child: AppBar(
-                flexibleSpace: EmployeeHeader(
-                  isTitle: true,
-                  title: 'الأقتراحات والشكاوى',
-                  textSize: 20.sp,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              iconTheme: const IconThemeData(
+                color: Colors.white, //change your color here
+              ),
+              title: Text(
+                'الشكاوى و الاقتراحات',
+                style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              centerTitle: true,
+              flexibleSpace: Container(
+                height: 15.h,
+                decoration: const BoxDecoration(
+                  color: Color(0xff6FBAE5),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(35),
+                    bottomRight: Radius.circular(35),
+                  ),
                 ),
               ),
+              toolbarHeight: 13.h,
             ),
             body: ListView.builder(
                 itemCount: data.length,

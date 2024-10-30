@@ -7,28 +7,28 @@ class ContainerStatistics extends StatelessWidget {
     required this.statisticsName,
     required this.statisticsNumber,
     required this.statisticsIcon,
-    required this.statisticsNameTxtSize,
-    required this.statisticsNumberTxtSize,
-    required this.txtColor,
+    this.statisticsNameTxtSize,
+    this.statisticsNumberTxtSize,
+    this.txtColor,
     required this.containerColor,
-    required this.containerWidth,
-    required this.containerHeight,
+    this.containerWidth,
+    this.containerHeight,
   });
 
   final String statisticsName;
   final int statisticsNumber;
   final Icon statisticsIcon;
-  final double statisticsNameTxtSize;
-  final double statisticsNumberTxtSize;
-  final Color txtColor;
+  final double? statisticsNameTxtSize;
+  final double? statisticsNumberTxtSize;
+  final Color? txtColor;
   final Color containerColor;
-  final double containerWidth;
-  final double containerHeight;
+  final double? containerWidth;
+  final double? containerHeight;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: containerWidth,
-      height: containerHeight,
+      width: containerWidth ?? 30.w,
+      height: containerHeight ?? 9.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: containerColor,
@@ -48,8 +48,9 @@ class ContainerStatistics extends StatelessWidget {
           children: [
             Text(
               statisticsName,
-              style:
-                  TextStyle(fontSize: statisticsNameTxtSize, color: txtColor),
+              style: TextStyle(
+                  fontSize: statisticsNameTxtSize ?? 16.sp,
+                  color: txtColor ?? Colors.black),
             ),
             SizedBox(
               height: 1.5.h,
@@ -57,11 +58,12 @@ class ContainerStatistics extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.money),
+                statisticsIcon,
                 Text(
                   '$statisticsNumber',
                   style: TextStyle(
-                      color: txtColor, fontSize: statisticsNumberTxtSize),
+                      color: txtColor,
+                      fontSize: statisticsNumberTxtSize ?? 14.sp),
                 )
               ],
             ),

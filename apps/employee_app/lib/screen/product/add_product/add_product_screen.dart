@@ -44,15 +44,30 @@ class AddProductScreen extends StatelessWidget {
             child: Form(
               key: formKey,
               child: Scaffold(
-                appBar: PreferredSize(
-                  preferredSize: Size.fromHeight(19.h),
-                  child: AppBar(
-                    flexibleSpace: EmployeeHeader(
-                      isTitle: true,
-                      title: 'اضافة منتج',
-                      textSize: 19.sp,
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white, //change your color here
+                  ),
+                  title: Text(
+                    'أضافة منتج',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  centerTitle: true,
+                  flexibleSpace: Container(
+                    height: 13.h,
+                    decoration: const BoxDecoration(
+                      color: Color(0xff6FBAE5),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
                     ),
                   ),
+                  toolbarHeight: 11.h,
                 ),
                 body: SingleChildScrollView(
                   child: Column(
@@ -61,10 +76,11 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextFormFelid(
+                          backgroundColor: const Color(0xffF6FAFD),
                           controller: cubit.foodNameController,
                           iconText: const Icon(Bootstrap.github),
                           keyboardType: TextInputType.text,
-                          width: 40.w,
+                          width: 85.w,
                           paddingRightSide: 8.w,
                           paddingLeftSide: 8.w,
                           hintText: 'بكس السعادة',
@@ -72,19 +88,9 @@ class AddProductScreen extends StatelessWidget {
                           label: 'اسم المنتج',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('ارجوا منك أضافة اسم المنتج'),
-                                backgroundColor: Colors.red,
-                              ));
                               return "لابد وضع اسم المنتج";
                             } else if (RegExp(r'[0-9]').hasMatch(value)) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('الاسم لا يحتوي على أرقام'),
-                                backgroundColor: Colors.red,
-                              ));
-                              return "بدون أرقام";
+                              return 'الاسم لا يحتوي على أرقام';
                             }
                             return null;
                           }),
@@ -95,6 +101,7 @@ class AddProductScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomTextFormFelid(
+                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.priceController,
                               keyboardType: TextInputType.number,
                               iconText: const Icon(
@@ -111,16 +118,12 @@ class AddProductScreen extends StatelessWidget {
                               label: 'السعر',
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text('ارجوا منك أضافة السعر'),
-                                    backgroundColor: Colors.red,
-                                  ));
                                   return "يجب أضافة السعر";
                                 }
                                 return null;
                               }),
                           CustomTextFormFelid(
+                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.calController,
                               keyboardType: TextInputType.number,
                               iconText: const Icon(
@@ -136,11 +139,6 @@ class AddProductScreen extends StatelessWidget {
                               label: 'السعرات',
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text('يجب كتابة السعرات'),
-                                    backgroundColor: Colors.red,
-                                  ));
                                   return "يجب كتابة السعرات";
                                 }
                                 return null;
@@ -150,7 +148,8 @@ class AddProductScreen extends StatelessWidget {
                       SizedBox(
                         height: 3.h,
                       ),
-                      CustomMultiSelect(
+                      CustomMultiSelects(
+                        backgroundColor: const Color(0xffF6FAFD),
                         label: 'الحساسية',
                         hintText: 'اختر الحساسية',
                         items: cubit.allergy,
@@ -163,6 +162,7 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomSelect(
+                        backgroundColor: const Color(0xffF6FAFD),
                         label: 'النوع',
                         hintText: 'ادخل نوع المنتج',
                         items: const [
@@ -176,13 +176,9 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextArea(
+                        backgroundColor: const Color(0xffF6FAFD),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('ارجوا منك أضافة وصف المنتج'),
-                              backgroundColor: Colors.red,
-                            ));
                             return "يجب كتابة وصف المنتج";
                           }
                           return null;
@@ -217,8 +213,16 @@ class AddProductScreen extends StatelessWidget {
                               width: 85.w,
                               height: 30.h,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(8.0),
+                                color: const Color(0xffF6FAFD),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 0.2,
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               child: cubit.selectedImage == null
                                   ? Center(
