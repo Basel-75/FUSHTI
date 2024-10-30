@@ -9,8 +9,12 @@ import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/order_item_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
+
+import 'package:get_all_pkg/helper/one_signal.dart';
+
 import 'package:get_all_pkg/data/model/scan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
+
 import 'package:meta/meta.dart';
 
 part 'order_state.dart';
@@ -60,6 +64,25 @@ class OrderCubit extends Cubit<OrderState> {
             isDily: false));
       }
     }
+
+
+
+  }
+
+  orderStatusNotification(
+      {required String status,
+      required String childId,
+      required String customerId}) async {
+    try {
+      log("here");
+      emit(LodingState());
+      await Onesignal().pushNote(msg: 'test $status', userId: customerId);
+      //msg: 'Hi your order is $status', userId: customerId
+      emit(NoLodingState());
+      //getChildOrder();
+    } catch (er) {
+      log("$er");
+      emit(ErorState(msg: "there was eorr"));
 
     if (plan != null) {
       for (var val in plan!.mealPlanItemLis) {

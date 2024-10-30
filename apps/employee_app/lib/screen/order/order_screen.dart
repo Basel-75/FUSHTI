@@ -174,6 +174,8 @@ class OrderScreen extends StatelessWidget {
                           );
                         },
                       ),
+                    ),
+
                       CustomButton(
                           onPressed: () {
                             cubit.checkOut();
