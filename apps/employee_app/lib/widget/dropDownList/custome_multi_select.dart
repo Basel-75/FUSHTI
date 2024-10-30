@@ -35,6 +35,7 @@ class CustomMultiSelect extends StatelessWidget {
               height: 0.5.h,
             ),
             CustomDropdown<DropDownItem>.multiSelectSearch(
+              
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
                     closedFillColor: Colors.white,

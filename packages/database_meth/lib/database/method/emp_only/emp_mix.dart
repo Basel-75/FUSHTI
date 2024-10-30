@@ -4,8 +4,11 @@ import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
+import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 import 'package:get_all_pkg/data/model/order_item_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
+import 'package:get_all_pkg/data/model/plan_model.dart';
+import 'package:get_all_pkg/data/model/scan_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
@@ -25,68 +28,198 @@ mixin EmpMix {
   //     rethrow;
   //   }
 
-  Future<List<Map<String, dynamic>>> getChildPlan(
-      {required ChildModel childModel}) async {
+  Future<double> bringPreOrderLimt({required ChildModel childModel}) async {
+    
     try {
+      double totalPreLimt = 0;
+      final date = DateTime.now().toIso8601String().split('T')[0];
       final res = await SuperMain()
           .supabase
-          .from("meal_plans")
+          .from("orders")
           .select()
           .eq("child_id", childModel.id)
-          .eq("status", "active");
+          .eq("status", "open_day")
+          .eq("create_date", date);
 
-      return res;
+      for (var val in res) {
+        totalPreLimt += val["total_price"];
+      }
+
+      return totalPreLimt;
     } catch (er) {
       log("$er");
-
       rethrow;
     }
   }
 
-  orderInfo({required OrderModel orderModel}) async {
-    try {
-      final res = await SuperMain()
-          .supabase
-          .from("order")
-          .select()
-          .eq("order_id", orderModel.id);
+  checkOutOrder({
+    required PlanModel? planModel,
+    required OrderModel? selctFoodOrder,
+    required List<OrderModel> orderLis,
+    required ChildModel childModel,
+    required double dailyLimitTotal,
+  }) async {
+    final date = DateTime.now().toIso8601String().split('T')[0];
 
-      for (var val in res) {
-        orderModel.orderItemModelLis.add(OrderItemModel.fromJson(val));
+    try {
+      if (planModel != null) {
+        await SuperMain().supabase.rpc('append_date_to_meal_plan', params: {
+          'meal_plan_id': planModel.id,
+          'new_date': date,
+        });
       }
 
-      for (var val in orderModel.orderItemModelLis) {
-        final food = await SuperMain()
+      if (selctFoodOrder != null) {
+        log(" in mix check  len of open_day  ${selctFoodOrder.orderItemModelLis.length}");
+        final orderRes = await SuperMain().supabase.from("orders").insert({
+          "child_id": childModel.id,
+          "status": "open_day",
+          "total_price": dailyLimitTotal,
+          "create_date": date
+        }).select();
+
+        for (var orderItem in selctFoodOrder.orderItemModelLis) {
+          await SuperMain().supabase.from("order_item").insert({
+            "order_id": orderRes[0]["id"],
+            "quantity": orderItem.quantity,
+            "menu_id": orderItem.menuId
+          }).select();
+        }
+      }
+
+      if (orderLis.isNotEmpty) {
+        for (var order in orderLis) {
+          await SuperMain()
+              .supabase
+              .from("orders")
+              .update({"status": "completed"})
+              .eq("id", order.id)
+              .select();
+        }
+      }
+
+      await SuperMain()
+          .supabase
+          .from("followers")
+          .update({"funds": childModel.funds - dailyLimitTotal}).eq(
+              "id", childModel.id);
+    } catch (er) {
+      log("$er");
+    }
+  }
+
+  Future<PlanModel?> getChildPlan({required ChildModel childModel}) async {
+    // try {
+    // List<PlanModel> planModelLis = [];
+    PlanModel? plan;
+    final date = DateTime.now().toIso8601String().split('T')[0];
+    // log(date);
+
+    final res = await SuperMain()
+        .supabase
+        .from("meal_plans")
+        .select()
+        .eq("child_id", childModel.id)
+        .lte("start_date", date)
+        .gte("end_date", date);
+
+    log("$res");
+
+// first check if the child take the food in the same day or not
+    List<String> dateTakenTempList = List<String>.from(res[0]["dates_taken"]);
+
+    if (dateTakenTempList.contains(date)) {
+      return null;
+    }
+    for (var val in res) {
+      log("in plan for");
+      plan = PlanModel.fromJson(val);
+
+      final mealItem = await SuperMain()
+          .supabase
+          .from("meal_plan_items")
+          .select()
+          .eq("meal_plan_id", plan.id);
+
+      log("how many meal item ::: ${mealItem.length}");
+
+      //  meal item model ready
+      for (var mealItemIndex in mealItem) {
+        final MealPlanItemModel mealPlanItemModel =
+            MealPlanItemModel.fromJson(mealItemIndex);
+
+        final res = await SuperMain()
             .supabase
             .from("food_menu")
             .select()
-            .eq("id", val.menuId);
+            .eq("id", mealPlanItemModel.menuItemId);
 
-        val.foodMenuModel = FoodMenuModel.fromJson(food[0]);
+        mealPlanItemModel.foodMenuModel = FoodMenuModel.fromJson(res[0]);
+
+        plan.mealPlanItemLis.add(mealPlanItemModel);
       }
-    } catch (er) {
-      log("$er");
 
-      rethrow;
+      // planModelLis.add(plan);
+      // planModelLis.length;
+
+      // log("${planModelLis.length}");
     }
+
+    // log("$res");
+
+    return plan;
+    // } catch (er) {
+    //   log("$er");
+
+    //   rethrow;
+    // }
+  }
+
+  orderInfo({required OrderModel orderModel}) async {
+    // try {
+    final res = await SuperMain()
+        .supabase
+        .from("order_item")
+        .select()
+        .eq("order_id", orderModel.id);
+
+    for (var val in res) {
+      orderModel.orderItemModelLis.add(OrderItemModel.fromJson(val));
+    }
+
+    for (var val in orderModel.orderItemModelLis) {
+      final food = await SuperMain()
+          .supabase
+          .from("food_menu")
+          .select()
+          .eq("id", val.menuId);
+
+      val.foodMenuModel = FoodMenuModel.fromJson(food[0]);
+      print(val.foodMenuModel?.foodName);
+    }
+    // } catch (er) {
+    //   log("$er");
+
+    //   rethrow;
+    // }
   }
 
   Future<List<Map<String, dynamic>>> getChildOrder(
       {required ChildModel childModel}) async {
-    try {
-      final res = await SuperMain()
-          .supabase
-          .from("order")
-          .select()
-          .eq("child_id", childModel.id)
-          .eq("status", "active");
+    // try {
+    final res = await SuperMain()
+        .supabase
+        .from("orders")
+        .select()
+        .eq("child_id", childModel.id)
+        .eq("status", "active");
 
-      return res;
-    } catch (er) {
-      log("$er");
+    return res;
+    // } catch (er) {
+    //   log("$er");
 
-      rethrow;
-    }
+    //   rethrow;
+    // }
   }
 
   getEmpSchool() async {
@@ -106,6 +239,7 @@ mixin EmpMix {
           .from("food_menu")
           .select()
           .eq("school_id", appModel.empModel!.schoolModel.id);
+
       for (var val in foodRes) {
         appModel.empModel!.schoolModel.foodMenuModelList
             .add(FoodMenuModel.fromJson(val));
@@ -115,33 +249,8 @@ mixin EmpMix {
     }
   }
 
-  deleteProduct({required String productId}) async {
-    try {
-      await SuperMain().supabase.from('food_menu').delete().eq('id', productId);
-    } catch (e) {
-      log('$e');
-    }
-  }
 
-  addProduct({required FoodMenuModel product}) async {
-    try {
-      final response = await SuperMain().supabase.from('food_menu').insert({
-        'school_id': product.schoolId,
-        'food_name': product.foodName,
-        'description': product.description,
-        'price': product.price,
-        'category': product.category,
-        'available': product.available,
-        'cal': product.cal,
-        'allergy': product.allergy,
-        'image_url': product.imageUrl,
-      }).select();
 
-      log('$response');
-    } catch (e) {
-      log('$e');
-    }
-  }
 
   editProduct({required FoodMenuModel product}) async {
     log('${product.toJson()}');
@@ -164,6 +273,36 @@ mixin EmpMix {
           .select();
 
       log('$response');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+
+  addProduct({required FoodMenuModel product}) async {
+    try {
+      final response = await SuperMain().supabase.from('food_menu').insert({
+        'school_id': product.schoolId,
+        'food_name': product.foodName,
+        'description': product.description,
+        'price': product.price,
+        'category': product.category,
+        'available': product.available,
+        'cal': product.cal,
+        'allergy': product.allergy,
+        'image_url': product.imageUrl,
+      }).select();
+
+      log('$response');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+
+  deleteProduct({required String productId}) async {
+    try {
+      await SuperMain().supabase.from('food_menu').delete().eq('id', productId);
     } catch (e) {
       log('$e');
     }

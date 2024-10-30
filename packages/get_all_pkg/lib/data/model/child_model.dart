@@ -17,16 +17,20 @@ class ChildModel {
   List<CartItem> cartList = [];
   final List<PlanModel> planList = [];
 
-  ChildModel({
-    required this.id,
-    required this.name,
-    required this.userId,
-    required this.schoolId,
-    required this.imgPath,
-    required this.studentClass,
-    required this.allergy,
-    required this.funds,
-  });
+  final num dailyLimits;
+  final bool isOpenDay;
+
+  ChildModel(
+      {required this.id,
+      required this.name,
+      required this.userId,
+      required this.schoolId,
+      required this.imgPath,
+      required this.studentClass,
+      required this.allergy,
+      required this.funds,
+      required this.dailyLimits,
+      required this.isOpenDay});
 
   factory ChildModel.fromJson(Map<String, dynamic> json) {
     return ChildModel(
@@ -38,6 +42,8 @@ class ChildModel {
       studentClass: json['class'],
       allergy: List<String>.from(json['allergy']),
       funds: json['funds'].toDouble(),
+      dailyLimits: json["daily_limit"],
+      isOpenDay: json["is_open_day"]
     );
   }
 
@@ -51,6 +57,8 @@ class ChildModel {
       'class': studentClass,
       'allergy': allergy,
       'funds': funds,
+      "daily_limit" : dailyLimits,
+      "is_open_day" : isOpenDay
     };
   }
 }
