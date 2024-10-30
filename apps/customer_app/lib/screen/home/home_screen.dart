@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/home/cubit/home_cubit.dart';
+import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
 import 'package:customer_app/widget/container/home_card.dart';
@@ -21,26 +22,56 @@ class HomeScreen extends StatelessWidget {
         final cubit = context.read<HomeCubit>();
         cubit.initHome();
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.wallet,
+                  color: Colors.white,
+                ),
+                Text(
+                  '${cubit.appModel.userModel?.funds.toString()}',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            OrderCartScreen(childModel: HomeCubit.currentChild),
+                      )),
+                  icon: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.white,
+                  )),
+            ],
+            title: Image.asset('assets/image/mainLogo.png'),
+            centerTitle: true,
+            flexibleSpace: Container(
+              decoration: const ShapeDecoration(
+                shape: SmoothRectangleBorder(
+                    borderRadius: SmoothBorderRadius.only(
+                  bottomLeft:
+                      SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                  bottomRight:
+                      SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                )),
+                color: Color(0xff6FBAE5),
+              ),
+            ),
+            toolbarHeight: 15.h,
+          ),
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BlocBuilder<HomeCubit, HomeState>(
-                    builder: (context, state) {
-                      return ScreenHeader(
-                        childModel: cubit.currentChild,
-                        childSchollName: cubit.currentChild.schoolModel.name,
-                        funds: cubit.appModel.userModel!.funds.toString(),
-                        inHomeScreen: true,
-                        parentName: cubit.appModel.userModel!.name,
-                        //title use if isHomeScreen = false
-                        title: '',
-                      );
-                    },
-                  ),
-                  //?=========Header End================
                   SizedBox(
                     height: 1.h,
                   ),
@@ -100,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: List.generate(
-                                  cubit.currentChild.schoolModel
+                                  HomeCubit.currentChild.schoolModel
                                       .foodMenuModelList.length,
                                   (index) {
                                     return HomeCard(
@@ -109,8 +140,9 @@ class HomeScreen extends StatelessWidget {
                                             .push(MaterialPageRoute(
                                           builder: (context) {
                                             return ProductScreen(
-                                              childModel: cubit.currentChild,
-                                              foodMenuModel: cubit
+                                              childModel:
+                                                  HomeCubit.currentChild,
+                                              foodMenuModel: HomeCubit
                                                   .currentChild
                                                   .schoolModel
                                                   .foodMenuModelList[index],
@@ -120,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                                       },
                                       onRestriction: !cubit
                                               .checkRestrictionsFood(
-                                                  productId: cubit
+                                                  productId: HomeCubit
                                                       .currentChild
                                                       .schoolModel
                                                       .foodMenuModelList[index]
@@ -128,27 +160,30 @@ class HomeScreen extends StatelessWidget {
                                           ? () {
                                               cubit.addToRestrictionsFood(
                                                   childId:
-                                                      cubit.currentChild.id,
-                                                  productId: cubit
+                                                      HomeCubit.currentChild.id,
+                                                  productId: HomeCubit
                                                       .currentChild
                                                       .schoolModel
                                                       .foodMenuModelList[index]
                                                       .id);
                                             }
                                           : null,
-                                      cal: cubit.currentChild.schoolModel
+                                      cal: HomeCubit.currentChild.schoolModel
                                           .foodMenuModelList[index].cal,
                                       imagePath: cubit.checkRestrictionsFood(
-                                              productId: cubit
+                                              productId: HomeCubit
                                                   .currentChild
                                                   .schoolModel
                                                   .foodMenuModelList[index]
                                                   .id)
                                           ? 'assets/image/no.png'
                                           : 'assets/image/lez.png',
-                                      itemName: cubit.currentChild.schoolModel
-                                          .foodMenuModelList[index].foodName,
-                                      price: cubit
+                                      itemName: HomeCubit
+                                          .currentChild
+                                          .schoolModel
+                                          .foodMenuModelList[index]
+                                          .foodName,
+                                      price: HomeCubit
                                           .currentChild
                                           .schoolModel
                                           .foodMenuModelList[index]

@@ -18,7 +18,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   List<ChildModel> childModelList = [];
 
-  late ChildModel currentChild;
+  static late ChildModel currentChild;
 
   initHome() {
     childModelList = appModel.userModel!.childModelList;
