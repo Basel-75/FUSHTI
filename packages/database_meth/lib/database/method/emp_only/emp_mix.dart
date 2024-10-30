@@ -29,6 +29,7 @@ mixin EmpMix {
   //   }
 
   Future<double> bringPreOrderLimt({required ChildModel childModel}) async {
+    
     try {
       double totalPreLimt = 0;
       final date = DateTime.now().toIso8601String().split('T')[0];
@@ -245,6 +246,65 @@ mixin EmpMix {
       }
     } catch (er) {
       log("$er");
+    }
+  }
+
+
+
+
+  editProduct({required FoodMenuModel product}) async {
+    log('${product.toJson()}');
+    try {
+      final response = await SuperMain()
+          .supabase
+          .from('food_menu')
+          .update({
+            'school_id': product.schoolId,
+            'food_name': product.foodName,
+            'description': product.description,
+            'price': product.price,
+            'category': product.category,
+            'available': product.available,
+            'cal': product.cal,
+            'allergy': product.allergy,
+            'image_url': product.imageUrl,
+          })
+          .eq('id', product.id)
+          .select();
+
+      log('$response');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+
+  addProduct({required FoodMenuModel product}) async {
+    try {
+      final response = await SuperMain().supabase.from('food_menu').insert({
+        'school_id': product.schoolId,
+        'food_name': product.foodName,
+        'description': product.description,
+        'price': product.price,
+        'category': product.category,
+        'available': product.available,
+        'cal': product.cal,
+        'allergy': product.allergy,
+        'image_url': product.imageUrl,
+      }).select();
+
+      log('$response');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+
+  deleteProduct({required String productId}) async {
+    try {
+      await SuperMain().supabase.from('food_menu').delete().eq('id', productId);
+    } catch (e) {
+      log('$e');
     }
   }
 }
