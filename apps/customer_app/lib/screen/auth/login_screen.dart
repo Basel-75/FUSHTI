@@ -97,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                                   fontFamily: 'Inter',
                                   fontSize: 22.sp,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xff103C37)),
+                                  color: const Color(0xff103C37)),
                             ),
                             SizedBox(
                               height: 5.h,
@@ -110,6 +110,7 @@ class LoginScreen extends StatelessWidget {
                                 keyboardType: TextInputType.emailAddress,
                                 isPassword: false,
                                 label: 'الايميل',
+                                backgroundColor: const Color(0xffF6FAFD),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     ScaffoldMessenger.of(context)

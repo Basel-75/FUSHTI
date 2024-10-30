@@ -64,37 +64,37 @@ class AddFollowersScreen extends StatelessWidget {
               key: cubit.formKey,
               child: Scaffold(
                 appBar: AppBar(
-                  title: const Text(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white, //change your color here
+                  ),
+                  title: Text(
                     'اضافة تابع',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   centerTitle: true,
-                  actions: [
-                    Image.asset('assets/image/homeicon.png'),
-                    SizedBox(
-                      width: 2.h,
-                    )
-                  ],
                   flexibleSpace: Container(
+                    height: 13.h,
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        )),
+                      color: Color(0xff6FBAE5),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                    ),
                   ),
+                  toolbarHeight: 11.h,
                 ),
                 body: SingleChildScrollView(
                   child: Directionality(
-                    textDirection: TextDirection.ltr,
+                    textDirection: TextDirection.rtl,
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 6.h,
+                          height: 3.h,
                         ),
                         SelectImageWidget(
                           onDelete: () {
@@ -112,6 +112,7 @@ class AddFollowersScreen extends StatelessWidget {
                               }
                               return null;
                             },
+                            backgroundColor: const Color(0xffF6FAFD),
                             controller: cubit.nameCon,
                             label: 'الاسم',
                             hintText: 'باسل العلوي',
@@ -130,6 +131,7 @@ class AddFollowersScreen extends StatelessWidget {
 
                             return null;
                           },
+                          backgroundColor: const Color(0xffF6FAFD),
                           label: 'المدرسة',
                           hintText: 'اختر المدرسة',
                           items: cubit.school,
@@ -147,6 +149,7 @@ class AddFollowersScreen extends StatelessWidget {
                             }
                             return null;
                           },
+                          backgroundColor: const Color(0xffF6FAFD),
                           controller: cubit.classCon,
                           label: 'الفصل',
                           hintText: '2ب',
@@ -156,6 +159,7 @@ class AddFollowersScreen extends StatelessWidget {
                           height: 2.h,
                         ),
                         CustomMultiSelect(
+                          backgroundColor: const Color(0xffF6FAFD),
                           label: 'الحساسية',
                           hintText: 'اختر الحساسية',
                           items: cubit.alergy,
@@ -176,6 +180,7 @@ class AddFollowersScreen extends StatelessWidget {
                             }
                             return null;
                           },
+                          backgroundColor: const Color(0xffF6FAFD),
                           label: 'المصروف',
                           hintText: '25',
                           isPassword: false,
