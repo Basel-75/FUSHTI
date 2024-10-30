@@ -18,14 +18,15 @@ void main() async {
   log("${getIt.get<AppModel>().empModel!.toJson()}");
   //log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
   //debugPaintSizeEnabled = true;
-  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  //!test login
-  OneSignal.login(getIt.get<AppModel>().userModel!.id);
-  log('-----####');
-  log("${getIt.get<AppModel>().userModel!.id}");
-  OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
 
-  OneSignal.Notifications.requestPermission(true);
+  // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  // //!test login
+  // OneSignal.login(getIt.get<AppModel>().userModel!.id);
+  // log('-----####');
+  // log("${getIt.get<AppModel>().userModel!.id}");
+  // OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
+
+  // OneSignal.Notifications.requestPermission(true);
   runApp(const MyApp());
 }
 

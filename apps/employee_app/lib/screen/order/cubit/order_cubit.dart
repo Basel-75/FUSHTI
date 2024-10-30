@@ -64,9 +64,6 @@ class OrderCubit extends Cubit<OrderState> {
             isDily: false));
       }
     }
-
-
-
   }
 
   orderStatusNotification(
@@ -84,12 +81,13 @@ class OrderCubit extends Cubit<OrderState> {
       log("$er");
       emit(ErorState(msg: "there was eorr"));
 
-    if (plan != null) {
-      for (var val in plan!.mealPlanItemLis) {
-        scanLis.add(ScanModel(
-            foodMenuModel: val.foodMenuModel,
-            que: val.quantity,
-            isDily: false));
+      if (plan != null) {
+        for (var val in plan!.mealPlanItemLis) {
+          scanLis.add(ScanModel(
+              foodMenuModel: val.foodMenuModel,
+              que: val.quantity,
+              isDily: false));
+        }
       }
     }
   }
@@ -118,7 +116,7 @@ class OrderCubit extends Cubit<OrderState> {
     } else {
       selctFoodOrder?.orderItemModelLis.clear();
     }
-   
+
     scanLis.clear();
 
     addtoScan();
@@ -172,8 +170,6 @@ class OrderCubit extends Cubit<OrderState> {
       }
 
       plan = await SuperMain().getChildPlan(childModel: childModel);
-
-     
 
       // add all food menu with que in this list to show up in ui
 
