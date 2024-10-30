@@ -35,8 +35,6 @@ class FoodMenuModel {
       cal: json['cal'],
 
       allergy: (json['allergy'] as List<dynamic>?)?.cast<String>(),
-
-      allergy: List<String>.from(json['allergy'] ?? []),
       imageUrl: json['image_url'], // Add this field
 
     );
