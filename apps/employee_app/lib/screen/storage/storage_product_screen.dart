@@ -50,15 +50,30 @@ class StorageScreen extends StatelessWidget {
               }
             },
             child: Scaffold(
-              appBar: PreferredSize(
-                preferredSize: Size.fromHeight(19.h),
-                child: AppBar(
-                  flexibleSpace: EmployeeHeader(
-                    isTitle: true,
-                    title: 'إدارة المخزون',
-                    textSize: 20.sp,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
+                title: Text(
+                  'إدارة المخزون',
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                centerTitle: true,
+                flexibleSpace: Container(
+                  height: 13.h,
+                  decoration: const BoxDecoration(
+                    color: Color(0xff6FBAE5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35),
+                    ),
                   ),
                 ),
+                toolbarHeight: 11.h,
               ),
               body: SingleChildScrollView(
                 child: Column(
@@ -88,7 +103,7 @@ class StorageScreen extends StatelessWidget {
                             inactiveText: 'avail',
                             sizeSwitch: 20.w,
                             onChanged: (value) {
-                               cubit.onAdvChange(
+                              cubit.onAdvChange(
                                   foodModel: cubit
                                       .schoolModel.foodMenuModelList[index]);
                               if (value == true) {
@@ -100,10 +115,12 @@ class StorageScreen extends StatelessWidget {
                             image: "assets/image/egg.png",
                             name: cubit
                                 .schoolModel.foodMenuModelList[index].foodName,
-                          
                           );
                         },
                       ),
+                    ),
+                    SizedBox(
+                      height: 3.h,
                     ),
                     CustomButton(
                         onPressed: () {
