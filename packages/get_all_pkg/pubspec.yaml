@@ -43,8 +43,8 @@ dependencies:
   barcode_scan2: ^4.3.3
   pdf: ^3.11.1
   flutter_advanced_switch: ^3.1.0
-
-
+  onesignal_flutter: ^5.2.6
+  dio: ^5.7.0
 
 dev_dependencies:
   flutter_test:
