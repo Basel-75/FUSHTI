@@ -3,10 +3,10 @@ import 'package:get_all_pkg/data/model/food_menu_model.dart';
 class OrderItemModel {
   final String id;
   final String orderId;
-  final int quantity;
+   int quantity;
   final String menuId;
 
-   late final FoodMenuModel foodMenuModel;
+   late FoodMenuModel foodMenuModel;
 
   OrderItemModel({
     required this.id,
