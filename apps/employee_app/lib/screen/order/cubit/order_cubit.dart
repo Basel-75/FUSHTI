@@ -32,13 +32,14 @@ class OrderCubit extends Cubit<OrderState> {
   OrderModel? selctFoodOrder;
 
   double dailyLimitTotal = 0;
+  double preDailyLimitTotal = 0;
 
   queAdd({required OrderItemModel orderItem}) {
     orderItem.quantity += 1;
 
     dailyLimitTotal += orderItem.foodMenuModel.price;
 
-    emit(DoneState());
+    emit(QueUpdateState());
   }
 
   queMin({required OrderItemModel orderItem}) {
@@ -47,7 +48,7 @@ class OrderCubit extends Cubit<OrderState> {
       dailyLimitTotal -= orderItem.foodMenuModel.price;
     }
 
-    emit(DoneState());
+    emit(QueUpdateState());
   }
 
   addtoScan() {
@@ -71,6 +72,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   addFromDrop({required List<DropDownItem> dropList}) {
+    emit(LodingState());
     dailyLimitTotal = 0;
     if (dropList.isEmpty) {
       scanLis.clear();
@@ -83,12 +85,17 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
 
-    selctFoodOrder ??= OrderModel(
-        id: "id",
-        childId: childModel.id,
-        status: "open_day",
-        totalPrice: 0,
-        createDate: DateTime.now().toIso8601String().split('T')[0]);
+    if (selctFoodOrder == null) {
+      selctFoodOrder = OrderModel(
+          id: "id",
+          childId: childModel.id,
+          status: "open_day",
+          totalPrice: 0,
+          createDate: DateTime.now().toIso8601String().split('T')[0]);
+    } else {
+      selctFoodOrder?.orderItemModelLis.clear();
+    }
+   
     scanLis.clear();
 
     addtoScan();
@@ -96,6 +103,7 @@ class OrderCubit extends Cubit<OrderState> {
     for (var val in dropList) {
       for (var food in appModel.empModel!.schoolModel.foodMenuModelList) {
         if (val.name == food.foodName) {
+          log("in check add form drop in if");
           dailyLimitTotal += food.price;
           // temp varible so the two list share same refence will help when we up or down the que in the ui
           final temp = OrderItemModel(
@@ -113,20 +121,20 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   getAllCHildOrder() async {
+    log(DateTime.now().toIso8601String().split('T')[0]);
+    await Future.delayed(Duration(milliseconds: 300));
+    emit(LodingState());
     try {
       scanLis.clear();
       orderLis.clear();
 
-      log("in methd 1");
-      // await Future.delayed(Duration(milliseconds: 300));
-      log("in methd 2");
-
-      // get the scholl drop dwon menu item ready
+      preDailyLimitTotal =
+          await SuperMain().bringPreOrderLimt(childModel: childModel);
 
       for (var val in appModel.empModel!.schoolModel.foodMenuModelList) {
         foodDropList.add(DropDownItem(val.foodName));
       }
-      emit(LodingState());
+
       final res = await SuperMain().getChildOrder(childModel: childModel);
 
 //  first order model
@@ -142,7 +150,7 @@ class OrderCubit extends Cubit<OrderState> {
 
       plan = await SuperMain().getChildPlan(childModel: childModel);
 
-      // log("${planModelLis[0].status}");
+     
 
       // add all food menu with que in this list to show up in ui
 
@@ -172,6 +180,34 @@ class OrderCubit extends Cubit<OrderState> {
 
       emit(ErorState(msg: er.toString()));
       rethrow;
+    }
+  }
+
+  checkOut() async {
+    log("  check this  ${selctFoodOrder?.orderItemModelLis.length}");
+    emit(LodingState());
+    if (dailyLimitTotal + preDailyLimitTotal > childModel.dailyLimits) {
+      emit(ErorState(msg: "the order is above the limt"));
+      return;
+    }
+
+    if (childModel.funds < dailyLimitTotal) {
+      emit(ErorState(msg: "child dont have money"));
+      return;
+    }
+
+    try {
+      await SuperMain().checkOutOrder(
+          planModel: plan,
+          selctFoodOrder: selctFoodOrder,
+          orderLis: orderLis,
+          childModel: childModel,
+          dailyLimitTotal: dailyLimitTotal);
+
+      emit(DoneState());
+    } catch (er) {
+      log("$er");
+      emit(ErorState(msg: er.toString()));
     }
   }
 }

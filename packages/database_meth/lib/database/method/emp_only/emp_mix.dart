@@ -28,6 +28,85 @@ mixin EmpMix {
   //     rethrow;
   //   }
 
+  Future<double> bringPreOrderLimt({required ChildModel childModel}) async {
+    try {
+      double totalPreLimt = 0;
+      final date = DateTime.now().toIso8601String().split('T')[0];
+      final res = await SuperMain()
+          .supabase
+          .from("orders")
+          .select()
+          .eq("child_id", childModel.id)
+          .eq("status", "open_day")
+          .eq("create_date", date);
+
+      for (var val in res) {
+        totalPreLimt += val["total_price"];
+      }
+
+      return totalPreLimt;
+    } catch (er) {
+      log("$er");
+      rethrow;
+    }
+  }
+
+  checkOutOrder({
+    required PlanModel? planModel,
+    required OrderModel? selctFoodOrder,
+    required List<OrderModel> orderLis,
+    required ChildModel childModel,
+    required double dailyLimitTotal,
+  }) async {
+    final date = DateTime.now().toIso8601String().split('T')[0];
+
+    try {
+      if (planModel != null) {
+        await SuperMain().supabase.rpc('append_date_to_meal_plan', params: {
+          'meal_plan_id': planModel.id,
+          'new_date': date,
+        });
+      }
+
+      if (selctFoodOrder != null) {
+        log(" in mix check  len of open_day  ${selctFoodOrder.orderItemModelLis.length}");
+        final orderRes = await SuperMain().supabase.from("orders").insert({
+          "child_id": childModel.id,
+          "status": "open_day",
+          "total_price": dailyLimitTotal,
+          "create_date": date
+        }).select();
+
+        for (var orderItem in selctFoodOrder.orderItemModelLis) {
+          await SuperMain().supabase.from("order_item").insert({
+            "order_id": orderRes[0]["id"],
+            "quantity": orderItem.quantity,
+            "menu_id": orderItem.menuId
+          }).select();
+        }
+      }
+
+      if (orderLis.isNotEmpty) {
+        for (var order in orderLis) {
+          await SuperMain()
+              .supabase
+              .from("orders")
+              .update({"status": "completed"})
+              .eq("id", order.id)
+              .select();
+        }
+      }
+
+      await SuperMain()
+          .supabase
+          .from("followers")
+          .update({"funds": childModel.funds - dailyLimitTotal}).eq(
+              "id", childModel.id);
+    } catch (er) {
+      log("$er");
+    }
+  }
+
   Future<PlanModel?> getChildPlan({required ChildModel childModel}) async {
     // try {
     // List<PlanModel> planModelLis = [];
@@ -43,8 +122,14 @@ mixin EmpMix {
         .lte("start_date", date)
         .gte("end_date", date);
 
-    // log("$res");
+    log("$res");
 
+// first check if the child take the food in the same day or not
+    List<String> dateTakenTempList = List<String>.from(res[0]["dates_taken"]);
+
+    if (dateTakenTempList.contains(date)) {
+      return null;
+    }
     for (var val in res) {
       log("in plan for");
       plan = PlanModel.fromJson(val);
