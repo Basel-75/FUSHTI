@@ -11,8 +11,8 @@ class PlanModel {
 
   final List<MealPlanItemModel> mealPlanItemLis = [];
 
-    final List<String> datesTaken;
-
+  final List<String> datesTaken;
+  final String createDate;
 
   PlanModel({
     required this.id,
@@ -22,8 +22,8 @@ class PlanModel {
     required this.totalMeals,
     required this.status,
     required this.name,
-    required this.datesTaken
-
+    required this.datesTaken,
+    required this.createDate,
   });
 
   factory PlanModel.fromJson(Map<String, dynamic> json) {
@@ -35,7 +35,8 @@ class PlanModel {
       totalMeals: json['total_meals'],
       status: json['status'],
       name: json['name'],
-      datesTaken : List<String>.from(json['dates_taken'])
+      datesTaken: List<String>.from(json['dates_taken']),
+      createDate: json["create_date"],
     );
   }
 
@@ -47,7 +48,8 @@ class PlanModel {
       'end_date': endDate,
       'total_meals': totalMeals,
       'status': status,
-      "dates_taken" : datesTaken
+      "dates_taken": datesTaken,
+      "create_date": createDate
     };
   }
 }
