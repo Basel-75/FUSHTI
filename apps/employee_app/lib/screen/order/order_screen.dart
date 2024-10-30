@@ -5,6 +5,7 @@ import 'package:employee_app/component/drop_down_item.dart';
 import 'package:employee_app/screen/order/cubit/order_cubit.dart';
 
 import 'package:employee_app/widget/appbar_emp_header.dart';
+import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/container/card_storage.dart';
 import 'package:employee_app/widget/container/cardorder.dart';
 import 'package:employee_app/widget/container/container_funds.dart';
@@ -129,7 +130,17 @@ class OrderScreen extends StatelessWidget {
                           );
                         },
                       ),
-                    )
+                    ),
+                    CustomButton(
+                      onPressed: () async {
+                        await cubit.orderStatusNotification(
+                            customerId: cubit.childModel.userId,
+                            childId: cubit.childModel.id,
+                            status: 'taked');
+                      },
+                      title: "تسليم الطلب",
+                      fixedSize: Size(40.w, 4.h),
+                    ),
                   ],
                 ),
               ),

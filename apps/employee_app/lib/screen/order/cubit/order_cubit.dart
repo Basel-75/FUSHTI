@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
+import 'package:get_all_pkg/helper/one_signal.dart';
 import 'package:meta/meta.dart';
 
 part 'order_state.dart';
@@ -31,8 +34,22 @@ class OrderCubit extends Cubit<OrderState> {
     }
 
     final planRes = await SuperMain().getChildPlan(childModel: childModel);
+  }
 
-
-    
+  orderStatusNotification(
+      {required String status,
+      required String childId,
+      required String customerId}) async {
+    try {
+      log("here");
+      emit(LodingState());
+      await Onesignal().pushNote(msg: 'test $status', userId: customerId);
+      //msg: 'Hi your order is $status', userId: customerId
+      emit(NoLodingState());
+      //getChildOrder();
+    } catch (er) {
+      log("$er");
+      emit(ErorState(msg: "there was eorr"));
+    }
   }
 }

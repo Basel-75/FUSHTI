@@ -12,4 +12,7 @@ final class ErorState extends OrderState {
 }
 
 final class DoneState extends OrderState {}
+
 final class LodingState extends OrderState {}
+
+final class NoLodingState extends OrderState {}
