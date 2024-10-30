@@ -5,8 +5,10 @@ import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/history_model.dart';
+import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 import 'package:get_all_pkg/data/model/order_item_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
+import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin HistoryMix {
@@ -74,6 +76,32 @@ mixin HistoryMix {
         orederTemp.orderItemModelLis.addAll(orderItemLis);
 
         lis.add(HistoryModel(childModel: childTemp, orderModel: orederTemp));
+      }
+      //  ----------------------------- for order handle if the history is plan -------------------------------
+      else {
+        final planRes = await SuperMain().supabase.rpc("get_child_meal_plans",
+            params: {
+              "p_child_id": val["child_id"],
+              "p_meal_plan_id": val["record_id"]
+            });
+
+        final planTemp = PlanModel.fromJson(planRes["meal_plans"][0]);
+        final tempChild = ChildModel.fromJson(planRes["child"]);
+
+        final List<MealPlanItemModel> tmeMealLis = [];
+
+        for (var val in planRes["meal_plans"][0]["meal_plan_items"]) {
+          final meal = MealPlanItemModel.fromJson(val);
+          final food = FoodMenuModel.fromJson(val["food_menu"]);
+
+          meal.foodMenuModel = food;
+
+          tmeMealLis.add(meal);
+        }
+
+        planTemp.mealPlanItemLis.addAll(tmeMealLis);
+
+        lis.add(HistoryModel(childModel: tempChild, planModel: planTemp));
       }
     }
 

@@ -25,12 +25,23 @@ class HistoryCubit extends Cubit<HistoryState> {
 
       final res = await SuperMain().orderHistory();
 
-      for (var val in res) {
-        log("${val.orderModel!.toJson()}");
+      // for (var val in res) {
+      //   log("${val.orderModel!.toJson()}");
 
-        for (var item in val.orderModel!.orderItemModelLis) {
-          log("${item.toJson()}");
-          log("${item.foodMenuModel.toJson()}");
+      //   for (var item in val.orderModel!.orderItemModelLis) {
+      //     log("${item.toJson()}");
+      //     log("${item.foodMenuModel.toJson()}");
+      //   }
+      // }
+
+      for (var val in res) {
+        if (val.planModel != null) {
+          log("${val.planModel!.toJson()}");
+
+          for (var item in val.planModel!.mealPlanItemLis) {
+            log("${item.toJson()}");
+            log("${item.foodMenuModel.toJson()}");
+          }
         }
       }
 
