@@ -10,7 +10,8 @@ class UserInfoRow extends StatelessWidget {
     required this.name,
     required this.schoolNameOrParentPhone,
     required this.onEdit,
-    required this.onDelete, required this.isParent,
+    required this.onDelete,
+    required this.isParent,
   });
 
   @override
@@ -25,7 +26,10 @@ class UserInfoRow extends StatelessWidget {
           children: [
             Text(
               name,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff546F66)),
             ),
             Text(
               schoolNameOrParentPhone,
@@ -43,13 +47,14 @@ class UserInfoRow extends StatelessWidget {
               Icons.edit_outlined,
               color: Colors.blueGrey,
             )),
-            isParent ?Text(''):
-        IconButton(
-            onPressed: onDelete,
-            icon: Icon(
-              Icons.delete,
-              color: Colors.red,
-            )),
+        isParent
+            ? Text('')
+            : IconButton(
+                onPressed: onDelete,
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )),
       ],
     );
   }

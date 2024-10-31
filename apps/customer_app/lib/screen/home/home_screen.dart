@@ -97,15 +97,21 @@ class HomeScreen extends StatelessWidget {
                                 children: List.generate(
                                   cubit.childModelList.length,
                                   (index) {
+                                    bool isClicked = true;
                                     return Padding(
                                       padding: const EdgeInsets.all(8),
                                       child: FollowersAvatar(
                                         onTap: () {
+                                          isClicked = !isClicked;
+                                          log(isClicked.toString());
                                           log("chnageChild start");
                                           cubit.chnageChild(
                                               cubit.childModelList[index]);
                                         },
                                         childImage: 'assets/image/kid1.png',
+                                        textColor: isClicked == false
+                                            ? Colors.blue
+                                            : Colors.black,
                                         childName:
                                             cubit.childModelList[index].name,
                                       ),
