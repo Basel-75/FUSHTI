@@ -32,31 +32,31 @@ class OrderCartScreen extends StatelessWidget {
               }
             },
             child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  iconTheme: const IconThemeData(
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'السلة',
-                    style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  centerTitle: true,
-                  flexibleSpace: Container(
-                    //height: 15.h,
-                    decoration: const BoxDecoration(
-                      color: Color(0xff6FBAE5),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(35),
-                        bottomRight: Radius.circular(35),
-                      ),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'السلة',
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                centerTitle: true,
+                flexibleSpace: Container(
+                  //height: 15.h,
+                  decoration: const BoxDecoration(
+                    color: Color(0xff6FBAE5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35),
                     ),
                   ),
-                  toolbarHeight: 11.h,
                 ),
+                toolbarHeight: 11.h,
+              ),
               body: Center(
                 child: Column(
                   children: [

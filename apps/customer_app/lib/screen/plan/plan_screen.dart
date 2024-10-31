@@ -31,14 +31,14 @@ class PlanScreen extends StatelessWidget {
                 backgroundColor: Colors.red,
               ));
             }
-        
+
             if (state is EorrPlanState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.msg),
                 backgroundColor: Colors.red,
               ));
             }
-        
+
             if (state is LodingState) {
               showDialog(
                 context: context,
@@ -50,11 +50,11 @@ class PlanScreen extends StatelessWidget {
                 },
               );
             }
-        
+
             if (state is NoLodingState) {
               Navigator.pop(context);
             }
-        
+
             if (state is ToCartState) {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
@@ -81,19 +81,6 @@ class PlanScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              actions: [
-                IconButton(
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OrderCartScreen(
-                              childModel: HomeCubit.currentChild),
-                        )),
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
-                    )),
-              ],
               title: Image.asset('assets/image/mainLogo.png'),
               centerTitle: true,
               flexibleSpace: Container(
@@ -157,8 +144,7 @@ class PlanScreen extends StatelessWidget {
               shape: const CircleBorder(),
               child: const Icon(Icons.add),
             ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.endFloat,
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             body: Directionality(
               textDirection: TextDirection.rtl,
               child: SingleChildScrollView(
@@ -212,7 +198,7 @@ class PlanScreen extends StatelessWidget {
                                               .childModelList[index].name;
                                         },
                                       ),
-                        
+
                                       buttonValues: List.generate(
                                         cubit.appModel.userModel!.childModelList
                                             .length,
@@ -226,10 +212,10 @@ class PlanScreen extends StatelessWidget {
                                           unSelectedColor: Colors.black,
                                           textStyle:
                                               TextStyle(fontSize: 16.sp)),
-                        
+
                                       radioButtonValue: (value) {
                                         log("$value");
-                        
+
                                         cubit.clickInChild(childModel: value);
                                       },
                                       selectedColor:
@@ -257,7 +243,7 @@ class PlanScreen extends StatelessWidget {
                                     CustomRadioButton(
                                       height: 5.h,
                                       width: 30.w,
-                        
+
                                       customShape: ContinuousRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(25)),
@@ -284,7 +270,7 @@ class PlanScreen extends StatelessWidget {
                                               TextStyle(fontSize: 16.sp)),
                                       radioButtonValue: (value) {
                                         log("$value");
-                        
+
                                         cubit.clickPlanState(planModel: value);
                                       },
                                       selectedColor:

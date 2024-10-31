@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            OrderCartScreen(childModel: HomeCubit.currentChild),
+                            OrderCartScreen(childModel: cubit.currentChild),
                       )),
                   icon: const Icon(
                     Icons.shopping_cart_outlined,
@@ -83,7 +83,9 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'التابعين',
                           style: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.w500),
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xff546F66)),
                         ),
                         BlocBuilder<HomeCubit, HomeState>(
                           builder: (context, state) {
@@ -120,7 +122,9 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'الأفضل مبيعا',
                           style: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold),
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff546F66)),
                         ),
                         SizedBox(
                           height: 2.h,
@@ -136,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: List.generate(
-                                    HomeCubit.currentChild.schoolModel
+                                    cubit.currentChild.schoolModel
                                         .foodMenuModelList.length,
                                     (index) {
                                       return HomeCard(
@@ -145,9 +149,8 @@ class HomeScreen extends StatelessWidget {
                                               .push(MaterialPageRoute(
                                             builder: (context) {
                                               return ProductScreen(
-                                                childModel:
-                                                    HomeCubit.currentChild,
-                                                foodMenuModel: HomeCubit
+                                                childModel: cubit.currentChild,
+                                                foodMenuModel: cubit
                                                     .currentChild
                                                     .schoolModel
                                                     .foodMenuModelList[index],
@@ -155,49 +158,50 @@ class HomeScreen extends StatelessWidget {
                                             },
                                           ));
                                         },
-                                        onRestriction:
-                                            !cubit.checkRestrictionsFood(
-                                                    productId: HomeCubit
+                                        onRestriction: !cubit
+                                                .checkRestrictionsFood(
+                                                    productId: cubit
                                                         .currentChild
                                                         .schoolModel
                                                         .foodMenuModelList[
                                                             index]
                                                         .id)
-                                                ? () {
-                                                    cubit.addToRestrictionsFood(
-                                                        childId: HomeCubit
-                                                            .currentChild.id,
-                                                        productId: HomeCubit
-                                                            .currentChild
-                                                            .schoolModel
-                                                            .foodMenuModelList[
-                                                                index]
-                                                            .id);
-                                                  }
-                                                : null,
-                                        cal: HomeCubit.currentChild.schoolModel
+                                            ? () {
+                                                cubit.addToRestrictionsFood(
+                                                    childId:
+                                                        cubit.currentChild.id,
+                                                    productId: cubit
+                                                        .currentChild
+                                                        .schoolModel
+                                                        .foodMenuModelList[
+                                                            index]
+                                                        .id);
+                                              }
+                                            : null,
+                                        cal: cubit.currentChild.schoolModel
                                             .foodMenuModelList[index].cal
                                             .toString(),
                                         imagePath: cubit.checkRestrictionsFood(
-                                                productId: HomeCubit
+                                                productId: cubit
                                                     .currentChild
                                                     .schoolModel
                                                     .foodMenuModelList[index]
                                                     .id)
                                             ? 'assets/image/no.png'
-                                            : HomeCubit
+                                            : cubit
                                                 .currentChild
                                                 .schoolModel
                                                 .foodMenuModelList[index]
                                                 .imageUrl
-                                                .toString().trim(),
-                                        productName: HomeCubit
+                                                .toString()
+                                                .trim(),
+                                        productName: cubit
                                             .currentChild
                                             .schoolModel
                                             .foodMenuModelList[index]
                                             .foodName,
                                         price:
-                                            '${HomeCubit.currentChild.schoolModel.foodMenuModelList[index].price as double}',
+                                            '${cubit.currentChild.schoolModel.foodMenuModelList[index].price as double}',
                                       );
                                     },
                                   ),
@@ -209,103 +213,67 @@ class HomeScreen extends StatelessWidget {
                         // SizedBox(
                         //   height: 2.h,
                         // ),
-                        const Text(
+                        Text(
                           'البوكسات',
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff546F66)),
                         ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(vertical: 1.h),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              HomeCard(
-                                productName: 'بوكس السعادة',
-                                price: '8',
-                                cal: '70',
-                                imagePath: 'assets/image/lez.png',
-                                onAdd: () {},
-                                onRestriction: () {},
-                                onTap: () {},
-                              ),
-                              OldHomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'بوكس السعادة',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                              OldHomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'بوكس التغذية',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                              OldHomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'بوكس المفرحات',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                              OldHomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'ليز',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                            ],
-                          ),
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: cubit
+                                  .getListByType(catagory: 'box')
+                                  .map(
+                                    (e) => HomeCard(
+                                        productName: e.foodName,
+                                        price: '${e.price}',
+                                        cal: '${e.cal}',
+                                        imagePath: '${e.imageUrl}'),
+                                  )
+                                  .toList()),
                         ),
                       ],
                     ),
+                  ),
+                  Text(
+                    'الوجبات',
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff546F66)),
                   ),
                   SizedBox(
-                    height: 2.h,
-                  ),
-                  const Text(
-                    'الوجبات',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(vertical: 1.h),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        OldHomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                        OldHomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                        OldHomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                        OldHomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                      ],
-                    ),
+                    height: 40.h,
+                    width: 80.w,
+                    child: cubit.getListByType(catagory: 'product').isNotEmpty
+                        ? GridView.builder(
+                            itemCount:
+                                cubit.getListByType(catagory: 'product').length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 2.0.h,
+                              mainAxisSpacing: 1.0.h,
+                              //childAspectRatio: 0.12.h,
+                            ),
+                            itemBuilder: (context, index) => HomeCard(
+                                productName: cubit
+                                    .getListByType(catagory: 'product')[index]
+                                    .foodName,
+                                price:
+                                    '${cubit.getListByType(catagory: 'product')[index].price}',
+                                cal:
+                                    '${cubit.getListByType(catagory: 'product')[index].cal}',
+                                imagePath:
+                                    '${cubit.getListByType(catagory: 'product')[index].imageUrl}'),
+                          )
+                        : Center(
+                            child: Text('لا توجد وجبات ):'),
+                          ),
                   ),
                   SizedBox(
                     height: 2.h,

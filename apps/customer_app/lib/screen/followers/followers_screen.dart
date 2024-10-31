@@ -44,7 +44,7 @@ class FollowersScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              leading:  Column(
+              leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -57,19 +57,6 @@ class FollowersScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              actions: [
-                IconButton(
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OrderCartScreen(
-                              childModel: cart.HomeCubit.currentChild),
-                        )),
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
-                    )),
-              ],
               title: Image.asset('assets/image/mainLogo.png'),
               centerTitle: true,
               flexibleSpace: Container(
