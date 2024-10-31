@@ -33,9 +33,9 @@ mixin HistoryMix {
   // }
 
   Future<List<HistoryModel>> orderHistory() async {
-    // try {
+    try {
     AppModel appModel = getIt.get<AppModel>();
-    log("in orderHis mix");
+    
 
     final List<HistoryModel> lis = [];
 
@@ -49,15 +49,14 @@ mixin HistoryMix {
     for (var val in res) {
       //  ----------------------------- for order handle if the history is order -------------------------------
       if (val["source"] == "order") {
-        log("before");
-        log("${val["child_id"]}");
+      
         final orderRes = await SuperMain()
             .supabase
             .rpc("get_child_orders_by_user", params: {
           "p_child_id": val["child_id"],
           "p_order_id": val["record_id"]
         });
-        log("here");
+        
 
         final childTemp = ChildModel.fromJson(orderRes["child"]);
 
@@ -74,6 +73,7 @@ mixin HistoryMix {
           orderItemLis.add(orderItemTemp);
         }
         orederTemp.orderItemModelLis.addAll(orderItemLis);
+        orederTemp.childModel = childTemp;
 
         lis.add(HistoryModel(childModel: childTemp, orderModel: orederTemp));
       }
@@ -100,16 +100,17 @@ mixin HistoryMix {
         }
 
         planTemp.mealPlanItemLis.addAll(tmeMealLis);
+        planTemp.childModel = tempChild;
 
         lis.add(HistoryModel(childModel: tempChild, planModel: planTemp));
       }
     }
 
     return lis;
-    // } catch (er) {
-    //   log("$er");
+    } catch (er) {
+      log("$er");
 
-    //   rethrow;
-    // }
+      rethrow;
+    }
   }
 }

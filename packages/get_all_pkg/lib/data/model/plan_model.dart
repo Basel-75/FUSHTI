@@ -1,3 +1,4 @@
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 
 class PlanModel {
@@ -13,6 +14,9 @@ class PlanModel {
 
   final List<String> datesTaken;
   final String createDate;
+
+     ChildModel? childModel;
+
 
   PlanModel({
     required this.id,

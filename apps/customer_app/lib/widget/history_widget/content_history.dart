@@ -16,7 +16,7 @@ class ContentHistory extends StatelessWidget {
   final String foodName;
   final int numberOfCal;
   final int quantity;
-  final int price;
+  final String price;
   final bool isBill;
 
   @override

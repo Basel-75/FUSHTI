@@ -18,6 +18,19 @@ class HistoryCubit extends Cubit<HistoryState> {
   List<OrderModel> lisOrder = [];
   List<PlanModel> planLis = [];
 
+  bool isOrder = true;
+
+  tabClick({required String tabName}) {
+    emit(LodingState());
+    if (tabName == "order") {
+      isOrder = true;
+    } else {
+      isOrder = false;
+    }
+
+    emit(DoneState());
+  }
+
   historyBring() async {
     try {
       await Future.delayed(Duration(milliseconds: 300));
@@ -25,23 +38,11 @@ class HistoryCubit extends Cubit<HistoryState> {
 
       final res = await SuperMain().orderHistory();
 
-      // for (var val in res) {
-      //   log("${val.orderModel!.toJson()}");
-
-      //   for (var item in val.orderModel!.orderItemModelLis) {
-      //     log("${item.toJson()}");
-      //     log("${item.foodMenuModel.toJson()}");
-      //   }
-      // }
-
       for (var val in res) {
-        if (val.planModel != null) {
-          log("${val.planModel!.toJson()}");
-
-          for (var item in val.planModel!.mealPlanItemLis) {
-            log("${item.toJson()}");
-            log("${item.foodMenuModel.toJson()}");
-          }
+        if (val.orderModel != null) {
+          lisOrder.add(val.orderModel!);
+        } else if (val.planModel != null) {
+          planLis.add(val.planModel!);
         }
       }
 
