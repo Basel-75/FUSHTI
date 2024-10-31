@@ -122,83 +122,93 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
                         BlocBuilder<HomeCubit, HomeState>(
                           builder: (context, state) {
-                            return SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.symmetric(vertical: 1.h),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: List.generate(
-                                  HomeCubit.currentChild.schoolModel
-                                      .foodMenuModelList.length,
-                                  (index) {
-                                    return OldHomeCard(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) {
-                                            return ProductScreen(
-                                              childModel:
-                                                  HomeCubit.currentChild,
-                                              foodMenuModel: HomeCubit
-                                                  .currentChild
-                                                  .schoolModel
-                                                  .foodMenuModelList[index],
-                                            );
-                                          },
-                                        ));
-                                      },
-                                      onRestriction: !cubit
-                                              .checkRestrictionsFood(
-                                                  productId: HomeCubit
-                                                      .currentChild
-                                                      .schoolModel
-                                                      .foodMenuModelList[index]
-                                                      .id)
-                                          ? () {
-                                              cubit.addToRestrictionsFood(
-                                                  childId:
-                                                      HomeCubit.currentChild.id,
-                                                  productId: HomeCubit
-                                                      .currentChild
-                                                      .schoolModel
-                                                      .foodMenuModelList[index]
-                                                      .id);
-                                            }
-                                          : null,
-                                      cal: HomeCubit.currentChild.schoolModel
-                                          .foodMenuModelList[index].cal,
-                                      imagePath: cubit.checkRestrictionsFood(
-                                              productId: HomeCubit
-                                                  .currentChild
-                                                  .schoolModel
-                                                  .foodMenuModelList[index]
-                                                  .id)
-                                          ? 'assets/image/no.png'
-                                          : 'assets/image/lez.png',
-                                      itemName: HomeCubit
-                                          .currentChild
-                                          .schoolModel
-                                          .foodMenuModelList[index]
-                                          .foodName,
-                                      price: HomeCubit
-                                          .currentChild
-                                          .schoolModel
-                                          .foodMenuModelList[index]
-                                          .price as double,
-                                      rate: '4.8',
-                                    );
-                                  },
+                            return SizedBox(
+                              height: 22.h,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(vertical: 1.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: List.generate(
+                                    HomeCubit.currentChild.schoolModel
+                                        .foodMenuModelList.length,
+                                    (index) {
+                                      return HomeCard(
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) {
+                                              return ProductScreen(
+                                                childModel:
+                                                    HomeCubit.currentChild,
+                                                foodMenuModel: HomeCubit
+                                                    .currentChild
+                                                    .schoolModel
+                                                    .foodMenuModelList[index],
+                                              );
+                                            },
+                                          ));
+                                        },
+                                        onRestriction:
+                                            !cubit.checkRestrictionsFood(
+                                                    productId: HomeCubit
+                                                        .currentChild
+                                                        .schoolModel
+                                                        .foodMenuModelList[
+                                                            index]
+                                                        .id)
+                                                ? () {
+                                                    cubit.addToRestrictionsFood(
+                                                        childId: HomeCubit
+                                                            .currentChild.id,
+                                                        productId: HomeCubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id);
+                                                  }
+                                                : null,
+                                        cal: HomeCubit.currentChild.schoolModel
+                                            .foodMenuModelList[index].cal
+                                            .toString(),
+                                        imagePath: cubit.checkRestrictionsFood(
+                                                productId: HomeCubit
+                                                    .currentChild
+                                                    .schoolModel
+                                                    .foodMenuModelList[index]
+                                                    .id)
+                                            ? 'assets/image/no.png'
+                                            : HomeCubit
+                                                .currentChild
+                                                .schoolModel
+                                                .foodMenuModelList[index]
+                                                .imageUrl
+                                                .toString().trim(),
+                                        productName: HomeCubit
+                                            .currentChild
+                                            .schoolModel
+                                            .foodMenuModelList[index]
+                                            .foodName,
+                                        price:
+                                            '${HomeCubit.currentChild.schoolModel.foodMenuModelList[index].price as double}',
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             );
                           },
                         ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
+                        // SizedBox(
+                        //   height: 2.h,
+                        // ),
                         const Text(
                           'البوكسات',
                           style: TextStyle(
@@ -210,7 +220,15 @@ class HomeScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              HomeCard(),
+                              HomeCard(
+                                productName: 'بوكس السعادة',
+                                price: '8',
+                                cal: '70',
+                                imagePath: 'assets/image/lez.png',
+                                onAdd: () {},
+                                onRestriction: () {},
+                                onTap: () {},
+                              ),
                               OldHomeCard(
                                 cal: 30,
                                 imagePath: 'assets/image/lez.png',
@@ -303,8 +321,17 @@ class HomeScreen extends StatelessWidget {
 }
 
 class HomeCard extends StatelessWidget {
+  final String productName, price, cal, imagePath;
+  final Function()? onTap, onRestriction, onAdd;
   const HomeCard({
     super.key,
+    required this.productName,
+    required this.price,
+    required this.cal,
+    this.onTap,
+    this.onRestriction,
+    this.onAdd,
+    required this.imagePath,
   });
 
   @override
@@ -315,76 +342,86 @@ class HomeCard extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            width: 35.w,
-            height: 35.w,
-            padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.w),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius:
-                    BorderRadius.circular(15),
-                boxShadow: kElevationToShadow[8]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Spacer(),
-                Text(
-                  'لوزين',
-                  style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w800),
-                ),
-                SizedBox(height: 1.w,),
-                Text(
-                  '18 رس',
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '30',
-                      style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0x50000000)),
-                    ),
-                    Icon(LineAwesome.fire_alt_solid,
-                        color: Color(0xffEC8743))
-                  ],
-                )
-              ],
+          InkWell(
+            onTap: onTap,
+            child: Container(
+              width: 35.w,
+              height: 35.w,
+              margin: EdgeInsets.symmetric(horizontal: 1.w),
+              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: kElevationToShadow[8]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Spacer(),
+                  Text(
+                    productName,
+                    style:
+                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800),
+                  ),
+                  SizedBox(
+                    height: 1.w,
+                  ),
+                  Text(
+                    '$price رس',
+                    style:
+                        TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        cal,
+                        style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0x50000000)),
+                      ),
+                      Icon(LineAwesome.fire_alt_solid, color: Color(0xffEC8743))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           Positioned(
               left: 12.w,
-              bottom: 32.w,
-              child: Image.asset(
-                  'assets/image/lez.png')),
+              bottom: 28.w,
+              child: CircleAvatar(
+                backgroundColor: Color(0x88C8E5F5),
+                child: Image.network(
+                  fit: BoxFit.contain,
+                  imagePath,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.fastfood_rounded,
+                    color: Colors.orange,
+                  ),
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
+              )),
           Positioned(
               left: 27.w,
               bottom: 32.w,
               child: InkWell(
-                onTap: () {},
-                child: const Icon(
-                    Icons.no_food_outlined,
-                    color: Colors.red),
+                onTap: onRestriction,
+                child: const Icon(Icons.no_food_outlined, color: Colors.red),
               )),
           Positioned(
             left: 3.w,
             bottom: 8.w,
             child: InkWell(
-              onTap: () {
-                log('add');
-              },
+              onTap: onAdd,
               child: Container(
                 width: 8.w,
                 height: 7.w,
                 decoration: BoxDecoration(
                     color: Color(0xffC9E7E7),
-                    borderRadius:
-                        BorderRadius.circular(6)),
+                    borderRadius: BorderRadius.circular(6)),
                 child: Icon(
                   Icons.add,
                   color: Colors.white,

@@ -19,12 +19,16 @@ class HomeCubit extends Cubit<HomeState> {
   List<ChildModel> childModelList = [];
 
   static late ChildModel currentChild;
-
+  
   initHome() {
     childModelList = appModel.userModel!.childModelList;
 
     log("there is ${childModelList.length}");
-
+log('${currentChild
+                                                .schoolModel
+                                                .foodMenuModelList.first
+                                                .imageUrl
+                                                .toString().trim()}');
     currentChild = childModelList.first;
   }
 
