@@ -66,7 +66,7 @@ class AddFollowersScreen extends StatelessWidget {
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,
                   iconTheme: const IconThemeData(
-                    color: Colors.white, //change your color here
+                    color: Colors.white,
                   ),
                   title: Text(
                     'اضافة تابع',

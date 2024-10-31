@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:customer_app/screen/home/cubit/home_cubit.dart';
 import 'package:customer_app/screen/home/home_screen.dart';
+import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cubit/plan_cubit.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
@@ -21,109 +23,148 @@ class PlanScreen extends StatelessWidget {
       create: (context) => PlanCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<PlanCubit>();
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: BlocListener<PlanCubit, PlanState>(
-            listener: (context, state) {
-              if (state is NoInterState) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Please check your Internet'),
-                  backgroundColor: Colors.red,
-                ));
-              }
-
-              if (state is EorrPlanState) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(state.msg),
-                  backgroundColor: Colors.red,
-                ));
-              }
-
-              if (state is LodingState) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
-              }
-
-              if (state is NoLodingState) {
-                Navigator.pop(context);
-              }
-
-              if (state is ToCartState) {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) {
-                    return PlanCartScreen(planModel: cubit.planModelSelcted!,);
-                  },
-                ));
-              }
-            },
-            child: Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  log("${cubit.childModelSelcted}");
-                  if (cubit.isThereChild()) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: Container(
-                            width: 30.w,
-                            height: 30.h,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: kElevationToShadow[8]),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                CustomTextFormFelid(
-                                    controller: cubit.planNameCOn,
-                                    label: "اضف خطة",
-                                    hintText: "اسم الخطة",
-                                    isPassword: false),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                CustomButton(
-                                  onPressed: () {
-                                    cubit.addPlan();
-                                  },
-                                  title: "اضف",
-                                  fixedSize: Size(30.w, 5.h),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
+        return BlocListener<PlanCubit, PlanState>(
+          listener: (context, state) {
+            if (state is NoInterState) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('Please check your Internet'),
+                backgroundColor: Colors.red,
+              ));
+            }
+        
+            if (state is EorrPlanState) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.msg),
+                backgroundColor: Colors.red,
+              ));
+            }
+        
+            if (state is LodingState) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 },
-                backgroundColor: Colors.white,
-                shape: const CircleBorder(),
-                child: const Icon(Icons.add),
+              );
+            }
+        
+            if (state is NoLodingState) {
+              Navigator.pop(context);
+            }
+        
+            if (state is ToCartState) {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) {
+                  return PlanCartScreen(
+                    planModel: cubit.planModelSelcted!,
+                  );
+                },
+              ));
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.wallet,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    '${cubit.appModel.userModel?.funds.toString()}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.startFloat,
-              body: SingleChildScrollView(
+              actions: [
+                IconButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OrderCartScreen(
+                              childModel: HomeCubit.currentChild),
+                        )),
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    )),
+              ],
+              title: Image.asset('assets/image/mainLogo.png'),
+              centerTitle: true,
+              flexibleSpace: Container(
+                decoration: const ShapeDecoration(
+                  shape: SmoothRectangleBorder(
+                      borderRadius: SmoothBorderRadius.only(
+                    bottomLeft:
+                        SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                    bottomRight:
+                        SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                  )),
+                  color: Color(0xff6FBAE5),
+                ),
+              ),
+              toolbarHeight: 15.h,
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                log("${cubit.childModelSelcted}");
+                if (cubit.isThereChild()) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: Container(
+                          width: 30.w,
+                          height: 30.h,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: kElevationToShadow[8]),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              CustomTextFormFelid(
+                                  controller: cubit.planNameCOn,
+                                  label: "اضف خطة",
+                                  hintText: "اسم الخطة",
+                                  isPassword: false),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              CustomButton(
+                                onPressed: () {
+                                  cubit.addPlan();
+                                },
+                                title: "اضف",
+                                fixedSize: Size(30.w, 5.h),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+              backgroundColor: Colors.white,
+              shape: const CircleBorder(),
+              child: const Icon(Icons.add),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endFloat,
+            body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ScreenHeader(
-                      parentName: '',
-                      title: 'الخطط',
-                      inHomeScreen: false,
-                      funds: '',
-                      childSchollName: '',
-                    ),
                     SizedBox(
                       height: 1.h,
                     ),
@@ -132,10 +173,12 @@ class PlanScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'التابعين',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff546F66)),
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -145,15 +188,16 @@ class PlanScreen extends StatelessWidget {
                                 return Row(
                                   children: [
                                     CustomRadioButton(
-                                      height: 10.h,
-
+                                      height: 5.h,
+                                      width: 30.w,
+                                      unSelectedBorderColor: Colors.grey,
                                       customShape: ContinuousRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(25)),
                                       enableShape: true,
-                                      elevation: 0,
+                                      elevation: 2,
                                       //absoluteZeroSpacing: true,
-                                      unSelectedColor: const Color(0xffe5dfcf),
+                                      unSelectedColor: const Color(0xffffffff),
                                       // buttonLables: const [
                                       //   'احمد',
                                       //   'انس',
@@ -168,7 +212,7 @@ class PlanScreen extends StatelessWidget {
                                               .childModelList[index].name;
                                         },
                                       ),
-
+                        
                                       buttonValues: List.generate(
                                         cubit.appModel.userModel!.childModelList
                                             .length,
@@ -177,27 +221,31 @@ class PlanScreen extends StatelessWidget {
                                               .childModelList[index];
                                         },
                                       ),
-                                      buttonTextStyle: const ButtonTextStyle(
-                                          selectedColor: Colors.white,
+                                      buttonTextStyle: ButtonTextStyle(
+                                          selectedColor: Colors.black,
                                           unSelectedColor: Colors.black,
-                                          textStyle: TextStyle(fontSize: 16)),
-
+                                          textStyle:
+                                              TextStyle(fontSize: 16.sp)),
+                        
                                       radioButtonValue: (value) {
                                         log("$value");
-
+                        
                                         cubit.clickInChild(childModel: value);
                                       },
-                                      selectedColor: Colors.blueAccent,
+                                      selectedColor:
+                                          Color.fromARGB(56, 12, 154, 236),
                                     ),
                                   ],
                                 );
                               },
                             ),
                           ),
-                          const Text(
+                          Text(
                             'الخطط',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff546F66)),
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -207,15 +255,16 @@ class PlanScreen extends StatelessWidget {
                                 return Row(
                                   children: [
                                     CustomRadioButton(
-                                      height: 10.h,
-
+                                      height: 5.h,
+                                      width: 30.w,
+                        
                                       customShape: ContinuousRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(25)),
                                       enableShape: true,
-                                      elevation: 0,
+                                      elevation: 2,
                                       //absoluteZeroSpacing: true,
-                                      unSelectedColor: const Color(0xffe5dfcf),
+                                      unSelectedColor: const Color(0xffffffff),
                                       buttonLables: List.generate(
                                         cubit.planListUi.length,
                                         (index) {
@@ -228,26 +277,30 @@ class PlanScreen extends StatelessWidget {
                                           return cubit.planListUi[index];
                                         },
                                       ),
-                                      buttonTextStyle: const ButtonTextStyle(
-                                          selectedColor: Colors.white,
+                                      buttonTextStyle: ButtonTextStyle(
+                                          selectedColor: Colors.black,
                                           unSelectedColor: Colors.black,
-                                          textStyle: TextStyle(fontSize: 16)),
+                                          textStyle:
+                                              TextStyle(fontSize: 16.sp)),
                                       radioButtonValue: (value) {
                                         log("$value");
-
+                        
                                         cubit.clickPlanState(planModel: value);
                                       },
-                                      selectedColor: Colors.blueAccent,
+                                      selectedColor:
+                                          Color.fromARGB(56, 12, 154, 236),
                                     ),
                                   ],
                                 );
                               },
                             ),
                           ),
-                          const Text(
+                          Text(
                             'الاطعمة المخصصة',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff546F66)),
                           ),
                           const Divider(),
                           SizedBox(

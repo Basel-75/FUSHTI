@@ -18,19 +18,19 @@ class ProductSmallContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.5.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Color(0x70BA9773),
+        color: Color(0x56FBC983),
       ),
       child: isForCal
           ? Row(
               children: [
-                Icon(
-                  Icons.local_fire_department_sharp,
-                  color: Color(0xffE4A951),
-                ),
                 Text(
                   ' $amount ',
                   style:
                       TextStyle(fontWeight: FontWeight.w300, fontSize: 16.sp),
+                ),
+                const Icon(
+                  LineAwesome.fire_alt_solid,
+                  color: Color(0xffEC8743),
                 ),
                 Text(
                   isCallWithText?'سعرة':'',

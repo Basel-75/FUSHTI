@@ -134,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                                   HomeCubit.currentChild.schoolModel
                                       .foodMenuModelList.length,
                                   (index) {
-                                    return HomeCard(
+                                    return OldHomeCard(
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
@@ -200,54 +200,6 @@ class HomeScreen extends StatelessWidget {
                           height: 2.h,
                         ),
                         const Text(
-                          'أقسامنا',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffe7c7c5)),
-                                  child:
-                                      Image.asset('assets/image/breakfast.png'),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffe7c7c5)),
-                                  child: Image.asset('assets/image/launch.png'),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: 129,
-                                  height: 75,
-                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffd7bf9c)),
-                                  child: Image.asset('assets/image/snack.png'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        const Text(
                           'البوكسات',
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
@@ -255,31 +207,32 @@ class HomeScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(vertical: 1.h),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              HomeCard(
+                              HomeCard(),
+                              OldHomeCard(
                                 cal: 30,
                                 imagePath: 'assets/image/lez.png',
                                 itemName: 'بوكس السعادة',
                                 price: 2,
                                 rate: '4.8',
                               ),
-                              HomeCard(
+                              OldHomeCard(
                                 cal: 30,
                                 imagePath: 'assets/image/lez.png',
                                 itemName: 'بوكس التغذية',
                                 price: 2,
                                 rate: '4.8',
                               ),
-                              HomeCard(
+                              OldHomeCard(
                                 cal: 30,
                                 imagePath: 'assets/image/lez.png',
                                 itemName: 'بوكس المفرحات',
                                 price: 2,
                                 rate: '4.8',
                               ),
-                              HomeCard(
+                              OldHomeCard(
                                 cal: 30,
                                 imagePath: 'assets/image/lez.png',
                                 itemName: 'ليز',
@@ -305,28 +258,28 @@ class HomeScreen extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        HomeCard(
+                        OldHomeCard(
                           cal: 30,
                           imagePath: 'assets/image/lez.png',
                           itemName: 'ليز',
                           price: 2,
                           rate: '4.8',
                         ),
-                        HomeCard(
+                        OldHomeCard(
                           cal: 30,
                           imagePath: 'assets/image/lez.png',
                           itemName: 'ليز',
                           price: 2,
                           rate: '4.8',
                         ),
-                        HomeCard(
+                        OldHomeCard(
                           cal: 30,
                           imagePath: 'assets/image/lez.png',
                           itemName: 'ليز',
                           price: 2,
                           rate: '4.8',
                         ),
-                        HomeCard(
+                        OldHomeCard(
                           cal: 30,
                           imagePath: 'assets/image/lez.png',
                           itemName: 'ليز',
@@ -345,6 +298,102 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+}
+
+class HomeCard extends StatelessWidget {
+  const HomeCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40.w,
+      width: 35.w,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: 35.w,
+            height: 35.w,
+            padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 1.w),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    BorderRadius.circular(15),
+                boxShadow: kElevationToShadow[8]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Spacer(),
+                Text(
+                  'لوزين',
+                  style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w800),
+                ),
+                SizedBox(height: 1.w,),
+                Text(
+                  '18 رس',
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '30',
+                      style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0x50000000)),
+                    ),
+                    Icon(LineAwesome.fire_alt_solid,
+                        color: Color(0xffEC8743))
+                  ],
+                )
+              ],
+            ),
+          ),
+          Positioned(
+              left: 12.w,
+              bottom: 32.w,
+              child: Image.asset(
+                  'assets/image/lez.png')),
+          Positioned(
+              left: 27.w,
+              bottom: 32.w,
+              child: InkWell(
+                onTap: () {},
+                child: const Icon(
+                    Icons.no_food_outlined,
+                    color: Colors.red),
+              )),
+          Positioned(
+            left: 3.w,
+            bottom: 8.w,
+            child: InkWell(
+              onTap: () {
+                log('add');
+              },
+              child: Container(
+                width: 8.w,
+                height: 7.w,
+                decoration: BoxDecoration(
+                    color: Color(0xffC9E7E7),
+                    borderRadius:
+                        BorderRadius.circular(6)),
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
