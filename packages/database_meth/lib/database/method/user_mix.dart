@@ -1,9 +1,38 @@
 import 'dart:developer';
 
 import 'package:database_meth/database/super_main.dart';
+import 'package:get_all_pkg/data/model/app_model.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/user_model.dart';
+import 'package:get_all_pkg/data/setup.dart';
 
 mixin UserMix {
+  updateChildOpenDay({required double limtFunds, required ChildModel childModel, required isOpen}) async {
+    try {
+      await SuperMain().supabase.from("followers").update({
+
+        "daily_limit" : limtFunds,
+        "is_open_day" : isOpen,
+      }).eq("id", childModel.id);
+    } catch (er) {
+      log("$er");
+    }
+  }
+
+  addfundsChild({required double funds, required ChildModel childModel}) async {
+    try {
+      AppModel appModel = getIt.get<AppModel>();
+      await SuperMain().supabase.rpc("decrement_funds",
+          params: {"user_id": appModel.userModel!.id, "amount": funds});
+
+      await SuperMain().supabase.rpc("child_incrment_funds",
+          params: {"p_user_id": childModel.id, "p_amount": funds});
+    } catch (er) {
+      log("$er");
+      rethrow;
+    }
+  }
+
   updateUserProfile(
       {required String name, required String phone, required String id}) async {
     try {

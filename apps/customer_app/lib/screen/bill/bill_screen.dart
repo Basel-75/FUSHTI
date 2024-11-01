@@ -129,7 +129,7 @@ class BillScreen extends StatelessWidget {
                                   height: 2.h,
                                 ),
                                 const BottomHistoryInfo(
-                                  totalPrice: 222,
+                                  totalPrice: "222",
                                   name: "احد محسن",
                                 ),
                               ],

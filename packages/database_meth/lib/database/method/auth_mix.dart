@@ -32,7 +32,7 @@ mixin AuthMix on Super {
           .select()
           .eq("id", "35d625c6-a6b1-4089-a638-f87c776aab2b");
 
-      getIt.get<AppModel>().empModel = EmpModel.fromJson(res[0]);
+      getIt.get<AppModel>().userModel = UserModel.fromJson(res[0]);
     } catch (er) {
       log("$er");
     }

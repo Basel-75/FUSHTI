@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:customer_app/component/drop_down_item.dart';
+import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
+import 'package:customer_app/screen/profile/edit_user_profile_form.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
 import 'package:customer_app/widget/container/screen_header.dart';
@@ -207,6 +209,7 @@ class ProfileScreen extends StatelessWidget {
                             },
                           ),
 
+
                           //=============Row of info plan,orders,funds===============
                           BlocBuilder<ProfileBloc, ProfileState>(
                             builder: (context, state) {
@@ -247,6 +250,7 @@ class ProfileScreen extends StatelessWidget {
                                   onTap: () {},
                                 ),
                               ],
+
                             ),
                           ),
                         ],
@@ -262,6 +266,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
 
 class ProfileTile extends StatelessWidget {
   final String title;
@@ -401,3 +406,4 @@ class EditUserProfileForm extends StatelessWidget {
     );
   }
 }
+

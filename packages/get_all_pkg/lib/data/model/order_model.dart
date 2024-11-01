@@ -1,3 +1,4 @@
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/order_item_model.dart';
 
 class OrderModel {
@@ -6,6 +7,8 @@ class OrderModel {
   final String status;
   final num totalPrice;
   final List<OrderItemModel> orderItemModelLis = [];
+
+   ChildModel? childModel;
 
   final String createDate;
 
@@ -19,12 +22,11 @@ class OrderModel {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
-      id: json['id'],
-      childId: json['child_id'],
-      status: json['status'],
-      totalPrice: json['total_price'],
-      createDate: json["create_date"]
-    );
+        id: json['id'],
+        childId: json['child_id'],
+        status: json['status'],
+        totalPrice: json['total_price'],
+        createDate: json["create_date"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -33,7 +35,7 @@ class OrderModel {
       'child_id': childId,
       'status': status,
       'total_price': totalPrice,
-      "create_date" : createDate
+      "create_date": createDate
     };
   }
 }
