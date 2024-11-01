@@ -24,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
     childModelList = appModel.userModel!.childModelList;
 
     log("there is ${childModelList.length}");
-
+    //log('${currentChild.schoolModel.foodMenuModelList.first.imageUrl.toString().trim()}');
     currentChild = childModelList.first;
   }
 
