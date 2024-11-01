@@ -7,6 +7,7 @@ import 'package:customer_app/widget/avatar/followers_avatar.dart';
 import 'package:customer_app/widget/container/home_card.dart';
 import 'package:customer_app/widget/container/screen_header.dart';
 import 'package:customer_app/widget/coulmn/child_avatar.dart';
+import 'package:customer_app/widget/image/image_handler.dart';
 import 'package:customer_app/widget/row/app_bar_row_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -246,7 +247,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(right: 4.w),
+                    padding: EdgeInsets.only(right: 4.w),
                     child: Text(
                       'الوجبات',
                       style: TextStyle(
@@ -255,7 +256,9 @@ class HomeScreen extends StatelessWidget {
                           color: Color(0xff546F66)),
                     ),
                   ),
-                  SizedBox(height: 2.h,),
+                  SizedBox(
+                    height: 2.h,
+                  ),
                   SizedBox(
                     height: 60.h,
                     width: 80.w,
@@ -369,18 +372,7 @@ class HomeCard extends StatelessWidget {
               bottom: 28.w,
               child: CircleAvatar(
                 backgroundColor: Color(0x88C8E5F5),
-                child: Image.network(
-                  fit: BoxFit.contain,
-                  imagePath,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.fastfood_rounded,
-                    color: Colors.orange,
-                  ),
-                  loadingBuilder: (context, child, loadingProgress) =>
-                      CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
+                child: ImageHandler(imagePath: imagePath),
               )),
           Positioned(
               left: 27.w,

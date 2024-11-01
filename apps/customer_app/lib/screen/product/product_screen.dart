@@ -169,8 +169,8 @@ class ProductScreen extends StatelessWidget {
                                       return Dialog(
                                         child: Builder(builder: (context) {
                                           return Container(
-                                            width: 200,
-                                            height: 200,
+                                            width: 50.w,
+                                            height: 25.h,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -213,8 +213,9 @@ class ProductScreen extends StatelessWidget {
                                                   children: [
                                                     CustomButton(
                                                         fontsize: 15.sp,
+                                                        backgroundColor: Color(0xffC8E5F5),
                                                         fixedSize:
-                                                            Size(34.w, 7.h),
+                                                            Size(32.w, 7.h),
                                                         onPressed: () {
                                                           cubit.addToCart(
                                                               childModel:
@@ -222,15 +223,16 @@ class ProductScreen extends StatelessWidget {
                                                               foodMenuModel:
                                                                   foodMenuModel);
                                                         },
-                                                        title: "أضافة الوجبة"),
+                                                        title: "اضافة لسلة"),
                                                     CustomButton(
                                                         fontsize: 15.sp,
+                                                        backgroundColor: Color(0xffA3E9BF),
                                                         fixedSize:
-                                                            Size(34.w, 7.h),
+                                                            Size(32.w, 7.h),
                                                         onPressed: () {
                                                           cubit.addToPlan();
                                                         },
-                                                        title: "أضافة للخطة")
+                                                        title: "اضافة للخطة")
                                                   ],
                                                 )
                                               ],
