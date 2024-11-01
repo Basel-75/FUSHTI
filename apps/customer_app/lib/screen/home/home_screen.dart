@@ -245,15 +245,19 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text(
-                    'الوجبات',
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff546F66)),
+                  Padding(
+                    padding:  EdgeInsets.only(right: 4.w),
+                    child: Text(
+                      'الوجبات',
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff546F66)),
+                    ),
                   ),
+                  SizedBox(height: 2.h,),
                   SizedBox(
-                    height: 40.h,
+                    height: 60.h,
                     width: 80.w,
                     child: cubit.getListByType(catagory: 'product').isNotEmpty
                         ? GridView.builder(
