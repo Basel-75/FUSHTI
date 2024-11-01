@@ -17,8 +17,8 @@ class ChildModel {
   List<CartItem> cartList = [];
   final List<PlanModel> planList = [];
 
-  final num dailyLimits;
-  final bool isOpenDay;
+   num dailyLimits;
+   bool isOpenDay;
 
   ChildModel(
       {required this.id,

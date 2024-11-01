@@ -1,6 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
+import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
+import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -13,9 +17,17 @@ import 'package:path_provider/path_provider.dart';
 part 'followers_profile_state.dart';
 
 class FollowersProfileCubit extends Cubit<FollowersProfileState> {
-  FollowersProfileCubit() : super(FollowersProfileInitial());
+  FollowersProfileCubit({this.childModel}) : super(FollowersProfileInitial());
   File? selectedImage;
   int totalMealsInPlan = 0;
+  AppModel appModel = getIt.get<AppModel>();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController fundsCon = TextEditingController();
+  TextEditingController limtFunds = TextEditingController();
+  bool initialValueRaido = false;
+
+  final ChildModel? childModel;
   countTotal({required String id}) {
     for (var i in appModel.userModel!.childModelList) {
       log('${i.planList}');
@@ -119,7 +131,7 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
       log('$imageUrl');
       final updateImageResponse = await SuperMain()
           .updateFollowersImage(childId: childId, imageUrl: imageUrl);
-          log('$updateImageResponse');
+      log('$updateImageResponse');
       //Update Locale
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
@@ -133,5 +145,61 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     }
   }
 
-  AppModel appModel = getIt.get<AppModel>();
+  addFundstoChild() async {
+    try {
+      emit(LoadingState());
+
+      log("user id is ${appModel.userModel!.id}");
+
+      if (formKey.currentState!.validate()) {
+        log("very good valid");
+        log("user funds is ${appModel.userModel!.funds}");
+        if (appModel.userModel!.funds >= double.parse(fundsCon.text)) {
+          await SuperMain().addfundsChild(
+              childModel: childModel!, funds: double.parse(fundsCon.text));
+        } else {
+          emit(ErrorState(msg: " لا يوجد رصيد"));
+          return;
+        }
+
+        childModel!.funds += double.parse(fundsCon.text);
+
+        emit(SuccessState(msg: "تمت اضافة رصيد"));
+
+        return;
+      }
+      emit(ErrorState(msg: "ادخل رقم"));
+    } catch (er) {
+      log("$er");
+      emit(ErrorState(msg: "حصل خطأ"));
+      rethrow;
+    }
+  }
+
+  updateOpenDay() async {
+    try {
+      emit(LoadingState());
+
+      log("is open or not  $initialValueRaido");
+
+      if (formKey.currentState!.validate()) {
+        await SuperMain().updateChildOpenDay(
+            limtFunds: double.parse(limtFunds.text),
+            childModel: childModel!,
+            isOpen: initialValueRaido);
+
+        childModel!.dailyLimits = double.parse(limtFunds.text);
+
+        childModel!.isOpenDay = initialValueRaido;
+
+        emit(SuccessState(msg: "تمت تعديل  اليوم المفتوح"));
+
+        return;
+      }
+      emit(ErrorState(msg: "ادخل رقم"));
+    } catch (er) {
+      log("$er");
+      emit(ErrorState(msg: "حصل خطأ"));
+    }
+  }
 }

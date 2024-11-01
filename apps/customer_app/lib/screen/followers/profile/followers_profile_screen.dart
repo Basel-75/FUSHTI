@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
+import 'package:customer_app/screen/followers/order_plan/follower_order_plan_screen.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
 import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
@@ -22,7 +23,7 @@ class FollowersProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FollowersProfileCubit(),
+      create: (context) => FollowersProfileCubit(childModel: childInfo!),
       child: Builder(builder: (context) {
         final cubit = context.read<FollowersProfileCubit>();
         cubit.countTotal(id: childInfo!.id);
@@ -34,11 +35,11 @@ class FollowersProfileScreen extends StatelessWidget {
             if (state is SuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BottomNavigatorScreen(),
-                  ));
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const BottomNavigatorScreen(),
+              //     ));
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.msg),
@@ -313,8 +314,8 @@ class FollowersProfileScreen extends StatelessWidget {
                                     builder: (context) => Dialog(
                                       backgroundColor: Colors.transparent,
                                       child: GlassContainer(
-                                        height: 50.w,
-                                        width: 40.h,
+                                        height: 30.h,
+                                        width: 90.w,
                                         borderRadius: BorderRadius.circular(12),
                                         gradient: LinearGradient(
                                           colors: [
@@ -348,11 +349,27 @@ class FollowersProfileScreen extends StatelessWidget {
                                         padding:
                                             EdgeInsets.symmetric(vertical: 2.h),
                                         child: fondsInfoDailog(
-                                          //controller: ,
+                                          formKey: cubit.formKey,
+                                          validator: (val) {
+                                            if (val == null || val.isEmpty) {
+                                              return 'Amount cannot be empty';
+                                            }
+
+                                            if (double.tryParse(val) == null) {
+                                              return 'Please enter a valid number';
+                                            }
+                                            return null;
+                                          },
+                                          controller: cubit.fundsCon,
                                           cancelOnPressed: () {
+                                            log("in caneel of page");
                                             Navigator.pop(context);
                                           },
-                                          okOnPressed: () {},
+                                          okOnPressed: () {
+                                            log("in ok of page");
+
+                                            cubit.addFundstoChild();
+                                          },
                                         ),
                                       ),
                                     ),
@@ -375,17 +392,27 @@ class FollowersProfileScreen extends StatelessWidget {
                                 ),
                                 //! bottomsheet activate plan
                                 onTap: () {
+                                  cubit.limtFunds.text =
+                                      "${cubit.childModel!.dailyLimits}";
+
+                                  cubit.initialValueRaido =
+                                      cubit.childModel!.isOpenDay;
+
+                                  log("hmm is isoen  ${cubit.initialValueRaido}");
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return OpenDaysBottomSheet(
-                                          onPressedButton: () {},
+                                          formKey: cubit.formKey,
+                                          initialValueRaido:
+                                              cubit.initialValueRaido,
+                                          controller: cubit.limtFunds,
+                                          onPressedButton: () {
+                                            cubit.updateOpenDay();
+                                          },
                                           onChangedSwitch: (value) {
-                                            if (value == true) {
-                                              log('Item is available');
-                                            } else {
-                                              log('Item is out of stock');
-                                            }
+                                            
+                                            cubit.initialValueRaido = value;
                                           },
                                           validator: (val) {
                                             if (val == null || val.isEmpty) {
@@ -400,16 +427,35 @@ class FollowersProfileScreen extends StatelessWidget {
                                       });
                                 },
                               ),
+
+                              // ---------------------------------
+
+                              ListTile(
+                                title: Text(
+                                  "الطلبات و الخطط",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.sp),
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 2.h,
+                                ),
+                                //! bottomsheet activate plan
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) {
+                                      return FollowerOrderPlanScreen(
+                                        childModel: childInfo!,
+                                      );
+                                    },
+                                  ));
+                                },
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      // Positioned(
-                      //   top: 50.h,
-                      //   left: 0.2.w,
-                      //   right: 0.2.w,
-                      //   child: Image.asset('assets/image/profilelogo.png'),
-                      // ),
                     ],
                   ),
                 ],

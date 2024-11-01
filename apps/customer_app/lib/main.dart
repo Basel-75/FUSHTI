@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:customer_app/screen/bill/bill_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
+import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
@@ -28,6 +29,7 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 void main() async {
   //!change the default user model in melos
   WidgetsFlutterBinding.ensureInitialized();
+  
 
   await setup();
   log('======================\nCurrent user : \n');
@@ -49,8 +51,9 @@ void main() async {
     log('No restrictionFood');
   }
   
-
   log('===========================');
+
+  
 
   runApp(const MainApp());
 }
@@ -64,6 +67,7 @@ class MainApp extends StatelessWidget {
       builder: (context, orientation, screenType) => Directionality(
         textDirection: TextDirection.rtl,
         child: MaterialApp(
+          debugShowCheckedModeBanner:  false,
           theme: ThemeData(
               fontFamily: 'Readex Pro',
               scaffoldBackgroundColor: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:customer_app/widget/history_widget/bottom_info.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -7,18 +8,16 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 import 'content_history.dart';
 
 class HistoyBodyOrderWidget extends StatelessWidget {
-  const HistoyBodyOrderWidget({
-    super.key,
-    required this.lisOrder,
-  });
+  const HistoyBodyOrderWidget(
+      {super.key, required this.lisOrder, this.childModel});
 
   final List<OrderModel> lisOrder;
-  // final List<PlanModel>? planLis;
+  final ChildModel? childModel;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: lisOrder.length,
       itemBuilder: (context, index) {
@@ -81,7 +80,8 @@ class HistoyBodyOrderWidget extends StatelessWidget {
                     ),
                     BottomHistoryInfo(
                       totalPrice: lisOrder[index].totalPrice.toString(),
-                      name: lisOrder[index].childModel!.name,
+                      name:
+                          childModel?.name ?? lisOrder[index].childModel!.name,
                     ),
                   ],
                 ),

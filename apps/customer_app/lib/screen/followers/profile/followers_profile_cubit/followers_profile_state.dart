@@ -12,6 +12,11 @@ final class SuccessState extends FollowersProfileState {
 
   SuccessState({required this.msg});
 }
+
+
+
+
+
 final class SuccessUpdateImageState extends FollowersProfileState {
   final String msg;
 

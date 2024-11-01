@@ -1,33 +1,34 @@
 import 'dart:developer';
 
-import 'package:customer_app/screen/history/cubit/history_cubit.dart';
-import 'package:customer_app/screen/product/cubit/product_cubit.dart';
-import 'package:customer_app/widget/button/custom_button.dart';
-import 'package:customer_app/widget/history_widget/bottom_info.dart';
-import 'package:customer_app/widget/history_widget/content_history.dart';
+import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
+
+
 import 'package:customer_app/widget/history_widget/histoy_body_order_widget.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_plan_widgetd.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
+class FollowerOrderPlanScreen extends StatelessWidget {
+  const FollowerOrderPlanScreen({super.key, required this.childModel});
 
+  final ChildModel childModel;
+
+  
   @override
   Widget build(BuildContext context) {
     //replace it with Bloc
 
     //replace it with Bloc order.length
-    
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: BlocProvider(
-        create: (context) => HistoryCubit()..historyBring(),
+        create: (context) => FollowerOrderPlanCubit()..historyBring()..childModel = childModel,
         child: Builder(builder: (context) {
-          final cubit = context.read<HistoryCubit>();
+          final cubit = context.read<FollowerOrderPlanCubit>();
 
-          return BlocListener<HistoryCubit, HistoryState>(
+          return BlocListener<FollowerOrderPlanCubit, FollowerOrderPlanState>(
             listener: (context, state) {
               if (state is ErorrState) {
                 Navigator.pop(context);
@@ -102,6 +103,7 @@ class HistoryScreen extends StatelessWidget {
                               enableShape: true,
                               elevation: 0,
                               customShape: ContinuousRectangleBorder(
+
                                   borderRadius: BorderRadius.circular(25)),
                               buttonLables: ["plan", "order"],
                               buttonValues: ["plan", "order"],
@@ -119,12 +121,14 @@ class HistoryScreen extends StatelessWidget {
                       Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 2.w, vertical: 2.h),
-                          child: BlocBuilder<HistoryCubit, HistoryState>(
+                          child: BlocBuilder<FollowerOrderPlanCubit, FollowerOrderPlanState>(
                             builder: (context, state) {
                               return cubit.isOrder == true
                                   ? HistoyBodyOrderWidget(
+                                    childModel: cubit.childModel,
                                       lisOrder: cubit.lisOrder)
                                   : HistoyBodyPlanWidgetd(
+                                    childModel: cubit.childModel,
                                       planLis: cubit.planLis);
                             },
                           )),

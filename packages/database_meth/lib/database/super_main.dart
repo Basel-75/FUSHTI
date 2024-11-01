@@ -2,7 +2,7 @@ import 'package:database_meth/database/method/auth_mix.dart';
 import 'package:database_meth/database/method/child_mix.dart';
 import 'package:database_meth/database/method/emp_only/emp_mix.dart';
 import 'package:database_meth/database/method/emp_only/storge_mix.dart';
-import 'package:database_meth/database/method/history_mix.dart';
+import 'package:database_meth/database/method/history_now_order_mix.dart';
 import 'package:database_meth/database/method/image_mix.dart';
 import 'package:database_meth/database/method/init_data_mix.dart';
 import 'package:database_meth/database/method/meal_plan_mix.dart';
@@ -25,4 +25,5 @@ class SuperMain extends Super
         OrderMix,
         EmpMix,
         StorgeMix,
-        ImageMix , HistoryMix {}
+        ImageMix,
+        HistoryNowOrderMix {}

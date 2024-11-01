@@ -1,5 +1,6 @@
 import 'package:customer_app/widget/history_widget/bottom_info.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -7,18 +8,17 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 import 'content_history.dart';
 
 class HistoyBodyPlanWidgetd extends StatelessWidget {
-  const HistoyBodyPlanWidgetd({
-    super.key,
-     required this.planLis,
-    
-  });
+  const HistoyBodyPlanWidgetd(
+      {super.key, required this.planLis, this.childModel});
 
-  
   final List<PlanModel> planLis;
+
+  final ChildModel? childModel;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: planLis.length,
       itemBuilder: (context, index) {
@@ -65,14 +65,13 @@ class HistoyBodyPlanWidgetd extends StatelessWidget {
                                   .foodMenuModel
                                   .cal,
                               quantity: planLis[index]
-                                  .mealPlanItemLis[itemIndex].quantity,
+                                  .mealPlanItemLis[itemIndex]
+                                  .quantity,
                               price:
                                   "${(planLis[index].mealPlanItemLis[itemIndex].foodMenuModel.price * (planLis[index].mealPlanItemLis[itemIndex].quantity))}",
                             ),
                             SizedBox(
-                                height: index < planLis.length - 1
-                                    ? 2.h
-                                    : 0),
+                                height: index < planLis.length - 1 ? 2.h : 0),
                           ],
                         );
                       },
@@ -84,7 +83,7 @@ class HistoyBodyPlanWidgetd extends StatelessWidget {
                       startPlan: planLis[index].startDate,
                       endPlan: planLis[index].endDate,
                       totalPrice: "fix later three is no total price in plan",
-                      name: planLis[index].childModel!.name,
+                      name: childModel?.name ?? planLis[index].childModel!.name,
                     ),
                   ],
                 ),
