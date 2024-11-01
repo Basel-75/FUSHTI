@@ -2,16 +2,18 @@ import 'package:employee_app/component/drop_down_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-class CustomMultiSelect extends StatelessWidget {
+class CustomMultiSelects extends StatelessWidget {
   final List<DropDownItem>? items;
   final dynamic Function(List<DropDownItem>)? onListChanged;
   final String label, hintText;
-  const CustomMultiSelect({
+  final Color? backgroundColor;
+  const CustomMultiSelects({
     super.key,
     this.items,
     this.onListChanged,
     required this.label,
     required this.hintText,
+    this.backgroundColor,
   });
 
   @override
@@ -37,9 +39,18 @@ class CustomMultiSelect extends StatelessWidget {
             CustomDropdown<DropDownItem>.multiSelectSearch(
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
-                    closedFillColor: Colors.white, //Color(0xfff4f4f4),
-                    closedBorder: Border.all(width: 0.8),
-                    closedShadow: kElevationToShadow[2]),
+                  closedFillColor: backgroundColor ?? Colors.white,
+                  closedBorder: Border.all(
+                      width: 0.8, color: Colors.grey.withOpacity(0.2)),
+                  closedShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.2,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
                 hintText: hintText,
                 items: items,
                 onListChanged: onListChanged),

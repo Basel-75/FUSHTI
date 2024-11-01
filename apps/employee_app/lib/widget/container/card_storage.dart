@@ -3,21 +3,20 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 class CardStorage extends StatelessWidget {
   const CardStorage({
-    
     super.key,
     required this.name,
-    
     required this.image,
     this.onTap,
     this.controller,
     this.onChanged,
     required this.activeText,
     required this.inactiveText,
-    required this.sizeSwitch, required this.isAvailable,
+    required this.sizeSwitch,
+    required this.isAvailable,
   });
 
   final String name;
-  
+
   final String image;
   final void Function()? onTap;
   final ValueNotifier<bool>? controller;
@@ -63,10 +62,10 @@ class CardStorage extends StatelessWidget {
             //   ),
             // ),
             trailing: AdvancedSwitch(
-              initialValue: isAvailable ,
+              initialValue: isAvailable,
               controller: controller,
-              activeColor: Colors.green,
-              inactiveColor: const Color.fromARGB(255, 204, 108, 108),
+              activeColor: const Color(0xff6FBAE5),
+              inactiveColor: const Color(0xffC8E5F5),
               activeChild: Text(activeText),
               inactiveChild: Text(inactiveText),
               width: 20.w,

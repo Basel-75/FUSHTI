@@ -34,7 +34,7 @@ class CartFeedBack extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 2.8.h,
-            backgroundColor: Colors.green[200],
+            backgroundColor: const Color(0xffC8E5F5),
             child: Image.asset(image),
           ),
           title: Text(

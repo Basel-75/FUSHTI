@@ -58,6 +58,7 @@ class BottomNavigatorScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.miniCenterDocked,
           floatingActionButton: FloatingActionButton(
+            shape: const CircleBorder(),
             heroTag: "navFloat",
             backgroundColor: const Color(0xffFDCB6A),
             tooltip: 'add Saving',

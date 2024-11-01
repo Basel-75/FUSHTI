@@ -6,6 +6,7 @@ import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:get_all_pkg/data/emp_setup.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -18,6 +19,16 @@ void main() async {
   log("${getIt.get<AppModel>().empModel!.toJson()}");
   //log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
   //debugPaintSizeEnabled = true;
+
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  // //!test login
+  OneSignal.login(getIt.get<AppModel>().userModel!.id);
+  log('-----####');
+  log("${getIt.get<AppModel>().userModel!.id}");
+  OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
+
+  OneSignal.Notifications.requestPermission(true);
+  // debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }
 
@@ -35,7 +46,7 @@ class MyApp extends StatelessWidget {
                     scaffoldBackgroundColor: Colors.white,
                     elevatedButtonTheme: ElevatedButtonThemeData(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffBA9773)))),
+                            backgroundColor: const Color(0xffFEC87F)))),
                 home: BottomNavigatorScreen(),
               ),
             ));

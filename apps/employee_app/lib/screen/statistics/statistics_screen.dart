@@ -17,7 +17,8 @@ class StatisticsScreen extends StatelessWidget {
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xffFDCB6A),
+          shape: const CircleBorder(),
+          backgroundColor: const Color(0xffC9E7E7),
           tooltip: 'Increment',
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
@@ -26,23 +27,30 @@ class StatisticsScreen extends StatelessWidget {
           },
           child: const Icon(Icons.add, color: Colors.white, size: 28),
         ),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(19.h),
-          child: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (builder) {
-                    return const FeedBackScreen();
-                  }));
-                },
-                icon: const Icon(Icons.chat_outlined)),
-            flexibleSpace: EmployeeHeader(
-              isTitle: false,
-              title: 'اضافة منتج',
-              textSize: 20.sp,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          title: Text(
+            'الاحصائيات',
+            style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
+          centerTitle: true,
+          flexibleSpace: Container(
+            height: 15.h,
+            decoration: const BoxDecoration(
+              color: Color(0xff6FBAE5),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35),
+              ),
             ),
           ),
+          toolbarHeight: 13.h,
         ),
         body: Column(
           children: [
@@ -60,7 +68,7 @@ class StatisticsScreen extends StatelessWidget {
               paddingTop: 0.h,
               paddingRight: 4.h,
               textSize: 18.sp,
-              schoolName: 'أحصائياتي',
+              schoolName: 'أرقام',
             ),
             SizedBox(
               height: 2.h,
@@ -69,28 +77,21 @@ class StatisticsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ContainerStatistics(
-                    containerHeight: 11.h,
-                    containerWidth: 30.w,
-                    statisticsName: 'الدخل',
+                    statisticsName: 'المبيعات',
                     statisticsNumber: 876,
-                    statisticsIcon: const Icon(
-                      Icons.monetization_on,
-                      color: Color(0xffA8483D),
+                    statisticsIcon: Icon(
+                      Icons.add_chart_outlined,
+                      color: const Color(0xff06374E).withOpacity(0.80),
                     ),
-                    statisticsNameTxtSize: 16.sp,
-                    statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black,
-                    containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
+                    containerColor: const Color(0xffF6FAFD)),
                 ContainerStatistics(
-                    containerHeight: 11.h,
-                    containerWidth: 30.w,
                     statisticsName: 'الدخل',
                     statisticsNumber: 876,
-                    statisticsIcon: const Icon(Icons.monetization_on),
-                    statisticsNameTxtSize: 16.sp,
-                    statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black,
-                    containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
+                    statisticsIcon: Icon(
+                      Icons.pie_chart,
+                      color: const Color(0xff06374E).withOpacity(0.80),
+                    ),
+                    containerColor: const Color(0xffF6FAFD)),
               ],
             ),
             SizedBox(
@@ -100,25 +101,21 @@ class StatisticsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ContainerStatistics(
-                    containerHeight: 11.h,
-                    containerWidth: 30.w,
-                    statisticsName: 'الدخل',
+                    statisticsName: 'الطلبات',
                     statisticsNumber: 876,
-                    statisticsIcon: const Icon(Icons.monetization_on),
-                    statisticsNameTxtSize: 16.sp,
-                    statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black,
-                    containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
+                    statisticsIcon: Icon(
+                      Icons.area_chart_outlined,
+                      color: const Color(0xff06374E).withOpacity(0.80),
+                    ),
+                    containerColor: const Color(0xffF6FAFD)),
                 ContainerStatistics(
-                    containerHeight: 11.h,
-                    containerWidth: 30.w,
-                    statisticsName: 'الدخل',
+                    statisticsName: 'عدد المنتجات',
                     statisticsNumber: 876,
-                    statisticsIcon: const Icon(Icons.monetization_on),
-                    statisticsNameTxtSize: 16.sp,
-                    statisticsNumberTxtSize: 14.sp,
-                    txtColor: Colors.black,
-                    containerColor: const Color(0xffE0D1BB).withOpacity(0.80)),
+                    statisticsIcon: Icon(
+                      Icons.ssid_chart,
+                      color: const Color(0xff06374E).withOpacity(0.80),
+                    ),
+                    containerColor: const Color(0xffF6FAFD)),
               ],
             ),
             SizedBox(
@@ -137,7 +134,7 @@ class StatisticsScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StorageScreen(),
+                              builder: (context) => const StorageScreen(),
                             ));
                       },
                       child: const Text(
@@ -153,5 +150,3 @@ class StatisticsScreen extends StatelessWidget {
     );
   }
 }
-
-

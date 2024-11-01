@@ -41,7 +41,8 @@ class HomeScreen extends StatelessWidget {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.startFloat,
               floatingActionButton: FloatingActionButton(
-                backgroundColor: const Color(0xffFDCB6A),
+                shape: const CircleBorder(),
+                backgroundColor: const Color(0xffC9E7E7),
                 tooltip: 'add Saving',
                 onPressed: () {
                   Navigator.of(context)

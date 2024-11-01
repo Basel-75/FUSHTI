@@ -13,14 +13,14 @@ import 'package:meta/meta.dart';
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  ProductCubit() : super(ProductInitial());
+  ProductCubit(this.foodMenuModel, this.childModel) : super(ProductInitial());
 
   AppModel appModel = getIt.get<AppModel>();
 
   TextEditingController planItemCOn = TextEditingController();
 
-  late final FoodMenuModel foodMenuModel;
-  late final ChildModel childModel;
+   final FoodMenuModel foodMenuModel;
+   final ChildModel childModel;
 
   addToCart(
       {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {

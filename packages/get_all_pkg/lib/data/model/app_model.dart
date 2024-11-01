@@ -4,8 +4,12 @@ import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/emp_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/model/user_model.dart';
+import 'package:get_all_pkg/data/setup.dart';
+import 'package:get_all_pkg/get_all_pkg.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class AppModel {
+  final box = GetStorage();
   UserModel? userModel = UserModel(
     id: "35d625c6-a6b1-4089-a638-f87c776aab2b",
     name: "ammar",
@@ -26,5 +30,11 @@ class AppModel {
     userModel = newUser;
 
     log("${userModel!.toJson()}");
+  }
+
+  Future<void> saveAuth({required UserModel userData}) async {
+    OneSignal.login(userData.id);
+    userModel = userData;
+    await box.write("user", userData.toJson());
   }
 }

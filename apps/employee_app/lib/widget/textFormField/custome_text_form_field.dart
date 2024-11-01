@@ -54,9 +54,9 @@ class CustomTextFormFelid extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 4),
+                  spreadRadius: 0.2,
+                  blurRadius: 2,
+                  offset: const Offset(0, 2),
                 ),
               ],
               borderRadius: BorderRadius.circular(8),
@@ -68,12 +68,18 @@ class CustomTextFormFelid extends StatelessWidget {
               controller: controller,
               keyboardType: keyboardType,
               decoration: InputDecoration(
-                  prefixIcon: iconText,
-                  hintStyle: const TextStyle(color: Color(0xffB9B9B9)),
-                  hintText: hintText,
-                  hintTextDirection: TextDirection.rtl,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8))),
+                hintStyle: const TextStyle(color: Color(0xffB9B9B9)),
+                hintText: hintText,
+                hintTextDirection: TextDirection.rtl,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                      color: Colors.grey
+                          .withOpacity(0.2)), // Border color when enabled
+                ),
+              ),
             ),
           )
         ],

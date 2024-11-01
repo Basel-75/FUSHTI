@@ -16,7 +16,7 @@ class SelectImageWidget extends StatelessWidget {
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(width: 2),
+          border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.5)),
           color: Color.fromARGB(255, 235, 233, 228)),
       child: Stack(
         clipBehavior: Clip.none,
@@ -30,11 +30,11 @@ class SelectImageWidget extends StatelessWidget {
           ),
           Positioned(
             left: 19.w,
-            top: 19.w,
+            top: 0.w,
             child: IconButton(
               onPressed: onDelete,
               icon: Icon(
-                Icons.delete_outline_rounded,
+                Icons.close_rounded,
                 color: Colors.red,
                 size: 3.h,
               ),
