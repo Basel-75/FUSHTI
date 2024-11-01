@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class ChildAvatar extends StatelessWidget {
   final String imagePath, childName;
-  const ChildAvatar({
-    super.key,
-    required this.imagePath,
-    required this.childName,
-  });
+  final Color? textColor;
+  const ChildAvatar(
+      {super.key,
+      required this.imagePath,
+      required this.childName,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,8 @@ class ChildAvatar extends StatelessWidget {
         ),
         Text(
           childName,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w500, color: textColor),
         ),
       ],
     );

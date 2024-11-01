@@ -33,30 +33,29 @@ class OrderCartScreen extends StatelessWidget {
             },
             child: Scaffold(
               appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
                 title: Text(
-                  "السلة",
-                  style:
-                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                  'السلة',
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 centerTitle: true,
-                actions: [
-                  Image.asset('assets/image/homeicon.png'),
-                  SizedBox(
-                    width: 2.h,
-                  )
-                ],
                 flexibleSpace: Container(
+                  //height: 15.h,
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      )),
+                    color: Color(0xff6FBAE5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35),
+                    ),
+                  ),
                 ),
+                toolbarHeight: 11.h,
               ),
               body: Center(
                 child: Column(

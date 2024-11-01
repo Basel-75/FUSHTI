@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-class HomeCard extends StatelessWidget {
+class OldHomeCard extends StatelessWidget {
   final String imagePath, itemName, rate;
   final double price;
   final int cal;
   final Function()? onTap;
   final Function()? onRestriction;
-  const HomeCard(
+  const OldHomeCard(
       {super.key,
       required this.imagePath,
       required this.itemName,

@@ -24,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
     childModelList = appModel.userModel!.childModelList;
 
     log("there is ${childModelList.length}");
-
+    //log('${currentChild.schoolModel.foodMenuModelList.first.imageUrl.toString().trim()}');
     currentChild = childModelList.first;
   }
 
@@ -73,5 +73,15 @@ class HomeCubit extends Cubit<HomeState> {
     }
     emit(CheckState());
     return result;
+  }
+
+  List<FoodMenuModel> getListByType({required String catagory}) {
+    List<FoodMenuModel> foodList = [];
+    for (var element in currentChild.schoolModel.foodMenuModelList) {
+      if (element.category == catagory) {
+        foodList.add(element);
+      }
+    }
+    return foodList;
   }
 }

@@ -16,10 +16,10 @@ class PayPlanBottom extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
       decoration: const BoxDecoration(
-        color: Colors.black12,
+        color: Color(0x50C8E5F5),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
         ),
       ),
       child: Column(

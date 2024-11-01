@@ -25,11 +25,10 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductCubit(),
+      create: (context) => ProductCubit(foodMenuModel,childModel),
       child: Builder(builder: (context) {
         final cubit = context.read<ProductCubit>();
-        cubit.childModel = childModel;
-        cubit.foodMenuModel = foodMenuModel;
+        log('${childModel.toJson()}|${foodMenuModel.toJson()}');
         return Directionality(
           textDirection: TextDirection.rtl,
           child: BlocListener<ProductCubit, ProductState>(
