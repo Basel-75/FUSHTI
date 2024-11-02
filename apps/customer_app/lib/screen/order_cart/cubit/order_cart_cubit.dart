@@ -63,7 +63,14 @@ class OrderCartCubit extends Cubit<OrderCartState> {
         return;
       }
 
-      await SuperMain().payForOrder(totalPrice: totalPrice, childModel: childModel);
+      if (childModel.cartList.isEmpty) {
+        emit(ErorrState(msg: "لا توجد منتجات في السلة"));
+
+        return;
+      }
+
+      await SuperMain()
+          .payForOrder(totalPrice: totalPrice, childModel: childModel);
 
       log("user funds :::: ${appModel.userModel!.funds}");
       log("very good order pay");
@@ -72,5 +79,10 @@ class OrderCartCubit extends Cubit<OrderCartState> {
 
       emit(ErorrState(msg: er.toString()));
     }
+  }
+
+  delItem({required int cartIndex}) {
+    childModel.cartList.removeAt(cartIndex);
+    emit(ChangeQueState());
   }
 }
