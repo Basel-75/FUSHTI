@@ -4,18 +4,18 @@ class ImageHandler extends StatelessWidget {
   const ImageHandler({
     super.key,
     required this.imagePath,
-    this.errorIcon,
+    this.errorWidget,
   });
 
   final String imagePath;
-  final Icon? errorIcon;
+  final Widget? errorWidget;
   @override
   Widget build(BuildContext context) {
     return Image.network(
       fit: BoxFit.contain,
       imagePath,
       errorBuilder: (context, error, stackTrace) =>
-          errorIcon ??
+          errorWidget ??
           const Icon(
             Icons.fastfood_rounded,
             color: Colors.orange,

@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                                             cubit.chnageChild(
                                                 cubit.childModelList[index]);
                                           },
-                                          childImage: 'assets/image/kid1.png',
+                                          childImage: cubit.childModelList[index].imgPath,
                                           textColor: isClicked == false
                                               ? Colors.blue
                                               : Colors.black,
