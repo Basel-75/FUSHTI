@@ -4,6 +4,7 @@ import 'package:customer_app/screen/bill/bill_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
+import 'package:customer_app/screen/landing_page/landing_page1.dart';
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/screen/plan/plan_screen.dart';
@@ -31,7 +32,6 @@ void main() async {
   //! remove shape later
   //!change the default user model in melos
   WidgetsFlutterBinding.ensureInitialized();
-  
 
   await setup();
   // log('======================\nCurrent user : \n');
@@ -52,7 +52,7 @@ void main() async {
   // } catch (e) {
   //   log('No restrictionFood');
   // }
-
+  //debugPaintSizeEnabled = true;
   runApp(const MainApp());
 }
 
@@ -65,15 +65,14 @@ class MainApp extends StatelessWidget {
       builder: (context, orientation, screenType) => Directionality(
         textDirection: TextDirection.rtl,
         child: MaterialApp(
-          debugShowCheckedModeBanner:  false,
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
               fontFamily: 'Readex Pro',
               scaffoldBackgroundColor: Colors.white,
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffFEC87F)))),
-
-          home: const BottomNavigatorScreen(),
+          home: const LandingPage1(),
         ),
       ),
     );
