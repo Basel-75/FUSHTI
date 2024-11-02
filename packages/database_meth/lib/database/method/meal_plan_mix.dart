@@ -9,6 +9,34 @@ import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin MealPlanMix {
+
+  editPlan({required PlanModel plan , required String name}) async{
+
+    try {
+      await SuperMain()
+          .supabase
+          .from("meal_plan_templates")
+          .update({
+            "name" : name
+          })
+          .eq("id", plan.id);
+    } catch (er) {
+      log("$er");
+    }
+
+  }
+  delPlan({required PlanModel plan}) async {
+    try {
+      await SuperMain()
+          .supabase
+          .from("meal_plan_templates")
+          .delete()
+          .eq("id", plan.id);
+    } catch (er) {
+      log("$er");
+    }
+  }
+
   payForPlan(
       {required PlanModel planModel,
       required DateTime stratDate,
@@ -31,7 +59,7 @@ mixin MealPlanMix {
         "end_date": endDate.toIso8601String(),
         "total_meals": totalMeals,
         "status": "active",
-        "total_price" : totalPrice
+        "total_price": totalPrice
       }).select();
 
       for (var val in planModel.mealPlanItemLis) {

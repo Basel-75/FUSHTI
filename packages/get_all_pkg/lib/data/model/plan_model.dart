@@ -8,7 +8,7 @@ class PlanModel {
   final String endDate;
   final int totalMeals;
   final String? status;
-  final String? name;
+   String? name;
    num totalPrice;
 
   final List<MealPlanItemModel> mealPlanItemLis = [];
