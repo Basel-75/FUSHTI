@@ -64,6 +64,7 @@ class RestrictionCard extends StatelessWidget {
                 isForCal: false,
                 amount: price,
                 isCallWithText: false,
+                withAmountText: true,
               )
             ],
           ),

@@ -45,7 +45,7 @@ class UserInfoRow extends StatelessWidget {
             onPressed: onEdit,
             icon: Icon(
               Icons.edit_outlined,
-              color: Colors.blueGrey,
+              color: Color(0xffA3E9BF),
             )),
         isParent
             ? Text('')
@@ -53,7 +53,7 @@ class UserInfoRow extends StatelessWidget {
                 onPressed: onDelete,
                 icon: Icon(
                   Icons.delete,
-                  color: Colors.red,
+                  color: const Color.fromARGB(255, 244, 67, 54),
                 )),
       ],
     );

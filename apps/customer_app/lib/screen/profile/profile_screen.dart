@@ -209,7 +209,6 @@ class ProfileScreen extends StatelessWidget {
                             },
                           ),
 
-
                           //=============Row of info plan,orders,funds===============
                           BlocBuilder<ProfileBloc, ProfileState>(
                             builder: (context, state) {
@@ -235,22 +234,30 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 ProfileTile(
                                   title: 'الفواتير',
-                                  onTap: () {},
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HistoryScreen(),
+                                      )),
                                 ),
                                 ProfileTile(
                                   title: 'الشكاوى و الاقتراحات',
                                   onTap: () {},
                                 ),
                                 ProfileTile(
-                                  title: 'الاعدادات',
-                                  onTap: () {},
-                                ),
-                                ProfileTile(
                                   title: 'عن فسحتي',
                                   onTap: () {},
                                 ),
+                                ProfileTile(
+                                    title: 'تسجيل الخروج',
+                                    onTap: () => showConfirmDialog(
+                                          context: context,
+                                          onCancelBtnTap: () {},
+                                          onConfirmBtnTap: () {
+                                            
+                                          },
+                                        )),
                               ],
-
                             ),
                           ),
                         ],
@@ -266,7 +273,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
 
 class ProfileTile extends StatelessWidget {
   final String title;
@@ -406,4 +412,3 @@ class EditUserProfileForm extends StatelessWidget {
     );
   }
 }
-

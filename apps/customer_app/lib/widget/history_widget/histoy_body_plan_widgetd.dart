@@ -80,9 +80,10 @@ class HistoyBodyPlanWidgetd extends StatelessWidget {
                       height: 2.h,
                     ),
                     BottomHistoryInfo(
+                      isForPlan: true,
                       startPlan: planLis[index].startDate,
                       endPlan: planLis[index].endDate,
-                      totalPrice: "fix later three is no total price in plan",
+                      totalPrice: "",
                       name: childModel?.name ?? planLis[index].childModel!.name,
                     ),
                   ],

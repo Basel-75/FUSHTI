@@ -5,6 +5,8 @@ import 'package:customer_app/screen/followers/add/add_followers_cubit/add_follow
 import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
+import 'package:get_all_pkg/data/model/food_menu_model.dart';
+import 'package:get_all_pkg/data/model/restriction_food_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -21,7 +23,8 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
   File? selectedImage;
   int totalMealsInPlan = 0;
   AppModel appModel = getIt.get<AppModel>();
-
+  List<RestrictionFoodModel> restrictionsFood = [];
+  List<FoodMenuModel> foodMenuModelList = [];
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController fundsCon = TextEditingController();
   TextEditingController limtFunds = TextEditingController();
@@ -200,6 +203,27 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     } catch (er) {
       log("$er");
       emit(ErrorState(msg: "حصل خطأ"));
+    }
+  }
+
+  getRestrictionFoodList({required String childId}) {
+    restrictionsFood.forEach(
+      (element) => log('${element.toJson()}'),
+    );
+    try {
+      for (var element in appModel.userModel!.childModelList) {
+        if (element.id == childId) {
+          restrictionsFood = element.restrictionFood;
+          for (var food in restrictionsFood) {
+            foodMenuModelList
+                .addAll(element.schoolModel.foodMenuModelList.where(
+              (element) => element.id == food.menuItemId,
+            ));
+          }
+        }
+      }
+    } catch (e) {
+      log('$e');
     }
   }
 }

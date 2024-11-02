@@ -7,6 +7,7 @@ class ProfileSmallContainer extends StatelessWidget {
   final Color? backgroundColor;
   final Function()? onTap;
   final EdgeInsetsGeometry? margin;
+  final Color? titleColor;
   const ProfileSmallContainer({
     super.key,
     this.title,
@@ -14,6 +15,7 @@ class ProfileSmallContainer extends StatelessWidget {
     this.backgroundColor,
     this.onTap,
     this.margin,
+    this.titleColor,
   });
 
   @override
@@ -38,7 +40,7 @@ class ProfileSmallContainer extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xff546F66)),
+                        color: titleColor ?? const Color(0xff546F66)),
                   ),
                   Text(
                     number,

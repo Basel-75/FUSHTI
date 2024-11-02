@@ -9,11 +9,13 @@ class BottomHistoryInfo extends StatelessWidget {
     required this.name,
     this.endPlan,
     this.startPlan,
+    required this.isForPlan,
   });
   final String totalPrice;
   final String name;
   final String? startPlan;
   final String? endPlan;
+  final bool isForPlan;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +30,7 @@ class BottomHistoryInfo extends StatelessWidget {
           endPlan: endPlan,
           isRightClickable: false,
           onPressed: () {},
-          leftText: 'السعر الكلي $totalPrice',
+          leftText:isForPlan?'' :'السعر الكلي $totalPrice',
           leftTextColor: Colors.black,
           leftTextSize: 18,
           rightText: 'الاسم: $name',

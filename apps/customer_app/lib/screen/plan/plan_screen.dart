@@ -195,15 +195,7 @@ class PlanScreen extends StatelessWidget {
                                               BorderRadius.circular(25)),
                                       enableShape: true,
                                       elevation: 2,
-                                      //absoluteZeroSpacing: true,
                                       unSelectedColor: const Color(0xffffffff),
-
-                                      // buttonLables: const [
-                                      //   'احمد',
-                                      //   'انس',
-                                      //   'احمد',
-                                      //   'خالد',
-                                      // ],
                                       buttonLables: List.generate(
                                         cubit.appModel.userModel!.childModelList
                                             .length,
@@ -212,7 +204,6 @@ class PlanScreen extends StatelessWidget {
                                               .childModelList[index].name;
                                         },
                                       ),
-
                                       buttonValues: List.generate(
                                         cubit.appModel.userModel!.childModelList
                                             .length,
@@ -226,7 +217,6 @@ class PlanScreen extends StatelessWidget {
                                           unSelectedColor: Colors.black,
                                           textStyle:
                                               TextStyle(fontSize: 16.sp)),
-
                                       radioButtonValue: (value) {
                                         log("$value");
 

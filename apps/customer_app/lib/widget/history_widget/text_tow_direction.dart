@@ -68,6 +68,7 @@ class TextWithTowDirection extends StatelessWidget {
                   )
           ],
         ),
+        SizedBox(height: 1.h,),
         startPlan != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -76,8 +77,9 @@ class TextWithTowDirection extends StatelessWidget {
                     children: [
                       Text(
                         "تاريخ البداية",
-                        style: TextStyle(color: Colors.black, fontSize: 17.sp),
+                        style: TextStyle(color: Colors.black.withOpacity(0.40), fontSize: 17.sp),
                       ),
+                       SizedBox(height: 1.h,),
                       Text(
                         startPlan ?? "",
                         style: TextStyle(color: Colors.black, fontSize: 17.sp),
@@ -88,8 +90,9 @@ class TextWithTowDirection extends StatelessWidget {
                     children: [
                       Text(
                         "تاريخ النهاية",
-                        style: TextStyle(color: Colors.black, fontSize: 17.sp),
+                        style: TextStyle(color: Colors.black.withOpacity(0.40), fontSize: 17.sp),
                       ),
+                       SizedBox(height: 1.h,),
                       Text(
                         endPlan ?? "",
                         style: TextStyle(color: Colors.black, fontSize: 17.sp),

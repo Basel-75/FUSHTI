@@ -133,11 +133,13 @@ class ProductScreen extends StatelessWidget {
                                 isForCal: true,
                                 amount: foodMenuModel.cal.toString(),
                                 isCallWithText: true,
+                                withAmountText: false,
                               ),
                               ProductSmallContainer(
                                 isForCal: false,
                                 amount: foodMenuModel.price.toString(),
                                 isCallWithText: false,
+                                withAmountText: true,
                               ),
                             ],
                           ),

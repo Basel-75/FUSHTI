@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 
-
 import 'package:customer_app/widget/history_widget/histoy_body_order_widget.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_plan_widgetd.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ class FollowerOrderPlanScreen extends StatelessWidget {
 
   final ChildModel childModel;
 
-  
   @override
   Widget build(BuildContext context) {
     //replace it with Bloc
@@ -24,7 +22,9 @@ class FollowerOrderPlanScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: BlocProvider(
-        create: (context) => FollowerOrderPlanCubit()..historyBring()..childModel = childModel,
+        create: (context) => FollowerOrderPlanCubit()
+          ..historyBring()
+          ..childModel = childModel,
         child: Builder(builder: (context) {
           final cubit = context.read<FollowerOrderPlanCubit>();
 
@@ -32,27 +32,12 @@ class FollowerOrderPlanScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is ErorrState) {
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                    state.msg,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  backgroundColor: Colors.red,
-                ));
+                showSnackBar(context: context, msg: state.msg, isError: true);
               }
 
               if (state is LodingState) {
                 log("in lodaing");
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+                showLoadingDialog(context: context);
               }
 
               if (state is DoneState) {
@@ -62,30 +47,29 @@ class FollowerOrderPlanScreen extends StatelessWidget {
             },
             child: Scaffold(
                 appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white,
+                  ),
                   title: Text(
                     'سجل الطلبات',
-                    style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   centerTitle: true,
-                  actions: [
-                    Image.asset('assets/image/homeicon.png'),
-                    SizedBox(
-                      width: 2.h,
-                    )
-                  ],
                   flexibleSpace: Container(
+                    //height: 15.h,
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        )),
+                      color: Color(0xff6FBAE5),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                    ),
                   ),
+                  toolbarHeight: 11.h,
                 ),
                 body: SingleChildScrollView(
                   child: Column(
@@ -96,19 +80,20 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomRadioButton(
-                              buttonTextStyle: const ButtonTextStyle(
-                                  selectedColor: Colors.white,
+                              buttonTextStyle: ButtonTextStyle(
+                                  selectedColor: Colors.black,
                                   unSelectedColor: Colors.black,
-                                  textStyle: TextStyle(fontSize: 16)),
+                                  textStyle: TextStyle(fontSize: 16.sp)),
                               enableShape: true,
-                              elevation: 0,
+                              elevation: 2,
                               customShape: ContinuousRectangleBorder(
-
                                   borderRadius: BorderRadius.circular(25)),
                               buttonLables: ["plan", "order"],
                               buttonValues: ["plan", "order"],
-                              unSelectedColor: const Color(0xffe5dfcf),
-                              selectedColor: Colors.blueAccent,
+                              unSelectedColor: const Color(0xffffffff),
+                              unSelectedBorderColor: Colors.grey,
+                              selectedColor:
+                                  const Color.fromARGB(56, 12, 154, 236),
                               defaultSelected: "order",
                               radioButtonValue: (p0) {
                                 log(p0);
@@ -120,15 +105,16 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                       ),
                       Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 2.w, vertical: 2.h),
-                          child: BlocBuilder<FollowerOrderPlanCubit, FollowerOrderPlanState>(
+                              horizontal: 2.w, vertical: 1.h),
+                          child: BlocBuilder<FollowerOrderPlanCubit,
+                              FollowerOrderPlanState>(
                             builder: (context, state) {
                               return cubit.isOrder == true
                                   ? HistoyBodyOrderWidget(
-                                    childModel: cubit.childModel,
+                                      childModel: cubit.childModel,
                                       lisOrder: cubit.lisOrder)
                                   : HistoyBodyPlanWidgetd(
-                                    childModel: cubit.childModel,
+                                      childModel: cubit.childModel,
                                       planLis: cubit.planLis);
                             },
                           )),

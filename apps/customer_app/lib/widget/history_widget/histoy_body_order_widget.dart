@@ -79,6 +79,7 @@ class HistoyBodyOrderWidget extends StatelessWidget {
                       height: 2.h,
                     ),
                     BottomHistoryInfo(
+                      isForPlan: false,
                       totalPrice: lisOrder[index].totalPrice.toString(),
                       name:
                           childModel?.name ?? lisOrder[index].childModel!.name,

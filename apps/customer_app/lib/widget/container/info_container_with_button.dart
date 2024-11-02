@@ -1,3 +1,4 @@
+import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/container/profile_small_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -16,34 +17,33 @@ class InfoContainerWithButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100.w,
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
-      margin: EdgeInsets.symmetric(horizontal: 3.w),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(11),
-          boxShadow: kElevationToShadow[4],
-          border: Border.all(width: 0.2, color: Colors.grey)),
-      child: Row(
-        children: [
-          Text(
-            title,
-            style:  TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
-          ),
-          IconButton(
-              onPressed: onPressedInfo,
-              icon: const Icon(
-                Icons.info_outline,
-                color: const Color.fromARGB(255, 9, 85, 148),
-              )),
-          const Spacer(),
-          ProfileSmallContainer(
-            number: amount,
-            backgroundColor: smallContainerColor ?? const Color(0xffc9adab),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff546F66)),
+        ),
+        IconButton(
+            onPressed: onPressedInfo,
+            icon: const Icon(
+              Icons.info_outline,
+              color: const Color(0xffC8E5F5),
+            )),
+        const Spacer(),
+        ProductSmallContainer(
+          isForCal: false,
+          amount: amount,
+          isCallWithText: false,
+          withAmountText: false,
+          width: 15.w,
+          height: 4.h,
+          backgroundColor: Color(0xff56ECB0B0),
+        ),
+
+      ],
     );
   }
 }
