@@ -11,7 +11,9 @@ import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
 import 'package:customer_app/widget/container/fonds_info_dailog.dart';
 import 'package:customer_app/widget/container/info_container_with_button.dart';
 import 'package:customer_app/widget/container/open_days_bottomsheet.dart';
+import 'package:customer_app/widget/coulmn/followers_tiles_column.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
+import 'package:customer_app/widget/image/image_handler.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
 import 'package:flutter/material.dart';
@@ -146,24 +148,13 @@ class FollowersProfileScreen extends StatelessWidget {
                                   child: Stack(
                                     fit: StackFit.expand,
                                     children: [
-                                      Image.network(
-                                        childInfo!.imgPath,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (context, error,
-                                                stackTrace) =>
-                                            Image.asset('assets/image/kid2.png',
-                                                fit: BoxFit.cover),
-                                        loadingBuilder:
-                                            (context, child, loadingProgress) {
-                                          if (loadingProgress == null)
-                                            return child;
-                                          return const Center(
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                      ImageHandler(
+                                        imagePath: childInfo!.imgPath,
+                                        errorWidget: Image.asset(
+                                          'assets/image/kid2.png',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -203,13 +194,8 @@ class FollowersProfileScreen extends StatelessWidget {
                           );
                         },
                         onDelete: () {
-                          QuickAlert.show(
+                          showConfirmDialog(
                             context: context,
-                            type: QuickAlertType.confirm,
-                            text: 'هل انت متأكد',
-                            confirmBtnText: 'نعم',
-                            cancelBtnText: 'لا',
-                            confirmBtnColor: Colors.green,
                             onCancelBtnTap: () => Navigator.pop(context),
                             onConfirmBtnTap: () =>
                                 cubit.deleteChild(childId: childInfo!.id),
@@ -286,37 +272,24 @@ class FollowersProfileScreen extends StatelessWidget {
                         top: 30.h,
                         left: 0.2.w,
                         right: 0.2.w,
-                        child: Column(
-                          children: [
-                            ProfileTile(
-                              title: 'اضافة مصروف',
-                              onTap: () => onAddFunds(context, cubit),
-                            ),
-                            ProfileTile(
-                              title: 'اضافة يوم مفتوح',
-                              onTap: () {
-                                cubit.limtFunds.text =
-                                    "${cubit.childModel!.dailyLimits}";
+                        child: FollowersTilesColumn(
+                          onAddFunds: () => onAddFunds(context, cubit),
+                          onAddOpenDays: () {
+                            cubit.limtFunds.text =
+                                "${cubit.childModel!.dailyLimits}";
 
-                                cubit.initialValueRaido =
-                                    cubit.childModel!.isOpenDay;
+                            cubit.initialValueRaido =
+                                cubit.childModel!.isOpenDay;
 
-                                log("hmm is isoen  ${cubit.initialValueRaido}");
-                                onManageOpenDays(context, cubit);
-                              },
-                            ),
-                            ProfileTile(
-                              title: 'الطلبات و الخطط',
-                              onTap: () =>
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) {
-                                  return FollowerOrderPlanScreen(
-                                    childModel: childInfo!,
-                                  );
-                                },
-                              )),
-                            ),
-                          ],
+                            log("hmm is isoen  ${cubit.initialValueRaido}");
+                            onManageOpenDays(context, cubit);
+                          },
+                          onPressPlanAndOrder: () => Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return FollowerOrderPlanScreen(
+                              childModel: childInfo!,
+                            );
+                          })),
                         ),
                       ),
                       Positioned(
