@@ -28,6 +28,7 @@ import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() async {
+  //! remove shape later
   //!change the default user model in melos
   WidgetsFlutterBinding.ensureInitialized();
   
