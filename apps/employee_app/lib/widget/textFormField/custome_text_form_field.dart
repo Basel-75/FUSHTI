@@ -10,8 +10,8 @@ class CustomTextFormFelid extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextDirection? textDirection;
   final double width;
-  final double paddingRightSide;
-  final double paddingLeftSide;
+  final double? paddingRightSide;
+  final double? paddingLeftSide;
 
   final Icon? iconText;
   const CustomTextFormFelid({
@@ -25,15 +25,16 @@ class CustomTextFormFelid extends StatelessWidget {
     this.keyboardType,
     this.textDirection,
     required this.width,
-    this.paddingRightSide = 0,
-    this.paddingLeftSide = 0,
+    this.paddingRightSide,
+    this.paddingLeftSide,
     this.iconText,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: paddingLeftSide, right: paddingRightSide),
+      padding: EdgeInsets.only(
+          left: paddingLeftSide ?? 8.w, right: paddingRightSide ?? 8.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +51,7 @@ class CustomTextFormFelid extends StatelessWidget {
           Container(
             width: width,
             decoration: BoxDecoration(
-              color: backgroundColor ?? Colors.white,
+              color: backgroundColor ?? const Color(0xffF6FAFD),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),

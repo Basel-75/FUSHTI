@@ -39,7 +39,7 @@ class CustomMultiSelects extends StatelessWidget {
             CustomDropdown<DropDownItem>.multiSelectSearch(
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
-                  closedFillColor: backgroundColor ?? Colors.white,
+                  closedFillColor: backgroundColor ?? const Color(0xffF6FAFD),
                   closedBorder: Border.all(
                       width: 0.8, color: Colors.grey.withOpacity(0.2)),
                   closedShadow: [

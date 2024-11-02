@@ -83,7 +83,7 @@ class FeedBackScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               iconTheme: const IconThemeData(
-                color: Colors.white, //change your color here
+                color: Colors.white,
               ),
               title: Text(
                 'الشكاوى و الاقتراحات',
@@ -94,7 +94,7 @@ class FeedBackScreen extends StatelessWidget {
               ),
               centerTitle: true,
               flexibleSpace: Container(
-                height: 15.h,
+                //height: 15.h,
                 decoration: const BoxDecoration(
                   color: Color(0xff6FBAE5),
                   borderRadius: BorderRadius.only(
@@ -103,7 +103,7 @@ class FeedBackScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              toolbarHeight: 13.h,
+              toolbarHeight: 11.h,
             ),
             body: ListView.builder(
                 itemCount: data.length,

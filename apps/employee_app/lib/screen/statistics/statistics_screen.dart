@@ -29,28 +29,32 @@ class StatisticsScreen extends StatelessWidget {
         ),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(
-            color: Colors.white, //change your color here
-          ),
-          title: Text(
-            'الاحصائيات',
-            style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
-          ),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (builder) {
+                  return const FeedBackScreen();
+                }));
+              },
+              icon: const Icon(
+                Bootstrap.chat_text_fill,
+                color: Colors.white,
+              )),
+          title: Image.asset('assets/image/mainLogo.png'),
           centerTitle: true,
           flexibleSpace: Container(
-            height: 15.h,
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
+              shape: SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius.only(
+                bottomLeft:
+                    SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                bottomRight:
+                    SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+              )),
               color: Color(0xff6FBAE5),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
             ),
           ),
-          toolbarHeight: 13.h,
+          toolbarHeight: 15.h,
         ),
         body: Column(
           children: [
@@ -123,24 +127,24 @@ class StatisticsScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 3.h),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('الاحصائيات',
+                  Text('الاحصائيات',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StorageScreen(),
-                            ));
-                      },
-                      child: const Text(
-                        'إدارة المخزون',
-                        style: TextStyle(fontSize: 16, color: Colors.black38),
-                      ))
+                  // InkWell(
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: (context) => const StorageScreen(),
+                  //           ));
+                  //     },
+                  //     child: const Text(
+                  //       'إدارة المخزون',
+                  //       style: TextStyle(fontSize: 16, color: Colors.black38),
+                  //     ))
                 ],
               ),
             )

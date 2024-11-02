@@ -40,7 +40,7 @@ class CustomTextArea extends StatelessWidget {
           Container(
             width: containerSize,
             decoration: BoxDecoration(
-              color: backgroundColor ?? Colors.white,
+              color: backgroundColor ?? const Color(0xffF6FAFD),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
