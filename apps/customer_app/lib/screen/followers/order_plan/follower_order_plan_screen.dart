@@ -32,27 +32,12 @@ class FollowerOrderPlanScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is ErorrState) {
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                    state.msg,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  backgroundColor: Colors.red,
-                ));
+                showSnackBar(context: context, msg: state.msg, isError: true);
               }
 
               if (state is LodingState) {
                 log("in lodaing");
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+                showLoadingDialog(context: context);
               }
 
               if (state is DoneState) {
@@ -106,7 +91,7 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                               buttonLables: ["plan", "order"],
                               buttonValues: ["plan", "order"],
                               unSelectedColor: const Color(0xffffffff),
-                               unSelectedBorderColor: Colors.grey,
+                              unSelectedBorderColor: Colors.grey,
                               selectedColor:
                                   const Color.fromARGB(56, 12, 154, 236),
                               defaultSelected: "order",

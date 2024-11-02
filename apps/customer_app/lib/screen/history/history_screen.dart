@@ -30,27 +30,12 @@ class HistoryScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is ErorrState) {
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                    state.msg,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  backgroundColor: Colors.red,
-                ));
+                showSnackBar(context: context, msg: state.msg, isError: true);
               }
 
               if (state is LodingState) {
                 log("in lodaing");
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+                showLoadingDialog(context: context);
               }
 
               if (state is DoneState) {
@@ -65,7 +50,7 @@ class HistoryScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: Text(
-                    'سجل الطلبات',
+                    'الفواتير',
                     style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
@@ -93,18 +78,20 @@ class HistoryScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             CustomRadioButton(
-                              buttonTextStyle: const ButtonTextStyle(
-                                  selectedColor: Colors.white,
+                              buttonTextStyle: ButtonTextStyle(
+                                  selectedColor: Colors.black,
                                   unSelectedColor: Colors.black,
-                                  textStyle: TextStyle(fontSize: 16)),
+                                  textStyle: TextStyle(fontSize: 16.sp)),
                               enableShape: true,
-                              elevation: 0,
+                              elevation: 2,
                               customShape: ContinuousRectangleBorder(
                                   borderRadius: BorderRadius.circular(25)),
                               buttonLables: ["plan", "order"],
                               buttonValues: ["plan", "order"],
-                              unSelectedColor: const Color(0xffe5dfcf),
-                              selectedColor: Colors.blueAccent,
+                              unSelectedColor: const Color(0xffffffff),
+                              unSelectedBorderColor: Colors.grey,
+                              selectedColor:
+                                  const Color.fromARGB(56, 12, 154, 236),
                               defaultSelected: "order",
                               radioButtonValue: (p0) {
                                 log(p0);

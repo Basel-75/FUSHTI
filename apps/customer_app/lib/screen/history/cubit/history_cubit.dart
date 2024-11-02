@@ -48,8 +48,8 @@ class HistoryCubit extends Cubit<HistoryState> {
 
       emit(DoneState());
     } catch (er) {
-      log("$er");
-      rethrow;
+      emit(ErorrState(msg: '$er'));
+      
     }
   }
 }
