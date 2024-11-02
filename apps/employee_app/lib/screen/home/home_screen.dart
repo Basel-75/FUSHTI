@@ -84,6 +84,7 @@ class HomeScreen extends StatelessWidget {
               body: BlocBuilder<HomeCubit, HomeState>(
                 builder: (context, state) {
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       EmpTitleName(
                         paddingTop: 0.6.h,
@@ -140,21 +141,23 @@ class HomeScreen extends StatelessWidget {
                       cubit.menu
                               .where((item) => item.category == 'product')
                               .isNotEmpty
-                          ? Expanded(
+                          ? SizedBox(
+                            height: 38.h,
+                            width: 80.w,
                               child: GridView.builder(
                                 itemCount: cubit.menu
                                     .where((item) => item.category == 'product')
                                     .length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 2.0.h,
-                                  mainAxisSpacing: 0.2.h,
-                                  //childAspectRatio: 0.12.h,
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 2.0.h,
+                                mainAxisSpacing: 1.0.h,
+                                  childAspectRatio: 0.12.h,
                                   // Uncomment and adjust the aspect ratio if needed.
                                   // childAspectRatio: 0.12.h,
                                 ),
-                                padding: EdgeInsets.all(3.h),
+                                padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 2.h),
                                 itemBuilder: (context, index) {
                                   final filteredMenu = cubit.menu
                                       .where(
