@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 
-class LandingPage1 extends StatelessWidget {
-  const LandingPage1({super.key});
+class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {

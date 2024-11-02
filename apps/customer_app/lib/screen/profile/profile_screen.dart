@@ -253,9 +253,7 @@ class ProfileScreen extends StatelessWidget {
                                     onTap: () => showConfirmDialog(
                                           context: context,
                                           onCancelBtnTap: () {},
-                                          onConfirmBtnTap: () {
-                                            
-                                          },
+                                          onConfirmBtnTap: () {},
                                         )),
                               ],
                             ),
