@@ -1,4 +1,5 @@
 import 'package:customer_app/widget/button/custom_button.dart';
+import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -25,8 +26,11 @@ class OpenDaysBottomSheet extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
-          height: 30.h,
-          decoration: const BoxDecoration(boxShadow: []),
+          height: 33.h,
+          decoration:  BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12)
+          ),
           child: Center(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.h),
@@ -36,25 +40,27 @@ class OpenDaysBottomSheet extends StatelessWidget {
                   SizedBox(
                     height: 2.h,
                   ),
-                  const Text('الأيام المفتوحة'),
+                   Text('الأيام المفتوحة',style: TextStyle(color: Color(0xff546F66),fontSize: 16.sp),),
+                
                   SizedBox(
                     height: 2.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('حالة اليوم'),
+                       Text('تفعيل',style: TextStyle(color: Color(0xff546F66),fontSize: 16.sp),),
                       AdvancedSwitch(
                           initialValue: initialValueRaido,
-                          activeColor: Colors.green,
+                          activeColor: Color(0xff6FBAE5),
                           inactiveColor:
-                              const Color.fromARGB(255, 204, 108, 108),
-                          width: 14.w,
+                              const Color(0x56ECB0B0),
+                          width: 12.w,
+                          height: 3.h,
                           onChanged: onChangedSwitch),
                     ],
                   ),
                   SizedBox(
-                    height: 1.h,
+                    height: 2.h,
                   ),
                   CustomTextFormFelid(
                     validator: validator,
@@ -66,13 +72,13 @@ class OpenDaysBottomSheet extends StatelessWidget {
                     controller: controller,
                   ),
                   SizedBox(
-                    height: 2.h,
+                    height: 2.5.h,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
                     child: CustomButton(
                       onPressed: onPressedButton,
-                      title: 'اضافة التابع',
+                      title: 'تأكيد',
                     ),
                   ),
                 ],

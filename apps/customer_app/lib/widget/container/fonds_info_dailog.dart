@@ -25,9 +25,9 @@ class fondsInfoDailog extends StatelessWidget {
           key: formKey,
           child: Column(
             children: [
-              const Text(
-                'اضافة رصيد الى المحفظة',
-                style: TextStyle(color: Colors.white),
+               Text(
+                'اضافة رصيد',
+                style: TextStyle(color: Colors.white,fontSize: 16.sp),
               ),
               CustomTextFormFelid(
                 validator: validator,
