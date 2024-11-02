@@ -37,7 +37,7 @@ class FollowerOrderPlanCubit extends Cubit<FollowerOrderPlanState> {
 
   historyBring() async {
     try {
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(Duration.zero);
       emit(LodingState());
 
       lisOrder = await SuperMain().bringOrder(childModel: childModel);

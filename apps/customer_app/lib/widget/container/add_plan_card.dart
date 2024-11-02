@@ -107,6 +107,7 @@ class AddPlanCard extends StatelessWidget {
                     isForCal: false,
                     amount: price,
                     isCallWithText: false,
+                    withAmountText: true,
                   ),
                   SizedBox(
                     width: 1.w,
@@ -115,6 +116,7 @@ class AddPlanCard extends StatelessWidget {
                     isForCal: true,
                     amount: cal,
                     isCallWithText: false,
+                    withAmountText: false,
                   ),
                 ],
               ),

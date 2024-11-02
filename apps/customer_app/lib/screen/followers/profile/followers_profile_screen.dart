@@ -5,6 +5,7 @@ import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart
 import 'package:customer_app/screen/followers/order_plan/follower_order_plan_screen.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
+import 'package:customer_app/screen/profile/profile_screen.dart';
 import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
 import 'package:customer_app/widget/container/fonds_info_dailog.dart';
 import 'package:customer_app/widget/container/info_container_with_button.dart';
@@ -79,29 +80,29 @@ class FollowersProfileScreen extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: Scaffold(
               appBar: AppBar(
-                title: const Text(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
+                title: Text(
                   'صفحة التابع',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 centerTitle: true,
-                actions: [
-                  Image.asset('assets/image/homeicon.png'),
-                  SizedBox(
-                    width: 2.h,
-                  )
-                ],
                 flexibleSpace: Container(
+                  //height: 15.h,
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      )),
+                    color: Color(0xff6FBAE5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35),
+                    ),
+                  ),
                 ),
+                toolbarHeight: 11.h,
               ),
               body: Column(
                 children: [
@@ -122,8 +123,8 @@ class FollowersProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        bottom: 70.h,
-                        left: 65.w,
+                        bottom: 68.h,
+                        left: 68.w,
                         child: Container(
                           width: 30.w,
                           height: 30.w,
@@ -177,7 +178,10 @@ class FollowersProfileScreen extends StatelessWidget {
                               await cubit.updateChildImage(
                                   childId: childInfo!.id);
                             },
-                            icon: const Icon(Icons.add_a_photo)),
+                            icon: const Icon(
+                              Icons.add_a_photo,
+                              color: Color(0xff6FBAE5),
+                            )),
                       ),
                       //=========Info and edit button==========
 
@@ -219,11 +223,14 @@ class FollowersProfileScreen extends StatelessWidget {
                           width: 25.w,
                           height: 3.h,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color.fromARGB(255, 113, 228, 132)),
+                              borderRadius: BorderRadius.circular(12),
+                              color: const Color(0xffA3E9BF)),
                           child: const Padding(
                             padding: EdgeInsets.only(bottom: 5),
-                            child: Center(child: Text('يوم مفتوح')),
+                            child: Center(
+                                child: Text(
+                              'يوم مفتوح',
+                            )),
                           ),
                         ),
                       ),
@@ -245,20 +252,60 @@ class FollowersProfileScreen extends StatelessWidget {
                         top: 23.h,
                         left: 0.2.w,
                         right: 0.2.w,
-                        child: InfoContainerWithButton(
-                          title: 'الوجبات المحظورة',
-                          amount: '6',
-                          onPressedInfo: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RestrictionsScreen(
-                                  childId: childInfo!.id,
-                                ),
-                              )),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.w),
+                          child: InfoContainerWithButton(
+                            title: 'الوجبات المحظورة',
+                            amount: '6',
+                            onPressedInfo: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RestrictionsScreen(
+                                    childId: childInfo!.id,
+                                  ),
+                                )),
+                          ),
                         ),
                       ),
                       Positioned(
-                        top: 36.5.h,
+                        top: 30.h,
+                        left: 0.2.w,
+                        right: 0.2.w,
+                        child: Column(
+                          children: [
+                            ProfileTile(
+                              title: 'اضافة مصروف',
+                              onTap: () => onAddFunds(context, cubit),
+                            ),
+                            ProfileTile(
+                              title: 'اضافة يوم مفتوح',
+                              onTap: () {
+                                cubit.limtFunds.text =
+                                    "${cubit.childModel!.dailyLimits}";
+                        
+                                cubit.initialValueRaido =
+                                    cubit.childModel!.isOpenDay;
+                        
+                                log("hmm is isoen  ${cubit.initialValueRaido}");
+                                onManageOpenDays(context, cubit);
+                              },
+                            ),
+                            ProfileTile(
+                              title: 'الطلبات و الخطط',
+                              onTap: () => Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                builder: (context) {
+                                  return FollowerOrderPlanScreen(
+                                    childModel: childInfo!,
+                                  );
+                                },
+                              )),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 54.h,
                         left: 0.2.w,
                         right: 0.2.w,
                         child: SizedBox(
@@ -277,185 +324,6 @@ class FollowersProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 48.h,
-                        left: 0.2.w,
-                        right: 0.2.w,
-                        child: Container(
-                          width: 80.w,
-                          //height: 30.h,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 2.w, vertical: 1.w),
-                          margin: EdgeInsets.symmetric(horizontal: 3.w),
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 231, 221, 221),
-                              borderRadius: BorderRadius.circular(11),
-                              boxShadow: kElevationToShadow[4],
-                              border:
-                                  Border.all(width: 0.2, color: Colors.grey)),
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text(
-                                  'أضافة رصيد',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.sp),
-                                ),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  size: 2.h,
-                                ),
-                                //! button dialog
-                                onTap: () {
-                                  showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (context) => Dialog(
-                                      backgroundColor: Colors.transparent,
-                                      child: GlassContainer(
-                                        height: 30.h,
-                                        width: 90.w,
-                                        borderRadius: BorderRadius.circular(12),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.40),
-                                            Colors.white.withOpacity(0.10)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderGradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.60),
-                                            Colors.white.withOpacity(0.10),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.05),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.6)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          stops: [0.0, 0.39, 0.40, 1.0],
-                                        ),
-                                        blur: 15.0,
-                                        borderWidth: 1.5,
-                                        elevation: 3.0,
-                                        isFrostedGlass: true,
-                                        shadowColor:
-                                            Colors.black.withOpacity(0.20),
-                                        alignment: Alignment.center,
-                                        frostedOpacity: 0.12,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 2.h),
-                                        child: fondsInfoDailog(
-                                          formKey: cubit.formKey,
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Amount cannot be empty';
-                                            }
-
-                                            if (double.tryParse(val) == null) {
-                                              return 'Please enter a valid number';
-                                            }
-                                            return null;
-                                          },
-                                          controller: cubit.fundsCon,
-                                          cancelOnPressed: () {
-                                            log("in caneel of page");
-                                            Navigator.pop(context);
-                                          },
-                                          okOnPressed: () {
-                                            log("in ok of page");
-
-                                            cubit.addFundstoChild();
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              const Divider(
-                                thickness: 2,
-                              ),
-                              ListTile(
-                                title: Text(
-                                  'يوم مفتوح',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.sp),
-                                ),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  size: 2.h,
-                                ),
-                                //! bottomsheet activate plan
-                                onTap: () {
-                                  cubit.limtFunds.text =
-                                      "${cubit.childModel!.dailyLimits}";
-
-                                  cubit.initialValueRaido =
-                                      cubit.childModel!.isOpenDay;
-
-                                  log("hmm is isoen  ${cubit.initialValueRaido}");
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return OpenDaysBottomSheet(
-                                          formKey: cubit.formKey,
-                                          initialValueRaido:
-                                              cubit.initialValueRaido,
-                                          controller: cubit.limtFunds,
-                                          onPressedButton: () {
-                                            cubit.updateOpenDay();
-                                          },
-                                          onChangedSwitch: (value) {
-                                            
-                                            cubit.initialValueRaido = value;
-                                          },
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Amount cannot be empty';
-                                            }
-                                            if (double.tryParse(val) == null) {
-                                              return 'Please enter a valid number';
-                                            }
-                                            return null;
-                                          },
-                                        );
-                                      });
-                                },
-                              ),
-
-                              // ---------------------------------
-
-                              ListTile(
-                                title: Text(
-                                  "الطلبات و الخطط",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.sp),
-                                ),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  size: 2.h,
-                                ),
-                                //! bottomsheet activate plan
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) {
-                                      return FollowerOrderPlanScreen(
-                                        childModel: childInfo!,
-                                      );
-                                    },
-                                  ));
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ],
@@ -465,5 +333,102 @@ class FollowersProfileScreen extends StatelessWidget {
         );
       }),
     );
+  }
+
+  Future<dynamic> onManageOpenDays(BuildContext context, FollowersProfileCubit cubit) {
+    return showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return OpenDaysBottomSheet(
+                                      formKey: cubit.formKey,
+                                      initialValueRaido:
+                                          cubit.initialValueRaido,
+                                      controller: cubit.limtFunds,
+                                      onPressedButton: () {
+                                        cubit.updateOpenDay();
+                                      },
+                                      onChangedSwitch: (value) {
+                                        cubit.initialValueRaido = value;
+                                      },
+                                      validator: (val) {
+                                        if (val == null || val.isEmpty) {
+                                          return 'Amount cannot be empty';
+                                        }
+                                        if (double.tryParse(val) == null) {
+                                          return 'Please enter a valid number';
+                                        }
+                                        return null;
+                                      },
+                                    );
+                                  });
+  }
+
+  Future<dynamic> onAddFunds(BuildContext context, FollowersProfileCubit cubit) {
+    return showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) => Dialog(
+                                backgroundColor: Colors.transparent,
+                                child: GlassContainer(
+                                  height: 23.h,
+                                  width: 90.w,
+                                  borderRadius: BorderRadius.circular(12),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0.40),
+                                      Colors.white.withOpacity(0.10)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderGradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0.60),
+                                      Colors.white.withOpacity(0.10),
+                                      Colors.lightBlueAccent
+                                          .withOpacity(0.05),
+                                      Colors.lightBlueAccent
+                                          .withOpacity(0.6)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    stops: [0.0, 0.39, 0.40, 1.0],
+                                  ),
+                                  blur: 15.0,
+                                  borderWidth: 1.5,
+                                  elevation: 3.0,
+                                  isFrostedGlass: true,
+                                  shadowColor:
+                                      Colors.black.withOpacity(0.20),
+                                  alignment: Alignment.center,
+                                  frostedOpacity: 0.12,
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 2.h),
+                                  child: fondsInfoDailog(
+                                    formKey: cubit.formKey,
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return 'Amount cannot be empty';
+                                      }
+                      
+                                      if (double.tryParse(val) == null) {
+                                        return 'Please enter a valid number';
+                                      }
+                                      return null;
+                                    },
+                                    controller: cubit.fundsCon,
+                                    cancelOnPressed: () {
+                                      log("in caneel of page");
+                                      Navigator.pop(context);
+                                    },
+                                    okOnPressed: () {
+                                      log("in ok of page");
+                      
+                                      cubit.addFundstoChild();
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
   }
 }
