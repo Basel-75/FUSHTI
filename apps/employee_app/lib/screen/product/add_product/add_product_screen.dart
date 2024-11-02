@@ -47,7 +47,7 @@ class AddProductScreen extends StatelessWidget {
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,
                   iconTheme: const IconThemeData(
-                    color: Colors.white, //change your color here
+                    color: Colors.white,
                   ),
                   title: Text(
                     'أضافة منتج',
@@ -58,7 +58,7 @@ class AddProductScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   flexibleSpace: Container(
-                    height: 13.h,
+                    //height: 15.h,
                     decoration: const BoxDecoration(
                       color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
@@ -76,13 +76,9 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextFormFelid(
-                          backgroundColor: const Color(0xffF6FAFD),
                           controller: cubit.foodNameController,
-                          iconText: const Icon(Bootstrap.github),
                           keyboardType: TextInputType.text,
                           width: 85.w,
-                          paddingRightSide: 8.w,
-                          paddingLeftSide: 8.w,
                           hintText: 'بكس السعادة',
                           isPassword: false,
                           label: 'اسم المنتج',
@@ -101,17 +97,10 @@ class AddProductScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomTextFormFelid(
-                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.priceController,
                               keyboardType: TextInputType.number,
-                              iconText: const Icon(
-                                Bootstrap.currency_dollar,
-                                color: Colors.black38,
-                              ),
                               width: 40.w,
-                              paddingRightSide: 8.w,
                               paddingLeftSide: 0.w,
-
                               //controller:
                               hintText: '210',
                               isPassword: false,
@@ -123,15 +112,9 @@ class AddProductScreen extends StatelessWidget {
                                 return null;
                               }),
                           CustomTextFormFelid(
-                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.calController,
                               keyboardType: TextInputType.number,
-                              iconText: const Icon(
-                                Bootstrap.fire,
-                                color: Colors.black38,
-                              ),
                               paddingRightSide: 0.w,
-                              paddingLeftSide: 8.w,
                               width: 40.w,
                               //controller:
                               hintText: '300',
@@ -149,7 +132,6 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomMultiSelects(
-                        backgroundColor: const Color(0xffF6FAFD),
                         label: 'الحساسية',
                         hintText: 'اختر الحساسية',
                         items: cubit.allergy,
@@ -162,7 +144,6 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomSelect(
-                        backgroundColor: const Color(0xffF6FAFD),
                         label: 'النوع',
                         hintText: 'ادخل نوع المنتج',
                         items: const [
@@ -176,7 +157,6 @@ class AddProductScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextArea(
-                        backgroundColor: const Color(0xffF6FAFD),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "يجب كتابة وصف المنتج";

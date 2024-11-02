@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/storage/cubit/storage_cubit.dart';
 import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
@@ -52,28 +53,32 @@ class StorageScreen extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                iconTheme: const IconThemeData(
-                  color: Colors.white, //change your color here
-                ),
-                title: Text(
-                  'إدارة المخزون',
-                  style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (builder) {
+                        return const FeedBackScreen();
+                      }));
+                    },
+                    icon: const Icon(
+                      Bootstrap.chat_text_fill,
+                      color: Colors.white,
+                    )),
+                title: Image.asset('assets/image/mainLogo.png'),
                 centerTitle: true,
                 flexibleSpace: Container(
-                  height: 13.h,
-                  decoration: const BoxDecoration(
+                  decoration: const ShapeDecoration(
+                    shape: SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius.only(
+                      bottomLeft:
+                          SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                      bottomRight:
+                          SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                    )),
                     color: Color(0xff6FBAE5),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(35),
-                      bottomRight: Radius.circular(35),
-                    ),
                   ),
                 ),
-                toolbarHeight: 11.h,
+                toolbarHeight: 15.h,
               ),
               body: SingleChildScrollView(
                 child: Column(
@@ -126,7 +131,10 @@ class StorageScreen extends StatelessWidget {
                         onPressed: () {
                           cubit.updateAdv();
                         },
-                        title: "حفظ")
+                        title: "حفظ"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
                   ],
                 ),
               ),

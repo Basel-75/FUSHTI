@@ -50,10 +50,10 @@ class EditScreen extends StatelessWidget {
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,
                   iconTheme: const IconThemeData(
-                    color: Colors.white, //change your color here
+                    color: Colors.white,
                   ),
                   title: Text(
-                    'تعديل منتج',
+                    'تعديل المنتج',
                     style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class EditScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   flexibleSpace: Container(
-                    height: 13.h,
+                    //height: 15.h,
                     decoration: const BoxDecoration(
                       color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
@@ -79,13 +79,9 @@ class EditScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomTextFormFelid(
-                          backgroundColor: const Color(0xffF6FAFD),
                           controller: cubit.foodNameController,
-                          iconText: const Icon(Bootstrap.github),
                           keyboardType: TextInputType.text,
-                          width: 40.w,
-                          paddingRightSide: 8.w,
-                          paddingLeftSide: 8.w,
+                          width: 85.w,
                           hintText: '${productInfo.foodName}',
                           isPassword: false,
                           label: 'اسم المنتج',
@@ -114,17 +110,10 @@ class EditScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomTextFormFelid(
-                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.priceController,
                               keyboardType: TextInputType.number,
-                              iconText: const Icon(
-                                Bootstrap.currency_dollar,
-                                color: Colors.black38,
-                              ),
                               width: 40.w,
-                              paddingRightSide: 8.w,
                               paddingLeftSide: 0.w,
-
                               //controller:
                               hintText: '${productInfo.price}',
                               isPassword: false,
@@ -141,15 +130,9 @@ class EditScreen extends StatelessWidget {
                                 return null;
                               }),
                           CustomTextFormFelid(
-                              backgroundColor: const Color(0xffF6FAFD),
                               controller: cubit.calController,
                               keyboardType: TextInputType.number,
-                              iconText: const Icon(
-                                Bootstrap.fire,
-                                color: Colors.black38,
-                              ),
                               paddingRightSide: 0.w,
-                              paddingLeftSide: 8.w,
                               width: 40.w,
                               //controller:
                               hintText: '${productInfo.cal}',
@@ -172,7 +155,6 @@ class EditScreen extends StatelessWidget {
                         height: 3.h,
                       ),
                       CustomMultiSelects(
-                        backgroundColor: const Color(0xffF6FAFD),
                         label: 'الحساسية',
                         hintText:
                             '${productInfo.allergy!.isNotEmpty ? productInfo.allergy : 'لا توجد حساسية'}',
@@ -242,8 +224,16 @@ class EditScreen extends StatelessWidget {
                               width: 85.w,
                               height: 30.h,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(8.0),
+                                color: const Color(0xffF6FAFD),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 0.2,
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               child: cubit.selectedImage == null
                                   ? Center(

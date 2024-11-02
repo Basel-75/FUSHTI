@@ -12,6 +12,7 @@ import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/profile/profile_screen.dart';
 
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
+import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/textFormField/custome_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class BottomNavigatorScreen extends StatelessWidget {
 
   final List<Widget> screens = const [
     HomeScreen(),
-    BoxesScreen(),
+    StorageScreen(),
     StatisticsScreen(),
     ProfileScreen()
   ];
@@ -75,99 +76,115 @@ class BottomNavigatorScreen extends StatelessWidget {
                     builder: (context) {
                       return Dialog(
                         child: Container(
-                          height: 50.h,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              CustomTextFormFelid(
-                                label: "اسم الطالب",
-                                hintText: "الاسم",
-                                isPassword: false,
-                                width: 60.w,
-                              ),
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              CustomTextFormFelid(
-                                label: "فصل الطالب",
-                                hintText: "الفصل",
-                                isPassword: false,
-                                width: 60.w,
-                              ),
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              CustomButton(
-                                onPressed: () async {
-                                  // here scan
+                          height: 38.h,
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                CustomTextFormFelid(
+                                  label: "اسم الطالب",
+                                  hintText: "فهد",
+                                  isPassword: false,
+                                  width: 70.w,
+                                ),
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                CustomTextFormFelid(
+                                  label: "فصل الطالب",
+                                  hintText: "أ3",
+                                  isPassword: false,
+                                  width: 70.w,
+                                ),
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomButton(
+                                      backgroundColor: const Color(0xff6FBAE5),
+                                      onPressed: () async {
+                                        // here scan
 
-                                  try {
-                                    final result = await BarcodeScanner.scan(
-                                      options: ScanOptions(
-                                        strings: {
-                                          'cancel': _cancelController.text,
-                                          'flash_on': _flashOnController.text,
-                                          'flash_off': _flashOffController.text,
-                                        },
-                                        restrictFormat: [BarcodeFormat.qr],
-                                        useCamera: _selectedCamera,
-                                        autoEnableFlash: _autoEnableFlash,
-                                        android: AndroidOptions(
-                                          aspectTolerance: _aspectTolerance,
-                                          useAutoFocus: _useAutoFocus,
-                                        ),
-                                      ),
-                                    );
+                                        try {
+                                          final result =
+                                              await BarcodeScanner.scan(
+                                            options: ScanOptions(
+                                              strings: {
+                                                'cancel':
+                                                    _cancelController.text,
+                                                'flash_on':
+                                                    _flashOnController.text,
+                                                'flash_off':
+                                                    _flashOffController.text,
+                                              },
+                                              restrictFormat: [
+                                                BarcodeFormat.qr
+                                              ],
+                                              useCamera: _selectedCamera,
+                                              autoEnableFlash: _autoEnableFlash,
+                                              android: AndroidOptions(
+                                                aspectTolerance:
+                                                    _aspectTolerance,
+                                                useAutoFocus: _useAutoFocus,
+                                              ),
+                                            ),
+                                          );
 
-                                    if (result.rawContent.isNotEmpty) {
-                                      // change it to take the value from databse later
-                                      //  result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //       builder: (context) => OrderScreen(
-                                      //         childModel: childm ,
-                                      //          ),
-                                      //     ));
-                                    }
-                                  } on PlatformException catch (e) {
-                                    scanResult = ScanResult(
-                                      rawContent: e.code ==
-                                              BarcodeScanner.cameraAccessDenied
-                                          ? 'The user did not grant the camera permission!'
-                                          : 'Unknown error: //',
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(scanResult!.rawContent),
-                                      backgroundColor: Colors.red[300],
-                                    ));
-                                  }
-                                },
-                                title: "مسح باركود",
-                                fixedSize: Size(40.w, 4.h),
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              CustomButton(
-                                onPressed: () async {
-                                  await cubit.getchild();
+                                          if (result.rawContent.isNotEmpty) {
+                                            // change it to take the value from databse later
+                                            //  result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder: (context) => OrderScreen(
+                                            //         childModel: childm ,
+                                            //          ),
+                                            //     ));
+                                          }
+                                        } on PlatformException catch (e) {
+                                          scanResult = ScanResult(
+                                            rawContent: e.code ==
+                                                    BarcodeScanner
+                                                        .cameraAccessDenied
+                                                ? 'The user did not grant the camera permission!'
+                                                : 'Unknown error: //',
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content:
+                                                Text(scanResult!.rawContent),
+                                            backgroundColor: Colors.red[300],
+                                          ));
+                                        }
+                                      },
+                                      title: "مسح باركود",
+                                      fixedSize: Size(35.w, 4.h),
+                                    ),
+                                    CustomButton(
+                                      onPressed: () async {
+                                        await cubit.getchild();
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => OrderScreen(
-                                          childModel: cubit.childModel!,
-                                        ),
-                                      ));
-                                },
-                                title: "ابحث",
-                                fixedSize: Size(40.w, 4.h),
-                              ),
-                            ],
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => OrderScreen(
+                                                childModel: cubit.childModel!,
+                                              ),
+                                            ));
+                                      },
+                                      title: "بحث",
+                                      fixedSize: Size(35.w, 4.h),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -200,11 +217,11 @@ class BottomNavigatorScreen extends StatelessWidget {
                     FlashyTabBarItem(
                       icon: const Icon(
                         // BoxIcons.bxs_food_menu
-                        IonIcons.fast_food,
+                        BoxIcons.bx_box,
                         color: Color(0xFFFDCB6A),
                         size: 30,
                       ),
-                      title: const Text('الوجبات'),
+                      title: const Text('المخزون'),
                     ),
                     FlashyTabBarItem(
                       icon: const Icon(
