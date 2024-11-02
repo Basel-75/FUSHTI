@@ -51,9 +51,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
     log(" here start  $start");
     log(" here end  $end");
 
-    // Update the focused day to the end of the selected range or to the start as needed
-
-    focusedDay = day; // Set focusedDay to the end of the range
+    focusedDay = day; //
 
     startDate = start;
     endDate = end;
@@ -115,14 +113,15 @@ class PlanCartCubit extends Cubit<PlanCartState> {
 
   payPlan({required PlanModel planModel}) async {
     try {
+      emit(LodingState());
       log("user funds :::: ${appModel.userModel!.funds}");
       if (dayNume == 0) {
-        emit(ErorrState(msg: "chose date"));
+        emit(ErorrState(msg: "أختر تاريخ"));
         return;
       }
 
       if (appModel.userModel!.funds < totalPrice) {
-        emit(ErorrState(msg: "you dont have money"));
+        emit(ErorrState(msg: "ليس معك مال"));
         return;
       }
 
@@ -134,6 +133,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
 
       log("user funds :::: ${appModel.userModel!.funds}");
       log("very good plan pay");
+      emit(DoneState());
     } catch (er) {
       log("$er");
       emit(ErorrState(msg: "there was eorr"));

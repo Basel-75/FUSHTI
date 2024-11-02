@@ -81,14 +81,14 @@ class PlanCubit extends Cubit<PlanState> {
     // check if there is plan with same name
 
     if (planNameCOn.text.isEmpty) {
-      emit(EorrPlanState(msg: "pls add text"));
+      emit(EorrPlanState(msg: "اضف اسم للخطة"));
 
       return;
     }
 
     for (var val in planListUi) {
       if (val.name! == planNameCOn.text) {
-        emit(EorrPlanState(msg: "there is plan with same name"));
+        emit(EorrPlanState(msg: "هناك خطة بنفس الاسم"));
         return;
       }
     }
@@ -101,7 +101,7 @@ class PlanCubit extends Cubit<PlanState> {
       childModelSelcted!.planList.add(PlanModel.fromJson(res));
 
       emit(NoLodingState());
-      emit(PlanChnageState());
+      emit(PlanChnageState(msg:"تمت اضافة خطة"));
 
       log("plan has been add");
     } catch (er) {

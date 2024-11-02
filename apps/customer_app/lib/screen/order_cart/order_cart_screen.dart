@@ -1,3 +1,4 @@
+import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/order_cart/cubit/order_cart_cubit.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
 import 'package:customer_app/widget/container/pay_plan_bottom.dart';
@@ -28,6 +29,27 @@ class OrderCartScreen extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(state.msg),
                   backgroundColor: Colors.red,
+                ));
+              }
+
+
+              if(state is LodingState){
+                showLoadingDialog(context: context);
+              }
+
+              if(state is DoneState){
+
+                 Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("تم الدفع"),
+                  backgroundColor: Colors.green,
+                ));
+
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) {
+                    return const BottomNavigatorScreen();
+                  },
                 ));
               }
             },
@@ -101,7 +123,10 @@ class OrderCartScreen extends StatelessWidget {
                                           cartItem:
                                               cubit.childModel.cartList[index]);
                                     },
-                                    withoutDelete: true,
+                                    withoutDelete: false,
+                                    onDelete: () {
+                                      cubit.delItem(cartIndex: index);
+                                    },
                                   );
                                 },
                               ),

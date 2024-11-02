@@ -4,7 +4,13 @@ part of 'plan_cubit.dart';
 sealed class PlanState {}
 
 final class PlanInitial extends PlanState {}
-final class PlanChnageState extends PlanState {}
+final class PlanChnageState extends PlanState {
+
+  final String msg;
+
+  PlanChnageState({required this.msg});
+
+}
 final class LodingState extends PlanState {}
 final class NoLodingState extends PlanState {}
 

@@ -31,6 +31,7 @@ mixin MealPlanMix {
         "end_date": endDate.toIso8601String(),
         "total_meals": totalMeals,
         "status": "active",
+        "total_price" : totalPrice
       }).select();
 
       for (var val in planModel.mealPlanItemLis) {
@@ -87,13 +88,14 @@ mixin MealPlanMix {
         }
       }
 
-      log("${appModel.userModel!.childModelList[0].planList.length}");
-      log("${appModel.userModel!.childModelList[0].planList[0].toJson()}");
-      log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis.length}");
-      log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].toJson()}");
-      log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].foodMenuModel.toJson()}");
+      // log("${appModel.userModel!.childModelList[0].planList.length}");
+      // log("${appModel.userModel!.childModelList[0].planList[0].toJson()}");
+      // log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis.length}");
+      // log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].toJson()}");
+      // log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].foodMenuModel.toJson()}");
     } catch (er) {
-      log("$er");
+      log("-------------------- $er");
+      rethrow;
     }
   }
 

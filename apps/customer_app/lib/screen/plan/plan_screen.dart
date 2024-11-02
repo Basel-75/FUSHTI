@@ -27,7 +27,7 @@ class PlanScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is NoInterState) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('Please check your Internet'),
+                content: Text('لا يوجد الانترنت'),
                 backgroundColor: Colors.red,
               ));
             }
@@ -64,6 +64,18 @@ class PlanScreen extends StatelessWidget {
                 },
               ));
             }
+
+
+            if(state is PlanChnageState){
+               Navigator.pop(context);
+
+               ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+                content: Text(state.msg),
+                backgroundColor: Colors.green,
+              ));
+
+
+            }
           },
           child: Scaffold(
             appBar: AppBar(
@@ -71,13 +83,13 @@ class PlanScreen extends StatelessWidget {
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.wallet,
                     color: Colors.white,
                   ),
                   Text(
                     '${cubit.appModel.userModel?.funds.toString()}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ],
               ),
@@ -164,7 +176,7 @@ class PlanScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
+                                color: const Color(0xff546F66)),
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -219,7 +231,7 @@ class PlanScreen extends StatelessWidget {
                                         cubit.clickInChild(childModel: value);
                                       },
                                       selectedColor:
-                                          Color.fromARGB(56, 12, 154, 236),
+                                          const Color.fromARGB(56, 12, 154, 236),
                                     ),
                                   ],
                                 );
@@ -231,7 +243,7 @@ class PlanScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
+                                color: const Color(0xff546F66)),
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -243,8 +255,10 @@ class PlanScreen extends StatelessWidget {
                                     CustomRadioButton(
                                       height: 5.h,
                                       width: 30.w,
+                                      
 
                                       customShape: ContinuousRectangleBorder(
+
                                           borderRadius:
                                               BorderRadius.circular(25)),
                                       enableShape: true,
@@ -274,7 +288,7 @@ class PlanScreen extends StatelessWidget {
                                         cubit.clickPlanState(planModel: value);
                                       },
                                       selectedColor:
-                                          Color.fromARGB(56, 12, 154, 236),
+                                          const Color.fromARGB(56, 12, 154, 236),
                                     ),
                                   ],
                                 );
@@ -286,7 +300,7 @@ class PlanScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
+                                color: const Color(0xff546F66)),
                           ),
                           const Divider(),
                           SizedBox(
