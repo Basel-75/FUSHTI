@@ -70,117 +70,116 @@ class LoginScreen extends StatelessWidget {
                       constraints: BoxConstraints(
                         minHeight: constraints.maxHeight,
                       ),
-                      child: IntrinsicHeight(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/image/auth_header1.png',
-                                ),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/image/auth_header2.png',
-                                ),
-                              ],
-                            ),
-
-                            Image.asset(
-                              'assets/image/mainLogo2.png',
-                            ),
-                            // SizedBox(
-                            //   height: 3.h,
-                            // ),
-                            Text(
-                              'تسجيل الدخول',
-                              style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 22.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xff103C37)),
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: CustomTextFormFelid(
-                                controller: cubit.emailCon,
-                                hintText: 'example@gmail.com',
-                                keyboardType: TextInputType.emailAddress,
-                                isPassword: false,
-                                label: 'الايميل',
-                                backgroundColor: const Color(0xffF6FAFD),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content:
-                                          Text('Please enter an email address'),
-                                      backgroundColor: Colors.red,
-                                    ));
-
-                                    return "";
-                                  } else if (!RegExp(
-                                          r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                                      .hasMatch(value)) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text(
-                                          'Please enter a valid email address'),
-                                      backgroundColor: Colors.red,
-                                    ));
-
-                                    return "";
-                                  }
-                                  return null;
-                                },
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/image/auth_header1.png',
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            // const CustomTextFormFelid(
-                            //   hintText: '*************',
-                            //   isPassword: true,
-                            //   label: 'كلمة السر',
-                            // ),
-                            SizedBox(
-                              height: 4.h,
-                            ),
-                            CustomButton(
-                              onPressed: () {
-                                cubit.singup();
+                              const Spacer(),
+                              Image.asset(
+                                'assets/image/auth_header2.png',
+                              ),
+                            ],
+                          ),
+                      
+                          Image.asset(
+                            'assets/image/mainLogo2.png',
+                          ),
+                          // SizedBox(
+                          //   height: 3.h,
+                          // ),
+                          Text(
+                            'تسجيل الدخول',
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xff103C37)),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: CustomTextFormFelid(
+                              controller: cubit.emailCon,
+                              hintText: 'example@gmail.com',
+                              keyboardType: TextInputType.emailAddress,
+                              isPassword: false,
+                              label: 'الايميل',
+                              backgroundColor: const Color(0xffF6FAFD),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content:
+                                        Text('Please enter an email address'),
+                                    backgroundColor: Colors.red,
+                                  ));
+                      
+                                  return "";
+                                } else if (!RegExp(
+                                        r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                                    .hasMatch(value)) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'Please enter a valid email address'),
+                                    backgroundColor: Colors.red,
+                                  ));
+                      
+                                  return "";
+                                }
+                                return null;
                               },
-                              title: 'تسجيل الدخول',
                             ),
-                            CustomTextButton(
-                              buttonTitle: 'تسجيل',
-                              question: 'ليس لديك حساب',
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignupScreen(),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            const BrandRow(),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/image/auth_bottom1.png',
-                                ),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/image/auth_bottom2.png',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          // const CustomTextFormFelid(
+                          //   hintText: '*************',
+                          //   isPassword: true,
+                          //   label: 'كلمة السر',
+                          // ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          CustomButton(
+                            onPressed: () {
+                              cubit.singup();
+                            },
+                            title: 'تسجيل الدخول',
+                          ),
+                          CustomTextButton(
+                            buttonTitle: 'تسجيل',
+                            question: 'ليس لديك حساب',
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignupScreen(),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          const BrandRow(),
+                          //const Spacer(),
+                          SizedBox(height: 18.h,),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/image/auth_bottom1.png',
+                              ),
+                              const Spacer(),
+                              Image.asset(
+                                'assets/image/auth_bottom2.png',
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   );

@@ -305,7 +305,7 @@ class PlanScreen extends StatelessWidget {
                                             log("clecik del");
                                             cubit.delPlan();
                                           },
-                                          child: const Icon(Icons.delete))
+                                          child: const Icon(Icons.delete,color: Colors.red,))
                                       : const SizedBox(),
                                   SizedBox(
                                     width: 5.w,
@@ -313,7 +313,7 @@ class PlanScreen extends StatelessWidget {
                                   cubit.planModelSelcted != null
                                       ? GestureDetector(
                                           child:
-                                              const Icon(Icons.edit_outlined),
+                                              const Icon(Icons.edit_outlined,color: Color(0xffA3E9BF),),
                                           onTap: () {
                                             log("in edit ");
 

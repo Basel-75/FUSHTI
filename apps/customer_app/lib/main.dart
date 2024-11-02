@@ -4,7 +4,7 @@ import 'package:customer_app/screen/bill/bill_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
-import 'package:customer_app/screen/landing_page/landing_page1.dart';
+
 import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/screen/plan/plan_screen.dart';
@@ -29,7 +29,6 @@ import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() async {
-  //! remove shape later
   //!change the default user model in melos
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -72,7 +71,7 @@ class MainApp extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffFEC87F)))),
-          home: const LandingPage1(),
+          home: const BottomNavigatorScreen(),
         ),
       ),
     );

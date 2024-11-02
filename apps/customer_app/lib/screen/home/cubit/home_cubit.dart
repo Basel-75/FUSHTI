@@ -81,6 +81,7 @@ class HomeCubit extends Cubit<HomeState> {
     for (var element in currentChild.schoolModel.foodMenuModelList) {
       if (element.category == catagory) {
         foodList.add(element);
+        log(element.toJson().toString());
       }
     }
     return foodList;
