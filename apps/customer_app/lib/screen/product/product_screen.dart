@@ -25,7 +25,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductCubit(foodMenuModel,childModel),
+      create: (context) => ProductCubit(foodMenuModel, childModel),
       child: Builder(builder: (context) {
         final cubit = context.read<ProductCubit>();
         log('${childModel.toJson()}|${foodMenuModel.toJson()}');
@@ -35,7 +35,7 @@ class ProductScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is DoneAddState) {
                 Navigator.of(context).pop();
-             
+
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('product has been add to the cart'),
                   backgroundColor: Colors.green,
@@ -44,36 +44,35 @@ class ProductScreen extends StatelessWidget {
 
               if (state is CartThereState) {
                 Navigator.of(context).pop();
-              
+
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('you arldy add to the cart'),
                   backgroundColor: Colors.red,
                 ));
               }
 
-
-              if(state is EorrState){
-
+              if (state is EorrState) {
                 Navigator.of(context).pop();
-              
-                ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(state.msg),
                   backgroundColor: Colors.red,
                 ));
-
               }
             },
             child: Scaffold(
               appBar: AppBar(
-                flexibleSpace: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xffFFFFFF), Color(0xffE0D1BB)],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  ),
-                ),
+                backgroundColor: Colors.white,
+
+                // flexibleSpace: Container(
+                //   decoration: const BoxDecoration(
+                //     gradient: LinearGradient(
+                //       colors: [Color(0xffFFFFFF), Color(0xffE0D1BB)],
+                //       begin: Alignment.bottomCenter,
+                //       end: Alignment.topCenter,
+                //     ),
+                //   ),
+                // ),
               ),
               body: Column(
                 children: [
@@ -81,12 +80,12 @@ class ProductScreen extends StatelessWidget {
                     width: 100.w,
                     //height: 44.h,
                     decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xffFFFFFF), Color(0xffE0D1BB)],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
+                        // gradient: LinearGradient(
+                        //   colors: [Color(0xffFFFFFF), Color(0xffE0D1BB)],
+                        //   begin: Alignment.topCenter,
+                        //   end: Alignment.bottomCenter,
+                        // ),
+                        ),
                     child: Column(
                       children: [
                         Image.asset(
@@ -123,7 +122,6 @@ class ProductScreen extends StatelessWidget {
                           ProductInfoColumn(
                             productName: foodMenuModel.foodName,
                             description: foodMenuModel.description ?? "",
-                            rate: '4.8',
                           ),
                           SizedBox(
                             height: 2.h,
@@ -146,19 +144,6 @@ class ProductScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-                          Text(
-                            'تحديد الوجبة للتابع',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16.sp),
-                          ),
-                          const CustomMultiSelect(
-                            label: '',
-                            hintText: 'اختر التابع',
-                            items: [],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
                           const Spacer(),
                           Center(
                             child: CustomButton(
@@ -169,8 +154,8 @@ class ProductScreen extends StatelessWidget {
                                       return Dialog(
                                         child: Builder(builder: (context) {
                                           return Container(
-                                            width: 200,
-                                            height: 200,
+                                            width: 50.w,
+                                            height: 25.h,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -185,8 +170,6 @@ class ProductScreen extends StatelessWidget {
                                                 CustomSelect(
                                                     onChanged: (p0) {
                                                       log("$p0");
-
-                                                      
 
                                                       cubit.planItemCOn.text =
                                                           p0!.name;
@@ -213,8 +196,10 @@ class ProductScreen extends StatelessWidget {
                                                   children: [
                                                     CustomButton(
                                                         fontsize: 15.sp,
+                                                        backgroundColor:
+                                                            Color(0xffC8E5F5),
                                                         fixedSize:
-                                                            Size(34.w, 7.h),
+                                                            Size(30.w, 6.h),
                                                         onPressed: () {
                                                           cubit.addToCart(
                                                               childModel:
@@ -222,15 +207,17 @@ class ProductScreen extends StatelessWidget {
                                                               foodMenuModel:
                                                                   foodMenuModel);
                                                         },
-                                                        title: "أضافة الوجبة"),
+                                                        title: "اضافة لسلة"),
                                                     CustomButton(
                                                         fontsize: 15.sp,
+                                                        backgroundColor:
+                                                            Color(0xffA3E9BF),
                                                         fixedSize:
-                                                            Size(34.w, 7.h),
+                                                            Size(32.w, 6.h),
                                                         onPressed: () {
                                                           cubit.addToPlan();
                                                         },
-                                                        title: "أضافة للخطة")
+                                                        title: "اضافة للخطة")
                                                   ],
                                                 )
                                               ],

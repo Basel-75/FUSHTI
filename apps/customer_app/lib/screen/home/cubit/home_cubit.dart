@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
+import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/restriction_food_model.dart';
@@ -83,5 +84,20 @@ class HomeCubit extends Cubit<HomeState> {
       }
     }
     return foodList;
+  }
+
+  quickAddToCart(
+      {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {
+    for (var val in childModel.cartList) {
+      if (val.foodMenuModel.id == foodMenuModel.id) {
+        emit(CartThereState());
+        return;
+      }
+    }
+
+    childModel.cartList.add(
+        CartItem(childModel: childModel, foodMenuModel: foodMenuModel, que: 1));
+
+    emit(DoneAddState(msg: 'تم اضافة المنتج الى السلة'));
   }
 }

@@ -27,7 +27,7 @@ class PlanScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is NoInterState) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('Please check your Internet'),
+                content: Text('لا يوجد الانترنت'),
                 backgroundColor: Colors.red,
               ));
             }
@@ -64,6 +64,15 @@ class PlanScreen extends StatelessWidget {
                 },
               ));
             }
+
+            if (state is PlanChnageState) {
+              Navigator.pop(context);
+
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.msg),
+                backgroundColor: Colors.green,
+              ));
+            }
           },
           child: Scaffold(
             appBar: AppBar(
@@ -71,13 +80,13 @@ class PlanScreen extends StatelessWidget {
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.wallet,
                     color: Colors.white,
                   ),
                   Text(
                     '${cubit.appModel.userModel?.funds.toString()}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ],
               ),
@@ -106,8 +115,8 @@ class PlanScreen extends StatelessWidget {
                     builder: (context) {
                       return Dialog(
                         child: Container(
-                          width: 30.w,
-                          height: 30.h,
+                          width: 25.w,
+                          height: 20.h,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
@@ -117,19 +126,23 @@ class PlanScreen extends StatelessWidget {
                               SizedBox(
                                 height: 2.h,
                               ),
-                              CustomTextFormFelid(
-                                  controller: cubit.planNameCOn,
-                                  label: "اضف خطة",
-                                  hintText: "اسم الخطة",
-                                  isPassword: false),
+                              Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: CustomTextFormFelid(
+                                    controller: cubit.planNameCOn,
+                                    label: "اضف خطة",
+                                    hintText: "اسم الخطة",
+                                    isPassword: false),
+                              ),
                               SizedBox(
                                 height: 2.h,
                               ),
                               CustomButton(
+                                backgroundColor: Color(0xffC8E5F5),
                                 onPressed: () {
                                   cubit.addPlan();
                                 },
-                                title: "اضف",
+                                title: "تأكيد",
                                 fixedSize: Size(30.w, 5.h),
                               )
                             ],
@@ -164,7 +177,7 @@ class PlanScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
+                                color: const Color(0xff546F66)),
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -184,6 +197,7 @@ class PlanScreen extends StatelessWidget {
                                       elevation: 2,
                                       //absoluteZeroSpacing: true,
                                       unSelectedColor: const Color(0xffffffff),
+
                                       // buttonLables: const [
                                       //   'احمد',
                                       //   'انس',
@@ -218,8 +232,8 @@ class PlanScreen extends StatelessWidget {
 
                                         cubit.clickInChild(childModel: value);
                                       },
-                                      selectedColor:
-                                          Color.fromARGB(56, 12, 154, 236),
+                                      selectedColor: const Color.fromARGB(
+                                          56, 12, 154, 236),
                                     ),
                                   ],
                                 );
@@ -231,7 +245,7 @@ class PlanScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
+                                color: const Color(0xff546F66)),
                           ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -273,20 +287,99 @@ class PlanScreen extends StatelessWidget {
 
                                         cubit.clickPlanState(planModel: value);
                                       },
-                                      selectedColor:
-                                          Color.fromARGB(56, 12, 154, 236),
+                                      selectedColor: const Color.fromARGB(
+                                          56, 12, 154, 236),
                                     ),
                                   ],
                                 );
                               },
                             ),
                           ),
-                          Text(
-                            'الاطعمة المخصصة',
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
+                          BlocBuilder<PlanCubit, PlanState>(
+                            builder: (context, state) {
+                              return Row(
+                                children: [
+                                  Text(
+                                    'الاطعمة المخصصة',
+                                    style: TextStyle(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xff546F66)),
+                                  ),
+                                  const Spacer(
+                                    flex: 2,
+                                  ),
+                                  cubit.planModelSelcted != null
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            log("clecik del");
+                                            cubit.delPlan();
+                                          },
+                                          child: const Icon(Icons.delete))
+                                      : const SizedBox(),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  cubit.planModelSelcted != null
+                                      ? GestureDetector(
+                                          child:
+                                              const Icon(Icons.edit_outlined),
+                                          onTap: () {
+                                            log("in edit ");
+
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Dialog(
+                                                  child: Container(
+                                                    width: 30.w,
+                                                    height: 30.h,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        boxShadow:
+                                                            kElevationToShadow[
+                                                                8]),
+                                                    child: Column(
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 2.h,
+                                                        ),
+                                                        CustomTextFormFelid(
+                                                            controller: cubit
+                                                                .planNameCOn,
+                                                            label: "عدل خطة",
+                                                            hintText:
+                                                                "اسم الخطة",
+                                                            isPassword: false),
+                                                        SizedBox(
+                                                          height: 2.h,
+                                                        ),
+                                                        CustomButton(
+                                                          onPressed: () {
+                                                            cubit.editPlan();
+                                                          },
+                                                          title: "عدل",
+                                                          fixedSize:
+                                                              Size(30.w, 5.h),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        )
+                                      : const SizedBox(),
+                                  const Spacer(
+                                    flex: 1,
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                           const Divider(),
                           SizedBox(

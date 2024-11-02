@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cart_cubit/plan_cart_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
@@ -21,7 +22,6 @@ class PlanCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) => PlanCartCubit(),
       child: Directionality(
@@ -34,6 +34,23 @@ class PlanCartScreen extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(state.msg),
                   backgroundColor: Colors.red,
+                ));
+              }
+
+              if (state is LodingState) {
+                showLoadingDialog(context: context);
+              }
+
+              if (state is DoneState) {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("تم الدفع"),
+                  backgroundColor: Colors.green,
+                ));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) {
+                    return const BottomNavigatorScreen();
+                  },
                 ));
               }
             },
@@ -57,7 +74,6 @@ class PlanCartScreen extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-
                       ),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(40),
@@ -223,7 +239,7 @@ class PlanCartScreen extends StatelessWidget {
                                     'عدد الأيام',
                                     style: TextStyle(fontSize: 13.sp),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   BlocBuilder<PlanCartCubit, PlanCartState>(
                                     builder: (context, state) {
                                       return Text(
@@ -254,7 +270,8 @@ class PlanCartScreen extends StatelessWidget {
                     BlocBuilder<PlanCartCubit, PlanCartState>(
                       builder: (context, state) {
                         return PayPlanBottom(
-                          totalPrice: cubit.calculateTotal(planModel: planModel),
+                          totalPrice:
+                              cubit.calculateTotal(planModel: planModel),
                           onPressed: () {
                             cubit.payPlan(planModel: planModel);
                           },

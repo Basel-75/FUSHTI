@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class ProductInfoColumn extends StatelessWidget {
-  final String productName, rate, description;
+  final String productName, description;
   const ProductInfoColumn({
     super.key,
     required this.productName,
-    required this.rate,
+
     required this.description,
   });
 
@@ -16,22 +16,9 @@ class ProductInfoColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Text(
-              productName,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-            ),
-            const Spacer(),
-            Text(
-              '$rate/5',
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xffFFE500)),
-            ),
-            const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500)),
-          ],
+        Text(
+          productName,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
         ),
         SizedBox(
           height: 1.h,

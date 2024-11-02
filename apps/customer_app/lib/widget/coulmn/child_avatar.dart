@@ -14,7 +14,28 @@ class ChildAvatar extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage(imagePath),
+          backgroundColor: Colors.transparent,
+          child: ClipOval(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.network(
+                 imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Image.asset('assets/image/kid2.png', fit: BoxFit.cover),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
         Text(
           childName,

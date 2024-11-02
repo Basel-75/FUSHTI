@@ -14,3 +14,7 @@ final class ErorrState extends PlanCartState {
 
   ErorrState({required this.msg});
 }
+
+
+final class DoneState extends PlanCartState {}
+final class LodingState extends PlanCartState {}

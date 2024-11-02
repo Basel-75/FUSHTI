@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
 import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +31,85 @@ class PlanCubit extends Cubit<PlanState> {
   PlanModel? planModelSelcted;
 
   clickInChild({required ChildModel childModel}) {
+    planModelSelcted = null;
     mealPlanItemLisUi.clear();
     planListUi = childModel.planList;
 
     childModelSelcted = childModel;
 
     emit(ChildClickState());
+  }
+
+  delPlan() async {
+    try {
+      emit(LodingState());
+      if (planModelSelcted == null) {
+        // emit(ErorrState(msg: msg));
+        return;
+      }
+
+      final inter = await CheckIntent().checkInternetConnection();
+
+      if (inter) {
+        log("there is inter");
+        SuperMain().delPlan(plan: planModelSelcted!);
+
+        childModelSelcted!.planList.removeWhere(
+          (element) {
+            return element.name == planModelSelcted!.name;
+          },
+        );
+        planModelSelcted = null;
+        emit(PlanChnageState(msg: "تمت حذف خطة"));
+      } else {
+        log("there is no  inter");
+        emit(NoInterState());
+      }
+    } catch (er) {
+      log("$er");
+    }
+  }
+
+  editPlan() async {
+    try {
+      if (planModelSelcted == null) {
+        // emit(ErorrState(msg: msg));
+        return;
+      }
+
+      final inter = await CheckIntent().checkInternetConnection();
+
+      if (inter) {
+        log("there is inter");
+
+        if (planNameCOn.text.isEmpty) {
+          emit(EorrPlanState(msg: "اضف اسم للخطة"));
+
+          return;
+        }
+
+        for (var val in planListUi) {
+          if (val.name! == planNameCOn.text) {
+            emit(EorrPlanState(msg: "هناك خطة بنفس الاسم"));
+            return;
+          }
+        }
+
+        emit(LodingState());
+
+        SuperMain().editPlan(plan: planModelSelcted!, name: planNameCOn.text);
+
+        planModelSelcted!.name = planNameCOn.text;
+
+        emit(NoLodingState());
+        emit(PlanChnageState(msg: "تمت تعديل خطة"));
+      } else {
+        log("there is no  inter");
+        emit(NoInterState());
+      }
+    } catch (er) {
+      log("$er");
+    }
   }
 
   clickPlanState({required PlanModel planModel}) {
@@ -81,14 +155,14 @@ class PlanCubit extends Cubit<PlanState> {
     // check if there is plan with same name
 
     if (planNameCOn.text.isEmpty) {
-      emit(EorrPlanState(msg: "pls add text"));
+      emit(EorrPlanState(msg: "اضف اسم للخطة"));
 
       return;
     }
 
     for (var val in planListUi) {
       if (val.name! == planNameCOn.text) {
-        emit(EorrPlanState(msg: "there is plan with same name"));
+        emit(EorrPlanState(msg: "هناك خطة بنفس الاسم"));
         return;
       }
     }
@@ -101,7 +175,7 @@ class PlanCubit extends Cubit<PlanState> {
       childModelSelcted!.planList.add(PlanModel.fromJson(res));
 
       emit(NoLodingState());
-      emit(PlanChnageState());
+      emit(PlanChnageState(msg: "تمت اضافة خطة"));
 
       log("plan has been add");
     } catch (er) {
