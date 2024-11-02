@@ -106,8 +106,8 @@ class PlanScreen extends StatelessWidget {
                     builder: (context) {
                       return Dialog(
                         child: Container(
-                          width: 30.w,
-                          height: 30.h,
+                          width: 25.w,
+                          height: 20.h,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
@@ -117,19 +117,23 @@ class PlanScreen extends StatelessWidget {
                               SizedBox(
                                 height: 2.h,
                               ),
-                              CustomTextFormFelid(
-                                  controller: cubit.planNameCOn,
-                                  label: "اضف خطة",
-                                  hintText: "اسم الخطة",
-                                  isPassword: false),
+                              Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: CustomTextFormFelid(
+                                    controller: cubit.planNameCOn,
+                                    label: "اضف خطة",
+                                    hintText: "اسم الخطة",
+                                    isPassword: false),
+                              ),
                               SizedBox(
                                 height: 2.h,
                               ),
                               CustomButton(
+                                backgroundColor: Color(0xffC8E5F5),
                                 onPressed: () {
                                   cubit.addPlan();
                                 },
-                                title: "اضف",
+                                title: "تأكيد",
                                 fixedSize: Size(30.w, 5.h),
                               )
                             ],

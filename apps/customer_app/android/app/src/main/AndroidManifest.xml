@@ -2,7 +2,7 @@
     
 
     <application
-        android:label="customer_app"
+        android:label="فسحتي"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

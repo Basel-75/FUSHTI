@@ -41,32 +41,31 @@ class RestrictionsScreen extends StatelessWidget {
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  'الوجبات المحظورة',
-                  style:
-                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
-                ),
-                centerTitle: true,
-                actions: [
-                  Image.asset('assets/image/homeicon.png'),
-                  SizedBox(
-                    width: 2.h,
-                  )
-                ],
-                flexibleSpace: Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                      ),
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'الوجبات المحظورة',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  centerTitle: true,
+                  flexibleSpace: Container(
+                    //height: 15.h,
+                    decoration: const BoxDecoration(
+                      color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      )),
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                    ),
+                  ),
+                  toolbarHeight: 11.h,
                 ),
-              ),
               body: Column(
                 children: [
                   SizedBox(
@@ -76,7 +75,7 @@ class RestrictionsScreen extends StatelessWidget {
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 6.h),
                       child: BlocBuilder<RestrictionsCubit, RestrictionsState>(
                         builder: (context, state) {
-                          return Column(
+                          return cubit.restrictionsFood.isNotEmpty? Column(
                               //'assets/image/boxImage.png'
                               children: List.generate(
                             cubit.restrictionsFood.length,
@@ -106,16 +105,12 @@ class RestrictionsScreen extends StatelessWidget {
                                     });
                               },
                             ),
-                          ));
+                          )):Center(child: Text('ليس هناك اي وجبات محظورة'),);
                         },
                       ),
                     ),
                   ),
-                  const Spacer(),
-                  CustomButton(onPressed: () {}, title: 'تأكيد'),
-                  SizedBox(
-                    height: 5.h,
-                  ),
+
                 ],
               ),
             ),

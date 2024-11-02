@@ -28,6 +28,7 @@ import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() async {
+  //! remove shape later
   //!change the default user model in melos
   WidgetsFlutterBinding.ensureInitialized();
   
@@ -71,7 +72,7 @@ class MainApp extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffFEC87F)))),
-          debugShowCheckedModeBanner: false,
+          
           home: const BottomNavigatorScreen(),
         ),
       ),
