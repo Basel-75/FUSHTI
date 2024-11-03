@@ -86,7 +86,6 @@ class StorageScreen extends StatelessWidget {
                     SizedBox(
                       height: 3.h,
                     ),
-                    Image.asset('assets/image/storage_img.png'),
                     EmpTitleName(
                       paddingTop: 0.6.h,
                       paddingRight: 2.h,
@@ -94,10 +93,10 @@ class StorageScreen extends StatelessWidget {
                       schoolName: 'منتجاتي',
                     ),
                     SizedBox(
-                      height: 3.h,
+                      height: 1.h,
                     ),
                     SizedBox(
-                      height: 40.h,
+                      height: 52.h,
                       child: ListView.builder(
                         itemCount: cubit.schoolModel.foodMenuModelList.length,
                         itemBuilder: (context, index) {

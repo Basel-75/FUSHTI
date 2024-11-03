@@ -76,7 +76,10 @@ class BottomNavigatorScreen extends StatelessWidget {
                     builder: (context) {
                       return Dialog(
                         child: Container(
-                          height: 38.h,
+                          height: 40.h,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
                           child: Directionality(
                             textDirection: TextDirection.rtl,
                             child: Column(
@@ -107,7 +110,7 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     CustomButton(
-                                      backgroundColor: const Color(0xff6FBAE5),
+                                      backgroundColor: const Color(0xffC8E5F5),
                                       onPressed: () async {
                                         // here scan
 
@@ -167,6 +170,7 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       fixedSize: Size(35.w, 4.h),
                                     ),
                                     CustomButton(
+                                      backgroundColor: const Color(0xffA3E9BF),
                                       onPressed: () async {
                                         await cubit.getchild();
 
