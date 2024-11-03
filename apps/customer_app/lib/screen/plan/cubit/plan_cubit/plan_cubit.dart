@@ -1,8 +1,6 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
-import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -11,7 +9,6 @@ import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/helper/check_intent.dart';
-import 'package:meta/meta.dart';
 
 part 'plan_state.dart';
 

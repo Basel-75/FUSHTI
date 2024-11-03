@@ -4,11 +4,7 @@ import 'package:customer_app/screen/home/cubit/home_cubit.dart';
 import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
-import 'package:customer_app/widget/container/home_card.dart';
-import 'package:customer_app/widget/container/screen_header.dart';
-import 'package:customer_app/widget/coulmn/child_avatar.dart';
 import 'package:customer_app/widget/image/image_handler.dart';
-import 'package:customer_app/widget/row/app_bar_row_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -48,13 +44,13 @@ class HomeScreen extends StatelessWidget {
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.monetization_on,
                     color: Colors.white,
                   ),
                   Text(
                     '${cubit.appModel.userModel?.funds.toString()} رس',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     textDirection: TextDirection.rtl,
                   ),
                 ],
@@ -109,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xff546F66)),
+                                  color: const Color(0xff546F66)),
                             ),
                             BlocBuilder<HomeCubit, HomeState>(
                               builder: (context, state) {
@@ -155,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff546F66)),
+                                  color: const Color(0xff546F66)),
                             ),
                             SizedBox(
                               height: 2.h,
@@ -267,7 +263,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff546F66)),
+                                  color: const Color(0xff546F66)),
                             ),
                             BlocBuilder<HomeCubit, HomeState>(
                               builder: (context, state) {
@@ -321,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff546F66)),
+                              color: const Color(0xff546F66)),
                         ),
                       ),
                       SizedBox(
@@ -377,7 +373,7 @@ class HomeScreen extends StatelessWidget {
                                             )),
                                       ),
                                     )
-                                  : Center(
+                                  : const Center(
                                       child: Text('لا توجد وجبات ):'),
                                     ));
                         },
@@ -434,7 +430,7 @@ class HomeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     productName,
                     style:
@@ -455,9 +451,9 @@ class HomeCard extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color(0x50000000)),
+                            color: const Color(0x50000000)),
                       ),
-                      Icon(LineAwesome.fire_alt_solid, color: Color(0xffEC8743))
+                      const Icon(LineAwesome.fire_alt_solid, color: Color(0xffEC8743))
                     ],
                   )
                 ],
@@ -468,8 +464,8 @@ class HomeCard extends StatelessWidget {
               left: 12.w,
               bottom: 28.w,
               child: CircleAvatar(
-                backgroundColor: Color(0x88C8E5F5),
-                child:!isRestriction?ImageHandler(imagePath: imagePath) :ImageHandler(imagePath: imagePath,errorWidget: Icon(Icons.no_food),),
+                backgroundColor: const Color(0x88C8E5F5),
+                child:!isRestriction?ImageHandler(imagePath: imagePath) :ImageHandler(imagePath: imagePath,errorWidget: const Icon(Icons.no_food),),
               )),
           Positioned(
               left: 27.w,
@@ -487,9 +483,9 @@ class HomeCard extends StatelessWidget {
                 width: 8.w,
                 height: 7.w,
                 decoration: BoxDecoration(
-                    color: Color(0xffC9E7E7),
+                    color: const Color(0xffC9E7E7),
                     borderRadius: BorderRadius.circular(6)),
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   color: Colors.white,
                 ),

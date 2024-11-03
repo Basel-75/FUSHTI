@@ -95,7 +95,7 @@ class OTPScreen extends StatelessWidget {
                               fontFamily: 'Inter',
                               fontSize: 22.sp,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff103C37)),
+                              color: const Color(0xff103C37)),
                         ),
                         SizedBox(
                           height: 10.h,

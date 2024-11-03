@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -33,7 +32,7 @@ class HistoryCubit extends Cubit<HistoryState> {
 
   historyBring() async {
     try {
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 300));
       emit(LodingState());
 
       final res = await SuperMain().orderHistory();

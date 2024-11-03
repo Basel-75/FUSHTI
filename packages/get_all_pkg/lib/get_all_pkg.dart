@@ -63,7 +63,7 @@ showConfirmDialog(
       confirmBtnText: 'نعم',
       cancelBtnText: 'لا',
       confirmBtnColor: Colors.green,
-      onCancelBtnTap: onCancelBtnTap,
+      onCancelBtnTap: onCancelBtnTap ?? ()=>Navigator.pop(context),
       onConfirmBtnTap: onConfirmBtnTap);
 }
 

@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cart_cubit/plan_cart_cubit.dart';
-import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
 import 'package:customer_app/widget/container/pay_plan_bottom.dart';
-import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/row/cal_row.dart';
 import 'package:customer_app/widget/row/item_details.dart';
@@ -132,7 +130,7 @@ class PlanCartScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 4.h,
+                      height: 3.h,
                     ),
                     Text(
                       'الخطة',
@@ -270,7 +268,7 @@ class PlanCartScreen extends StatelessWidget {
                       builder: (context, state) {
                         return PayPlanBottom(
                           totalPrice:
-                              cubit.calculateTotal(planModel: planModel),
+                              '${double.parse(cubit.calculateTotal(planModel: planModel)) *cubit.dayNume}',
                           onPressed: () {
                             cubit.payPlan(planModel: planModel);
                           },

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
@@ -129,7 +128,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
           planModel: planModel,
           stratDate: startDate!,
           endDate: endDate!,
-          totalPrice: totalPrice);
+          totalPrice: totalPrice * dayNume);
 
       log("user funds :::: ${appModel.userModel!.funds}");
       log("very good plan pay");

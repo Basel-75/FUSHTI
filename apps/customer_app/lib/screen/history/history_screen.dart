@@ -1,10 +1,6 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/history/cubit/history_cubit.dart';
-import 'package:customer_app/screen/product/cubit/product_cubit.dart';
-import 'package:customer_app/widget/button/custom_button.dart';
-import 'package:customer_app/widget/history_widget/bottom_info.dart';
-import 'package:customer_app/widget/history_widget/content_history.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_order_widget.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_plan_widgetd.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +82,8 @@ class HistoryScreen extends StatelessWidget {
                               elevation: 2,
                               customShape: ContinuousRectangleBorder(
                                   borderRadius: BorderRadius.circular(25)),
-                              buttonLables: ["plan", "order"],
-                              buttonValues: ["plan", "order"],
+                              buttonLables: const ["plan", "order"],
+                              buttonValues: const ["plan", "order"],
                               unSelectedColor: const Color(0xffffffff),
                               unSelectedBorderColor: Colors.grey,
                               selectedColor:

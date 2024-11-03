@@ -8,7 +8,6 @@ import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
-import 'package:meta/meta.dart';
 
 part 'product_state.dart';
 

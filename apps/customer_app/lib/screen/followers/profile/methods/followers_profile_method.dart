@@ -62,7 +62,7 @@ Future<dynamic> onManageOpenDays(
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: [0.0, 0.39, 0.40, 1.0],
+            stops: const [0.0, 0.39, 0.40, 1.0],
           ),
           blur: 15.0,
           borderWidth: 1.5,

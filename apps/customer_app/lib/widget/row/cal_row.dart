@@ -16,12 +16,12 @@ class CalRow extends StatelessWidget {
           'عدد السعرات',
           style: TextStyle(fontSize: 13.sp),
         ),
-        Spacer(),
+        const Spacer(),
         Text(
           '$totalCal سعرة',
           style: TextStyle(fontSize: 13.sp),
         ),
-        Icon(
+        const Icon(
           Icons.local_fire_department,
           color: Color(0xffE4A951),
         )

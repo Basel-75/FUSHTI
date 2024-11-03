@@ -27,23 +27,23 @@ class UserInfoRow extends StatelessWidget {
           children: [
             Text(
               name,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff546F66)),
             ),
             Text(
               schoolNameOrParentPhone,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.grey),
             ),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         isParent
-            ? Text('')
+            ? const Text('')
             : InkWell(
                 onTap: onAddImage,
                 child: const Icon(
@@ -55,7 +55,7 @@ class UserInfoRow extends StatelessWidget {
         ),
         InkWell(
             onTap: onEdit,
-            child: Icon(
+            child: const Icon(
               Icons.edit_outlined,
               color: Color(0xffA3E9BF),
             )),
@@ -63,12 +63,12 @@ class UserInfoRow extends StatelessWidget {
           width: 2.w,
         ),
         isParent
-            ? Text('')
+            ? const Text('')
             : InkWell(
                 onTap: onDelete,
-                child: Icon(
+                child: const Icon(
                   Icons.delete,
-                  color: const Color.fromARGB(255, 244, 67, 54),
+                  color: Color.fromARGB(255, 244, 67, 54),
                 )),
         SizedBox(
           width: 2.w,

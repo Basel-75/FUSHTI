@@ -58,7 +58,7 @@ class OldHomeCard extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      color: Color(0x50000000)),
+                      color: const Color(0x50000000)),
                 ),
                 const Spacer(),
                 InkWell(
@@ -97,7 +97,7 @@ class OldHomeCard extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xffFFE500)),
+                      color: const Color(0xffFFE500)),
                 ),
                 const Icon(Icons.star_rate_rounded, color: Color(0xffFFE500)),
               ],

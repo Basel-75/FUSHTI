@@ -27,7 +27,7 @@ class ProductSmallContainer extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: backgroundColor ?? Color(0x56FBC983),
+        color: backgroundColor ?? const Color(0x56FBC983),
       ),
       child: isForCal
           ? Row(

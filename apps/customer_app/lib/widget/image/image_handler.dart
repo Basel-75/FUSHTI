@@ -20,7 +20,7 @@ class ImageHandler extends StatelessWidget {
       loadingBuilder: (context, child, loadingProgress) =>
           loadingProgress == null
               ? child
-              : CircularProgressIndicator(
+              : const CircularProgressIndicator(
                   color: Colors.white,
                 ),
     );

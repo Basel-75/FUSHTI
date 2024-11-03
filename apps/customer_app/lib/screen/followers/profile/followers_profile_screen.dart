@@ -229,7 +229,7 @@ class FollowersProfileScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   color: cubit.initialValueRaido
                                       ? const Color(0xffA3E9BF)
-                                      : const Color(0xff56ECB0B0)),
+                                      : const Color(0xff56ecb0b0)),
                               child: const Padding(
                                 padding: EdgeInsets.only(bottom: 5),
                                 child: Center(

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
 import 'package:customer_app/widget/container/info_container_with_button.dart';
-import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/datePicker/date_picker_button.dart';
 import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
@@ -114,7 +113,7 @@ class AddPlanScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              CustomDotLine(),
+              const CustomDotLine(),
               SizedBox(
                 height: 1.h,
               ),

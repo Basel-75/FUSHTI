@@ -79,7 +79,7 @@ class ChildCard extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: onPressedQR,
-                    icon: Icon(Iconsax.scan_barcode_outline)),
+                    icon: const Icon(Iconsax.scan_barcode_outline)),
               ],
             ),
           ],

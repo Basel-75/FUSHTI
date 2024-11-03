@@ -5,7 +5,6 @@ import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/coulmn/product_info_column.dart';
-import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -199,7 +198,7 @@ class ProductScreen extends StatelessWidget {
                                                     CustomButton(
                                                         fontsize: 15.sp,
                                                         backgroundColor:
-                                                            Color(0xffC8E5F5),
+                                                            const Color(0xffC8E5F5),
                                                         fixedSize:
                                                             Size(32.w, 6.h),
                                                         onPressed: () {
@@ -213,7 +212,7 @@ class ProductScreen extends StatelessWidget {
                                                     CustomButton(
                                                         fontsize: 15.sp,
                                                         backgroundColor:
-                                                            Color(0xffA3E9BF),
+                                                            const Color(0xffA3E9BF),
                                                         fixedSize:
                                                             Size(34.w, 6.h),
                                                         onPressed: () {

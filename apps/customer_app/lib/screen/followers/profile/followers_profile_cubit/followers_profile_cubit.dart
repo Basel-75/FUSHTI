@@ -1,19 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
-import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
-import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/restriction_food_model.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
-import 'package:meta/meta.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 part 'followers_profile_state.dart';
@@ -135,7 +131,7 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
 
       final imageUrl = await SuperMain()
           .uploadImage(imageFile: selectedImage!, isProductImage: false);
-      log('$imageUrl');
+      log(imageUrl);
       final updateImageResponse = await SuperMain()
           .updateFollowersImage(childId: childId, imageUrl: imageUrl);
       log('$updateImageResponse');
@@ -211,9 +207,9 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
   }
 
   getRestrictionFoodList({required String childId}) {
-    restrictionsFood.forEach(
-      (element) => log('${element.toJson()}'),
-    );
+    for (var element in restrictionsFood) {
+      log('${element.toJson()}');
+    }
     try {
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {

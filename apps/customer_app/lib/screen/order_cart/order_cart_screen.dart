@@ -2,6 +2,7 @@ import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart
 import 'package:customer_app/screen/order_cart/cubit/order_cart_cubit.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
 import 'package:customer_app/widget/container/pay_plan_bottom.dart';
+import 'package:customer_app/widget/coulmn/empty_space_column.dart';
 import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/row/cal_row.dart';
 import 'package:customer_app/widget/row/item_details.dart';
@@ -94,7 +95,7 @@ class OrderCartScreen extends StatelessWidget {
                         child: BlocBuilder<OrderCartCubit, OrderCartState>(
                           builder: (context, state) {
                             return cubit.childModel.cartList.isEmpty
-                                ? EmptySpaceColumn(
+                                ? const EmptySpaceColumn(
                                     msg: 'لا توجد منتجات في السلة')
                                 : Column(
                                     children: List.generate(
@@ -212,31 +213,6 @@ class OrderCartScreen extends StatelessWidget {
           );
         }),
       ),
-    );
-  }
-}
-
-class EmptySpaceColumn extends StatelessWidget {
-  final String msg;
-  final double? width, height;
-  const EmptySpaceColumn({
-    super.key,
-    required this.msg,
-    this.width,
-    this.height,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width:width ?? 50.w,
-          height:height ?? 20.h,
-          child: Image.asset('assets/image/mainLogo.png'),
-        ),
-        Text(msg)
-      ],
     );
   }
 }
