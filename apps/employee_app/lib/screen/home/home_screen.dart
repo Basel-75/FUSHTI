@@ -81,24 +81,26 @@ class HomeScreen extends StatelessWidget {
                 ),
                 toolbarHeight: 15.h,
               ),
-              body: BlocBuilder<HomeCubit, HomeState>(
-                builder: (context, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      EmpTitleName(
-                        paddingTop: 0.6.h,
-                        paddingRight: 2.h,
-                        textSize: 18.sp,
-                        schoolName: 'كافتيريا الثانوية السابعة للبنات',
-                      ),
-                      const Divider(),
-                      const EmpTitleName(
-                        schoolName: 'البوكسات',
-                      ),
-                      SingleChildScrollView(
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  EmpTitleName(
+                    paddingTop: 0.6.h,
+                    paddingRight: 2.h,
+                    textSize: 18.sp,
+                    schoolName: 'كافتيريا الثانوية السابعة للبنات',
+                  ),
+                  const Divider(),
+                  EmpTitleName(
+                    schoolName: 'البوكسات',
+                    paddingRight: 1.3.h,
+                  ),
+                  BlocBuilder<HomeCubit, HomeState>(
+                    builder: (context, state) {
+                      return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(vertical: 1.h),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 1.h, horizontal: 1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: List.generate(
@@ -131,33 +133,37 @@ class HomeScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                      ),
-                      const EmpTitleName(
-                        schoolName: 'منتجاتي',
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      cubit.menu
-                              .where((item) => item.category == 'product')
-                              .isNotEmpty
-                          ? SizedBox(
-                            height: 38.h,
-                            width: 80.w,
+                      );
+                    },
+                  ),
+                  EmpTitleName(
+                    schoolName: 'منتجاتي',
+                    paddingRight: 1.3.h,
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  cubit.menu
+                          .where((item) => item.category == 'product')
+                          .isNotEmpty
+                      ? BlocBuilder<HomeCubit, HomeState>(
+                          builder: (context, state) {
+                            return SizedBox(
+                              height: 39.5.h,
+                              width: 80.w,
                               child: GridView.builder(
                                 itemCount: cubit.menu
                                     .where((item) => item.category == 'product')
                                     .length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 2.0.h,
-                                mainAxisSpacing: 1.0.h,
-                                  childAspectRatio: 0.12.h,
-                                  // Uncomment and adjust the aspect ratio if needed.
-                                  // childAspectRatio: 0.12.h,
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 1.0.h,
+                                  //mainAxisSpacing: 0.0.h,
+                                  //childAspectRatio: 0.12.h,
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 2.h),
+                                // padding: EdgeInsets.symmetric(
+                                //     horizontal: 4.w, vertical: 2.h),
                                 itemBuilder: (context, index) {
                                   final filteredMenu = cubit.menu
                                       .where(
@@ -194,11 +200,11 @@ class HomeScreen extends StatelessWidget {
                                   );
                                 },
                               ),
-                            )
-                          : const Text('Empty')
-                    ],
-                  );
-                },
+                            );
+                          },
+                        )
+                      : const Text('Empty')
+                ],
               ),
             ),
           ),
@@ -208,12 +214,35 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// HomeCard(
-//                                       productName: filteredMenu[index].foodName,
-//                                       price: '${filteredMenu[index].price}',
-//                                       cal: '${filteredMenu[index].cal}',
-//                                       imagePath:
-//                                           '${filteredMenu[index].imageUrl}');
+class ImageHandler extends StatelessWidget {
+  const ImageHandler({
+    super.key,
+    required this.imagePath,
+    this.errorWidget,
+  });
+
+  final String imagePath;
+  final Widget? errorWidget;
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      fit: BoxFit.contain,
+      imagePath,
+      errorBuilder: (context, error, stackTrace) =>
+          errorWidget ??
+          const Icon(
+            Icons.fastfood_rounded,
+            color: Colors.orange,
+          ),
+      loadingBuilder: (context, child, loadingProgress) =>
+          loadingProgress == null
+              ? child
+              : const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+    );
+  }
+}
 
 class HomeCard extends StatelessWidget {
   final String productName, price, cal, imagePath;
@@ -287,18 +316,7 @@ class HomeCard extends StatelessWidget {
               bottom: 28.w,
               child: CircleAvatar(
                 backgroundColor: const Color(0x88C8E5F5),
-                child: Image.network(
-                  fit: BoxFit.contain,
-                  imagePath,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.fastfood_rounded,
-                    color: Colors.orange,
-                  ),
-                  loadingBuilder: (context, child, loadingProgress) =>
-                      const CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
+                child: ImageHandler(imagePath: imagePath),
               )),
           Positioned(
               left: 27.w,

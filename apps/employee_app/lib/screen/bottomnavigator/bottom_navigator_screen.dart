@@ -55,80 +55,67 @@ class BottomNavigatorScreen extends StatelessWidget {
         final bloc = context.read<BottomnavigatorBloc>();
         final cubit = context.read<ScanCubit>();
         int selectedIndex = 0;
-        return BlocListener<ScanCubit, ScanState>(
-          listener: (context, state) {
-            
-            if(state is ErorState){
-               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  state.msg,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                backgroundColor: Colors.red,
-              ));
-            }
-          },
-          child: Scaffold(
-            //extendBody: true,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.miniCenterDocked,
-            floatingActionButton: FloatingActionButton(
-              shape: const CircleBorder(),
-              heroTag: "navFloat",
-              backgroundColor: const Color(0xffFDCB6A),
-              tooltip: 'add Saving',
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (builder) {
-                  return const AddProductScreen();
-                }));
-              },
-              child: IconButton(
-                  onPressed: () async {
-                    // here scan
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: Container(
-                            height: 38.h,
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 3.h,
-                                  ),
-                                  CustomTextFormFelid(
-                                    label: "اسم الطالب",
-                                    hintText: "فهد",
-                                    isPassword: false,
-                                    width: 70.w,
-                                    controller: cubit.childNameCon,
-                                  ),
-                                  SizedBox(
-                                    height: 3.h,
-                                  ),
-                                  CustomTextFormFelid(
-                                    controller: cubit.childClassCon,
-                                    label: "فصل الطالب",
-                                    hintText: "أ3",
-                                    isPassword: false,
-                                    width: 70.w,
-                                  ),
-                                  SizedBox(
-                                    height: 3.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      CustomButton(
-                                        backgroundColor:
-                                            const Color(0xff6FBAE5),
-                                        onPressed: () async {
-                                          // here scan
+
+        return Scaffold(
+          //extendBody: true,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.miniCenterDocked,
+          floatingActionButton: FloatingActionButton(
+            shape: const CircleBorder(),
+            heroTag: "navFloat",
+            backgroundColor: const Color(0xffFDCB6A),
+            tooltip: 'add Saving',
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
+                return const AddProductScreen();
+              }));
+            },
+            child: IconButton(
+                onPressed: () async {
+                  // here scan
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: Container(
+                          height: 40.h,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                CustomTextFormFelid(
+                                  label: "اسم الطالب",
+                                  hintText: "فهد",
+                                  isPassword: false,
+                                  width: 70.w,
+                                ),
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                CustomTextFormFelid(
+                                  label: "فصل الطالب",
+                                  hintText: "أ3",
+                                  isPassword: false,
+                                  width: 70.w,
+                                ),
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomButton(
+                                      backgroundColor: const Color(0xffC8E5F5),
+                                      onPressed: () async {
+                                        // here scan
+
 
                                           try {
                                             final result =
@@ -182,13 +169,31 @@ class BottomNavigatorScreen extends StatelessWidget {
                                               backgroundColor: Colors.red[300],
                                             ));
                                           }
-                                        },
-                                        title: "مسح باركود",
-                                        fixedSize: Size(35.w, 4.h),
-                                      ),
-                                      CustomButton(
-                                        onPressed: () async {
-                                          // await cubit.getchild();
+
+                                        } on PlatformException catch (e) {
+                                          scanResult = ScanResult(
+                                            rawContent: e.code ==
+                                                    BarcodeScanner
+                                                        .cameraAccessDenied
+                                                ? 'The user did not grant the camera permission!'
+                                                : 'Unknown error: //',
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content:
+                                                Text(scanResult!.rawContent),
+                                            backgroundColor: Colors.red[300],
+                                          ));
+                                        }
+                                      },
+                                      title: "مسح باركود",
+                                      fixedSize: Size(35.w, 4.h),
+                                    ),
+                                    CustomButton(
+                                      backgroundColor: const Color(0xffA3E9BF),
+                                      onPressed: () async {
+                                        await cubit.getchild();
+
 
                                           if (cubit.checkTheCOn()) {
                                             Navigator.push(

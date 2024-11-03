@@ -20,6 +20,8 @@ class HomeCubit extends Cubit<HomeState> {
   List<ChildModel> childModelList = [];
 
   late ChildModel currentChild;
+  List<FoodMenuModel> boxList = [];
+  List<FoodMenuModel> productList = [];
 
   initHome() {
     childModelList = appModel.userModel!.childModelList;
@@ -27,12 +29,28 @@ class HomeCubit extends Cubit<HomeState> {
     log("there is ${childModelList.length}");
     //log('${currentChild.schoolModel.foodMenuModelList.first.imageUrl.toString().trim()}');
     currentChild = childModelList.first;
+    for (var element in currentChild.schoolModel.foodMenuModelList) {
+      if (element.category == 'box') {
+        boxList.add(element);
+      } else {
+        productList.add(element);
+      }
+    }
   }
 
   chnageChild(ChildModel child) {
     if (child != currentChild) {
+      boxList.clear();
+      productList.clear();
       log("in if change child");
       currentChild = child;
+      for (var element in currentChild.schoolModel.foodMenuModelList) {
+        if (element.category == 'box') {
+          boxList.add(element);
+        } else {
+          productList.add(element);
+        }
+      }
       emit(ChnageChildState());
     }
   }
@@ -76,16 +94,16 @@ class HomeCubit extends Cubit<HomeState> {
     return result;
   }
 
-  List<FoodMenuModel> getListByType({required String catagory}) {
-    List<FoodMenuModel> foodList = [];
-    for (var element in currentChild.schoolModel.foodMenuModelList) {
-      if (element.category == catagory) {
-        foodList.add(element);
-        log(element.toJson().toString());
-      }
-    }
-    return foodList;
-  }
+  // List<FoodMenuModel> getListByType({required String catagory,required String schoolId}) {
+
+  //   for (var element in currentChild.schoolModel.foodMenuModelList) {
+  //     if (element.category == catagory && element.schoolId==schoolId) {
+  //       foodList.add(element);
+  //       log(element.toJson().toString());
+  //     }
+  //   }
+  //   return foodList;
+  // }
 
   quickAddToCart(
       {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {
