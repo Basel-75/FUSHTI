@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
+import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/storage/cubit/storage_cubit.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/container/card_storage.dart';
@@ -50,6 +51,20 @@ class StorageScreen extends StatelessWidget {
               }
             },
             child: Scaffold(
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.startFloat,
+              floatingActionButton: FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: const Color(0xffC9E7E7),
+                tooltip: 'add Saving',
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (builder) {
+                    return const AddProductScreen();
+                  }));
+                },
+                child: const Icon(Icons.add, color: Colors.white, size: 28),
+              ),
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 leading: IconButton(
@@ -63,6 +78,15 @@ class StorageScreen extends StatelessWidget {
                       Bootstrap.chat_text_fill,
                       color: Colors.white,
                     )),
+                actions: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        BoxIcons.bx_log_out,
+                        color: Colors.white,
+                        size: 3.5.h,
+                      ))
+                ],
                 title: Image.asset('assets/image/mainLogo.png'),
                 centerTitle: true,
                 flexibleSpace: Container(

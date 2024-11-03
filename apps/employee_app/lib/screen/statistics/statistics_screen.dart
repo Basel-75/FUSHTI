@@ -1,4 +1,5 @@
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
+import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/widget/container/container_statistics.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,28 @@ class StatisticsScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          backgroundColor: const Color(0xffC9E7E7),
+          tooltip: 'add Saving',
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
+              return const AddProductScreen();
+            }));
+          },
+          child: const Icon(Icons.add, color: Colors.white, size: 28),
+        ),
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  BoxIcons.bx_log_out,
+                  color: Colors.white,
+                  size: 3.5.h,
+                ))
+          ],
           backgroundColor: Colors.transparent,
           leading: IconButton(
               onPressed: () {
@@ -76,7 +97,7 @@ class StatisticsScreen extends StatelessWidget {
                     statisticsName: 'الدخل',
                     statisticsNumber: 876,
                     statisticsIcon: Icon(
-                      Icons.pie_chart,
+                      Icons.attach_money,
                       color: const Color(0xff06374E).withOpacity(0.80),
                     ),
                     containerColor: const Color(0xffF6FAFD)),
