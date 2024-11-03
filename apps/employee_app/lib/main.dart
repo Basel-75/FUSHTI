@@ -15,19 +15,20 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() async {
   await empSetup();
-
+   OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
+OneSignal.Notifications.requestPermission(true);
   log("${getIt.get<AppModel>().empModel!.toJson()}");
+  OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
   //log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
   //debugPaintSizeEnabled = true;
 
-  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
   // //!test login
-  OneSignal.login(getIt.get<AppModel>().userModel!.id);
+  // OneSignal.login(getIt.get<AppModel>().userModel!.id);
   log('-----####');
-  log("${getIt.get<AppModel>().userModel!.id}");
-  OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
+  // log("${getIt.get<AppModel>().userModel!.id}");
 
-  OneSignal.Notifications.requestPermission(true);
+  
   // debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }

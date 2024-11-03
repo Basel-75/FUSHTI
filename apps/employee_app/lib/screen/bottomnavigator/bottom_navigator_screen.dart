@@ -1,4 +1,5 @@
 import 'package:database_meth/database/super_main.dart';
+import 'package:employee_app/screen/order/child_after_serach_screen.dart';
 
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 
@@ -54,6 +55,7 @@ class BottomNavigatorScreen extends StatelessWidget {
         final bloc = context.read<BottomnavigatorBloc>();
         final cubit = context.read<ScanCubit>();
         int selectedIndex = 0;
+
         return Scaffold(
           //extendBody: true,
           floatingActionButtonLocation:
@@ -114,42 +116,60 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       onPressed: () async {
                                         // here scan
 
-                                        try {
-                                          final result =
-                                              await BarcodeScanner.scan(
-                                            options: ScanOptions(
-                                              strings: {
-                                                'cancel':
-                                                    _cancelController.text,
-                                                'flash_on':
-                                                    _flashOnController.text,
-                                                'flash_off':
-                                                    _flashOffController.text,
-                                              },
-                                              restrictFormat: [
-                                                BarcodeFormat.qr
-                                              ],
-                                              useCamera: _selectedCamera,
-                                              autoEnableFlash: _autoEnableFlash,
-                                              android: AndroidOptions(
-                                                aspectTolerance:
-                                                    _aspectTolerance,
-                                                useAutoFocus: _useAutoFocus,
-                                              ),
-                                            ),
-                                          );
 
-                                          if (result.rawContent.isNotEmpty) {
-                                            // change it to take the value from databse later
-                                            //  result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) => OrderScreen(
-                                            //         childModel: childm ,
-                                            //          ),
-                                            //     ));
+                                          try {
+                                            final result =
+                                                await BarcodeScanner.scan(
+                                              options: ScanOptions(
+                                                strings: {
+                                                  'cancel':
+                                                      _cancelController.text,
+                                                  'flash_on':
+                                                      _flashOnController.text,
+                                                  'flash_off':
+                                                      _flashOffController.text,
+                                                },
+                                                restrictFormat: [
+                                                  BarcodeFormat.qr
+                                                ],
+                                                useCamera: _selectedCamera,
+                                                autoEnableFlash:
+                                                    _autoEnableFlash,
+                                                android: AndroidOptions(
+                                                  aspectTolerance:
+                                                      _aspectTolerance,
+                                                  useAutoFocus: _useAutoFocus,
+                                                ),
+                                              ),
+                                            );
+
+                                            if (result.rawContent.isNotEmpty) {
+                                              // change it to take the value from databse later
+                                              //  result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
+                                              // Navigator.push(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //       builder: (context) => OrderScreen(
+                                              //         childModel: childm ,
+                                              //          ),
+                                              //     ));
+                                            }
+                                          } on PlatformException catch (e) {
+                                            scanResult = ScanResult(
+                                              rawContent: e.code ==
+                                                      BarcodeScanner
+                                                          .cameraAccessDenied
+                                                  ? 'The user did not grant the camera permission!'
+                                                  : 'Unknown error: //',
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content:
+                                                  Text(scanResult!.rawContent),
+                                              backgroundColor: Colors.red[300],
+                                            ));
                                           }
+
                                         } on PlatformException catch (e) {
                                           scanResult = ScanResult(
                                             rawContent: e.code ==
@@ -174,84 +194,93 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       onPressed: () async {
                                         await cubit.getchild();
 
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => OrderScreen(
-                                                childModel: cubit.childModel!,
-                                              ),
-                                            ));
-                                      },
-                                      title: "بحث",
-                                      fixedSize: Size(35.w, 4.h),
-                                    ),
-                                  ],
-                                ),
-                              ],
+
+                                          if (cubit.checkTheCOn()) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ChildAfterSerachScreen(
+                                                    childClass: cubit
+                                                        .childClassCon.text.isEmpty ? null : cubit.childClassCon.text,
+                                                    childName:
+                                                        cubit.childNameCon.text,
+                                                  ),
+                                                ));
+                                          }
+                                        },
+                                        title: "بحث",
+                                        fixedSize: Size(35.w, 4.h),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Iconsax.scan_barcode_outline)),
+            ),
+            bottomNavigationBar: Directionality(
+              textDirection: TextDirection.rtl,
+              child: BlocBuilder<BottomnavigatorBloc, BottomnavigatorState>(
+                builder: (context, state) {
+                  if (state is IndexChangeState) {
+                    selectedIndex = state.index;
+                  }
+                  return FlashyTabBar(
+                    onItemSelected: (index) {
+                      bloc.add(
+                          NavigatorBetweenScreenEvent(selectedIndex: index));
                     },
+                    selectedIndex: selectedIndex,
+                    items: [
+                      FlashyTabBarItem(
+                        icon: const Icon(
+                          Iconsax.home_bold,
+                          color: Color(0xFFFDCB6A),
+                          size: 30,
+                        ),
+                        title: const Text('الرئيسية'),
+                      ),
+                      FlashyTabBarItem(
+                        icon: const Icon(
+                          // BoxIcons.bxs_food_menu
+                          BoxIcons.bx_box,
+                          color: Color(0xFFFDCB6A),
+                          size: 30,
+                        ),
+                        title: const Text('المخزون'),
+                      ),
+                      FlashyTabBarItem(
+                        icon: const Icon(
+                          LineAwesome.chart_bar_solid,
+                          color: Color(0xFFFDCB6A),
+                          size: 30,
+                        ),
+                        title: const Text('الاحصائيات'),
+                      ),
+                      FlashyTabBarItem(
+                        icon: const Icon(
+                          Iconsax.profile_2user_bold,
+                          color: Color(0xFFFDCB6A),
+                          size: 30,
+                        ),
+                        title: const Text('صفحتي'),
+                      ),
+                    ],
                   );
                 },
-                icon: const Icon(Iconsax.scan_barcode_outline)),
-          ),
-          bottomNavigationBar: Directionality(
-            textDirection: TextDirection.rtl,
-            child: BlocBuilder<BottomnavigatorBloc, BottomnavigatorState>(
+              ),
+            ),
+            body: BlocBuilder<BottomnavigatorBloc, BottomnavigatorState>(
               builder: (context, state) {
-                if (state is IndexChangeState) {
-                  selectedIndex = state.index;
-                }
-                return FlashyTabBar(
-                  onItemSelected: (index) {
-                    bloc.add(NavigatorBetweenScreenEvent(selectedIndex: index));
-                  },
-                  selectedIndex: selectedIndex,
-                  items: [
-                    FlashyTabBarItem(
-                      icon: const Icon(
-                        Iconsax.home_bold,
-                        color: Color(0xFFFDCB6A),
-                        size: 30,
-                      ),
-                      title: const Text('الرئيسية'),
-                    ),
-                    FlashyTabBarItem(
-                      icon: const Icon(
-                        // BoxIcons.bxs_food_menu
-                        BoxIcons.bx_box,
-                        color: Color(0xFFFDCB6A),
-                        size: 30,
-                      ),
-                      title: const Text('المخزون'),
-                    ),
-                    FlashyTabBarItem(
-                      icon: const Icon(
-                        LineAwesome.chart_bar_solid,
-                        color: Color(0xFFFDCB6A),
-                        size: 30,
-                      ),
-                      title: const Text('الاحصائيات'),
-                    ),
-                    FlashyTabBarItem(
-                      icon: const Icon(
-                        Iconsax.profile_2user_bold,
-                        color: Color(0xFFFDCB6A),
-                        size: 30,
-                      ),
-                      title: const Text('صفحتي'),
-                    ),
-                  ],
-                );
+                return screens[bloc.currentScreenIndex];
               },
             ),
-          ),
-          body: BlocBuilder<BottomnavigatorBloc, BottomnavigatorState>(
-            builder: (context, state) {
-              return screens[bloc.currentScreenIndex];
-            },
           ),
         );
       }),
