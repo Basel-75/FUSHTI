@@ -69,9 +69,7 @@ class StatisticsScreen extends StatelessWidget {
               height: 2.h,
             ),
             EmpTitleName(
-              paddingTop: 0.h,
-              paddingRight: 4.h,
-              textSize: 18.sp,
+              paddingRight: 2.h,
               schoolName: 'أرقام',
             ),
             SizedBox(
