@@ -89,280 +89,288 @@ class HomeScreen extends StatelessWidget {
             body: Directionality(
               textDirection: TextDirection.rtl,
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(horizontal: 4.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'التابعين',
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff546F66)),
-                          ),
-                          BlocBuilder<HomeCubit, HomeState>(
-                            builder: (context, state) {
-                              return SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: List.generate(
-                                    cubit.childModelList.length,
-                                    (index) {
-                                      bool isClicked = true;
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: FollowersAvatar(
-                                          onTap: () {
-                                            isClicked = !isClicked;
-                                            log(isClicked.toString());
-                                            log("chnageChild start");
-                                            cubit.chnageChild(
-                                                cubit.childModelList[index]);
-                                          },
-                                          childImage: cubit.childModelList[index].imgPath,
-                                          textColor: isClicked == false
-                                              ? Colors.blue
-                                              : Colors.black,
-                                          childName:
-                                              cubit.childModelList[index].name,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text(
-                            'الأفضل مبيعا',
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          BlocBuilder<HomeCubit, HomeState>(
-                            builder: (context, state) {
-                              return SizedBox(
-                                height: 22.h,
-                                child: SingleChildScrollView(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(horizontal: 4.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'التابعين',
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff546F66)),
+                            ),
+                            BlocBuilder<HomeCubit, HomeState>(
+                              builder: (context, state) {
+                                return SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  padding: EdgeInsets.symmetric(vertical: 1.h),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: List.generate(
-                                      cubit.currentChild.schoolModel
-                                          .foodMenuModelList.length,
+                                      cubit.childModelList.length,
                                       (index) {
-                                        return HomeCard(
-                                          onTap: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) {
-                                                return ProductScreen(
-                                                  childModel:
-                                                      cubit.currentChild,
-                                                  foodMenuModel: cubit
-                                                      .currentChild
-                                                      .schoolModel
-                                                      .foodMenuModelList[index],
-                                                );
-                                              },
-                                            ));
-                                          },
-                                          onRestriction: !cubit
-                                                  .checkRestrictionsFood(
-                                                      productId: cubit
-                                                          .currentChild
-                                                          .schoolModel
-                                                          .foodMenuModelList[
-                                                              index]
-                                                          .id)
-                                              ? () {
-                                                  cubit.addToRestrictionsFood(
-                                                      childId:
-                                                          cubit.currentChild.id,
-                                                      productId: cubit
-                                                          .currentChild
-                                                          .schoolModel
-                                                          .foodMenuModelList[
-                                                              index]
-                                                          .id);
-                                                }
-                                              : null,
-                                          cal: cubit.currentChild.schoolModel
-                                              .foodMenuModelList[index].cal
-                                              .toString(),
-                                          imagePath:
-                                              cubit.checkRestrictionsFood(
-                                                      productId: cubit
-                                                          .currentChild
-                                                          .schoolModel
-                                                          .foodMenuModelList[
-                                                              index]
-                                                          .id)
-                                                  ? 'assets/image/no.png'
-                                                  : cubit
-                                                      .currentChild
-                                                      .schoolModel
-                                                      .foodMenuModelList[index]
-                                                      .imageUrl
-                                                      .toString()
-                                                      .trim(),
-                                          productName: cubit
-                                              .currentChild
-                                              .schoolModel
-                                              .foodMenuModelList[index]
-                                              .foodName,
-                                          price:
-                                              '${cubit.currentChild.schoolModel.foodMenuModelList[index].price as double}',
-                                          onAdd: () => cubit.quickAddToCart(
-                                              childModel: cubit.currentChild,
-                                              foodMenuModel: cubit
-                                                  .currentChild
-                                                  .schoolModel
-                                                  .foodMenuModelList[index]),
+                                        bool isClicked = true;
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: FollowersAvatar(
+                                            onTap: () {
+                                              isClicked = !isClicked;
+                                              log(isClicked.toString());
+                                              log("chnageChild start");
+                                              cubit.chnageChild(
+                                                  cubit.childModelList[index]);
+                                            },
+                                            childImage: cubit
+                                                .childModelList[index].imgPath,
+                                            textColor: isClicked == false
+                                                ? Colors.blue
+                                                : Colors.black,
+                                            childName:
+                                                cubit.childModelList[index].name,
+                                          ),
                                         );
                                       },
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                          // SizedBox(
-                          //   height: 2.h,
-                          // ),
-                          Text(
-                            'البوكسات',
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff546F66)),
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.symmetric(vertical: 1.h),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: cubit
-                                    .getListByType(catagory: 'box')
-                                    .map(
-                                      (e) => HomeCard(
-                                        //values
-                                        productName: e.foodName,
-                                        price: '${e.price}',
-                                        cal: '${e.cal}',
-                                        imagePath: '${e.imageUrl}',
-                                        //functions
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Text(
+                              'الأفضل مبيعا',
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff546F66)),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            BlocBuilder<HomeCubit, HomeState>(
+                              builder: (context, state) {
+                                return SizedBox(
+                                  height: 22.h,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    padding: EdgeInsets.symmetric(vertical: 1.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: List.generate(
+                                        cubit.currentChild.schoolModel
+                                            .foodMenuModelList.length,
+                                        (index) {
+                                          return HomeCard(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (context) {
+                                                  return ProductScreen(
+                                                    childModel:
+                                                        cubit.currentChild,
+                                                    foodMenuModel: cubit
+                                                        .currentChild
+                                                        .schoolModel
+                                                        .foodMenuModelList[index],
+                                                  );
+                                                },
+                                              ));
+                                            },
+                                            onRestriction: !cubit
+                                                    .checkRestrictionsFood(
+                                                        productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id)
+                                                ? () {
+                                                    cubit.addToRestrictionsFood(
+                                                        childId:
+                                                            cubit.currentChild.id,
+                                                        productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id);
+                                                  }
+                                                : null,
+                                            cal: cubit.currentChild.schoolModel
+                                                .foodMenuModelList[index].cal
+                                                .toString(),
+                                            imagePath:
+                                                cubit.checkRestrictionsFood(
+                                                        productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id)
+                                                    ? 'assets/image/no.png'
+                                                    : cubit
+                                                        .currentChild
+                                                        .schoolModel
+                                                        .foodMenuModelList[index]
+                                                        .imageUrl
+                                                        .toString()
+                                                        .trim(),
+                                            productName: cubit
+                                                .currentChild
+                                                .schoolModel
+                                                .foodMenuModelList[index]
+                                                .foodName,
+                                            price:
+                                                '${cubit.currentChild.schoolModel.foodMenuModelList[index].price as double}',
+                                            onAdd: () => cubit.quickAddToCart(
+                                                childModel: cubit.currentChild,
+                                                foodMenuModel: cubit
+                                                    .currentChild
+                                                    .schoolModel
+                                                    .foodMenuModelList[index]),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            // SizedBox(
+                            //   height: 2.h,
+                            // ),
+                            Text(
+                              'البوكسات',
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff546F66)),
+                            ),
+                            BlocBuilder<HomeCubit, HomeState>(
+                              builder: (context, state) {
+                                return SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  padding: EdgeInsets.symmetric(vertical: 1.h),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: cubit.boxList
+                                          .map(
+                                            (e) => HomeCard(
+                                              //values
+                                              productName: e.foodName,
+                                              price: '${e.price}',
+                                              cal: '${e.cal}',
+                                              imagePath: '${e.imageUrl}',
+                                              //functions
+                                              onAdd: () => cubit.quickAddToCart(
+                                                  childModel: cubit.currentChild,
+                                                  foodMenuModel: e),
+                                              onRestriction: () =>
+                                                  cubit.addToRestrictionsFood(
+                                                      childId:
+                                                          cubit.currentChild.id,
+                                                      productId: e.id),
+                                              onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProductScreen(
+                                                            foodMenuModel: e,
+                                                            childModel: cubit
+                                                                .currentChild),
+                                                  )),
+                                            ),
+                                          )
+                                          .toList()),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 4.w),
+                        child: Text(
+                          'الوجبات',
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff546F66)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      BlocBuilder<HomeCubit, HomeState>(
+                        builder: (context, state) {
+                          // cubit.getListByType(
+                          //     catagory: 'product',
+                          //     schoolId: cubit.currentChild.schoolId);
+                          return SizedBox(
+                              height: 60.h,
+                              width: 80.w,
+                              child: cubit.productList.isNotEmpty
+                                  ? GridView.builder(
+                                      itemCount: cubit.productList.length,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 2.0.h,
+                                        mainAxisSpacing: 1.0.h,
+                                        //childAspectRatio: 0.12.h,
+                                      ),
+                                      itemBuilder: (context, index) => HomeCard(
+                                        //value
+                                        productName:
+                                            cubit.productList[index].foodName,
+                                        price:
+                                            '${cubit.productList[index].price}',
+                                        cal: '${cubit.productList[index].cal}',
+                                        imagePath:
+                                            '${cubit.productList[index].imageUrl}',
+                                        //Function
                                         onAdd: () => cubit.quickAddToCart(
                                             childModel: cubit.currentChild,
-                                            foodMenuModel: e),
+                                            foodMenuModel:
+                                                cubit.productList[index]),
                                         onRestriction: () =>
                                             cubit.addToRestrictionsFood(
                                                 childId: cubit.currentChild.id,
-                                                productId: e.id),
+                                                productId:
+                                                    cubit.productList[index].id),
                                         onTap: () => Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProductScreen(
-                                                      foodMenuModel: e,
-                                                      childModel:
-                                                          cubit.currentChild),
+                                              builder: (context) => ProductScreen(
+                                                  foodMenuModel:
+                                                      cubit.productList[index],
+                                                  childModel: cubit.currentChild),
                                             )),
                                       ),
                                     )
-                                    .toList()),
-                          ),
-                        ],
+                                  : Center(
+                                      child: Text('لا توجد وجبات ):'),
+                                    ));
+                        },
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 4.w),
-                      child: Text(
-                        'الوجبات',
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff546F66)),
+                      SizedBox(
+                        height: 2.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    SizedBox(
-                      height: 60.h,
-                      width: 80.w,
-                      child: cubit.getListByType(catagory: 'product').isNotEmpty
-                          ? GridView.builder(
-                              itemCount: cubit
-                                  .getListByType(catagory: 'product')
-                                  .length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 2.0.h,
-                                mainAxisSpacing: 1.0.h,
-                                //childAspectRatio: 0.12.h,
-                              ),
-                              itemBuilder: (context, index) => HomeCard(
-                                //value
-                                productName: cubit
-                                    .getListByType(catagory: 'product')[index]
-                                    .foodName,
-                                price:
-                                    '${cubit.getListByType(catagory: 'product')[index].price}',
-                                cal:
-                                    '${cubit.getListByType(catagory: 'product')[index].cal}',
-                                imagePath:
-                                    '${cubit.getListByType(catagory: 'product')[index].imageUrl}',
-                                //Function
-                                onAdd: () => cubit.quickAddToCart(
-                                    childModel: cubit.currentChild,
-                                    foodMenuModel: cubit.getListByType(
-                                        catagory: 'product')[index]),
-                                onRestriction: () =>
-                                    cubit.addToRestrictionsFood(
-                                        childId: cubit.currentChild.id,
-                                        productId: cubit
-                                            .getListByType(
-                                                catagory: 'product')[index]
-                                            .id),
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ProductScreen(
-                                          foodMenuModel: cubit.getListByType(
-                                              catagory: 'product')[index],
-                                          childModel: cubit.currentChild),
-                                    )),
-                              ),
-                            )
-                          : Center(
-                              child: Text('لا توجد وجبات ):'),
-                            ),
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
