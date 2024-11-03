@@ -110,7 +110,7 @@ class BottomNavigatorScreen extends StatelessWidget {
                                 CustomTextFormFelid(
                                   controller: cubit.childClassCon,
                                   label: "فصل الطالب",
-                                  hintText: "أ3",
+                                  hintText: "3 ب",
                                   isPassword: false,
                                   width: 70.w,
                                 ),
@@ -120,7 +120,8 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     CustomButton(
-                                      backgroundColor: const Color(0xffC8E5F5),
+                                      backgroundColor: const Color(0xffA3E9BF),
+                                      
                                       onPressed: () async {
                                         try {
                                           final result =
@@ -178,7 +179,8 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       fixedSize: Size(35.w, 4.h),
                                     ),
                                     CustomButton(
-                                      backgroundColor: const Color(0xffA3E9BF),
+
+                                      backgroundColor: const Color(0xffC8E5F5),
                                       onPressed: () async {
                                         // await cubit.getchild();
 

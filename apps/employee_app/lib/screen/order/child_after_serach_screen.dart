@@ -44,29 +44,29 @@ class ChildAfterSerachScreen extends StatelessWidget {
                 Navigator.pop(context);
               }
             },
-            child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: Image.asset('assets/image/mainLogo.png'),
-                centerTitle: true,
-                flexibleSpace: Container(
-                  decoration: const ShapeDecoration(
-                    shape: SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius.only(
-                        bottomLeft: SmoothRadius(
-                            cornerRadius: 50, cornerSmoothing: 0.1),
-                        bottomRight: SmoothRadius(
-                            cornerRadius: 50, cornerSmoothing: 0.1),
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  title: Image.asset('assets/image/mainLogo.png'),
+                  centerTitle: true,
+                  flexibleSpace: Container(
+                    decoration: const ShapeDecoration(
+                      shape: SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius.only(
+                          bottomLeft: SmoothRadius(
+                              cornerRadius: 50, cornerSmoothing: 0.1),
+                          bottomRight: SmoothRadius(
+                              cornerRadius: 50, cornerSmoothing: 0.1),
+                        ),
                       ),
+                      color: Color(0xff6FBAE5),
                     ),
-                    color: Color(0xff6FBAE5),
                   ),
+                  toolbarHeight: 15.h,
                 ),
-                toolbarHeight: 15.h,
-              ),
-              body: Directionality(
-                textDirection: TextDirection.rtl,
-                child: SingleChildScrollView(
+                body: SingleChildScrollView(
                   child: Center(
                     child: Column(
                       children: [
@@ -75,7 +75,7 @@ class ChildAfterSerachScreen extends StatelessWidget {
                         ),
                         BlocBuilder<ChildSerchCubit, ChildSerchState>(
                           builder: (context, state) {
-                            return Column(
+                            return cubit.childLis.isNotEmpty? Column(
                               children: cubit.childLis
                                   .map(
                                     (child) => Padding(
@@ -93,7 +93,7 @@ class ChildAfterSerachScreen extends StatelessWidget {
                                     ),
                                   )
                                   .toList(),
-                            );
+                            ):Text('لا يوجد طالب بهذا الاسم');
                           },
                         ),
                       ],

@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                       ? BlocBuilder<HomeCubit, HomeState>(
                           builder: (context, state) {
                             return SizedBox(
-                              height: 39.5.h,
+                              height: 38.h,
                               width: 80.w,
                               child: GridView.builder(
                                 itemCount: cubit.menu

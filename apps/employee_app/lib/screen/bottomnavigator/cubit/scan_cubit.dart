@@ -23,7 +23,7 @@ class ScanCubit extends Cubit<ScanState> {
 
   bool checkTheCOn() {
     if (childNameCon.text.isEmpty) {
-      emit(ErorState(msg: "رجاء ادخل اسم الطالب"));
+      emit(ErorState(msg: "يرجى ادخال اسم الطالب"));
       return false;
     }
 

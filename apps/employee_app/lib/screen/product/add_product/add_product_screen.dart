@@ -50,7 +50,7 @@ class AddProductScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: Text(
-                    'أضافة منتج',
+                    'اضافة منتج',
                     style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class AddProductScreen extends StatelessWidget {
                           label: 'اسم المنتج',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "لابد وضع اسم المنتج";
+                              return "يجب كتابة اسم المنتج";
                             } else if (RegExp(r'[0-9]').hasMatch(value)) {
                               return 'الاسم لا يحتوي على أرقام';
                             }
@@ -107,7 +107,7 @@ class AddProductScreen extends StatelessWidget {
                               label: 'السعر',
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "يجب أضافة السعر";
+                                  return "يجب اضافة السعر";
                                 }
                                 return null;
                               }),

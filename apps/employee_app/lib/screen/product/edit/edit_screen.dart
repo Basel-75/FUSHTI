@@ -157,7 +157,7 @@ class EditScreen extends StatelessWidget {
                       CustomMultiSelects(
                         label: 'الحساسية',
                         hintText:
-                            '${productInfo.allergy!.isNotEmpty ? productInfo.allergy : 'لا توجد حساسية'}',
+                            '${productInfo.allergy ?? 'لا توجد حساسية'}',
                         items: cubit.allergy,
                         onListChanged: (val) {
                           cubit.allergyList = val;

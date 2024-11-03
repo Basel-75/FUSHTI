@@ -123,16 +123,26 @@ class StorageScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    CustomButton(
-                        onPressed: () {
-                          cubit.updateAdv();
-                        },
-                        title: "حفظ"),
-                    SizedBox(
-                      height: 4.h,
+                    Container(
+                      width: 98.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Color(0x45C8E5F5)),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          CustomButton(
+                              onPressed: () {
+                                cubit.updateAdv();
+                              },
+                              title: "حفظ"),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

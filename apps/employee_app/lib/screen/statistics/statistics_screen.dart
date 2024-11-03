@@ -15,18 +15,7 @@ class StatisticsScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: FloatingActionButton(
-          shape: const CircleBorder(),
-          backgroundColor: const Color(0xffC9E7E7),
-          tooltip: 'Increment',
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-              return const AddProductScreen();
-            }));
-          },
-          child: const Icon(Icons.add, color: Colors.white, size: 28),
-        ),
+
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           leading: IconButton(
