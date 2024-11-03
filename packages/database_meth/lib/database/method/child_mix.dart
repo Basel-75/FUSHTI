@@ -8,6 +8,59 @@ import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin ChildMix {
+  Future<List<ChildModel>> getAllChildernSerch(
+      {required String name, required String? childClass}) async {
+    final List<Map<String, dynamic>> res;
+
+    AppModel appModel = getIt.get<AppModel>();
+
+    List<ChildModel> lis = [];
+    try {
+      if (childClass == null) {
+        log("in class is null");
+        res = await SuperMain()
+            .supabase
+            .from('followers')
+            .select('*, school(id,name, adders, contact_number)')
+            .like('name', '%$name%')
+            .eq("school_id", appModel.empModel!.schoolId);
+
+        log("is there data ${res}");
+
+        for (var val in res) {
+          final temp = ChildModel.fromJson(val);
+
+          temp.schoolModel = SchoolModel.fromJson(val["school"]);
+          lis.add(temp);
+        }
+      } else {
+        log("in class not null null");
+        res = await SuperMain()
+            .supabase
+            
+            .from('followers')
+            .select('*, school(id,name, adders, contact_number)')
+            .like('name', '%$name%')
+            .eq('class', childClass)
+            .eq("school_id", appModel.empModel!.schoolId);
+
+        log("is there data ${res}");
+
+        for (var val in res) {
+          final temp = ChildModel.fromJson(val);
+
+          temp.schoolModel = SchoolModel.fromJson(val["school"]);
+          lis.add(temp);
+        }
+      }
+
+      return lis;
+    } catch (er) {
+      log("$er");
+      rethrow;
+    }
+  }
+
   Future<Map<String, dynamic>> getChildById({required String childId}) async {
     try {
       final res = await SuperMain()
