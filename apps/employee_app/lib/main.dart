@@ -1,8 +1,7 @@
-
-
 import 'dart:developer';
 
-import 'package:employee_app/screen/bottomnavigator/bottom_navigator_screen.dart' as bot;
+import 'package:employee_app/screen/bottomnavigator/bottom_navigator_screen.dart'
+    as bot;
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/emp_setup.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -11,8 +10,8 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 void main() async {
   await empSetup();
-   OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
-OneSignal.Notifications.requestPermission(true);
+  OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
+  OneSignal.Notifications.requestPermission(true);
   log("${getIt.get<AppModel>().empModel!.toJson()}");
   OneSignal.initialize(dotenv.env["onesignal_app_key"]!);
   //log("${getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList[0].toJson()}");
@@ -24,7 +23,6 @@ OneSignal.Notifications.requestPermission(true);
   log('-----####');
   // log("${getIt.get<AppModel>().userModel!.id}");
 
-  
   // debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }

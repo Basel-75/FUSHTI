@@ -1,4 +1,3 @@
-
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/home/cubit/home_cubit.dart';
@@ -62,6 +61,15 @@ class HomeScreen extends StatelessWidget {
                       Bootstrap.chat_text_fill,
                       color: Colors.white,
                     )),
+                actions: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        BoxIcons.bx_log_out,
+                        color: Colors.white,
+                        size: 3.5.h,
+                      ))
+                ],
                 title: Image.asset('assets/image/mainLogo.png'),
                 centerTitle: true,
                 flexibleSpace: Container(
@@ -175,8 +183,6 @@ class HomeScreen extends StatelessWidget {
                                           .imageUrl
                                           .toString()
                                           .trim(),
-                                      onTap:
-                                          () {}, // Optional, add functionality if needed.
                                       onDelete: () => showConfirmDialog(
                                         context: context,
                                         onCancelBtnTap: () =>
