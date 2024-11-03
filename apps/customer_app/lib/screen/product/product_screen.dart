@@ -156,7 +156,7 @@ class ProductScreen extends StatelessWidget {
                                       return Dialog(
                                         child: Builder(builder: (context) {
                                           return Container(
-                                            width: 50.w,
+                                            width: 55.w,
                                             height: 25.h,
                                             decoration: BoxDecoration(
                                                 borderRadius:
@@ -201,7 +201,7 @@ class ProductScreen extends StatelessWidget {
                                                         backgroundColor:
                                                             Color(0xffC8E5F5),
                                                         fixedSize:
-                                                            Size(30.w, 6.h),
+                                                            Size(32.w, 6.h),
                                                         onPressed: () {
                                                           cubit.addToCart(
                                                               childModel:
@@ -215,7 +215,7 @@ class ProductScreen extends StatelessWidget {
                                                         backgroundColor:
                                                             Color(0xffA3E9BF),
                                                         fixedSize:
-                                                            Size(32.w, 6.h),
+                                                            Size(34.w, 6.h),
                                                         onPressed: () {
                                                           cubit.addToPlan();
                                                         },

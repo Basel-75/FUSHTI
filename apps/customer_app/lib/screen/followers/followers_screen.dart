@@ -44,6 +44,7 @@ class FollowersScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -52,8 +53,9 @@ class FollowersScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                   Text(
-                    '${cubit.appModel.userModel?.funds.toString()}',
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
                     style: TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
               ),
@@ -122,18 +124,11 @@ class FollowersScreen extends StatelessWidget {
                                                   // cubit.appModel =
                                                   //     getIt.get<AppModel>();
 
-                                                  if(value != null){
-
-                                                    if(value){
-
-                                                       cubit.refreshPage();
-
+                                                  if (value != null) {
+                                                    if (value) {
+                                                      cubit.refreshPage();
                                                     }
-                                                   
-
                                                   }
-
-                                                  
                                                 },
                                               ),
                                           onPressedQR: () async {

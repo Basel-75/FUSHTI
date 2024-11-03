@@ -44,6 +44,7 @@ class HomeScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -52,8 +53,9 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                   Text(
-                    '${cubit.appModel.userModel?.funds.toString()}',
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
                     style: TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
               ),
@@ -135,8 +137,8 @@ class HomeScreen extends StatelessWidget {
                                             textColor: isClicked == false
                                                 ? Colors.blue
                                                 : Colors.black,
-                                            childName:
-                                                cubit.childModelList[index].name,
+                                            childName: cubit
+                                                .childModelList[index].name,
                                           ),
                                         );
                                       },
@@ -164,7 +166,8 @@ class HomeScreen extends StatelessWidget {
                                   height: 22.h,
                                   child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
-                                    padding: EdgeInsets.symmetric(vertical: 1.h),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 1.h),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -181,14 +184,39 @@ class HomeScreen extends StatelessWidget {
                                                     childModel:
                                                         cubit.currentChild,
                                                     foodMenuModel: cubit
-                                                        .currentChild
-                                                        .schoolModel
-                                                        .foodMenuModelList[index],
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                        index],
                                                   );
                                                 },
                                               ));
                                             },
-                                            onRestriction: !cubit
+                                            onRestriction:
+                                                !cubit.checkRestrictionsFood(
+                                                        productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id)
+                                                    ? () {
+                                                        cubit.addToRestrictionsFood(
+                                                            childId: cubit
+                                                                .currentChild
+                                                                .id,
+                                                            productId: cubit
+                                                                .currentChild
+                                                                .schoolModel
+                                                                .foodMenuModelList[
+                                                                    index]
+                                                                .id);
+                                                      }
+                                                    : null,
+                                            cal: cubit.currentChild.schoolModel
+                                                .foodMenuModelList[index].cal
+                                                .toString(),
+                                            imagePath: cubit
                                                     .checkRestrictionsFood(
                                                         productId: cubit
                                                             .currentChild
@@ -196,37 +224,14 @@ class HomeScreen extends StatelessWidget {
                                                             .foodMenuModelList[
                                                                 index]
                                                             .id)
-                                                ? () {
-                                                    cubit.addToRestrictionsFood(
-                                                        childId:
-                                                            cubit.currentChild.id,
-                                                        productId: cubit
-                                                            .currentChild
-                                                            .schoolModel
-                                                            .foodMenuModelList[
-                                                                index]
-                                                            .id);
-                                                  }
-                                                : null,
-                                            cal: cubit.currentChild.schoolModel
-                                                .foodMenuModelList[index].cal
-                                                .toString(),
-                                            imagePath:
-                                                cubit.checkRestrictionsFood(
-                                                        productId: cubit
-                                                            .currentChild
-                                                            .schoolModel
-                                                            .foodMenuModelList[
-                                                                index]
-                                                            .id)
-                                                    ? 'assets/image/no.png'
-                                                    : cubit
-                                                        .currentChild
-                                                        .schoolModel
-                                                        .foodMenuModelList[index]
-                                                        .imageUrl
-                                                        .toString()
-                                                        .trim(),
+                                                ? 'assets/image/no.png'
+                                                : cubit
+                                                    .currentChild
+                                                    .schoolModel
+                                                    .foodMenuModelList[index]
+                                                    .imageUrl
+                                                    .toString()
+                                                    .trim(),
                                             productName: cubit
                                                 .currentChild
                                                 .schoolModel
@@ -276,7 +281,8 @@ class HomeScreen extends StatelessWidget {
                                               imagePath: '${e.imageUrl}',
                                               //functions
                                               onAdd: () => cubit.quickAddToCart(
-                                                  childModel: cubit.currentChild,
+                                                  childModel:
+                                                      cubit.currentChild,
                                                   foodMenuModel: e),
                                               onRestriction: () =>
                                                   cubit.addToRestrictionsFood(
@@ -349,15 +355,17 @@ class HomeScreen extends StatelessWidget {
                                         onRestriction: () =>
                                             cubit.addToRestrictionsFood(
                                                 childId: cubit.currentChild.id,
-                                                productId:
-                                                    cubit.productList[index].id),
+                                                productId: cubit
+                                                    .productList[index].id),
                                         onTap: () => Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => ProductScreen(
-                                                  foodMenuModel:
-                                                      cubit.productList[index],
-                                                  childModel: cubit.currentChild),
+                                              builder: (context) =>
+                                                  ProductScreen(
+                                                      foodMenuModel: cubit
+                                                          .productList[index],
+                                                      childModel:
+                                                          cubit.currentChild),
                                             )),
                                       ),
                                     )

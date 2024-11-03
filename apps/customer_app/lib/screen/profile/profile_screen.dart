@@ -51,19 +51,6 @@ class ProfileScreen extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.wallet,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      '${bloc.appModel.userModel?.funds.toString()}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
                 title: Image.asset('assets/image/mainLogo.png'),
                 centerTitle: true,
                 flexibleSpace: Container(
@@ -133,78 +120,84 @@ class ProfileScreen extends StatelessWidget {
 
                           BlocBuilder<ProfileBloc, ProfileState>(
                             builder: (context, state) {
-                              return UserInfoRow(
-                                name: '${bloc.userName}',
-                                schoolNameOrParentPhone: '${bloc.phoneNum}',
-                                isParent: true,
-                                //update profile info
-                                onEdit: () {
-                                  showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (context) => Dialog(
-                                      backgroundColor: Colors.transparent,
-                                      child: GlassContainer(
-                                        height: 80.w,
-                                        width: 40.h,
-                                        borderRadius: BorderRadius.circular(12),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.40),
-                                            Colors.white.withOpacity(0.10)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderGradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.60),
-                                            Colors.white.withOpacity(0.10),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.05),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.6)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          stops: [0.0, 0.39, 0.40, 1.0],
-                                        ),
-                                        blur: 15.0,
-                                        borderWidth: 1.5,
-                                        elevation: 3.0,
-                                        isFrostedGlass: true,
-                                        shadowColor:
-                                            Colors.black.withOpacity(0.20),
-                                        alignment: Alignment.center,
-                                        frostedOpacity: 0.12,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 2.h),
-                                        child: Directionality(
-                                          textDirection: TextDirection.rtl,
-                                          child: EditUserProfileForm(
-                                            usernameController:
-                                                bloc.usernameController,
-                                            phoneNumController:
-                                                bloc.phoneNumController,
-                                            onSubmit: () {
-                                              bloc.add(UpdateProfileEvent());
-                                              Navigator.pop(context);
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                      'تم تحديث الملف الشخصي بنجاح'),
-                                                  backgroundColor: Colors.green,
-                                                ),
-                                              );
-                                            },
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: UserInfoRow(
+                                  onAddImage: () {},
+                                  name: '${bloc.userName}',
+                                  schoolNameOrParentPhone: '${bloc.phoneNum}',
+                                  isParent: true,
+                                  //update profile info
+                                  onEdit: () {
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        child: GlassContainer(
+                                          height: 80.w,
+                                          width: 40.h,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.white.withOpacity(0.40),
+                                              Colors.white.withOpacity(0.10)
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderGradient: LinearGradient(
+                                            colors: [
+                                              Colors.white.withOpacity(0.60),
+                                              Colors.white.withOpacity(0.10),
+                                              Colors.lightBlueAccent
+                                                  .withOpacity(0.05),
+                                              Colors.lightBlueAccent
+                                                  .withOpacity(0.6)
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            stops: [0.0, 0.39, 0.40, 1.0],
+                                          ),
+                                          blur: 15.0,
+                                          borderWidth: 1.5,
+                                          elevation: 3.0,
+                                          isFrostedGlass: true,
+                                          shadowColor:
+                                              Colors.black.withOpacity(0.20),
+                                          alignment: Alignment.center,
+                                          frostedOpacity: 0.12,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 2.h),
+                                          child: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: EditUserProfileForm(
+                                              usernameController:
+                                                  bloc.usernameController,
+                                              phoneNumController:
+                                                  bloc.phoneNumController,
+                                              onSubmit: () {
+                                                bloc.add(UpdateProfileEvent());
+                                                Navigator.pop(context);
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'تم تحديث الملف الشخصي بنجاح'),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                onDelete: () {},
+                                    );
+                                  },
+                                  onDelete: () {},
+                                ),
                               );
                             },
                           ),
@@ -234,6 +227,8 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 ProfileTile(
                                   title: 'الفواتير',
+                                  icon: Icon(Icons.book_outlined),
+                                  forLogout: false,
                                   onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -242,14 +237,21 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 ProfileTile(
                                   title: 'الشكاوى و الاقتراحات',
+                                  icon: Icon(Icons.safety_divider_sharp),
+                                  forLogout: false,
                                   onTap: () {},
                                 ),
                                 ProfileTile(
                                   title: 'عن فسحتي',
+                                  icon: Icon(Icons.info_outline_rounded),
+                                  forLogout: false,
                                   onTap: () {},
                                 ),
                                 ProfileTile(
                                     title: 'تسجيل الخروج',
+                                    icon: Icon(Icons.exit_to_app_rounded),
+                                    forLogout: true,
+                                    backgroundColor: Color(0x56ECB0B0),
                                     onTap: () => showConfirmDialog(
                                           context: context,
                                           onCancelBtnTap: () {},
@@ -273,12 +275,18 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class ProfileTile extends StatelessWidget {
+  final Color? backgroundColor;
+  final Icon? icon;
   final String title;
   final Function()? onTap;
+  final bool forLogout;
   const ProfileTile({
     super.key,
     this.onTap,
     required this.title,
+    this.backgroundColor,
+    this.icon,
+    required this.forLogout,
   });
 
   @override
@@ -290,20 +298,23 @@ class ProfileTile extends StatelessWidget {
         margin: EdgeInsets.only(top: 3.h),
         padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.5.h),
         decoration: BoxDecoration(
-            color: Color(0xffF2F2F2),
-            boxShadow: kElevationToShadow[2],
+            color: backgroundColor ?? Color(0xffF2F2F2),
+            boxShadow: forLogout ? null : kElevationToShadow[2],
             borderRadius: BorderRadius.circular(8)),
         child: Row(
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 16.sp, color: Color(0xff546F66)),
+              style: TextStyle(
+                  fontSize: 16.sp,
+                  color: forLogout ? Colors.grey : Color(0xff546F66)),
             ),
             Spacer(),
-            Icon(
-              Icons.add,
-              color: Color(0xff545454),
-            )
+            icon ??
+                Icon(
+                  Icons.add,
+                  color: Color(0xff545454),
+                )
           ],
         ),
       ),

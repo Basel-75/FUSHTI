@@ -136,10 +136,10 @@ class FollowersProfileScreen extends StatelessWidget {
                       ),
                       Positioned(
                         bottom: 68.h,
-                        left: 68.w,
+                        left: 66.w,
                         child: Container(
-                          width: 30.w,
-                          height: 30.w,
+                          width: 28.w,
+                          height: 28.w,
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 218, 220, 218),
@@ -171,60 +171,56 @@ class FollowersProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        left: 20.w,
-                        child: IconButton(
-                            onPressed: () async {
-                              await cubit.pickImage();
-                              await cubit.updateChildImage(
-                                  childId: childInfo!.id);
-                            },
-                            icon: const Icon(
-                              Icons.add_a_photo,
-                              color: Color(0xff6FBAE5),
-                            )),
-                      ),
+
                       //=========Info and edit button==========
 
                       BlocBuilder<FollowersProfileCubit, FollowersProfileState>(
                         builder: (context, state) {
-                          return UserInfoRow(
-                            name: childInfo?.name ?? '',
-                            schoolNameOrParentPhone:
-                                childInfo?.schoolModel.name ?? '',
-                            isParent: false,
-                            onEdit: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditFollowersScreen(
-                                    childInfo: childInfo,
+                          return Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: UserInfoRow(
+                              onAddImage: () async {
+                                await cubit.pickImage();
+                                await cubit.updateChildImage(
+                                    childId: childInfo!.id);
+                              },
+                              name: childInfo?.name ?? '',
+                              schoolNameOrParentPhone:
+                                  childInfo?.schoolModel.name ?? '',
+                              isParent: false,
+                              onEdit: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditFollowersScreen(
+                                      childInfo: childInfo,
+                                    ),
                                   ),
-                                ),
-                              ).then(
-                                (value) {
-                                  if (value != null) {
-                                    if (value) {
-                                      cubit.refreshPage();
+                                ).then(
+                                  (value) {
+                                    if (value != null) {
+                                      if (value) {
+                                        cubit.refreshPage();
+                                      }
                                     }
-                                  }
-                                },
-                              );
-                            },
-                            onDelete: () {
-                              showConfirmDialog(
-                                context: context,
-                                onCancelBtnTap: () => Navigator.pop(context),
-                                onConfirmBtnTap: () => cubit.deleteChild(),
-                              );
-                            },
+                                  },
+                                );
+                              },
+                              onDelete: () {
+                                showConfirmDialog(
+                                  context: context,
+                                  onCancelBtnTap: () => Navigator.pop(context),
+                                  onConfirmBtnTap: () => cubit.deleteChild(),
+                                );
+                              },
+                            ),
                           );
                         },
                       ),
 
                       //!status
                       Positioned(
-                        top: 6.h,
+                        top: 8.h,
                         left: 40.w,
                         child: BlocBuilder<FollowersProfileCubit,
                             FollowersProfileState>(
@@ -251,7 +247,7 @@ class FollowersProfileScreen extends StatelessWidget {
 
                       //=============Row of info plan,orders,funds===============
                       Positioned(
-                        top: 11.h,
+                        top: 13.h,
                         left: 3.w,
                         child: BlocBuilder<FollowersProfileCubit,
                             FollowersProfileState>(
@@ -269,7 +265,7 @@ class FollowersProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: 23.h,
+                        top: 25.h,
                         left: 0.2.w,
                         right: 0.2.w,
                         child: Padding(
@@ -288,7 +284,7 @@ class FollowersProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: 30.h,
+                        top: 32.h,
                         left: 0.2.w,
                         right: 0.2.w,
                         child: FollowersTilesColumn(
@@ -312,12 +308,13 @@ class FollowersProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: 54.h,
+                        top: 56.h,
                         left: 0.2.w,
                         right: 0.2.w,
                         child: SizedBox(
                           width: 100.w,
-                          child: BlocBuilder<FollowersProfileCubit, FollowersProfileState>(
+                          child: BlocBuilder<FollowersProfileCubit,
+                              FollowersProfileState>(
                             builder: (context, state) {
                               return CustomSelect(
                                 label: 'الحساسية',

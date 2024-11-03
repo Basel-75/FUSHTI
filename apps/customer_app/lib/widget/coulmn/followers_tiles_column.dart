@@ -19,14 +19,17 @@ class FollowersTilesColumn extends StatelessWidget {
         ProfileTile(
           title: 'اضافة مصروف',
           onTap: onAddFunds,
+          forLogout: false,
         ),
         ProfileTile(
           title: 'اضافة يوم مفتوح',
           onTap: onAddOpenDays,
+          forLogout: false,
         ),
         ProfileTile(
           title: 'الطلبات و الخطط',
           onTap: onPressPlanAndOrder,
+          forLogout: false,
         ),
       ],
     );

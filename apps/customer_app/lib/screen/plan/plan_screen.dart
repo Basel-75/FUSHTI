@@ -77,16 +77,18 @@ class PlanScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.wallet,
                     color: Colors.white,
                   ),
                   Text(
-                    '${cubit.appModel.userModel?.funds.toString()}',
-                    style: const TextStyle(color: Colors.white),
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
+                    style: TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
               ),
@@ -138,7 +140,7 @@ class PlanScreen extends StatelessWidget {
                                 height: 2.h,
                               ),
                               CustomButton(
-                                backgroundColor: Color(0xffC8E5F5),
+                                // backgroundColor: Color(0xffC8E5F5),
                                 onPressed: () {
                                   cubit.addPlan();
                                 },
@@ -305,15 +307,20 @@ class PlanScreen extends StatelessWidget {
                                             log("clecik del");
                                             cubit.delPlan();
                                           },
-                                          child: const Icon(Icons.delete,color: Colors.red,))
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ))
                                       : const SizedBox(),
                                   SizedBox(
                                     width: 5.w,
                                   ),
                                   cubit.planModelSelcted != null
                                       ? GestureDetector(
-                                          child:
-                                              const Icon(Icons.edit_outlined,color: Color(0xffA3E9BF),),
+                                          child: const Icon(
+                                            Icons.edit_outlined,
+                                            color: Color(0xffA3E9BF),
+                                          ),
                                           onTap: () {
                                             log("in edit ");
 
