@@ -7,14 +7,15 @@ class CustomMultiSelect extends StatelessWidget {
   final dynamic Function(List<DropDownItem>)? onListChanged;
   final String label, hintText;
   final Color? backgroundColor;
-  const CustomMultiSelect({
-    super.key,
-    this.items,
-    this.onListChanged,
-    required this.label,
-    required this.hintText,
-    this.backgroundColor,
-  });
+  final List<DropDownItem>? initialItems;
+  const CustomMultiSelect(
+      {super.key,
+      this.items,
+      this.onListChanged,
+      required this.label,
+      required this.hintText,
+      this.backgroundColor,
+      this.initialItems});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class CustomMultiSelect extends StatelessWidget {
               height: 0.5.h,
             ),
             CustomDropdown<DropDownItem>.multiSelectSearch(
+                initialItems: initialItems,
                 itemsListPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: CustomDropdownDecoration(
                   closedFillColor: backgroundColor ?? Colors.white,

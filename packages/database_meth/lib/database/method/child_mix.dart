@@ -146,7 +146,7 @@ mixin ChildMix {
       rethrow;
     }
   }
-
+  
   editChild(
       {required String name,
       required String id,
@@ -155,14 +155,16 @@ mixin ChildMix {
       required String schoolId,
       required double funds}) async {
     try {
-      await SuperMain().supabase.from("followers").update({
+     final res = await SuperMain().supabase.from("followers").update({
         "name": name,
         "id": id,
         "funds": funds,
         "allergy": allergy,
         "class": childClass,
         "school_id": schoolId,
-      }).eq('id', id);
+      }).eq('id', id).select();
+
+      print(res);
     } catch (er) {
       log("$er");
     }
