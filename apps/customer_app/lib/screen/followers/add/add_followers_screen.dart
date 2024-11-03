@@ -27,21 +27,15 @@ class AddFollowersScreen extends StatelessWidget {
           child: BlocListener<AddFollowersCubit, AddFollowersState>(
             listener: (context, state) {
               if (state is LodingState) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+                showLoadingDialog(context: context);
               }
 
               if (state is DoenAddState) {
                 Navigator.pop(context);
 
-                log("very Good add child");
+                Navigator.pop(context, true);
+
+                
               }
 
               if (state is NoLodingState) {
@@ -105,10 +99,10 @@ class AddFollowersScreen extends StatelessWidget {
                         CustomTextFormFelid(
                             validator: (val) {
                               if (val == null || val.isEmpty) {
-                                return 'Name cannot be empty';
+                                return 'اضف اسم';
                               }
                               if (RegExp(r'[0-9]').hasMatch(val)) {
-                                return 'Name cannot contain numbers';
+                                return 'الاسم يحتوي على ارقام';
                               }
                               return null;
                             },
@@ -122,12 +116,9 @@ class AddFollowersScreen extends StatelessWidget {
                         ),
                         CustomSelect(
                           validator: (val) {
-                            log("got to shcoll");
                             if (cubit.schoolCon.text.isEmpty) {
-                              log("not on  shcoll");
-                              return "pls give school";
+                              return "اختر مدرسة";
                             }
-                            log("iam to shcoll");
 
                             return null;
                           },
@@ -145,7 +136,7 @@ class AddFollowersScreen extends StatelessWidget {
                         CustomTextFormFelid(
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return 'Class name cannot be empty';
+                              return 'اضف صف';
                             }
                             return null;
                           },
@@ -173,10 +164,10 @@ class AddFollowersScreen extends StatelessWidget {
                         CustomTextFormFelid(
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return 'Amount cannot be empty';
+                              return 'اضف مصروف ';
                             }
                             if (double.tryParse(val) == null) {
-                              return 'Please enter a valid number';
+                              return 'ادخل رقم صحيح';
                             }
                             return null;
                           },

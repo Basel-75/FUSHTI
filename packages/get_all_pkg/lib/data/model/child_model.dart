@@ -13,7 +13,7 @@ class ChildModel {
   List<String> allergy;
   num funds;
   List<RestrictionFoodModel> restrictionFood = [];
-  late final SchoolModel schoolModel;
+  late  SchoolModel schoolModel;
   List<CartItem> cartList = [];
   final List<PlanModel> planList = [];
 

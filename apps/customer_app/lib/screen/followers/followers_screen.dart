@@ -81,73 +81,99 @@ class FollowersScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const AddFollowersScreen(),
-                  )),
+                  )).then(
+                (value) {
+                  if (value != null) {
+                    if (value) {
+                      cubit.refreshPage();
+                    }
+                  }
+                },
+              ),
             ),
             body: Directionality(
               textDirection: TextDirection.rtl,
               child: SingleChildScrollView(
                 child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 6.h,
-                      ),
-                      Column(
-                          children: cubit.appModel.userModel!.childModelList
-                              .map(
-                                (child) => Padding(
-                                  padding: EdgeInsets.only(bottom: 3.h),
-                                  child: ChildCard(
-                                      childModel: child,
-                                      onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    FollowersProfileScreen(
-                                                  childInfo: child,
-                                                ),
-                                              )).then(
-                                            (value) {
-                                              cubit.appModel =
-                                                  getIt.get<AppModel>();
-                                            },
-                                          ),
-                                      onPressedQR: () async {
-                                        await cubit.saveQrCode(
-                                            childId: child.id);
-                                        await cubit.openPdf(
-                                            childName: child.name.trim());
-                                      }),
-                                ),
-                              )
-                              .toList()
+                  child:
+                      BlocBuilder<FollowersProfileCubit, FollowersProfileState>(
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 6.h,
+                          ),
+                          Column(
+                              children: cubit.appModel.userModel!.childModelList
+                                  .map(
+                                    (child) => Padding(
+                                      padding: EdgeInsets.only(bottom: 3.h),
+                                      child: ChildCard(
+                                          childModel: child,
+                                          onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        FollowersProfileScreen(
+                                                      childInfo: child,
+                                                    ),
+                                                  )).then(
+                                                (value) {
+                                                  // cubit.appModel =
+                                                  //     getIt.get<AppModel>();
 
-                          // List.generate(
-                          //   cubit.appModel.schoolModelList.length,
-                          //   (index) {
-                          //     return Padding(
-                          //       padding: EdgeInsets.only(bottom: 3.h),
-                          //       child: ChildCard(
-                          //         childModel:
-                          //             cubit.appModel.userModel!.childModelList[index],
-                          //         onTap: () => Navigator.push(
-                          //             context,
-                          //             MaterialPageRoute(
-                          //               builder: (context) => FollowersProfileScreen(
-                          //                 childInfo: cubit.appModel.userModel!
-                          //                     .childModelList[index],
-                          //               ),
-                          //             )).then(
-                          //           (value) {
-                          //             cubit.appModel = getIt.get<AppModel>();
-                          //           },
-                          //         ),
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
-                          )
-                    ],
+                                                  if(value != null){
+
+                                                    if(value){
+
+                                                       cubit.refreshPage();
+
+                                                    }
+                                                   
+
+                                                  }
+
+                                                  
+                                                },
+                                              ),
+                                          onPressedQR: () async {
+                                            await cubit.saveQrCode(
+                                                childId: child.id);
+                                            await cubit.openPdf(
+                                                childName: child.name.trim());
+                                          }),
+                                    ),
+                                  )
+                                  .toList()
+
+                              // List.generate(
+                              //   cubit.appModel.schoolModelList.length,
+                              //   (index) {
+                              //     return Padding(
+                              //       padding: EdgeInsets.only(bottom: 3.h),
+                              //       child: ChildCard(
+                              //         childModel:
+                              //             cubit.appModel.userModel!.childModelList[index],
+                              //         onTap: () => Navigator.push(
+                              //             context,
+                              //             MaterialPageRoute(
+                              //               builder: (context) => FollowersProfileScreen(
+                              //                 childInfo: cubit.appModel.userModel!
+                              //                     .childModelList[index],
+                              //               ),
+                              //             )).then(
+                              //           (value) {
+                              //             cubit.appModel = getIt.get<AppModel>();
+                              //           },
+                              //         ),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
+                              )
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),

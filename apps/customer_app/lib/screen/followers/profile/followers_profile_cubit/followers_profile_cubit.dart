@@ -41,16 +41,22 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     }
   }
 
-  deleteChild({required String childId}) async {
+  refreshPage() {
+    emit(FollowersProfileInitial());
+  }
+
+  deleteChild() async {
     try {
       //Delete in DB
       emit(LoadingState());
-      await SuperMain().deleteChild(id: childId);
+      await SuperMain().deleteChild(id: childModel!.id,userId: childModel!.userId);
       //Delete Locale
       appModel.userModel?.childModelList.removeWhere(
-        (element) => element.id == childId,
+        (element) => element.id == childModel!.id,
       );
-      emit(SuccessState(msg: 'تم حذف التابع بنجاح'));
+
+      appModel.userModel?.numberFollowers -= 1;
+      emit(AfterDelState(msg: 'تم حذف التابع بنجاح'));
     } catch (e) {
       emit(ErrorState(msg: 'تعذر حذف التابع اعد المحاولة لاحقا'));
     }

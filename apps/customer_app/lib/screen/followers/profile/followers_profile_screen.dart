@@ -37,14 +37,22 @@ class FollowersProfileScreen extends StatelessWidget {
             if (state is LoadingState) {
               showLoadingDialog(context: context);
             }
+
+            if (state is AfterDelState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.msg),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              Navigator.pop(context, true);
+            }
             if (state is SuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => const BottomNavigatorScreen(),
-              //     ));
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.msg),
@@ -178,27 +186,38 @@ class FollowersProfileScreen extends StatelessWidget {
                       ),
                       //=========Info and edit button==========
 
-                      UserInfoRow(
-                        name: childInfo?.name ?? '',
-                        schoolNameOrParentPhone:
-                            childInfo?.schoolModel.name ?? '',
-                        isParent: false,
-                        onEdit: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditFollowersScreen(
-                                childInfo: childInfo,
-                              ),
-                            ),
-                          );
-                        },
-                        onDelete: () {
-                          showConfirmDialog(
-                            context: context,
-                            onCancelBtnTap: () => Navigator.pop(context),
-                            onConfirmBtnTap: () =>
-                                cubit.deleteChild(childId: childInfo!.id),
+                      BlocBuilder<FollowersProfileCubit, FollowersProfileState>(
+                        builder: (context, state) {
+                          return UserInfoRow(
+                            name: childInfo?.name ?? '',
+                            schoolNameOrParentPhone:
+                                childInfo?.schoolModel.name ?? '',
+                            isParent: false,
+                            onEdit: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditFollowersScreen(
+                                    childInfo: childInfo,
+                                  ),
+                                ),
+                              ).then(
+                                (value) {
+                                  if (value != null) {
+                                    if (value) {
+                                      cubit.refreshPage();
+                                    }
+                                  }
+                                },
+                              );
+                            },
+                            onDelete: () {
+                              showConfirmDialog(
+                                context: context,
+                                onCancelBtnTap: () => Navigator.pop(context),
+                                onConfirmBtnTap: () => cubit.deleteChild(),
+                              );
+                            },
                           );
                         },
                       ),
@@ -298,17 +317,21 @@ class FollowersProfileScreen extends StatelessWidget {
                         right: 0.2.w,
                         child: SizedBox(
                           width: 100.w,
-                          child: CustomSelect(
-                            label: 'الحساسية',
-                            hintText: 'عرض الحساسية',
-                            items: childInfo!.allergy.isNotEmpty
-                                ? List.generate(
-                                    childInfo!.allergy.length,
-                                    (index) => DropDownItem(
-                                          childInfo!.allergy[index],
-                                        ))
-                                : [const DropDownItem('لا يوجد')],
-                            backgroundColor: Colors.white,
+                          child: BlocBuilder<FollowersProfileCubit, FollowersProfileState>(
+                            builder: (context, state) {
+                              return CustomSelect(
+                                label: 'الحساسية',
+                                hintText: 'عرض الحساسية',
+                                items: childInfo!.allergy.isNotEmpty
+                                    ? List.generate(
+                                        childInfo!.allergy.length,
+                                        (index) => DropDownItem(
+                                              childInfo!.allergy[index],
+                                            ))
+                                    : [const DropDownItem('لا يوجد')],
+                                backgroundColor: Colors.white,
+                              );
+                            },
                           ),
                         ),
                       ),
