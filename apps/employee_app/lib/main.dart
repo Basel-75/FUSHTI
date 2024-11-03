@@ -1,13 +1,9 @@
+
+
 import 'dart:developer';
 
-import 'package:employee_app/screen/bottomnavigator/bottom_navigator_screen.dart';
-import 'package:employee_app/screen/home/home_screen.dart';
-import 'package:employee_app/screen/order/order_screen.dart';
-import 'package:employee_app/screen/statistics/statistics_screen.dart';
-import 'package:employee_app/screen/storage/storage_product_screen.dart';
+import 'package:employee_app/screen/bottomnavigator/bottom_navigator_screen.dart' as bot;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import 'package:get_all_pkg/data/emp_setup.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
@@ -48,7 +44,7 @@ class MyApp extends StatelessWidget {
                     elevatedButtonTheme: ElevatedButtonThemeData(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xffFEC87F)))),
-                home: BottomNavigatorScreen(),
+                home: bot.BottomNavigatorScreen(),
               ),
             ));
   }

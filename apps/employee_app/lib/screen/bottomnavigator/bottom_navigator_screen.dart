@@ -1,17 +1,12 @@
 import 'package:database_meth/database/super_main.dart';
 import 'package:employee_app/screen/order/child_after_serach_screen.dart';
-
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
-
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
 import 'package:employee_app/screen/bottomnavigator/cubit/scan_cubit.dart';
 import 'package:employee_app/screen/boxes/boxes_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
-
 import 'package:employee_app/screen/order/order_screen.dart';
-
 import 'package:employee_app/screen/profile/profile_screen.dart';
-
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
@@ -40,6 +35,7 @@ class BottomNavigatorScreen extends StatelessWidget {
     StatisticsScreen(),
     ProfileScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -56,21 +52,36 @@ class BottomNavigatorScreen extends StatelessWidget {
         final cubit = context.read<ScanCubit>();
         int selectedIndex = 0;
 
-        return Scaffold(
-          //extendBody: true,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.miniCenterDocked,
-          floatingActionButton: FloatingActionButton(
-            shape: const CircleBorder(),
-            heroTag: "navFloat",
-            backgroundColor: const Color(0xffFDCB6A),
-            tooltip: 'add Saving',
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-                return const AddProductScreen();
-              }));
-            },
-            child: IconButton(
+        return BlocListener<ScanCubit, ScanState>(
+          listener: (context, state) {
+            
+
+            if(state is ErorState){
+               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  state.msg,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                backgroundColor: Colors.red,
+              ));
+            }
+          },
+          child: Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniCenterDocked,
+            floatingActionButton: FloatingActionButton(
+              shape: const CircleBorder(),
+              heroTag: "navFloat",
+              backgroundColor: const Color(0xffFDCB6A),
+              tooltip: 'add Saving',
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (builder) {
+                  return const AddProductScreen();
+                }));
+              },
+              child: IconButton(
                 onPressed: () async {
                   // here scan
                   showDialog(
@@ -80,33 +91,30 @@ class BottomNavigatorScreen extends StatelessWidget {
                         child: Container(
                           height: 40.h,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Directionality(
                             textDirection: TextDirection.rtl,
                             child: Column(
                               children: [
-                                SizedBox(
-                                  height: 3.h,
-                                ),
+                                SizedBox(height: 3.h),
                                 CustomTextFormFelid(
+                                  controller: cubit.childNameCon,
                                   label: "اسم الطالب",
                                   hintText: "فهد",
                                   isPassword: false,
                                   width: 70.w,
                                 ),
-                                SizedBox(
-                                  height: 3.h,
-                                ),
+                                SizedBox(height: 3.h),
                                 CustomTextFormFelid(
+                                  controller: cubit.childClassCon,
                                   label: "فصل الطالب",
                                   hintText: "أ3",
                                   isPassword: false,
                                   width: 70.w,
                                 ),
-                                SizedBox(
-                                  height: 3.h,
-                                ),
+                                SizedBox(height: 3.h),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -114,69 +122,49 @@ class BottomNavigatorScreen extends StatelessWidget {
                                     CustomButton(
                                       backgroundColor: const Color(0xffC8E5F5),
                                       onPressed: () async {
-                                        // here scan
-
-
-                                          try {
-                                            final result =
-                                                await BarcodeScanner.scan(
-                                              options: ScanOptions(
-                                                strings: {
-                                                  'cancel':
-                                                      _cancelController.text,
-                                                  'flash_on':
-                                                      _flashOnController.text,
-                                                  'flash_off':
-                                                      _flashOffController.text,
-                                                },
-                                                restrictFormat: [
-                                                  BarcodeFormat.qr
-                                                ],
-                                                useCamera: _selectedCamera,
-                                                autoEnableFlash:
-                                                    _autoEnableFlash,
-                                                android: AndroidOptions(
-                                                  aspectTolerance:
-                                                      _aspectTolerance,
-                                                  useAutoFocus: _useAutoFocus,
-                                                ),
+                                        try {
+                                          final result =
+                                              await BarcodeScanner.scan(
+                                            options: ScanOptions(
+                                              strings: {
+                                                'cancel':
+                                                    _cancelController.text,
+                                                'flash_on':
+                                                    _flashOnController.text,
+                                                'flash_off':
+                                                    _flashOffController.text,
+                                              },
+                                              restrictFormat: [
+                                                BarcodeFormat.qr
+                                              ],
+                                              useCamera: _selectedCamera,
+                                              autoEnableFlash: _autoEnableFlash,
+                                              android: AndroidOptions(
+                                                aspectTolerance:
+                                                    _aspectTolerance,
+                                                useAutoFocus: _useAutoFocus,
                                               ),
-                                            );
+                                            ),
+                                          );
 
-                                            if (result.rawContent.isNotEmpty) {
-                                              // change it to take the value from databse later
-                                              //  result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //       builder: (context) => OrderScreen(
-                                              //         childModel: childm ,
-                                              //          ),
-                                              //     ));
-                                            }
-                                          } on PlatformException catch (e) {
-                                            scanResult = ScanResult(
-                                              rawContent: e.code ==
-                                                      BarcodeScanner
-                                                          .cameraAccessDenied
-                                                  ? 'The user did not grant the camera permission!'
-                                                  : 'Unknown error: //',
-                                            );
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                              content:
-                                                  Text(scanResult!.rawContent),
-                                              backgroundColor: Colors.red[300],
-                                            ));
+                                          if (result.rawContent.isNotEmpty) {
+                                            // change it to take the value from database later
+                                            // result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder: (context) => OrderScreen(
+                                            //         childModel: childm,
+                                            //       ),
+                                            //     ));
                                           }
-
                                         } on PlatformException catch (e) {
                                           scanResult = ScanResult(
                                             rawContent: e.code ==
                                                     BarcodeScanner
                                                         .cameraAccessDenied
                                                 ? 'The user did not grant the camera permission!'
-                                                : 'Unknown error: //',
+                                                : 'Unknown error: ${e.message}',
                                           );
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(
@@ -192,37 +180,40 @@ class BottomNavigatorScreen extends StatelessWidget {
                                     CustomButton(
                                       backgroundColor: const Color(0xffA3E9BF),
                                       onPressed: () async {
-                                        await cubit.getchild();
+                                        // await cubit.getchild();
 
-
-                                          if (cubit.checkTheCOn()) {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ChildAfterSerachScreen(
-                                                    childClass: cubit
-                                                        .childClassCon.text.isEmpty ? null : cubit.childClassCon.text,
-                                                    childName:
-                                                        cubit.childNameCon.text,
-                                                  ),
-                                                ));
-                                          }
-                                        },
-                                        title: "بحث",
-                                        fixedSize: Size(35.w, 4.h),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                        if (cubit.checkTheCOn()) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChildAfterSerachScreen(
+                                                childClass: cubit.childClassCon
+                                                        .text.isEmpty
+                                                    ? null
+                                                    : cubit.childClassCon.text,
+                                                childName:
+                                                    cubit.childNameCon.text,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      title: "بحث",
+                                      fixedSize: Size(35.w, 4.h),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                  icon: const Icon(Iconsax.scan_barcode_outline)),
+                        ),
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(Iconsax.scan_barcode_outline),
+              ),
             ),
             bottomNavigationBar: Directionality(
               textDirection: TextDirection.rtl,
@@ -248,7 +239,6 @@ class BottomNavigatorScreen extends StatelessWidget {
                       ),
                       FlashyTabBarItem(
                         icon: const Icon(
-                          // BoxIcons.bxs_food_menu
                           BoxIcons.bx_box,
                           color: Color(0xFFFDCB6A),
                           size: 30,
