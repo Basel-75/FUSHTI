@@ -1,7 +1,4 @@
-import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
-import 'package:employee_app/screen/storage/storage_product_screen.dart';
-import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/container/container_statistics.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +12,7 @@ class StatisticsScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: FloatingActionButton(
-          shape: const CircleBorder(),
-          backgroundColor: const Color(0xffC9E7E7),
-          tooltip: 'Increment',
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-              return const AddProductScreen();
-            }));
-          },
-          child: const Icon(Icons.add, color: Colors.white, size: 28),
-        ),
+
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           leading: IconButton(

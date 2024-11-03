@@ -3,12 +3,9 @@ import 'dart:developer';
 import 'package:employee_app/component/drop_down_item.dart';
 
 import 'package:employee_app/screen/product/edit/cubit/edit_cubit.dart';
-import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
-import 'package:employee_app/widget/dropDownList/custom_drop_down_list.dart';
 import 'package:employee_app/widget/dropDownList/custom_multi_select.dart';
 import 'package:employee_app/widget/dropDownList/custom_select.dart';
-import 'package:employee_app/widget/textFormField/custom_image.dart';
 import 'package:employee_app/widget/textFormField/custom_text_area.dart';
 import 'package:employee_app/widget/textFormField/custome_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +79,7 @@ class EditScreen extends StatelessWidget {
                           controller: cubit.foodNameController,
                           keyboardType: TextInputType.text,
                           width: 85.w,
-                          hintText: '${productInfo.foodName}',
+                          hintText: productInfo.foodName,
                           isPassword: false,
                           label: 'اسم المنتج',
                           validator: (value) {
@@ -157,7 +154,7 @@ class EditScreen extends StatelessWidget {
                       CustomMultiSelects(
                         label: 'الحساسية',
                         hintText:
-                            '${productInfo.allergy!.isNotEmpty ? productInfo.allergy : 'لا توجد حساسية'}',
+                            '${productInfo.allergy ?? 'لا توجد حساسية'}',
                         items: cubit.allergy,
                         onListChanged: (val) {
                           cubit.allergyList = val;
@@ -170,7 +167,7 @@ class EditScreen extends StatelessWidget {
                       CustomSelect(
                         label: 'النوع',
                         hintText:
-                            '${productInfo.category.isEmpty ? 'لا يوجد نوع' : productInfo.category}',
+                            productInfo.category.isEmpty ? 'لا يوجد نوع' : productInfo.category,
                         items: const [
                           DropDownItem('none'),
                           DropDownItem('بوكس'),
@@ -254,7 +251,7 @@ class EditScreen extends StatelessWidget {
                                           right: 0,
                                           top: 0,
                                           child: IconButton(
-                                            icon: Icon(Icons.delete,
+                                            icon: const Icon(Icons.delete,
                                                 color: Colors.red),
                                             onPressed: () {
                                               cubit.selectedImage = null;

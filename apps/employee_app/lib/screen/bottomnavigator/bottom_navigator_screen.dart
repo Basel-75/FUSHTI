@@ -1,11 +1,8 @@
-import 'package:database_meth/database/super_main.dart';
 import 'package:employee_app/screen/order/child_after_serach_screen.dart';
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
 import 'package:employee_app/screen/bottomnavigator/cubit/scan_cubit.dart';
-import 'package:employee_app/screen/boxes/boxes_screen.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
-import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/profile/profile_screen.dart';
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
@@ -110,7 +107,7 @@ class BottomNavigatorScreen extends StatelessWidget {
                                 CustomTextFormFelid(
                                   controller: cubit.childClassCon,
                                   label: "فصل الطالب",
-                                  hintText: "أ3",
+                                  hintText: "3 ب",
                                   isPassword: false,
                                   width: 70.w,
                                 ),
@@ -120,7 +117,8 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     CustomButton(
-                                      backgroundColor: const Color(0xffC8E5F5),
+                                      backgroundColor: const Color(0xffA3E9BF),
+                                      
                                       onPressed: () async {
                                         try {
                                           final result =
@@ -178,7 +176,8 @@ class BottomNavigatorScreen extends StatelessWidget {
                                       fixedSize: Size(35.w, 4.h),
                                     ),
                                     CustomButton(
-                                      backgroundColor: const Color(0xffA3E9BF),
+
+                                      backgroundColor: const Color(0xffC8E5F5),
                                       onPressed: () async {
                                         // await cubit.getchild();
 

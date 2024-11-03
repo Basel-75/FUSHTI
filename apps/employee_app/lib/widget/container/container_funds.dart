@@ -38,7 +38,7 @@ class ContainerFunds extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              '$amount',
+              amount,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),

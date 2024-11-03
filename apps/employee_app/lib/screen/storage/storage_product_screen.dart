@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/storage/cubit/storage_cubit.dart';
-import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/container/card_storage.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
@@ -123,16 +122,26 @@ class StorageScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    CustomButton(
-                        onPressed: () {
-                          cubit.updateAdv();
-                        },
-                        title: "حفظ"),
-                    SizedBox(
-                      height: 4.h,
+                    Container(
+                      width: 98.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0x45C8E5F5)),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          CustomButton(
+                              onPressed: () {
+                                cubit.updateAdv();
+                              },
+                              title: "حفظ"),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
