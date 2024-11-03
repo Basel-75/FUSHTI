@@ -23,7 +23,7 @@ class ChildAvatar extends StatelessWidget {
                  imagePath,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) =>
-                      Image.asset('assets/image/kid2.png', fit: BoxFit.cover),
+                      Image.asset('assets/image/mainLogo.png', fit: BoxFit.cover),
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return const Center(

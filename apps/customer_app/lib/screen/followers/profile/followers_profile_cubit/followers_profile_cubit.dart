@@ -121,9 +121,7 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     if (pickedFile != null) {
       selectedImage = File(pickedFile.path);
       emit(ImagePickedState(selectedImage!));
-    } else {
-      emit(ErrorState(msg: 'لم يتم اختيار صور للتابع'));
-    }
+    } 
   }
 
   Future<void> updateChildImage({required String childId}) async {

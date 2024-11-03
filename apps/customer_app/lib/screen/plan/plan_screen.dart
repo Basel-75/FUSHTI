@@ -82,7 +82,7 @@ class PlanScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.wallet,
+                    Icons.monetization_on,
                     color: Colors.white,
                   ),
                   Text(

@@ -85,7 +85,7 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
           ).toList(),
           childClass: classCon.text,
           schoolId: schoolId,
-          funds: double.parse(fundsCon.text));
+       );
       //Update locale
       try {
         //sure not empty
@@ -99,8 +99,6 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
                   classCon.text.trim();
               appModel.userModel?.childModelList[i].schoolId = schoolId;
 
-              appModel.userModel?.childModelList[i].funds =
-                  double.parse(fundsCon.text);
               appModel.userModel?.childModelList[i].allergy = allgyList.map(
                 (e) {
                   return e.name;

@@ -114,9 +114,7 @@ class EditFollowersScreen extends StatelessWidget {
                               children: [
                                 ImageHandler(
                                   imagePath: childInfo!.imgPath,
-                                  errorWidget: Image.asset(
-                                      'assets/image/kid2.png',
-                                      fit: BoxFit.cover),
+
                                 )
                               ],
                             ),
@@ -192,22 +190,7 @@ class EditFollowersScreen extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-                      CustomTextFormFelid(
-                        validator: (val) {
-                          if (val == null || val.isEmpty) {
-                            return 'قيمة فارغة';
-                          }
-                          if (double.tryParse(val) == null) {
-                            return 'يرجى ادخال قيمة صحيحة';
-                          }
-                          return null;
-                        },
-                        label: 'المصروف',
-                        hintText: '25',
-                        isPassword: false,
-                        keyboardType: TextInputType.number,
-                        controller: cubit.fundsCon,
-                      ),
+
                       SizedBox(
                         height: 4.h,
                       ),

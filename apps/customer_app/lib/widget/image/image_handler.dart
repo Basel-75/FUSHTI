@@ -16,10 +16,7 @@ class ImageHandler extends StatelessWidget {
       imagePath,
       errorBuilder: (context, error, stackTrace) =>
           errorWidget ??
-          const Icon(
-            Icons.fastfood_rounded,
-            color: Colors.orange,
-          ),
+           Image.asset('assets/image/mainLogo.png'),
       loadingBuilder: (context, child, loadingProgress) =>
           loadingProgress == null
               ? child

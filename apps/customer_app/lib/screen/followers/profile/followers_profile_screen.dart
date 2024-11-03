@@ -142,7 +142,7 @@ class FollowersProfileScreen extends StatelessWidget {
                           height: 28.w,
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 218, 220, 218),
+                              color:  Colors.white,
                               shape: BoxShape.circle,
                               border:
                                   Border.all(width: 0.2, color: Colors.grey)),
@@ -158,10 +158,7 @@ class FollowersProfileScreen extends StatelessWidget {
                                     children: [
                                       ImageHandler(
                                         imagePath: childInfo!.imgPath,
-                                        errorWidget: Image.asset(
-                                          'assets/image/kid2.png',
-                                          fit: BoxFit.fill,
-                                        ),
+
                                       )
                                     ],
                                   ),

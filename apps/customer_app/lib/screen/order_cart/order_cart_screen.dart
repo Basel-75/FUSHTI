@@ -32,19 +32,16 @@ class OrderCartScreen extends StatelessWidget {
                 ));
               }
 
-
-              if(state is LodingState){
+              if (state is LodingState) {
                 showLoadingDialog(context: context);
               }
 
-              if(state is DoneState){
-
-                 Navigator.of(context).pop();
+              if (state is DoneState) {
+                Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("تم الدفع"),
                   backgroundColor: Colors.green,
                 ));
-
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) {
@@ -96,41 +93,51 @@ class OrderCartScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 2.w),
                         child: BlocBuilder<OrderCartCubit, OrderCartState>(
                           builder: (context, state) {
-                            return Column(
-                              children: List.generate(
-                                cubit.childModel.cartList.length,
-                                (index) {
-                                  return AddPlanCard(
-                                    productName: cubit.childModel
-                                        .cartList[index].foodMenuModel.foodName,
-                                    cal: cubit.childModel.cartList[index]
-                                        .foodMenuModel.cal
-                                        .toString(),
-                                    price: cubit.childModel.cartList[index]
-                                        .foodMenuModel.price
-                                        .toString(),
-                                    quantity: cubit
-                                        .childModel.cartList[index].que
-                                        .toString(),
-                                    imagePath: 'assets/image/boxImage.png',
-                                    onAdd: () {
-                                      cubit.onAdd(
-                                          cartItem:
-                                              cubit.childModel.cartList[index]);
-                                    },
-                                    onMinus: () {
-                                      cubit.onMinus(
-                                          cartItem:
-                                              cubit.childModel.cartList[index]);
-                                    },
-                                    withoutDelete: false,
-                                    onDelete: () {
-                                      cubit.delItem(cartIndex: index);
-                                    },
+                            return cubit.childModel.cartList.isEmpty
+                                ? EmptySpaceColumn(
+                                    msg: 'لا توجد منتجات في السلة')
+                                : Column(
+                                    children: List.generate(
+                                      cubit.childModel.cartList.length,
+                                      (index) {
+                                        return AddPlanCard(
+                                          productName: cubit
+                                              .childModel
+                                              .cartList[index]
+                                              .foodMenuModel
+                                              .foodName,
+                                          cal: cubit.childModel.cartList[index]
+                                              .foodMenuModel.cal
+                                              .toString(),
+                                          price: cubit
+                                              .childModel
+                                              .cartList[index]
+                                              .foodMenuModel
+                                              .price
+                                              .toString(),
+                                          quantity: cubit
+                                              .childModel.cartList[index].que
+                                              .toString(),
+                                          imagePath:
+                                              'assets/image/boxImage.png',
+                                          onAdd: () {
+                                            cubit.onAdd(
+                                                cartItem: cubit.childModel
+                                                    .cartList[index]);
+                                          },
+                                          onMinus: () {
+                                            cubit.onMinus(
+                                                cartItem: cubit.childModel
+                                                    .cartList[index]);
+                                          },
+                                          withoutDelete: false,
+                                          onDelete: () {
+                                            cubit.delItem(cartIndex: index);
+                                          },
+                                        );
+                                      },
+                                    ),
                                   );
-                                },
-                              ),
-                            );
                           },
                         ),
                       ),
@@ -205,6 +212,31 @@ class OrderCartScreen extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+}
+
+class EmptySpaceColumn extends StatelessWidget {
+  final String msg;
+  final double? width, height;
+  const EmptySpaceColumn({
+    super.key,
+    required this.msg,
+    this.width,
+    this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width:width ?? 50.w,
+          height:height ?? 20.h,
+          child: Image.asset('assets/image/mainLogo.png'),
+        ),
+        Text(msg)
+      ],
     );
   }
 }

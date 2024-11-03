@@ -29,6 +29,7 @@ class HomeCubit extends Cubit<HomeState> {
     log("there is ${childModelList.length}");
     //log('${currentChild.schoolModel.foodMenuModelList.first.imageUrl.toString().trim()}');
     currentChild = childModelList.first;
+    currentChild.isSelected = true;
     for (var element in currentChild.schoolModel.foodMenuModelList) {
       if (element.category == 'box') {
         boxList.add(element);
@@ -42,8 +43,10 @@ class HomeCubit extends Cubit<HomeState> {
     if (child != currentChild) {
       boxList.clear();
       productList.clear();
+      currentChild.isSelected = false;
       log("in if change child");
       currentChild = child;
+      currentChild.isSelected = true;
       for (var element in currentChild.schoolModel.foodMenuModelList) {
         if (element.category == 'box') {
           boxList.add(element);
@@ -51,6 +54,7 @@ class HomeCubit extends Cubit<HomeState> {
           productList.add(element);
         }
       }
+
       emit(ChnageChildState());
     }
   }
@@ -85,6 +89,7 @@ class HomeCubit extends Cubit<HomeState> {
     bool result = false;
     for (var element in appModel.userModel!.childModelList) {
       for (var food in element.restrictionFood) {
+        //log('${element.toJson()}1111111');
         if (food.menuItemId == productId) {
           result = true;
         }
@@ -118,5 +123,13 @@ class HomeCubit extends Cubit<HomeState> {
         CartItem(childModel: childModel, foodMenuModel: foodMenuModel, que: 1));
 
     emit(DoneAddState(msg: 'تم اضافة المنتج الى السلة'));
+  }
+
+  @override
+  Future<void> close() {
+    for (var element in appModel.userModel!.childModelList) {
+      element.isSelected = false;
+    }
+    return super.close();
   }
 }

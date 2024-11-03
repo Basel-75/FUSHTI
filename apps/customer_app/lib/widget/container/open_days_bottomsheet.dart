@@ -65,7 +65,7 @@ class OpenDaysBottomSheet extends StatelessWidget {
                   CustomTextFormFelid(
                     validator: validator,
                     horizontal: 0.w,
-                    label: 'المصروف',
+                    label: 'الحد اليومي',
                     hintText: '25',
                     isPassword: false,
                     keyboardType: TextInputType.number,
