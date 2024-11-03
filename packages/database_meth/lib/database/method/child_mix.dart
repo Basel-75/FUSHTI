@@ -37,7 +37,6 @@ mixin ChildMix {
         log("in class not null null");
         res = await SuperMain()
             .supabase
-            
             .from('followers')
             .select('*, school(id,name, adders, contact_number)')
             .like('name', '%$name%')
@@ -118,7 +117,7 @@ mixin ChildMix {
     }
   }
 
-  addChild(
+  Future<Map<String, dynamic>> addChild(
       {required String name,
       required String userId,
       required List<String> allergy,
@@ -127,7 +126,7 @@ mixin ChildMix {
       required String schoolId,
       required double funds}) async {
     try {
-      await SuperMain().supabase.from("followers").insert({
+      final res = await SuperMain().supabase.from("followers").insert({
         "name": name,
         "user_id": userId,
         "funds": funds,
@@ -135,13 +134,16 @@ mixin ChildMix {
         "class": childClass,
         "img_path": imgPath,
         "school_id": schoolId,
-      });
+      }).select();
 
       await SuperMain().supabase.rpc('increment_followers', params: {
         'user_id': userId,
       });
+
+      return res[0];
     } catch (er) {
       log("$er");
+      rethrow;
     }
   }
 
@@ -166,9 +168,14 @@ mixin ChildMix {
     }
   }
 
-  deleteChild({required String id}) async {
+  deleteChild({required String id , required String userId}) async {
     try {
       await SuperMain().supabase.from('followers').delete().eq('id', id);
+      
+
+      await  await SuperMain().supabase.rpc('decremnt_followers', params: {
+        'user_id': userId,
+      });
     } catch (e) {
       log('$e');
     }

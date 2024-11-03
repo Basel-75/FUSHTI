@@ -37,14 +37,23 @@ class FollowersProfileScreen extends StatelessWidget {
             if (state is LoadingState) {
               showLoadingDialog(context: context);
             }
+
+            if(state is AfterDelState){
+                Navigator.pop(context);
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.msg),
+                  backgroundColor: Colors.green,
+                ),
+              );
+               Navigator.pop(context, true);
+
+            }
             if (state is SuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => const BottomNavigatorScreen(),
-              //     ));
+            
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.msg),
@@ -198,7 +207,7 @@ class FollowersProfileScreen extends StatelessWidget {
                             context: context,
                             onCancelBtnTap: () => Navigator.pop(context),
                             onConfirmBtnTap: () =>
-                                cubit.deleteChild(childId: childInfo!.id),
+                                cubit.deleteChild(),
                           );
                         },
                       ),
