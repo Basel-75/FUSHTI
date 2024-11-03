@@ -5,7 +5,6 @@ import 'package:database_meth/database/super_main.dart';
 import 'package:employee_app/component/drop_down_item.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
-import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/order_item_model.dart';
 import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
@@ -143,7 +142,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   getAllCHildOrder() async {
     log(DateTime.now().toIso8601String().split('T')[0]);
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     emit(LodingState());
     try {
       scanLis.clear();

@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
-import 'package:meta/meta.dart';
 
 part 'scan_state.dart';
 

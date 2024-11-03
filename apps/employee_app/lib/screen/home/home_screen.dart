@@ -1,11 +1,8 @@
-import 'dart:developer';
 
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/home/cubit/home_cubit.dart';
 import 'package:employee_app/screen/product/edit/edit_screen.dart';
-import 'package:employee_app/widget/appbar_emp_header.dart';
-import 'package:employee_app/widget/container/card_home_product.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';

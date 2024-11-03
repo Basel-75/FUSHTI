@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 
 part 'add_state.dart';

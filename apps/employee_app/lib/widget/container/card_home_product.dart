@@ -98,11 +98,11 @@ class ProductCards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${calories} سعرة',
+                  '$calories سعرة',
                   style: TextStyle(fontSize: 15.sp, color: Colors.grey),
                 ),
                 Text(
-                  '${price} رس',
+                  '$price رس',
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.bold,

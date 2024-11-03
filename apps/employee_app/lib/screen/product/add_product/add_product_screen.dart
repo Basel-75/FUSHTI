@@ -2,12 +2,9 @@ import 'dart:developer';
 
 import 'package:employee_app/component/drop_down_item.dart';
 import 'package:employee_app/screen/product/add_product/cubit/add_cubit.dart';
-import 'package:employee_app/widget/appbar_emp_header.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
-import 'package:employee_app/widget/dropDownList/custom_drop_down_list.dart';
 import 'package:employee_app/widget/dropDownList/custom_multi_select.dart';
 import 'package:employee_app/widget/dropDownList/custom_select.dart';
-import 'package:employee_app/widget/textFormField/custom_image.dart';
 import 'package:employee_app/widget/textFormField/custom_text_area.dart';
 import 'package:employee_app/widget/textFormField/custome_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -223,7 +220,7 @@ class AddProductScreen extends StatelessWidget {
                                           right: 0,
                                           top: 0,
                                           child: IconButton(
-                                            icon: Icon(Icons.delete,
+                                            icon: const Icon(Icons.delete,
                                                 color: Colors.red),
                                             onPressed: () {
                                               cubit.selectedImage = null;

@@ -1,16 +1,10 @@
 import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:employee_app/screen/order/cubit/child_serch_cubit/child_serch_cubit.dart';
 import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 import 'package:flutter/material.dart';
-import 'package:get_all_pkg/data/model/app_model.dart';
-import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/widget/container/child_card.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ChildAfterSerachScreen extends StatelessWidget {
   const ChildAfterSerachScreen(
@@ -93,7 +87,7 @@ class ChildAfterSerachScreen extends StatelessWidget {
                                     ),
                                   )
                                   .toList(),
-                            ):Text('لا يوجد طالب بهذا الاسم');
+                            ):const Text('لا يوجد طالب بهذا الاسم');
                           },
                         ),
                       ],
