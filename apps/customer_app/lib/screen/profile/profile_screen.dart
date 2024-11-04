@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:customer_app/component/drop_down_item.dart';
+
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
@@ -35,12 +36,16 @@ class ProfileScreen extends StatelessWidget {
               );
             }
             if (state is LoadingState) {
-              //showLoadingDialog(context: context);
+              showLoadingDialog(context: context);
             }
             if (state is ProfileUpdatedState) {
               log("iam lis");
               bloc.add(GetUserInfoEvent());
-              // Navigator.pop(context);
+            }
+            if (state is SussesState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              showSnackBar(context: context, msg: state.msg, isError: false);
             }
           },
           child: Directionality(
@@ -261,6 +266,8 @@ class ProfileScreen extends StatelessWidget {
                                           CustomSelect(
                                             label: 'المدرسة',
                                             hintText: 'اختر المدرسة',
+                                            onChanged: (p0) =>
+                                                bloc.schoolName = p0?.name,
                                             items: bloc.appModel.schoolModelList
                                                 .map(
                                                   (school) =>
@@ -271,17 +278,36 @@ class ProfileScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 2.h,
                                           ),
-                                          const Directionality(
+                                          Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: CustomTextFormFelid(
-                                                  label: 'النص',
-                                                  hintText: 'لدي مشكلة في ...',
-                                                  isPassword: false)),
-                                                   const Spacer(),
+                                                label: 'النص',
+                                                hintText: 'لدي مشكلة في ...',
+                                                isPassword: false,
+                                                controller:
+                                                    bloc.messageController,
+                                              )),
+                                          const Spacer(),
                                           CustomButton(
-                                              onPressed: () {}, title: 'ارسال'),
-                                             
-                                              SizedBox(height: 2.h,),
+                                              onPressed: () => bloc
+                                                      .messageController!
+                                                      .text
+                                                      .isNotEmpty
+                                                  ? bloc.add(SendMessagesEvent(
+                                                      senderName:
+                                                          '${bloc.appModel.userModel?.name}',
+                                                      schoolId:
+                                                          '${bloc.schoolId}',
+                                                      content:
+                                                          '${bloc.messageController?.text}'))
+                                                  : showSnackBar(
+                                                      context: context,
+                                                      msg: 'رسالة فارغة',
+                                                      isError: true),
+                                              title: 'ارسال'),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
                                         ],
                                       ),
                                     ),

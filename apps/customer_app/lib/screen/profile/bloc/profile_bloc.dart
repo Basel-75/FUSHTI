@@ -18,18 +18,47 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       TextEditingController(text: 'باسل العلوي');
   TextEditingController phoneNumController =
       TextEditingController(text: '0512345678');
+  TextEditingController? messageController = TextEditingController();
   String? userName = '';
   String? phoneNum = '';
   String? followersNum = '';
   String? planNum = '';
   String? funds = '';
+  String? schoolName = '';
+  String? schoolId = '';
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) {});
+    on<SendMessagesEvent>(sendMessages);
     on<UpdateImageEvent>(updateImage);
     on<GetUserInfoEvent>(getUserInfoMethod);
     on<UpdateProfileEvent>(updateProfileMethod);
     on<PickImageEvent>(pickImage);
   }
+
+  FutureOr<void> sendMessages(SendMessagesEvent event, emit) async {
+    emit(LoadingState());
+    try {
+      if (event.senderName.isEmpty || event.content.isEmpty) {
+        emit(ErrorState(msg: 'حصل خطأ ما يرجى اعادة المحاولة لاحقا'));
+      } else {
+        for (var element in appModel.schoolModelList) {
+          if (element.name == schoolName) {
+            schoolId = element.id;
+          }
+        }
+        await SuperMain().sendSuggestion(
+            senderName: event.senderName,
+            content: event.content,
+            schoolId: event.schoolId);
+        emit(SussesState(msg: 'شكرا لك تم الارسال بنجاح'));
+        messageController?.clear();
+        schoolName = '';
+      }
+    } catch (e) {
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى اعادة المحاولة لاحقا'));
+    }
+  }
+
 //!Remove it later if we do not want change profile image
   FutureOr<void> updateImage(event, emit) async {
     emit(LoadingState());
@@ -40,7 +69,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         return;
       }
 
-      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!,isProductImage: false);
+      final imageUrl = await SuperMain()
+          .uploadImage(imageFile: selectedImage!, isProductImage: false);
 
       final newProduct = await SuperMain().updateUserProfileImage(
           id: appModel.userModel!.id, imageUrl: imageUrl);
@@ -91,6 +121,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     userName = appModel.userModel?.name;
     phoneNum = appModel.userModel?.phone;
     funds = appModel.userModel?.funds.toString();
+
     followersNum = appModel.userModel?.childModelList != null
         ? appModel.userModel?.childModelList.length.toString()
         : '0';
