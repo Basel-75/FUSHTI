@@ -17,9 +17,9 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
   RestrictionsCubit() : super(RestrictionsInitial());
 
   getRestrictionFoodList({required String childId}) {
-    restrictionsFood.forEach(
-      (element) => log('${element.toJson()}'),
-    );
+    for (var element in restrictionsFood) {
+      log('${element.toJson()}');
+    }
     try {
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {

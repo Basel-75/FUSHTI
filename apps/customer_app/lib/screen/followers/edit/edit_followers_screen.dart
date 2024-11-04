@@ -1,14 +1,12 @@
 import 'dart:developer';
 
-import 'package:customer_app/component/drop_down_item.dart';
-import 'package:customer_app/main.dart';
 
 import 'package:customer_app/screen/followers/edit/edit_followers_cubit/edit_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/image/image_handler.dart';
-import 'package:customer_app/widget/imagePicker/select_image_widget.dart';
+
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -114,9 +112,7 @@ class EditFollowersScreen extends StatelessWidget {
                               children: [
                                 ImageHandler(
                                   imagePath: childInfo!.imgPath,
-                                  errorWidget: Image.asset(
-                                      'assets/image/kid2.png',
-                                      fit: BoxFit.cover),
+
                                 )
                               ],
                             ),
@@ -192,22 +188,7 @@ class EditFollowersScreen extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-                      CustomTextFormFelid(
-                        validator: (val) {
-                          if (val == null || val.isEmpty) {
-                            return 'قيمة فارغة';
-                          }
-                          if (double.tryParse(val) == null) {
-                            return 'يرجى ادخال قيمة صحيحة';
-                          }
-                          return null;
-                        },
-                        label: 'المصروف',
-                        hintText: '25',
-                        isPassword: false,
-                        keyboardType: TextInputType.number,
-                        controller: cubit.fundsCon,
-                      ),
+
                       SizedBox(
                         height: 4.h,
                       ),

@@ -146,23 +146,27 @@ mixin ChildMix {
       rethrow;
     }
   }
-  
-  editChild(
-      {required String name,
-      required String id,
-      required List<String> allergy,
-      required String childClass,
-      required String schoolId,
-      required double funds}) async {
+
+  editChild({
+    required String name,
+    required String id,
+    required List<String> allergy,
+    required String childClass,
+    required String schoolId,
+  }) async {
     try {
-     final res = await SuperMain().supabase.from("followers").update({
-        "name": name,
-        "id": id,
-        "funds": funds,
-        "allergy": allergy,
-        "class": childClass,
-        "school_id": schoolId,
-      }).eq('id', id).select();
+      final res = await SuperMain()
+          .supabase
+          .from("followers")
+          .update({
+            "name": name,
+            "id": id,
+            "allergy": allergy,
+            "class": childClass,
+            "school_id": schoolId,
+          })
+          .eq('id', id)
+          .select();
 
       print(res);
     } catch (er) {
@@ -170,12 +174,11 @@ mixin ChildMix {
     }
   }
 
-  deleteChild({required String id , required String userId}) async {
+  deleteChild({required String id, required String userId}) async {
     try {
       await SuperMain().supabase.from('followers').delete().eq('id', id);
-      
 
-      await  await SuperMain().supabase.rpc('decremnt_followers', params: {
+      await await SuperMain().supabase.rpc('decremnt_followers', params: {
         'user_id': userId,
       });
     } catch (e) {

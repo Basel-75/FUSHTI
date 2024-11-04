@@ -115,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
                                     content:
-                                        Text('Please enter an email address'),
+                                        Text('يرجى ادخال الايميل'),
                                     backgroundColor: Colors.red,
                                   ));
                       
@@ -126,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
                                     content: Text(
-                                        'Please enter a valid email address'),
+                                        'ايميل غير صالح'),
                                     backgroundColor: Colors.red,
                                   ));
                       

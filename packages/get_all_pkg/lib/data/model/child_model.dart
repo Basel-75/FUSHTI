@@ -13,12 +13,12 @@ class ChildModel {
   List<String> allergy;
   num funds;
   List<RestrictionFoodModel> restrictionFood = [];
-  late  SchoolModel schoolModel;
+  late SchoolModel schoolModel;
   List<CartItem> cartList = [];
   final List<PlanModel> planList = [];
-
-   num dailyLimits;
-   bool isOpenDay;
+  bool? isSelected;
+  num dailyLimits;
+  bool isOpenDay;
 
   ChildModel(
       {required this.id,
@@ -30,21 +30,21 @@ class ChildModel {
       required this.allergy,
       required this.funds,
       required this.dailyLimits,
+      this.isSelected,
       required this.isOpenDay});
 
   factory ChildModel.fromJson(Map<String, dynamic> json) {
     return ChildModel(
-      id: json['id'],
-      name: json['name'],
-      userId: json['user_id'],
-      schoolId: json['school_id'],
-      imgPath: json['img_path'],
-      studentClass: json['class'],
-      allergy: List<String>.from(json['allergy']),
-      funds: json['funds'].toDouble(),
-      dailyLimits: json["daily_limit"],
-      isOpenDay: json["is_open_day"]
-    );
+        id: json['id'],
+        name: json['name'],
+        userId: json['user_id'],
+        schoolId: json['school_id'],
+        imgPath: json['img_path'],
+        studentClass: json['class'],
+        allergy: List<String>.from(json['allergy']),
+        funds: json['funds'].toDouble(),
+        dailyLimits: json["daily_limit"],
+        isOpenDay: json["is_open_day"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -57,8 +57,8 @@ class ChildModel {
       'class': studentClass,
       'allergy': allergy,
       'funds': funds,
-      "daily_limit" : dailyLimits,
-      "is_open_day" : isOpenDay
+      "daily_limit": dailyLimits,
+      "is_open_day": isOpenDay
     };
   }
 }

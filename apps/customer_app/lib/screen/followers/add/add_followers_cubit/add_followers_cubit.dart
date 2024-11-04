@@ -8,7 +8,6 @@ import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
-import 'package:meta/meta.dart';
 
 part 'add_followers_state.dart';
 
@@ -43,7 +42,7 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
   }
 
   addChild() async {
-    log("${fundsCon.text}");
+    log(fundsCon.text);
     emit(LodingState());
     if (formKey.currentState!.validate()) {
       if (appModel.userModel!.funds < double.parse(fundsCon.text)) {

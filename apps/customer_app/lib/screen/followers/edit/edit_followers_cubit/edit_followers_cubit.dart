@@ -8,7 +8,6 @@ import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
-import 'package:meta/meta.dart';
 
 part 'edit_followers_state.dart';
 
@@ -62,7 +61,7 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
   }
 
   editChild() async {
-    log("${nameCon.text}");
+    log(nameCon.text);
     if (formKey.currentState!.validate()) {
     emit(LoadingState());
       late String schoolId;
@@ -85,7 +84,7 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
           ).toList(),
           childClass: classCon.text,
           schoolId: schoolId,
-          funds: double.parse(fundsCon.text));
+       );
       //Update locale
       try {
         //sure not empty
@@ -99,8 +98,6 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
                   classCon.text.trim();
               appModel.userModel?.childModelList[i].schoolId = schoolId;
 
-              appModel.userModel?.childModelList[i].funds =
-                  double.parse(fundsCon.text);
               appModel.userModel?.childModelList[i].allergy = allgyList.map(
                 (e) {
                   return e.name;

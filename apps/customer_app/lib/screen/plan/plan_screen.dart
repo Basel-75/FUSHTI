@@ -1,15 +1,10 @@
 import 'dart:developer';
 
-import 'package:customer_app/screen/home/cubit/home_cubit.dart';
-import 'package:customer_app/screen/home/home_screen.dart';
-import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
-import 'package:customer_app/screen/plan/add_plan_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cubit/plan_cubit.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/plan_item_container.dart';
-import 'package:customer_app/widget/container/profile_small_container.dart';
-import 'package:customer_app/widget/container/screen_header.dart';
+import 'package:customer_app/widget/coulmn/empty_space_column.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -77,16 +72,18 @@ class PlanScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(
-                    Icons.wallet,
+                    Icons.monetization_on,
                     color: Colors.white,
                   ),
                   Text(
-                    '${cubit.appModel.userModel?.funds.toString()}',
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
                     style: const TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
               ),
@@ -138,7 +135,7 @@ class PlanScreen extends StatelessWidget {
                                 height: 2.h,
                               ),
                               CustomButton(
-                                backgroundColor: Color(0xffC8E5F5),
+                                // backgroundColor: Color(0xffC8E5F5),
                                 onPressed: () {
                                   cubit.addPlan();
                                 },
@@ -301,19 +298,10 @@ class PlanScreen extends StatelessWidget {
                                   ),
                                   cubit.planModelSelcted != null
                                       ? GestureDetector(
-                                          onTap: () {
-                                            log("clecik del");
-                                            cubit.delPlan();
-                                          },
-                                          child: const Icon(Icons.delete,color: Colors.red,))
-                                      : const SizedBox(),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  cubit.planModelSelcted != null
-                                      ? GestureDetector(
-                                          child:
-                                              const Icon(Icons.edit_outlined,color: Color(0xffA3E9BF),),
+                                          child: const Icon(
+                                            Icons.edit_outlined,
+                                            color: Color(0xffA3E9BF),
+                                          ),
                                           onTap: () {
                                             log("in edit ");
 
@@ -363,9 +351,29 @@ class PlanScreen extends StatelessWidget {
                                             );
                                           },
                                         )
-                                      : const SizedBox(),
-                                  const Spacer(
-                                    flex: 1,
+                                      : SizedBox(
+                                          width: 5.w,
+                                        ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  cubit.planModelSelcted != null
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            showConfirmDialog(
+                                              context: context,
+                                              onConfirmBtnTap: () => cubit.delPlan(),);
+                                            
+                                          },
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ))
+                                      : SizedBox(
+                                          width: 5.w,
+                                        ),
+                                  SizedBox(
+                                    width: 2.w,
                                   ),
                                 ],
                               );
@@ -373,47 +381,59 @@ class PlanScreen extends StatelessWidget {
                           ),
                           const Divider(),
                           SizedBox(
-                            height: 45.h,
+                            height: 35.h,
                             child: BlocBuilder<PlanCubit, PlanState>(
                               builder: (context, state) {
-                                return GridView.builder(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 1.h, horizontal: 1.h),
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 10,
-                                    mainAxisSpacing: 10,
-                                    childAspectRatio: 0.7,
-                                  ),
-                                  itemCount: cubit.mealPlanItemLisUi.length,
-                                  itemBuilder: (context, index) =>
-                                      PlanItemContainer(
-                                    itemName: cubit.mealPlanItemLisUi[index]
-                                        .foodMenuModel.foodName,
-                                    imagePath: 'assets/image/lez.png',
-                                    onDelete: () {
-                                      log("on del method");
-                                      cubit.delPlanItem(
-                                          mealPlanItemModel:
-                                              cubit.mealPlanItemLisUi[index]);
-                                    },
-                                  ),
-                                );
+                                return cubit.mealPlanItemLisUi.isEmpty
+                                    ? const Center(
+                                        child: EmptySpaceColumn(
+                                            msg: 'لا توجد اطعمة مخصصة حاليا'),
+                                      )
+                                    : GridView.builder(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 1.h, horizontal: 1.h),
+                                        shrinkWrap: true,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          childAspectRatio: 0.7,
+                                        ),
+                                        itemCount:
+                                            cubit.mealPlanItemLisUi.length,
+                                        itemBuilder: (context, index) =>
+                                            PlanItemContainer(
+                                          itemName: cubit
+                                              .mealPlanItemLisUi[index]
+                                              .foodMenuModel
+                                              .foodName,
+                                          imagePath: 'assets/image/lez.png',
+                                          onDelete: () {
+                                            showConfirmDialog(
+                                              context: context,
+                                              onConfirmBtnTap: () =>
+                                                  cubit.delPlanItem(
+                                                      mealPlanItemModel: cubit
+                                                              .mealPlanItemLisUi[
+                                                          index]),
+                                            );
+                                          },
+                                        ),
+                                      );
                               },
                             ),
                           ),
-                          const Divider(),
-                          Center(
-                              child: CustomButton(
-                                  onPressed: () {
-                                    cubit.toCart();
-                                  },
-                                  title: 'الدفع'))
                         ],
                       ),
                     ),
+                    const Divider(),
+                    Center(
+                        child: CustomButton(
+                            onPressed: () {
+                              cubit.toCart();
+                            },
+                            title: 'الدفع'))
                   ],
                 ),
               ),

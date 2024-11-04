@@ -1,30 +1,10 @@
-import 'dart:developer';
 
-import 'package:customer_app/screen/bill/bill_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
-import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
-import 'package:customer_app/screen/history/history_screen.dart';
 
-import 'package:customer_app/screen/plan/add_plan_screen.dart';
-import 'package:customer_app/screen/plan/plan_cart_screen.dart';
-import 'package:customer_app/screen/plan/plan_screen.dart';
-import 'package:customer_app/screen/product/product_screen.dart';
-import 'package:customer_app/screen/profile/profile_screen.dart';
-import 'package:customer_app/screen/auth/login_screen.dart';
-import 'package:customer_app/screen/followers/edit/edit_followers_screen.dart';
-import 'package:customer_app/screen/followers/profile/followers_profile_screen.dart';
-import 'package:customer_app/screen/followers/followers_screen.dart';
 
-import 'package:customer_app/screen/home/home_screen.dart';
 
-import 'package:customer_app/screen/auth/otp_screen.dart';
-import 'package:customer_app/screen/auth/signup_screen.dart';
-import 'package:customer_app/screen/restrictions/restrictions_screen.dart';
-import 'package:database_meth/database_meth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 

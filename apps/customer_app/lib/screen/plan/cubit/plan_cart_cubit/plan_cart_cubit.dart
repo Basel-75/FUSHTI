@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
@@ -116,12 +115,12 @@ class PlanCartCubit extends Cubit<PlanCartState> {
       emit(LodingState());
       log("user funds :::: ${appModel.userModel!.funds}");
       if (dayNume == 0) {
-        emit(ErorrState(msg: "أختر تاريخ"));
+        emit(ErorrState(msg: "يرجى اختيا التاريخ"));
         return;
       }
 
       if (appModel.userModel!.funds < totalPrice) {
-        emit(ErorrState(msg: "ليس معك مال"));
+        emit(ErorrState(msg: "ليس لديك رصيد كافي"));
         return;
       }
 
@@ -129,14 +128,14 @@ class PlanCartCubit extends Cubit<PlanCartState> {
           planModel: planModel,
           stratDate: startDate!,
           endDate: endDate!,
-          totalPrice: totalPrice);
+          totalPrice: totalPrice * dayNume);
 
       log("user funds :::: ${appModel.userModel!.funds}");
       log("very good plan pay");
       emit(DoneState());
     } catch (er) {
       log("$er");
-      emit(ErorrState(msg: "there was eorr"));
+      emit(ErorrState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }
 }

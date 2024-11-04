@@ -1,4 +1,4 @@
-import 'package:customer_app/screen/profile/profile_screen.dart';
+import 'package:customer_app/widget/container/profile_tile.dart';
 import 'package:flutter/material.dart';
 
 class FollowersTilesColumn extends StatelessWidget {
@@ -19,14 +19,17 @@ class FollowersTilesColumn extends StatelessWidget {
         ProfileTile(
           title: 'اضافة مصروف',
           onTap: onAddFunds,
+          forLogout: false,
         ),
         ProfileTile(
           title: 'اضافة يوم مفتوح',
           onTap: onAddOpenDays,
+          forLogout: false,
         ),
         ProfileTile(
           title: 'الطلبات و الخطط',
           onTap: onPressPlanAndOrder,
+          forLogout: false,
         ),
       ],
     );

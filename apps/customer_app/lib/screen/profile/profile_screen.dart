@@ -2,19 +2,16 @@ import 'dart:developer';
 
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
-import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
-import 'package:customer_app/screen/profile/edit_user_profile_form.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
-import 'package:customer_app/widget/container/profile_small_container.dart';
-import 'package:customer_app/widget/container/screen_header.dart';
+import 'package:customer_app/widget/container/profile_tile.dart';
+import 'package:customer_app/widget/coulmn/edit_user_profile_form.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
-import 'package:get_all_pkg/widget/loading_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -51,19 +48,6 @@ class ProfileScreen extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.wallet,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      '${bloc.appModel.userModel?.funds.toString()}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
                 title: Image.asset('assets/image/mainLogo.png'),
                 centerTitle: true,
                 flexibleSpace: Container(
@@ -133,78 +117,84 @@ class ProfileScreen extends StatelessWidget {
 
                           BlocBuilder<ProfileBloc, ProfileState>(
                             builder: (context, state) {
-                              return UserInfoRow(
-                                name: '${bloc.userName}',
-                                schoolNameOrParentPhone: '${bloc.phoneNum}',
-                                isParent: true,
-                                //update profile info
-                                onEdit: () {
-                                  showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (context) => Dialog(
-                                      backgroundColor: Colors.transparent,
-                                      child: GlassContainer(
-                                        height: 80.w,
-                                        width: 40.h,
-                                        borderRadius: BorderRadius.circular(12),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.40),
-                                            Colors.white.withOpacity(0.10)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderGradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.60),
-                                            Colors.white.withOpacity(0.10),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.05),
-                                            Colors.lightBlueAccent
-                                                .withOpacity(0.6)
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          stops: [0.0, 0.39, 0.40, 1.0],
-                                        ),
-                                        blur: 15.0,
-                                        borderWidth: 1.5,
-                                        elevation: 3.0,
-                                        isFrostedGlass: true,
-                                        shadowColor:
-                                            Colors.black.withOpacity(0.20),
-                                        alignment: Alignment.center,
-                                        frostedOpacity: 0.12,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 2.h),
-                                        child: Directionality(
-                                          textDirection: TextDirection.rtl,
-                                          child: EditUserProfileForm(
-                                            usernameController:
-                                                bloc.usernameController,
-                                            phoneNumController:
-                                                bloc.phoneNumController,
-                                            onSubmit: () {
-                                              bloc.add(UpdateProfileEvent());
-                                              Navigator.pop(context);
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                      'تم تحديث الملف الشخصي بنجاح'),
-                                                  backgroundColor: Colors.green,
-                                                ),
-                                              );
-                                            },
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: UserInfoRow(
+                                  onAddImage: () {},
+                                  name: '${bloc.userName}',
+                                  schoolNameOrParentPhone: '${bloc.phoneNum}',
+                                  isParent: true,
+                                  //update profile info
+                                  onEdit: () {
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        child: GlassContainer(
+                                          height: 80.w,
+                                          width: 40.h,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.white.withOpacity(0.40),
+                                              Colors.white.withOpacity(0.10)
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderGradient: LinearGradient(
+                                            colors: [
+                                              Colors.white.withOpacity(0.60),
+                                              Colors.white.withOpacity(0.10),
+                                              Colors.lightBlueAccent
+                                                  .withOpacity(0.05),
+                                              Colors.lightBlueAccent
+                                                  .withOpacity(0.6)
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            stops: const [0.0, 0.39, 0.40, 1.0],
+                                          ),
+                                          blur: 15.0,
+                                          borderWidth: 1.5,
+                                          elevation: 3.0,
+                                          isFrostedGlass: true,
+                                          shadowColor:
+                                              Colors.black.withOpacity(0.20),
+                                          alignment: Alignment.center,
+                                          frostedOpacity: 0.12,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 2.h),
+                                          child: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: EditUserProfileForm(
+                                              usernameController:
+                                                  bloc.usernameController,
+                                              phoneNumController:
+                                                  bloc.phoneNumController,
+                                              onSubmit: () {
+                                                bloc.add(UpdateProfileEvent());
+                                                Navigator.pop(context);
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'تم تحديث الملف الشخصي بنجاح'),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                onDelete: () {},
+                                    );
+                                  },
+                                  onDelete: () {},
+                                ),
                               );
                             },
                           ),
@@ -234,25 +224,90 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 ProfileTile(
                                   title: 'الفواتير',
+                                  icon: const Icon(Icons.book_outlined),
+                                  forLogout: false,
                                   onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => HistoryScreen(),
+                                        builder: (context) =>
+                                            const HistoryScreen(),
                                       )),
                                 ),
                                 ProfileTile(
                                   title: 'الشكاوى و الاقتراحات',
-                                  onTap: () {},
+                                  icon: const Icon(Icons.safety_divider_sharp),
+                                  forLogout: false,
+                                  onTap: () => showBottomSheet(
+                                    context: context,
+                                    builder: (context) => Container(
+                                      width: 100.w,
+                                      height: 40.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.white,
+                                        boxShadow: kElevationToShadow[4],
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Text(
+                                            'الشكاوى و الاقتراحات',
+                                            style: TextStyle(
+                                                fontSize: 16.sp,
+                                                color: const Color(0xff546F66)),
+                                          ),
+                                          CustomSelect(
+                                            label: 'المدرسة',
+                                            hintText: 'اختر المدرسة',
+                                            items: bloc.appModel.schoolModelList
+                                                .map(
+                                                  (school) =>
+                                                      DropDownItem(school.name),
+                                                )
+                                                .toList(),
+                                          ),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
+                                          const Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: CustomTextFormFelid(
+                                                  label: 'النص',
+                                                  hintText: 'لدي مشكلة في ...',
+                                                  isPassword: false)),
+                                                   const Spacer(),
+                                          CustomButton(
+                                              onPressed: () {}, title: 'ارسال'),
+                                             
+                                              SizedBox(height: 2.h,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 ProfileTile(
                                   title: 'عن فسحتي',
-                                  onTap: () {},
+                                  icon: const Icon(Icons.info_outline_rounded),
+                                  forLogout: false,
+                                  onTap: () => QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.info,
+                                      title: '👋 مرحبًا بك في فسحتي',
+                                      text:
+                                          '\n🍽️ فسحتي هو خيارك الأمثل لتنظيم وجبات ابنائك بكل يسر و سهولة. نحرص في فسحتي على حل مشاكل الأبناء و الآباء في المقاصف المدرسية حيث نوفر للأب خيار إدارة وجبات أبنائهم و نوفر للأبناء حل لمشاكل المصروف. نسعد باقتراحاتكم و نعمل من أجل رضاكم.\n\n❤️ فريق فسحتي',
+                                      confirmBtnText: 'حسنا'),
                                 ),
                                 ProfileTile(
                                     title: 'تسجيل الخروج',
+                                    icon: const Icon(Icons.exit_to_app_rounded),
+                                    forLogout: true,
+                                    backgroundColor: const Color(0x56ECB0B0),
                                     onTap: () => showConfirmDialog(
                                           context: context,
-                                          onCancelBtnTap: () {},
+                                          onCancelBtnTap: () =>
+                                              Navigator.pop(context),
                                           onConfirmBtnTap: () {},
                                         )),
                               ],
@@ -268,145 +323,6 @@ class ProfileScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-}
-
-class ProfileTile extends StatelessWidget {
-  final String title;
-  final Function()? onTap;
-  const ProfileTile({
-    super.key,
-    this.onTap,
-    required this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: 85.w,
-        margin: EdgeInsets.only(top: 3.h),
-        padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.5.h),
-        decoration: BoxDecoration(
-            color: Color(0xffF2F2F2),
-            boxShadow: kElevationToShadow[2],
-            borderRadius: BorderRadius.circular(8)),
-        child: Row(
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 16.sp, color: Color(0xff546F66)),
-            ),
-            Spacer(),
-            Icon(
-              Icons.add,
-              color: Color(0xff545454),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EditUserProfileForm extends StatelessWidget {
-  final TextEditingController usernameController;
-  final TextEditingController phoneNumController;
-  final VoidCallback onSubmit;
-
-  const EditUserProfileForm({
-    super.key,
-    required this.usernameController,
-    required this.phoneNumController,
-    required this.onSubmit,
-  });
-
-  void _validateAndSubmit(BuildContext context) {
-    String? usernameError;
-    String? phoneError;
-
-    // Validate username
-    if (usernameController.text.isEmpty) {
-      usernameError = 'الرجاء إدخال اسم المستخدم';
-    } else {
-      final usernameRegExp = RegExp(r'^[a-zA-Z0-9_\-\u0600-\u06FF\s]+$');
-
-      if (!usernameRegExp.hasMatch(usernameController.text)) {
-        usernameError = 'اسم المستخدم يحتوي على أحرف غير صالحة';
-      }
-    }
-
-    // Validate phone number
-    if (phoneNumController.text.isEmpty) {
-      phoneError = 'الرجاء إدخال رقم الجوال';
-    } else {
-      final phoneRegExp = RegExp(r'^[0-9]{10}$');
-      if (!phoneRegExp.hasMatch(phoneNumController.text)) {
-        phoneError = 'الرجاء إدخال رقم جوال صحيح';
-      }
-    }
-
-    // check for error
-    if (usernameError != null || phoneError != null) {
-      final errorMessage = '${usernameError ?? ''}\n${phoneError ?? ''}';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            errorMessage.trim(),
-            textDirection: TextDirection.rtl,
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } else {
-      onSubmit();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'تحديث الملف الشخصي',
-          style: TextStyle(fontSize: 16.sp, color: Colors.white),
-        ),
-        SizedBox(height: 1.h),
-        CustomTextFormFelid(
-          label: 'اسم المستخدم',
-          hintText: 'باسل العلوي',
-          isPassword: false,
-          controller: usernameController,
-        ),
-        SizedBox(height: 1.h),
-        CustomTextFormFelid(
-          label: 'رقم الجوال',
-          hintText: '0512345678',
-          isPassword: false,
-          keyboardType: TextInputType.phone,
-          controller: phoneNumController,
-        ),
-        const Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            CustomButton(
-              onPressed: () => Navigator.pop(context),
-              title: 'الغاء',
-              fixedSize: Size(30.w, 5.h),
-              backgroundColor: Colors.red,
-            ),
-            CustomButton(
-              onPressed: () => _validateAndSubmit(context),
-              title: 'تأكيد',
-              fixedSize: Size(30.w, 5.h),
-              backgroundColor: Colors.green,
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

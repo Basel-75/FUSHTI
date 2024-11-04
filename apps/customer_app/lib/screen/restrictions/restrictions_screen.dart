@@ -1,7 +1,6 @@
 import 'package:customer_app/screen/restrictions/cubit/restrictions_cubit.dart';
-import 'package:customer_app/widget/button/custom_button.dart';
-import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/container/restriction_card.dart';
+import 'package:customer_app/widget/coulmn/empty_space_column.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -99,13 +98,13 @@ class RestrictionsScreen extends StatelessWidget {
                                         Navigator.pop(context),
                                     onConfirmBtnTap: () {
                                       cubit.deleteRestrictionFood(
-                                          productId: '${cubit.restrictionsFood[index].menuItemId}');
+                                          productId: cubit.restrictionsFood[index].menuItemId);
                                       cubit.getRestrictionFoodList(
                                           childId: childId);
                                     });
                               },
                             ),
-                          )):Center(child: Text('ليس هناك اي وجبات محظورة'),);
+                          )):const Center(child: EmptySpaceColumn(msg: 'ليس هناك اي وجبات محظورة'));
                         },
                       ),
                     ),

@@ -1,24 +1,11 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:customer_app/screen/followers/add/add_followers_screen.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_screen.dart';
-import 'package:customer_app/screen/home/cubit/home_cubit.dart' as cart;
-import 'package:customer_app/screen/order_cart/cubit/order_cart_cubit.dart';
-import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
 import 'package:customer_app/widget/container/child_card.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-import 'package:customer_app/widget/container/screen_header.dart';
 import 'package:flutter/material.dart';
-import 'package:get_all_pkg/data/model/app_model.dart';
-import 'package:get_all_pkg/data/setup.dart';
-import 'package:open_file/open_file.dart';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
 
 class FollowersScreen extends StatelessWidget {
   const FollowersScreen({super.key});
@@ -44,16 +31,18 @@ class FollowersScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.wallet,
+                  const Icon(
+                    Icons.monetization_on,
                     color: Colors.white,
                   ),
                   Text(
-                    '${cubit.appModel.userModel?.funds.toString()}',
-                    style: TextStyle(color: Colors.white),
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
+                    style: const TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
               ),
@@ -122,18 +111,11 @@ class FollowersScreen extends StatelessWidget {
                                                   // cubit.appModel =
                                                   //     getIt.get<AppModel>();
 
-                                                  if(value != null){
-
-                                                    if(value){
-
-                                                       cubit.refreshPage();
-
+                                                  if (value != null) {
+                                                    if (value) {
+                                                      cubit.refreshPage();
                                                     }
-                                                   
-
                                                   }
-
-                                                  
                                                 },
                                               ),
                                           onPressedQR: () async {
@@ -145,31 +127,6 @@ class FollowersScreen extends StatelessWidget {
                                     ),
                                   )
                                   .toList()
-
-                              // List.generate(
-                              //   cubit.appModel.schoolModelList.length,
-                              //   (index) {
-                              //     return Padding(
-                              //       padding: EdgeInsets.only(bottom: 3.h),
-                              //       child: ChildCard(
-                              //         childModel:
-                              //             cubit.appModel.userModel!.childModelList[index],
-                              //         onTap: () => Navigator.push(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //               builder: (context) => FollowersProfileScreen(
-                              //                 childInfo: cubit.appModel.userModel!
-                              //                     .childModelList[index],
-                              //               ),
-                              //             )).then(
-                              //           (value) {
-                              //             cubit.appModel = getIt.get<AppModel>();
-                              //           },
-                              //         ),
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
                               )
                         ],
                       );

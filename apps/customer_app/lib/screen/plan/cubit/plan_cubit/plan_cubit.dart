@@ -1,8 +1,6 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
-import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -11,7 +9,6 @@ import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/helper/check_intent.dart';
-import 'package:meta/meta.dart';
 
 part 'plan_state.dart';
 
@@ -60,7 +57,7 @@ class PlanCubit extends Cubit<PlanState> {
           },
         );
         planModelSelcted = null;
-        emit(PlanChnageState(msg: "تمت حذف خطة"));
+        emit(PlanChnageState(msg: "تم حذف الخطة بنجاح"));
       } else {
         log("there is no  inter");
         emit(NoInterState());
@@ -102,7 +99,7 @@ class PlanCubit extends Cubit<PlanState> {
         planModelSelcted!.name = planNameCOn.text;
 
         emit(NoLodingState());
-        emit(PlanChnageState(msg: "تمت تعديل خطة"));
+        emit(PlanChnageState(msg: "تم تعديل الخطة"));
       } else {
         log("there is no  inter");
         emit(NoInterState());
@@ -175,19 +172,19 @@ class PlanCubit extends Cubit<PlanState> {
       childModelSelcted!.planList.add(PlanModel.fromJson(res));
 
       emit(NoLodingState());
-      emit(PlanChnageState(msg: "تمت اضافة خطة"));
+      emit(PlanChnageState(msg: "تم اضافة الخطة بنجاح"));
 
       log("plan has been add");
     } catch (er) {
       emit(NoLodingState());
-      emit(EorrPlanState(msg: "there was eorr"));
+      emit(EorrPlanState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }
 
 // check before add plan if there is child or not
   bool isThereChild() {
     if (childModelSelcted == null) {
-      emit(EorrPlanState(msg: "chose child first"));
+      emit(EorrPlanState(msg: "اختر التابع اولا"));
       return false;
     } else {
       return true;
@@ -196,10 +193,10 @@ class PlanCubit extends Cubit<PlanState> {
 
   toCart() {
     if (planModelSelcted == null) {
-      emit(EorrPlanState(msg: "chose plan"));
+      emit(EorrPlanState(msg: "يرجى اختيار خطة"));
       return;
     } else if (planModelSelcted!.mealPlanItemLis.isEmpty) {
-      emit(EorrPlanState(msg: "your plan is emty"));
+      emit(EorrPlanState(msg: "خطتك فارغة"));
       return;
     }
 

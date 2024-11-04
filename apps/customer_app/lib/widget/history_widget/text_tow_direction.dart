@@ -101,7 +101,7 @@ class TextWithTowDirection extends StatelessWidget {
                   )
                 ],
               )
-            : SizedBox()
+            : const SizedBox()
       ],
     );
   }

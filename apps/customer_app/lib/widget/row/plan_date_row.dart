@@ -17,7 +17,7 @@ class PlanDateRow extends StatelessWidget {
           'تاريخ الخطة',
           style: TextStyle(fontSize: 13.sp),
         ),
-        Spacer(),
+        const Spacer(),
         Text(
           '  من $startDate  الى $endDate ',
           style: TextStyle(fontSize: 13.sp),

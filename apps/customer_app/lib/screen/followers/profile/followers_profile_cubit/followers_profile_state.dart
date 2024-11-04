@@ -8,7 +8,7 @@ final class FollowersProfileInitial extends FollowersProfileState {}
 final class LoadingState extends FollowersProfileState {}
 
 final class AfterDelState extends FollowersProfileState {
-   final String msg;
+  final String msg;
 
   AfterDelState({required this.msg});
 }
@@ -19,15 +19,12 @@ final class SuccessState extends FollowersProfileState {
   SuccessState({required this.msg});
 }
 
-
-
-
-
 final class SuccessUpdateImageState extends FollowersProfileState {
   final String msg;
 
   SuccessUpdateImageState({required this.msg});
 }
+
 final class ErrorUpdateImageState extends FollowersProfileState {
   final String msg;
 
@@ -44,6 +41,3 @@ class ImagePickedState extends FollowersProfileState {
   final File image;
   ImagePickedState(this.image);
 }
-
-
-

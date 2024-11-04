@@ -24,13 +24,13 @@ class InfoContainerWithButton extends StatelessWidget {
           style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
-              color: Color(0xff546F66)),
+              color: const Color(0xff546F66)),
         ),
         IconButton(
             onPressed: onPressedInfo,
             icon: const Icon(
               Icons.info_outline,
-              color: const Color(0xffC8E5F5),
+              color: Color(0xffC8E5F5),
             )),
         const Spacer(),
         ProductSmallContainer(
@@ -40,7 +40,7 @@ class InfoContainerWithButton extends StatelessWidget {
           withAmountText: false,
           width: 15.w,
           height: 4.h,
-          backgroundColor: Color(0xff56ECB0B0),
+          backgroundColor: const Color(0xff56ecb0b0),
         ),
 
       ],

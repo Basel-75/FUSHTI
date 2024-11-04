@@ -2,6 +2,7 @@ import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart
 import 'package:customer_app/screen/order_cart/cubit/order_cart_cubit.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
 import 'package:customer_app/widget/container/pay_plan_bottom.dart';
+import 'package:customer_app/widget/coulmn/empty_space_column.dart';
 import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/row/cal_row.dart';
 import 'package:customer_app/widget/row/item_details.dart';
@@ -32,19 +33,16 @@ class OrderCartScreen extends StatelessWidget {
                 ));
               }
 
-
-              if(state is LodingState){
+              if (state is LodingState) {
                 showLoadingDialog(context: context);
               }
 
-              if(state is DoneState){
-
-                 Navigator.of(context).pop();
+              if (state is DoneState) {
+                Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("تم الدفع"),
                   backgroundColor: Colors.green,
                 ));
-
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) {
@@ -96,41 +94,51 @@ class OrderCartScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 2.w),
                         child: BlocBuilder<OrderCartCubit, OrderCartState>(
                           builder: (context, state) {
-                            return Column(
-                              children: List.generate(
-                                cubit.childModel.cartList.length,
-                                (index) {
-                                  return AddPlanCard(
-                                    productName: cubit.childModel
-                                        .cartList[index].foodMenuModel.foodName,
-                                    cal: cubit.childModel.cartList[index]
-                                        .foodMenuModel.cal
-                                        .toString(),
-                                    price: cubit.childModel.cartList[index]
-                                        .foodMenuModel.price
-                                        .toString(),
-                                    quantity: cubit
-                                        .childModel.cartList[index].que
-                                        .toString(),
-                                    imagePath: 'assets/image/boxImage.png',
-                                    onAdd: () {
-                                      cubit.onAdd(
-                                          cartItem:
-                                              cubit.childModel.cartList[index]);
-                                    },
-                                    onMinus: () {
-                                      cubit.onMinus(
-                                          cartItem:
-                                              cubit.childModel.cartList[index]);
-                                    },
-                                    withoutDelete: false,
-                                    onDelete: () {
-                                      cubit.delItem(cartIndex: index);
-                                    },
+                            return cubit.childModel.cartList.isEmpty
+                                ? const EmptySpaceColumn(
+                                    msg: 'لا توجد منتجات في السلة')
+                                : Column(
+                                    children: List.generate(
+                                      cubit.childModel.cartList.length,
+                                      (index) {
+                                        return AddPlanCard(
+                                          productName: cubit
+                                              .childModel
+                                              .cartList[index]
+                                              .foodMenuModel
+                                              .foodName,
+                                          cal: cubit.childModel.cartList[index]
+                                              .foodMenuModel.cal
+                                              .toString(),
+                                          price: cubit
+                                              .childModel
+                                              .cartList[index]
+                                              .foodMenuModel
+                                              .price
+                                              .toString(),
+                                          quantity: cubit
+                                              .childModel.cartList[index].que
+                                              .toString(),
+                                          imagePath:
+                                              'assets/image/boxImage.png',
+                                          onAdd: () {
+                                            cubit.onAdd(
+                                                cartItem: cubit.childModel
+                                                    .cartList[index]);
+                                          },
+                                          onMinus: () {
+                                            cubit.onMinus(
+                                                cartItem: cubit.childModel
+                                                    .cartList[index]);
+                                          },
+                                          withoutDelete: false,
+                                          onDelete: () {
+                                            cubit.delItem(cartIndex: index);
+                                          },
+                                        );
+                                      },
+                                    ),
                                   );
-                                },
-                              ),
-                            );
                           },
                         ),
                       ),

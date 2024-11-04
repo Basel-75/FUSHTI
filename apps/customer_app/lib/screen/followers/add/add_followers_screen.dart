@@ -1,13 +1,9 @@
-import 'dart:developer';
 
-import 'package:customer_app/component/drop_down_item.dart';
-import 'package:customer_app/main.dart';
-import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
 import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
-import 'package:customer_app/widget/imagePicker/select_image_widget.dart';
+
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -88,14 +84,9 @@ class AddFollowersScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 3.h,
+                          height: 7.h,
                         ),
-                        SelectImageWidget(
-                          onDelete: () {
-                            log('message');
-                          },
-                          onTapInCamera: () {},
-                        ),
+
                         CustomTextFormFelid(
                             validator: (val) {
                               if (val == null || val.isEmpty) {

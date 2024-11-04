@@ -1,7 +1,6 @@
 import 'package:customer_app/widget/history_widget/bottom_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
-import 'package:get_all_pkg/data/model/order_model.dart';
 import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 

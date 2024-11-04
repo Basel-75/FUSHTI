@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get_all_pkg/get_all_pkg.dart';
 
 class ImageSlider extends StatelessWidget {
   const ImageSlider({

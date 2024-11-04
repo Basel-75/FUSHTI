@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cart_cubit/plan_cart_cubit.dart';
-import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
 import 'package:customer_app/widget/container/pay_plan_bottom.dart';
-import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/row/cal_row.dart';
 import 'package:customer_app/widget/row/item_details.dart';
@@ -44,7 +42,7 @@ class PlanCartScreen extends StatelessWidget {
               if (state is DoneState) {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("تم الدفع"),
+                  content: Text("تم الدفع بنجاح"),
                   backgroundColor: Colors.green,
                 ));
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -56,30 +54,29 @@ class PlanCartScreen extends StatelessWidget {
             },
             child: Scaffold(
               appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
                 title: Text(
                   'دفع الخطة',
-                  style:
-                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 centerTitle: true,
-                actions: [
-                  Image.asset('assets/image/homeicon.png'),
-                  SizedBox(
-                    width: 2.h,
-                  )
-                ],
                 flexibleSpace: Container(
+                  //height: 15.h,
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      )),
+                    color: Color(0xff6FBAE5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35),
+                    ),
+                  ),
                 ),
+                toolbarHeight: 11.h,
               ),
               body: Center(
                 child: Column(
@@ -133,7 +130,7 @@ class PlanCartScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 4.h,
+                      height: 3.h,
                     ),
                     Text(
                       'الخطة',
@@ -224,9 +221,9 @@ class PlanCartScreen extends StatelessWidget {
                                 builder: (context, state) {
                                   return PlanDateRow(
                                     startDate: formatDate(cubit.startDate) ??
-                                        "لم يحدد",
+                                        "غير محدد",
                                     endDate:
-                                        formatDate(cubit.endDate) ?? "لم يحدد",
+                                        formatDate(cubit.endDate) ??  "غير محدد",
                                   );
                                 },
                               ),
@@ -271,7 +268,7 @@ class PlanCartScreen extends StatelessWidget {
                       builder: (context, state) {
                         return PayPlanBottom(
                           totalPrice:
-                              cubit.calculateTotal(planModel: planModel),
+                              '${double.parse(cubit.calculateTotal(planModel: planModel)) *cubit.dayNume}',
                           onPressed: () {
                             cubit.payPlan(planModel: planModel);
                           },

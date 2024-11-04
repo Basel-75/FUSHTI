@@ -35,7 +35,7 @@ class InfoContainerRow extends StatelessWidget {
         ),
         ProfileSmallContainer(
           title: titleThree,
-          number: numThree,
+          number: '$numThree رس',
         ),
       ],
     );

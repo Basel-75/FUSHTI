@@ -1,5 +1,4 @@
 import 'package:customer_app/widget/button/custom_button.dart';
-import 'package:customer_app/widget/devider/custom_dot_line.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -40,7 +39,7 @@ class OpenDaysBottomSheet extends StatelessWidget {
                   SizedBox(
                     height: 2.h,
                   ),
-                   Text('الأيام المفتوحة',style: TextStyle(color: Color(0xff546F66),fontSize: 16.sp),),
+                   Text('الأيام المفتوحة',style: TextStyle(color: const Color(0xff546F66),fontSize: 16.sp),),
                 
                   SizedBox(
                     height: 2.h,
@@ -48,10 +47,10 @@ class OpenDaysBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                       Text('تفعيل',style: TextStyle(color: Color(0xff546F66),fontSize: 16.sp),),
+                       Text('تفعيل',style: TextStyle(color: const Color(0xff546F66),fontSize: 16.sp),),
                       AdvancedSwitch(
                           initialValue: initialValueRaido,
-                          activeColor: Color(0xff6FBAE5),
+                          activeColor: const Color(0xff6FBAE5),
                           inactiveColor:
                               const Color(0x56ECB0B0),
                           width: 12.w,
@@ -65,7 +64,7 @@ class OpenDaysBottomSheet extends StatelessWidget {
                   CustomTextFormFelid(
                     validator: validator,
                     horizontal: 0.w,
-                    label: 'المصروف',
+                    label: 'الحد اليومي',
                     hintText: '25',
                     isPassword: false,
                     keyboardType: TextInputType.number,

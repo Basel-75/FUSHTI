@@ -4,11 +4,7 @@ import 'package:customer_app/screen/home/cubit/home_cubit.dart';
 import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
-import 'package:customer_app/widget/container/home_card.dart';
-import 'package:customer_app/widget/container/screen_header.dart';
-import 'package:customer_app/widget/coulmn/child_avatar.dart';
 import 'package:customer_app/widget/image/image_handler.dart';
-import 'package:customer_app/widget/row/app_bar_row_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -44,16 +40,18 @@ class HomeScreen extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.wallet,
+                  const Icon(
+                    Icons.monetization_on,
                     color: Colors.white,
                   ),
                   Text(
-                    '${cubit.appModel.userModel?.funds.toString()}',
-                    style: TextStyle(color: Colors.white),
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
+                    style: const TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
               ),
@@ -107,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xff546F66)),
+                                  color: const Color(0xff546F66)),
                             ),
                             BlocBuilder<HomeCubit, HomeState>(
                               builder: (context, state) {
@@ -119,24 +117,24 @@ class HomeScreen extends StatelessWidget {
                                     children: List.generate(
                                       cubit.childModelList.length,
                                       (index) {
-                                        bool isClicked = true;
                                         return Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: FollowersAvatar(
                                             onTap: () {
-                                              isClicked = !isClicked;
-                                              log(isClicked.toString());
                                               log("chnageChild start");
                                               cubit.chnageChild(
                                                   cubit.childModelList[index]);
                                             },
                                             childImage: cubit
                                                 .childModelList[index].imgPath,
-                                            textColor: isClicked == false
-                                                ? Colors.blue
-                                                : Colors.black,
-                                            childName:
-                                                cubit.childModelList[index].name,
+                                            textColor:
+                                                cubit
+                                                .childModelList[index].isSelected ==
+                                                        true
+                                                    ? Colors.green
+                                                    : Colors.black,
+                                            childName: cubit
+                                                .childModelList[index].name,
                                           ),
                                         );
                                       },
@@ -153,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff546F66)),
+                                  color: const Color(0xff546F66)),
                             ),
                             SizedBox(
                               height: 2.h,
@@ -164,7 +162,8 @@ class HomeScreen extends StatelessWidget {
                                   height: 22.h,
                                   child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
-                                    padding: EdgeInsets.symmetric(vertical: 1.h),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 1.h),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -173,6 +172,12 @@ class HomeScreen extends StatelessWidget {
                                             .foodMenuModelList.length,
                                         (index) {
                                           return HomeCard(
+                                            isRestriction: cubit.checkRestrictionsFood(productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id),
                                             onTap: () {
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(
@@ -181,14 +186,39 @@ class HomeScreen extends StatelessWidget {
                                                     childModel:
                                                         cubit.currentChild,
                                                     foodMenuModel: cubit
-                                                        .currentChild
-                                                        .schoolModel
-                                                        .foodMenuModelList[index],
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                        index],
                                                   );
                                                 },
                                               ));
                                             },
-                                            onRestriction: !cubit
+                                            onRestriction:
+                                                !cubit.checkRestrictionsFood(
+                                                        productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id)
+                                                    ? () {
+                                                        cubit.addToRestrictionsFood(
+                                                            childId: cubit
+                                                                .currentChild
+                                                                .id,
+                                                            productId: cubit
+                                                                .currentChild
+                                                                .schoolModel
+                                                                .foodMenuModelList[
+                                                                    index]
+                                                                .id);
+                                                      }
+                                                    : null,
+                                            cal: cubit.currentChild.schoolModel
+                                                .foodMenuModelList[index].cal
+                                                .toString(),
+                                            imagePath: cubit
                                                     .checkRestrictionsFood(
                                                         productId: cubit
                                                             .currentChild
@@ -196,37 +226,14 @@ class HomeScreen extends StatelessWidget {
                                                             .foodMenuModelList[
                                                                 index]
                                                             .id)
-                                                ? () {
-                                                    cubit.addToRestrictionsFood(
-                                                        childId:
-                                                            cubit.currentChild.id,
-                                                        productId: cubit
-                                                            .currentChild
-                                                            .schoolModel
-                                                            .foodMenuModelList[
-                                                                index]
-                                                            .id);
-                                                  }
-                                                : null,
-                                            cal: cubit.currentChild.schoolModel
-                                                .foodMenuModelList[index].cal
-                                                .toString(),
-                                            imagePath:
-                                                cubit.checkRestrictionsFood(
-                                                        productId: cubit
-                                                            .currentChild
-                                                            .schoolModel
-                                                            .foodMenuModelList[
-                                                                index]
-                                                            .id)
-                                                    ? 'assets/image/no.png'
-                                                    : cubit
-                                                        .currentChild
-                                                        .schoolModel
-                                                        .foodMenuModelList[index]
-                                                        .imageUrl
-                                                        .toString()
-                                                        .trim(),
+                                                ? 'assets/image/no.png'
+                                                : cubit
+                                                    .currentChild
+                                                    .schoolModel
+                                                    .foodMenuModelList[index]
+                                                    .imageUrl
+                                                    .toString()
+                                                    .trim(),
                                             productName: cubit
                                                 .currentChild
                                                 .schoolModel
@@ -256,7 +263,7 @@ class HomeScreen extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xff546F66)),
+                                  color: const Color(0xff546F66)),
                             ),
                             BlocBuilder<HomeCubit, HomeState>(
                               builder: (context, state) {
@@ -270,13 +277,15 @@ class HomeScreen extends StatelessWidget {
                                           .map(
                                             (e) => HomeCard(
                                               //values
+                                              isRestriction: cubit.checkRestrictionsFood(productId: e.id),
                                               productName: e.foodName,
                                               price: '${e.price}',
                                               cal: '${e.cal}',
                                               imagePath: '${e.imageUrl}',
                                               //functions
                                               onAdd: () => cubit.quickAddToCart(
-                                                  childModel: cubit.currentChild,
+                                                  childModel:
+                                                      cubit.currentChild,
                                                   foodMenuModel: e),
                                               onRestriction: () =>
                                                   cubit.addToRestrictionsFood(
@@ -308,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff546F66)),
+                              color: const Color(0xff546F66)),
                         ),
                       ),
                       SizedBox(
@@ -334,6 +343,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       itemBuilder: (context, index) => HomeCard(
                                         //value
+                                        isRestriction: cubit.checkRestrictionsFood(productId: cubit.productList[index].id),
                                         productName:
                                             cubit.productList[index].foodName,
                                         price:
@@ -349,19 +359,21 @@ class HomeScreen extends StatelessWidget {
                                         onRestriction: () =>
                                             cubit.addToRestrictionsFood(
                                                 childId: cubit.currentChild.id,
-                                                productId:
-                                                    cubit.productList[index].id),
+                                                productId: cubit
+                                                    .productList[index].id),
                                         onTap: () => Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => ProductScreen(
-                                                  foodMenuModel:
-                                                      cubit.productList[index],
-                                                  childModel: cubit.currentChild),
+                                              builder: (context) =>
+                                                  ProductScreen(
+                                                      foodMenuModel: cubit
+                                                          .productList[index],
+                                                      childModel:
+                                                          cubit.currentChild),
                                             )),
                                       ),
                                     )
-                                  : Center(
+                                  : const Center(
                                       child: Text('لا توجد وجبات ):'),
                                     ));
                         },
@@ -384,6 +396,7 @@ class HomeScreen extends StatelessWidget {
 class HomeCard extends StatelessWidget {
   final String productName, price, cal, imagePath;
   final Function()? onTap, onRestriction, onAdd;
+  final bool isRestriction;
   const HomeCard({
     super.key,
     required this.productName,
@@ -392,7 +405,7 @@ class HomeCard extends StatelessWidget {
     this.onTap,
     this.onRestriction,
     this.onAdd,
-    required this.imagePath,
+    required this.imagePath, required this.isRestriction,
   });
 
   @override
@@ -417,7 +430,7 @@ class HomeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     productName,
                     style:
@@ -438,9 +451,9 @@ class HomeCard extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color(0x50000000)),
+                            color: const Color(0x50000000)),
                       ),
-                      Icon(LineAwesome.fire_alt_solid, color: Color(0xffEC8743))
+                      const Icon(LineAwesome.fire_alt_solid, color: Color(0xffEC8743))
                     ],
                   )
                 ],
@@ -451,8 +464,8 @@ class HomeCard extends StatelessWidget {
               left: 12.w,
               bottom: 28.w,
               child: CircleAvatar(
-                backgroundColor: Color(0x88C8E5F5),
-                child: ImageHandler(imagePath: imagePath),
+                backgroundColor: const Color(0x88C8E5F5),
+                child:!isRestriction?ImageHandler(imagePath: imagePath) :ImageHandler(imagePath: imagePath,errorWidget: const Icon(Icons.no_food),),
               )),
           Positioned(
               left: 27.w,
@@ -470,9 +483,9 @@ class HomeCard extends StatelessWidget {
                 width: 8.w,
                 height: 7.w,
                 decoration: BoxDecoration(
-                    color: Color(0xffC9E7E7),
+                    color: const Color(0xffC9E7E7),
                     borderRadius: BorderRadius.circular(6)),
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   color: Colors.white,
                 ),

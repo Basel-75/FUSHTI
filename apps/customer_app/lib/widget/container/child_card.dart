@@ -31,8 +31,8 @@ class ChildCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child:ImageHandler(imagePath: childModel.imgPath,errorWidget: Image.asset(
-                "assets/image/child_img.png",
-                fit: BoxFit.fill,
+                "assets/image/mainLogo.png",
+                fit: BoxFit.fitHeight,
               ),) 
             ),
             Expanded(
@@ -79,7 +79,7 @@ class ChildCard extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: onPressedQR,
-                    icon: Icon(Iconsax.scan_barcode_outline)),
+                    icon: const Icon(Iconsax.scan_barcode_outline)),
               ],
             ),
           ],
