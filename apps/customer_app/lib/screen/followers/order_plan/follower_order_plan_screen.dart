@@ -88,7 +88,7 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                               elevation: 2,
                               customShape: ContinuousRectangleBorder(
                                   borderRadius: BorderRadius.circular(25)),
-                              buttonLables: const ["plan", "order"],
+                              buttonLables: const ["خطة", "طلبات"],
                               buttonValues: const ["plan", "order"],
                               unSelectedColor: const Color(0xffffffff),
                               unSelectedBorderColor: Colors.grey,
