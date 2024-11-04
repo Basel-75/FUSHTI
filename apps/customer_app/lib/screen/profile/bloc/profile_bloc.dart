@@ -18,6 +18,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       TextEditingController(text: 'باسل العلوي');
   TextEditingController phoneNumController =
       TextEditingController(text: '0512345678');
+  TextEditingController amountController =
+      TextEditingController(text: '20');
   String? userName = '';
   String? phoneNum = '';
   String? followersNum = '';

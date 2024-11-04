@@ -5,11 +5,13 @@ import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/profile_tile.dart';
+import 'package:customer_app/widget/container/show_dialog_pay_widget.dart';
 import 'package:customer_app/widget/coulmn/edit_user_profile_form.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
+import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -223,6 +225,24 @@ class ProfileScreen extends StatelessWidget {
                             child: Column(
                               children: [
                                 ProfileTile(
+                                    title: 'شحن المحفظة',
+                                    icon: const Icon(Icons.book_outlined),
+                                    forLogout: false,
+                                    onTap: () => showDialogPayWidget(
+                                          context: context,
+                                          priceTotal: bloc.amountController,
+                                          onPressed: () async{
+                                            Navigator.pop(context);
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) => CreditCard(
+                                                  config:  moyserPay(priceTotal: 20),
+                                                  onPaymentResult:
+                                                      onPaymentResult),
+                                            );
+                                          },
+                                        )),
+                                ProfileTile(
                                   title: 'الفواتير',
                                   icon: const Icon(Icons.book_outlined),
                                   forLogout: false,
@@ -233,7 +253,7 @@ class ProfileScreen extends StatelessWidget {
                                             const HistoryScreen(),
                                       )),
                                 ),
-                                ProfileTile(
+                                 ProfileTile(
                                   title: 'الشكاوى و الاقتراحات',
                                   icon: const Icon(Icons.safety_divider_sharp),
                                   forLogout: false,
@@ -261,6 +281,8 @@ class ProfileScreen extends StatelessWidget {
                                           CustomSelect(
                                             label: 'المدرسة',
                                             hintText: 'اختر المدرسة',
+                                            onChanged: (p0) =>
+                                                bloc.schoolName = p0?.name,
                                             items: bloc.appModel.schoolModelList
                                                 .map(
                                                   (school) =>
@@ -271,17 +293,36 @@ class ProfileScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 2.h,
                                           ),
-                                          const Directionality(
+                                          Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: CustomTextFormFelid(
-                                                  label: 'النص',
-                                                  hintText: 'لدي مشكلة في ...',
-                                                  isPassword: false)),
-                                                   const Spacer(),
+                                                label: 'النص',
+                                                hintText: 'لدي مشكلة في ...',
+                                                isPassword: false,
+                                                controller:
+                                                    bloc.messageController,
+                                              )),
+                                          const Spacer(),
                                           CustomButton(
-                                              onPressed: () {}, title: 'ارسال'),
-                                             
-                                              SizedBox(height: 2.h,),
+                                              onPressed: () => bloc
+                                                      .messageController!
+                                                      .text
+                                                      .isNotEmpty
+                                                  ? bloc.add(SendMessagesEvent(
+                                                      senderName:
+                                                          '${bloc.appModel.userModel?.name}',
+                                                      schoolId:
+                                                          '${bloc.schoolId}',
+                                                      content:
+                                                          '${bloc.messageController?.text}'))
+                                                  : showSnackBar(
+                                                      context: context,
+                                                      msg: 'رسالة فارغة',
+                                                      isError: true),
+                                              title: 'ارسال'),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
                                         ],
                                       ),
                                     ),
