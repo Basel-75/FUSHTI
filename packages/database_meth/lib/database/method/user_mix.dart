@@ -7,12 +7,14 @@ import 'package:get_all_pkg/data/model/user_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin UserMix {
-  updateChildOpenDay({required double limtFunds, required ChildModel childModel, required isOpen}) async {
+  updateChildOpenDay(
+      {required double limtFunds,
+      required ChildModel childModel,
+      required isOpen}) async {
     try {
       await SuperMain().supabase.from("followers").update({
-
-        "daily_limit" : limtFunds,
-        "is_open_day" : isOpen,
+        "daily_limit": limtFunds,
+        "is_open_day": isOpen,
       }).eq("id", childModel.id);
     } catch (er) {
       log("$er");
@@ -74,6 +76,22 @@ mixin UserMix {
       UserModel user = UserModel.fromJson(response);
       return user;
       log('${user.toJson()}');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+  sendSuggestion(
+      {required String senderName,
+      required String content,
+      required String schoolId}) async {
+    try {
+      final res = await SuperMain().supabase.from('help_center').insert({
+        'sender_name': senderName,
+        'school_id': schoolId,
+        'message': content
+      }).select();
+      log('$res');
     } catch (e) {
       log('$e');
     }

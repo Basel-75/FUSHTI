@@ -261,6 +261,8 @@ class ProfileScreen extends StatelessWidget {
                                           CustomSelect(
                                             label: 'المدرسة',
                                             hintText: 'اختر المدرسة',
+                                            onChanged: (p0) =>
+                                                bloc.schoolName = p0?.name,
                                             items: bloc.appModel.schoolModelList
                                                 .map(
                                                   (school) =>
@@ -271,17 +273,36 @@ class ProfileScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 2.h,
                                           ),
-                                          const Directionality(
+                                          Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: CustomTextFormFelid(
-                                                  label: 'النص',
-                                                  hintText: 'لدي مشكلة في ...',
-                                                  isPassword: false)),
-                                                   const Spacer(),
+                                                label: 'النص',
+                                                hintText: 'لدي مشكلة في ...',
+                                                isPassword: false,
+                                                controller:
+                                                    bloc.messageController,
+                                              )),
+                                          const Spacer(),
                                           CustomButton(
-                                              onPressed: () {}, title: 'ارسال'),
-                                             
-                                              SizedBox(height: 2.h,),
+                                              onPressed: () => bloc
+                                                      .messageController!
+                                                      .text
+                                                      .isNotEmpty
+                                                  ? bloc.add(SendMessagesEvent(
+                                                      senderName:
+                                                          '${bloc.appModel.userModel?.name}',
+                                                      schoolId:
+                                                          '${bloc.schoolName}',
+                                                      content:
+                                                          '${bloc.messageController?.text}'))
+                                                  : showSnackBar(
+                                                      context: context,
+                                                      msg: 'رسالة فارغة',
+                                                      isError: true),
+                                              title: 'ارسال'),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
                                         ],
                                       ),
                                     ),
