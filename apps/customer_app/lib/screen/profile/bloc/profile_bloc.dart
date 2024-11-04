@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -18,6 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       TextEditingController(text: 'باسل العلوي');
   TextEditingController phoneNumController =
       TextEditingController(text: '0512345678');
+  TextEditingController amountController = TextEditingController(text: '20');
   TextEditingController? messageController = TextEditingController();
   String? userName = '';
   String? phoneNum = '';
@@ -28,11 +30,43 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? schoolId = '';
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) {});
+    on<CheckPaymentEvent>(checkPayment);
+    on<PaymentEvent>(paymentConfig);
     on<SendMessagesEvent>(sendMessages);
     on<UpdateImageEvent>(updateImage);
     on<GetUserInfoEvent>(getUserInfoMethod);
     on<UpdateProfileEvent>(updateProfileMethod);
     on<PickImageEvent>(pickImage);
+  }
+
+  FutureOr<void> checkPayment(CheckPaymentEvent event, emit) async {
+    if (event.paymentResponse.status == PaymentStatus.paid) {
+      try {
+        //Update in DB
+        await SuperMain().updateFunds(
+            userId: '${getIt.get<AppModel>().userModel?.id}',
+            oldFund: appModel.userModel!.funds.toDouble(),
+            funds: double.parse(amountController.text.trim()));
+        //Update locale
+        appModel.userModel?.funds += num.parse(amountController.text.trim());
+        funds = appModel.userModel?.funds.toString();
+        emit(SussesUpdateFundsState(msg: 'تم شحن المحفظة بنجاح'));
+      } catch (e) {
+        emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+      }
+      emit(ErrorState(msg: 'تعذر شحن المحفظة يرجى المحاولة لاحقا'));
+    }
+  }
+
+  FutureOr<void> paymentConfig(PaymentEvent event, emit) async {
+    emit(LoadingState());
+    try {
+      final paymentConfig = await moyserPay(
+          priceTotal: double.parse(amountController.text.trim()));
+      emit(SussesPayState(paymentConfig: paymentConfig!));
+    } catch (e) {
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+    }
   }
 
   FutureOr<void> sendMessages(SendMessagesEvent event, emit) async {
@@ -121,7 +155,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     userName = appModel.userModel?.name;
     phoneNum = appModel.userModel?.phone;
     funds = appModel.userModel?.funds.toString();
-
     followersNum = appModel.userModel?.childModelList != null
         ? appModel.userModel?.childModelList.length.toString()
         : '0';
