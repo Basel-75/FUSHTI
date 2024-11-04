@@ -45,7 +45,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         //Update in DB
         await SuperMain().updateFunds(
             userId: '${getIt.get<AppModel>().userModel?.id}',
-            oldFunds: appModel.userModel!.funds.toDouble(),
+            oldFund: appModel.userModel!.funds.toDouble(),
             funds: double.parse(amountController.text.trim()));
         //Update locale
         appModel.userModel?.funds += num.parse(amountController.text.trim());
