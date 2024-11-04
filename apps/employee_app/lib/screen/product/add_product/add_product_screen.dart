@@ -83,7 +83,7 @@ class AddProductScreen extends StatelessWidget {
                             if (value == null || value.isEmpty) {
                               return "يجب كتابة اسم المنتج";
                             } else if (RegExp(r'[0-9]').hasMatch(value)) {
-                              return 'الاسم لا يحتوي على أرقام';
+                              return 'الاسم لا يمكن ان يحتوي على أرقام';
                             }
                             return null;
                           }),

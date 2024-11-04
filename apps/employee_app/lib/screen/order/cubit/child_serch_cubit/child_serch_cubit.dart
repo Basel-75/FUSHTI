@@ -7,8 +7,8 @@ import 'package:meta/meta.dart';
 
 part 'child_serch_state.dart';
 
-class ChildSerchCubit extends Cubit<ChildSerchState> {
-  ChildSerchCubit() : super(ChildSerchInitial());
+class ChildSearchCubit extends Cubit<ChildSearchState> {
+  ChildSearchCubit() : super(ChildSerchInitial());
 
   late final String childName;
 
@@ -33,7 +33,7 @@ class ChildSerchCubit extends Cubit<ChildSerchState> {
       emit(SuccessState());
     } catch (er) {
       log("$er");
-      emit(ErrorState(msg: "حصل خطأ"));
+      emit(ErrorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }
 }

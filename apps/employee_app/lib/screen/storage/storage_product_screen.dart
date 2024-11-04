@@ -22,7 +22,7 @@ class StorageScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: BlocListener<StorageCubit, StorageState>(
             listener: (context, state) {
-              if (state is LodingState) {
+              if (state is LoadingState) {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -38,7 +38,7 @@ class StorageScreen extends StatelessWidget {
                 log("very good update adv of food");
               }
 
-              if (state is ErorState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(

@@ -5,11 +5,11 @@ sealed class StorageState {}
 
 final class StorageInitial extends StorageState {}
 
-final class ErorState extends StorageState {
+final class ErrorState extends StorageState {
   final String msg;
 
-  ErorState({required this.msg});
+  ErrorState({required this.msg});
 }
 
 final class DoneState extends StorageState {}
-final class LodingState extends StorageState {}
+final class LoadingState extends StorageState {}

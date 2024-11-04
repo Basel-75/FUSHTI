@@ -32,7 +32,7 @@ class StorageCubit extends Cubit<StorageState> {
 
   updateAdv() async {
     try {
-      emit(LodingState());
+      emit(LoadingState());
       log("${foodAdvChangeList.length}");
       await SuperMain().chnageFoodAdv(foodAdvChangeList: foodAdvChangeList);
 
@@ -42,7 +42,7 @@ class StorageCubit extends Cubit<StorageState> {
     } catch (er) {
       log("$er");
 
-      emit(ErorState(msg: er.toString()));
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }
 }

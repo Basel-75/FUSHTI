@@ -86,14 +86,14 @@ class EditScreen extends StatelessWidget {
                             if (value == null || value.isEmpty) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content: Text('ارجوا منك أضافة اسم المنتج'),
+                                content: Text('يرجى اضافة اسم المنتج'),
                                 backgroundColor: Colors.red,
                               ));
-                              return "لابد وضع اسم المنتج";
+                              return "لابد من وضع اسم المنتج";
                             } else if (RegExp(r'[0-9]').hasMatch(value)) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content: Text('الاسم لا يحتوي على أرقام'),
+                                content: Text('الاسم لا يمكن ان يحتوي على أرقام'),
                                 backgroundColor: Colors.red,
                               ));
                               return "بدون أرقام";
@@ -119,10 +119,10 @@ class EditScreen extends StatelessWidget {
                                 if (value == null || value.isEmpty) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
-                                    content: Text('ارجوا منك أضافة السعر'),
+                                    content: Text('يرجى كتابة السعر'),
                                     backgroundColor: Colors.red,
                                   ));
-                                  return "يجب أضافة السعر";
+                                  return "يجب كتابة السعر";
                                 }
                                 return null;
                               }),
@@ -183,7 +183,7 @@ class EditScreen extends StatelessWidget {
                           if (value == null || value.isEmpty) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text('ارجوا منك أضافة وصف المنتج'),
+                              content: Text('يرجى كتابة  وصف للمنتج'),
                               backgroundColor: Colors.red,
                             ));
                             return "يجب كتابة وصف المنتج";
