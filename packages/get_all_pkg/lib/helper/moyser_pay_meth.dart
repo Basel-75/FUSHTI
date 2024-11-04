@@ -2,14 +2,13 @@ import 'dart:developer';
 
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-Future< PaymentConfig?> moyserPay({required double priceTotal}) async {
-
+Future<PaymentConfig?> moyserPay({required double priceTotal}) async {
   try {
-  await dotenv.load(fileName: ".env");
+    await dotenv.load(fileName: "packages/database_meth/.env");
     final PaymentConfig paymentConfig = PaymentConfig(
-      publishableApiKey: dotenv.env['moyster_key']!,
+      publishableApiKey: dotenv.env['moyaser_key']!,
       amount: (priceTotal * 100).toInt(), // SAR 257.58
-      description: 'order #1324',
+      description: 'عملية شحن المحفظة',
 
       creditCard: CreditCardConfig(saveCard: true, manual: false),
     );

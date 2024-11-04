@@ -1,7 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:moyasar/moyasar.dart';
+import 'package:get_all_pkg/get_all_pkg.dart';
+
 
 class PayScreen extends StatelessWidget {
   const PayScreen({super.key, required this.paymentConfig});
