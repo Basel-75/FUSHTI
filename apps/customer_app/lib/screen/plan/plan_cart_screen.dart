@@ -42,7 +42,7 @@ class PlanCartScreen extends StatelessWidget {
               if (state is DoneState) {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("تم الدفع"),
+                  content: Text("تم الدفع بنجاح"),
                   backgroundColor: Colors.green,
                 ));
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -221,9 +221,9 @@ class PlanCartScreen extends StatelessWidget {
                                 builder: (context, state) {
                                   return PlanDateRow(
                                     startDate: formatDate(cubit.startDate) ??
-                                        "لم يحدد",
+                                        "غير محدد",
                                     endDate:
-                                        formatDate(cubit.endDate) ?? "لم يحدد",
+                                        formatDate(cubit.endDate) ??  "غير محدد",
                                   );
                                 },
                               ),

@@ -36,7 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     //Update in DB
     try {
       if (selectedImage == null) {
-        emit(ErrorState(msg: 'No image selected'));
+        emit(ErrorState(msg: 'لم يتم اختيار صورة'));
         return;
       }
 
@@ -60,7 +60,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       selectedImage = File(pickedFile.path);
       emit(ImagePickedState(selectedImage: selectedImage!));
     } else {
-      emit(ErrorState(msg: 'لم يتم اختيار صور للمنتج'));
+      emit(ErrorState(msg: 'لم يتم اختيار صورة '));
     }
   }
 

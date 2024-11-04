@@ -42,7 +42,7 @@ class AuthCubit extends Cubit<AuthStatee> {
     // try {
     emit(LoadingState());
     if (otp.isEmpty) {
-      emit(ErrorState(msg: "enter otp first"));
+      emit(ErrorState(msg: "ادخل رمز التحقق"));
       return;
     }
 

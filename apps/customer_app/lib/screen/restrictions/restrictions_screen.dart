@@ -1,5 +1,6 @@
 import 'package:customer_app/screen/restrictions/cubit/restrictions_cubit.dart';
 import 'package:customer_app/widget/container/restriction_card.dart';
+import 'package:customer_app/widget/coulmn/empty_space_column.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -103,7 +104,7 @@ class RestrictionsScreen extends StatelessWidget {
                                     });
                               },
                             ),
-                          )):const Center(child: Text('ليس هناك اي وجبات محظورة'),);
+                          )):const Center(child: EmptySpaceColumn(msg: 'ليس هناك اي وجبات محظورة'));
                         },
                       ),
                     ),

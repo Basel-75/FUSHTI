@@ -59,7 +59,7 @@ class OrderCartCubit extends Cubit<OrderCartState> {
       log("user funds :::: ${appModel.userModel!.funds}");
 
       if (appModel.userModel!.funds < totalPrice) {
-        emit(ErorrState(msg: "you dont have money"));
+        emit(ErorrState(msg: "ليس لديك رصيد كافي"));
         return;
       }
 
@@ -77,7 +77,7 @@ class OrderCartCubit extends Cubit<OrderCartState> {
     } catch (er) {
       log("$er");
 
-      emit(ErorrState(msg: er.toString()));
+      emit(ErorrState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }
 

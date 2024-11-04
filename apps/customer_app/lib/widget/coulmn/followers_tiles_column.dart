@@ -1,4 +1,3 @@
-import 'package:customer_app/screen/profile/profile_screen.dart';
 import 'package:customer_app/widget/container/profile_tile.dart';
 import 'package:flutter/material.dart';
 

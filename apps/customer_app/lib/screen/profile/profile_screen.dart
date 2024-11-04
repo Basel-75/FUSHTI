@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/profile_tile.dart';
 import 'package:customer_app/widget/coulmn/edit_user_profile_form.dart';
+import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
@@ -227,26 +229,75 @@ class ProfileScreen extends StatelessWidget {
                                   onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const HistoryScreen(),
+                                        builder: (context) =>
+                                            const HistoryScreen(),
                                       )),
                                 ),
                                 ProfileTile(
                                   title: 'الشكاوى و الاقتراحات',
                                   icon: const Icon(Icons.safety_divider_sharp),
                                   forLogout: false,
-                                  onTap: () {},
+                                  onTap: () => showBottomSheet(
+                                    context: context,
+                                    builder: (context) => Container(
+                                      width: 100.w,
+                                      height: 40.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.white,
+                                        boxShadow: kElevationToShadow[4],
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 4.h,
+                                          ),
+                                          Text(
+                                            'الشكاوى و الاقتراحات',
+                                            style: TextStyle(
+                                                fontSize: 16.sp,
+                                                color: const Color(0xff546F66)),
+                                          ),
+                                          CustomSelect(
+                                            label: 'المدرسة',
+                                            hintText: 'اختر المدرسة',
+                                            items: bloc.appModel.schoolModelList
+                                                .map(
+                                                  (school) =>
+                                                      DropDownItem(school.name),
+                                                )
+                                                .toList(),
+                                          ),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
+                                          const Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: CustomTextFormFelid(
+                                                  label: 'النص',
+                                                  hintText: 'لدي مشكلة في ...',
+                                                  isPassword: false)),
+                                                   const Spacer(),
+                                          CustomButton(
+                                              onPressed: () {}, title: 'ارسال'),
+                                             
+                                              SizedBox(height: 2.h,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 ProfileTile(
                                   title: 'عن فسحتي',
                                   icon: const Icon(Icons.info_outline_rounded),
                                   forLogout: false,
-                                  onTap: ()=>QuickAlert.show(
-                                    context: context,
-                                    type: QuickAlertType.info,
-    title: '👋 مرحبًا بك في فسحتي',
-    text: '\n🍽️ فسحتي هو خيارك الأمثل لتنظيم وجبات ابنائك بكل يسر و سهولة. نحرص في فسحتي على حل مشاكل الأبناء و الآباء في المقاصف المدرسية حيث نوفر للأب خيار إدارة وجبات أبنائهم و نوفر للأبناء حل لمشاكل المصروف. نسعد باقتراحاتكم و نعمل من أجل رضاكم.\n\n❤️ فريق فسحتي',
-                                    confirmBtnText: 'حسنا'
-                                  ),
+                                  onTap: () => QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.info,
+                                      title: '👋 مرحبًا بك في فسحتي',
+                                      text:
+                                          '\n🍽️ فسحتي هو خيارك الأمثل لتنظيم وجبات ابنائك بكل يسر و سهولة. نحرص في فسحتي على حل مشاكل الأبناء و الآباء في المقاصف المدرسية حيث نوفر للأب خيار إدارة وجبات أبنائهم و نوفر للأبناء حل لمشاكل المصروف. نسعد باقتراحاتكم و نعمل من أجل رضاكم.\n\n❤️ فريق فسحتي',
+                                      confirmBtnText: 'حسنا'),
                                 ),
                                 ProfileTile(
                                     title: 'تسجيل الخروج',
@@ -255,7 +306,8 @@ class ProfileScreen extends StatelessWidget {
                                     backgroundColor: const Color(0x56ECB0B0),
                                     onTap: () => showConfirmDialog(
                                           context: context,
-                                          onCancelBtnTap: ()=>Navigator.pop(context),
+                                          onCancelBtnTap: () =>
+                                              Navigator.pop(context),
                                           onConfirmBtnTap: () {},
                                         )),
                               ],

@@ -23,10 +23,10 @@ Future<dynamic> onManageOpenDays(
             },
             validator: (val) {
               if (val == null || val.isEmpty) {
-                return 'Amount cannot be empty';
+                return 'القيمة لا يمكن ان تكون فارغة';
               }
               if (double.tryParse(val) == null) {
-                return 'Please enter a valid number';
+                return 'ادخل رقم صحيح';
               }
               return null;
             },
@@ -76,11 +76,11 @@ Future<dynamic> onManageOpenDays(
             formKey: cubit.formKey,
             validator: (val) {
               if (val == null || val.isEmpty) {
-                return 'Amount cannot be empty';
+                return 'القيمة لا يمكن ان تكون فارغة';
               }
 
               if (double.tryParse(val) == null) {
-                return 'Please enter a valid number';
+                return 'ادخل رقم صحيح';
               }
               return null;
             },

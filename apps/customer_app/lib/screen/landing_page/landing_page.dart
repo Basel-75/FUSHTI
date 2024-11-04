@@ -13,7 +13,7 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
       body: OnBoardingSlider(
         headerBackgroundColor: Colors.white,
-        finishButtonText: 'سجل الأن',
+        finishButtonText: 'سجل الان',
         onFinish: () {
           Navigator.of(context)
               .pushReplacement(MaterialPageRoute(builder: (builder) {

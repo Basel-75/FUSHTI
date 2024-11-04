@@ -36,7 +36,7 @@ class ProductScreen extends StatelessWidget {
                 Navigator.of(context).pop();
 
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('product has been add to the cart'),
+                  content: Text('تم اضافة المنتج الى السلة بنجاح'),
                   backgroundColor: Colors.green,
                 ));
               }
@@ -45,7 +45,7 @@ class ProductScreen extends StatelessWidget {
                 Navigator.of(context).pop();
 
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('you arldy add to the cart'),
+                  content: Text('المنتج موجود في السلة مسبقا'),
                   backgroundColor: Colors.red,
                 ));
               }
@@ -186,7 +186,7 @@ class ProductScreen extends StatelessWidget {
                                                       },
                                                     ),
                                                     label: "الخطة",
-                                                    hintText: "enter"),
+                                                    hintText: "اختر الخطة"),
                                                 SizedBox(
                                                   height: 3.h,
                                                 ),

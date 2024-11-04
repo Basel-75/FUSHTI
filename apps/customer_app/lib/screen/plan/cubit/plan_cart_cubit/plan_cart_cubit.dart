@@ -115,12 +115,12 @@ class PlanCartCubit extends Cubit<PlanCartState> {
       emit(LodingState());
       log("user funds :::: ${appModel.userModel!.funds}");
       if (dayNume == 0) {
-        emit(ErorrState(msg: "أختر تاريخ"));
+        emit(ErorrState(msg: "يرجى اختيا التاريخ"));
         return;
       }
 
       if (appModel.userModel!.funds < totalPrice) {
-        emit(ErorrState(msg: "ليس معك مال"));
+        emit(ErorrState(msg: "ليس لديك رصيد كافي"));
         return;
       }
 
@@ -135,7 +135,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
       emit(DoneState());
     } catch (er) {
       log("$er");
-      emit(ErorrState(msg: "there was eorr"));
+      emit(ErorrState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }
 }

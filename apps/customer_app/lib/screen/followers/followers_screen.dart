@@ -127,31 +127,6 @@ class FollowersScreen extends StatelessWidget {
                                     ),
                                   )
                                   .toList()
-
-                              // List.generate(
-                              //   cubit.appModel.schoolModelList.length,
-                              //   (index) {
-                              //     return Padding(
-                              //       padding: EdgeInsets.only(bottom: 3.h),
-                              //       child: ChildCard(
-                              //         childModel:
-                              //             cubit.appModel.userModel!.childModelList[index],
-                              //         onTap: () => Navigator.push(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //               builder: (context) => FollowersProfileScreen(
-                              //                 childInfo: cubit.appModel.userModel!
-                              //                     .childModelList[index],
-                              //               ),
-                              //             )).then(
-                              //           (value) {
-                              //             cubit.appModel = getIt.get<AppModel>();
-                              //           },
-                              //         ),
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
                               )
                         ],
                       );

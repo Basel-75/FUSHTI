@@ -111,7 +111,7 @@ class SignupScreen extends StatelessWidget {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
                                         content: Text(
-                                            'Please enter an email address'),
+                                            'يرجى ادخال الايميل'),
                                         backgroundColor: Colors.red,
                                       ));
 
@@ -122,7 +122,7 @@ class SignupScreen extends StatelessWidget {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
                                         content: Text(
-                                            'Please enter a valid email address'),
+                                            'ايميل غير صالح'),
                                         backgroundColor: Colors.red,
                                       ));
 
@@ -150,7 +150,7 @@ class SignupScreen extends StatelessWidget {
                                       if (value == null || value.isEmpty) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
-                                          content: Text('Please enter a name'),
+                                          content: Text('يرجى ادخال الاسم'),
                                           backgroundColor: Colors.red,
                                         ));
                                         return "";
@@ -159,7 +159,7 @@ class SignupScreen extends StatelessWidget {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
                                           content: Text(
-                                              'Name cannot contain numbers'),
+                                              'الاسم لا يمكن ان يحتوي على ارقام'),
                                           backgroundColor: Colors.red,
                                         ));
                                         return "";
@@ -180,7 +180,7 @@ class SignupScreen extends StatelessWidget {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
                                           content: Text(
-                                              'Please enter a phone number'),
+                                              'يرجى ادخال رقم الجوال'),
                                           backgroundColor: Colors.red,
                                         ));
                                         return "";
@@ -189,7 +189,7 @@ class SignupScreen extends StatelessWidget {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
                                           content: Text(
-                                              'Please enter a valid Saudi phone number starting with 05'),
+                                              'رقم الهاتف يجب ان يبدأ ب 05'),
                                           backgroundColor: Colors.red,
                                         ));
                                         return "";

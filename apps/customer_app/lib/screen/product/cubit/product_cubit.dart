@@ -39,7 +39,7 @@ class ProductCubit extends Cubit<ProductState> {
   addToPlan() async {
     log("in add plan");
     if (planItemCOn.text.isEmpty) {
-      emit(EorrState(msg: "chose plan"));
+      emit(EorrState(msg: "اختر خطة"));
       return;
     }
 
@@ -54,7 +54,7 @@ class ProductCubit extends Cubit<ProductState> {
       emit(DoneAddState());
     } catch (er) {
       log("$er");
-      emit(EorrState(msg: er.toString()));
+      emit(EorrState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }
 }
