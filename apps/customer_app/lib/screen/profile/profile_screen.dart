@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:customer_app/component/drop_down_item.dart';
+
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
@@ -35,12 +36,16 @@ class ProfileScreen extends StatelessWidget {
               );
             }
             if (state is LoadingState) {
-              //showLoadingDialog(context: context);
+              showLoadingDialog(context: context);
             }
             if (state is ProfileUpdatedState) {
               log("iam lis");
               bloc.add(GetUserInfoEvent());
-              // Navigator.pop(context);
+            }
+            if (state is SussesState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              showSnackBar(context: context, msg: state.msg, isError: false);
             }
           },
           child: Directionality(
@@ -292,7 +297,7 @@ class ProfileScreen extends StatelessWidget {
                                                       senderName:
                                                           '${bloc.appModel.userModel?.name}',
                                                       schoolId:
-                                                          '${bloc.schoolName}',
+                                                          '${bloc.schoolId}',
                                                       content:
                                                           '${bloc.messageController?.text}'))
                                                   : showSnackBar(

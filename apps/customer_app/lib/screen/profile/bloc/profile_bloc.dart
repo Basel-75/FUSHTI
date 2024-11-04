@@ -25,6 +25,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? planNum = '';
   String? funds = '';
   String? schoolName = '';
+  String? schoolId = '';
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) {});
     on<SendMessagesEvent>(sendMessages);
@@ -40,11 +41,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (event.senderName.isEmpty || event.content.isEmpty) {
         emit(ErrorState(msg: 'حصل خطأ ما يرجى اعادة المحاولة لاحقا'));
       } else {
+        for (var element in appModel.schoolModelList) {
+          if (element.name == schoolName) {
+            schoolId = element.id;
+          }
+        }
         await SuperMain().sendSuggestion(
             senderName: event.senderName,
             content: event.content,
             schoolId: event.schoolId);
         emit(SussesState(msg: 'شكرا لك تم الارسال بنجاح'));
+        messageController?.clear();
+        schoolName = '';
       }
     } catch (e) {
       emit(ErrorState(msg: 'حصل خطأ ما يرجى اعادة المحاولة لاحقا'));
@@ -113,6 +121,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     userName = appModel.userModel?.name;
     phoneNum = appModel.userModel?.phone;
     funds = appModel.userModel?.funds.toString();
+
     followersNum = appModel.userModel?.childModelList != null
         ? appModel.userModel?.childModelList.length.toString()
         : '0';

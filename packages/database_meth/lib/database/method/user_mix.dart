@@ -96,4 +96,18 @@ mixin UserMix {
       log('$e');
     }
   }
+
+  getSuggestion({required String schoolId}) async {
+    try {
+      final res = await SuperMain()
+          .supabase
+          .from('help_center')
+          .select()
+          .eq('school_id', schoolId);
+      log('$res');
+      return res;
+    } catch (e) {
+      log('$e');
+    }
+  }
 }
