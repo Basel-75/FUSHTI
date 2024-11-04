@@ -32,8 +32,6 @@ class AddCubit extends Cubit<EditState> {
     if (pickedFile != null) {
       selectedImage = File(pickedFile.path);
       emit(ImagePickedState(selectedImage!));
-    } else {
-      emit(ErrorState(msg: 'لم يتم اختيار صور للمنتج'));
     }
   }
 
@@ -42,7 +40,7 @@ class AddCubit extends Cubit<EditState> {
    //add in DB
     try {
       if (selectedImage == null) {
-        emit(ErrorState(msg: 'No image selected'));
+        emit(ErrorState(msg: 'لم يتم اختيار صورة'));
         return;
       }
 

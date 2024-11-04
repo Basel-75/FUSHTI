@@ -3,7 +3,7 @@ import 'package:employee_app/screen/product/add_product/add_product_screen.dart'
 import 'package:employee_app/screen/bottomnavigator/bloc/bottomnavigator_bloc.dart';
 import 'package:employee_app/screen/bottomnavigator/cubit/scan_cubit.dart';
 import 'package:employee_app/screen/home/home_screen.dart';
-import 'package:employee_app/screen/profile/profile_screen.dart';
+
 import 'package:employee_app/screen/statistics/statistics_screen.dart';
 import 'package:employee_app/screen/storage/storage_product_screen.dart';
 import 'package:employee_app/widget/button/custome_button.dart';

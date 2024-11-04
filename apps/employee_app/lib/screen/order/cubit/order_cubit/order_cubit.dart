@@ -78,7 +78,7 @@ class OrderCubit extends Cubit<OrderState> {
       //getChildOrder();
     } catch (er) {
       log("$er");
-      emit(ErorState(msg: "there was eorr"));
+      emit(ErorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
 
       if (plan != null) {
         for (var val in plan!.mealPlanItemLis) {
@@ -196,7 +196,7 @@ class OrderCubit extends Cubit<OrderState> {
     } catch (er) {
       log("$er");
 
-      emit(ErorState(msg: er.toString()));
+      emit(ErorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
       rethrow;
     }
   }
@@ -205,12 +205,12 @@ class OrderCubit extends Cubit<OrderState> {
     log("  check this  ${selctFoodOrder?.orderItemModelLis.length}");
     emit(LodingState());
     if (dailyLimitTotal + preDailyLimitTotal > childModel.dailyLimits) {
-      emit(ErorState(msg: "the order is above the limt"));
+      emit(ErorState(msg: "قيمة الطلب اكبر من الحد اليومي"));
       return;
     }
 
     if (childModel.funds < dailyLimitTotal) {
-      emit(ErorState(msg: "child dont have money"));
+      emit(ErorState(msg: "الرصيد غير كافي لاتمام الطلب"));
       return;
     }
 
@@ -225,7 +225,7 @@ class OrderCubit extends Cubit<OrderState> {
       emit(DoneState());
     } catch (er) {
       log("$er");
-      emit(ErorState(msg: er.toString()));
+      emit(ErorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }
 }

@@ -35,8 +35,6 @@ class EditCubit extends Cubit<EditState> {
     if (pickedFile != null) {
       selectedImage = File(pickedFile.path);
       emit(ImagePickedState(selectedImage!));
-    } else {
-      emit(ErrorState(msg: 'لم يتم اختيار صور للمنتج'));
     }
   }
 
@@ -45,11 +43,12 @@ class EditCubit extends Cubit<EditState> {
     //add in DB
     try {
       if (selectedImage == null) {
-        emit(ErrorState(msg: 'No image selected'));
+        emit(ErrorState(msg: 'لم يتم اختيار صورة'));
         return;
       }
 
-      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!,isProductImage: true);
+      final imageUrl = await SuperMain()
+          .uploadImage(imageFile: selectedImage!, isProductImage: true);
       final updatedProduct = FoodMenuModel(
         id: productInfo.id,
         schoolId: appModel.empModel!.schoolId,
@@ -75,10 +74,10 @@ class EditCubit extends Cubit<EditState> {
                   return e.name;
                 },
               ).toList(),
-        imageUrl: imageUrl.isEmpty?product.imageUrl:imageUrl,
+        imageUrl: imageUrl.isEmpty ? product.imageUrl : imageUrl,
       );
       log('${updatedProduct.toJson()}');
-      final newProduct = await SuperMain().editProduct(product: updatedProduct);
+
       //Add Locale
       appModel.empModel?.schoolModel.foodMenuModelList.where(
         (element) => element.id == product.id,

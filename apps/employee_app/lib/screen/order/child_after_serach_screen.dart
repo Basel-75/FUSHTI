@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:employee_app/screen/order/cubit/child_serch_cubit/child_serch_cubit.dart';
 import 'package:employee_app/screen/order/order_screen.dart';
+import 'package:employee_app/widget/coulmn/empty_space_column.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/widget/container/child_card.dart';
@@ -17,14 +18,14 @@ class ChildAfterSerachScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ChildSerchCubit()
+      create: (context) => ChildSearchCubit()
         ..childName = childName
         ..childClass = childClass
         ..getChilds(),
       child: Builder(
         builder: (context) {
-          final cubit = context.read<ChildSerchCubit>();
-          return BlocListener<ChildSerchCubit, ChildSerchState>(
+          final cubit = context.read<ChildSearchCubit>();
+          return BlocListener<ChildSearchCubit, ChildSearchState>(
             listener: (context, state) {
               log("in state");
               if (state is LoadingState) {
@@ -67,7 +68,7 @@ class ChildAfterSerachScreen extends StatelessWidget {
                         SizedBox(
                           height: 6.h,
                         ),
-                        BlocBuilder<ChildSerchCubit, ChildSerchState>(
+                        BlocBuilder<ChildSearchCubit, ChildSearchState>(
                           builder: (context, state) {
                             return cubit.childLis.isNotEmpty? Column(
                               children: cubit.childLis
@@ -87,7 +88,7 @@ class ChildAfterSerachScreen extends StatelessWidget {
                                     ),
                                   )
                                   .toList(),
-                            ):const Text('لا يوجد طالب بهذا الاسم');
+                            ):const Center(child: EmptySpaceColumn(msg: 'لا يوجد طالب بهذا الاسم'),);
                           },
                         ),
                       ],

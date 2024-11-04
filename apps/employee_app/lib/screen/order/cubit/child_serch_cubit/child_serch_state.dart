@@ -1,12 +1,12 @@
 part of 'child_serch_cubit.dart';
 
 @immutable
-sealed class ChildSerchState {}
+sealed class ChildSearchState {}
 
-final class ChildSerchInitial extends ChildSerchState {}
-final class LoadingState extends ChildSerchState {}
-final class SuccessState extends ChildSerchState {}
-final class ErrorState extends ChildSerchState {
+final class ChildSerchInitial extends ChildSearchState {}
+final class LoadingState extends ChildSearchState {}
+final class SuccessState extends ChildSearchState {}
+final class ErrorState extends ChildSearchState {
 
   final String msg;
 
