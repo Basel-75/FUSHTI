@@ -70,9 +70,8 @@ class OrderCubit extends Cubit<OrderState> {
       required String childId,
       required String customerId}) async {
     try {
-      log("here");
       emit(LodingState());
-      await Onesignal().pushNote(msg: 'test $status', userId: customerId);
+      await Onesignal().pushNote(msg: '$status', userId: customerId);
       //msg: 'Hi your order is $status', userId: customerId
       emit(NoLodingState());
       //getChildOrder();
@@ -88,6 +87,9 @@ class OrderCubit extends Cubit<OrderState> {
               isDily: false));
         }
       }
+    } finally {
+      emit(
+          NoLodingState()); // Ensure loading state is removed, even in case of an error
     }
   }
 
@@ -221,11 +223,19 @@ class OrderCubit extends Cubit<OrderState> {
           orderLis: orderLis,
           childModel: childModel,
           dailyLimitTotal: dailyLimitTotal);
-
+      emit(DoneState());
+      await orderStatusNotification(
+          status: 'ولدك ${childModel.name} استلم وجبته',
+          childId: childModel.id,
+          customerId: childModel.userId);
+      emit(SuccessState(msg: 'تم تسليم الطلب بنجاح'));
       emit(DoneState());
     } catch (er) {
       log("$er");
       emit(ErorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+    } finally {
+      emit(
+          NoLodingState()); // Ensure loading state is removed, even in case of an error
     }
   }
 }

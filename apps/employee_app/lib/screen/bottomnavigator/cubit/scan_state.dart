@@ -10,3 +10,7 @@ final class ErorState extends ScanState {
 
   ErorState({required this.msg});
 }
+
+final class DoneState extends ScanState {}
+
+final class LoadingState extends ScanState {}
