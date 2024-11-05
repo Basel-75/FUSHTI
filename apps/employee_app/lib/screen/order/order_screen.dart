@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-
 import 'package:employee_app/screen/order/cubit/order_cubit/order_cubit.dart';
 
 import 'package:employee_app/widget/button/custome_button.dart';
 import 'package:employee_app/widget/container/cardorder.dart';
 import 'package:employee_app/widget/container/container_funds.dart';
 import 'package:employee_app/widget/dropDownList/custom_multi_select.dart';
+import 'package:employee_app/widget/image/image_handler.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +58,12 @@ class OrderScreen extends StatelessWidget {
                   },
                 );
               }
-
+              if (state is SuccessState) {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                // Navigator.pop(context);
+                showSnackBar(context: context, msg: state.msg, isError: false);
+              }
               if (state is DoneState) {
                 Navigator.pop(context);
               }
@@ -96,12 +101,22 @@ class OrderScreen extends StatelessWidget {
                     SizedBox(height: 4.h),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
-                      child: Image.asset(
-                        'assets/image/child_img.png',
-                        width: 40.w,
-                        height: 17.h,
-                        fit: BoxFit.cover,
-                      ),
+                      child: ImageHandler(
+                        imagePath: cubit.childModel.imgPath,
+                        errorWidget: Image.asset(
+                          "assets/image/mainLogo.png",
+                          height: 17.h,
+                          width: 40.w,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                      // Image.network(
+                      //         cubit.childModel.imgPath,
+                      //         width: 40.w,
+                      //         height: 17.h,
+                      //         fit: BoxFit.cover,
+                      //       )
+                      ,
                     ),
                     SizedBox(height: 1.h),
                     Text(
@@ -194,7 +209,10 @@ class OrderScreen extends StatelessWidget {
                         onPressed: () {
                           cubit.checkOut();
                         },
-                        title: "تأكيد الطلب")
+                        title: "تأكيد الطلب"),
+                    SizedBox(
+                      height: 2.h,
+                    )
                   ],
                 ),
               ),

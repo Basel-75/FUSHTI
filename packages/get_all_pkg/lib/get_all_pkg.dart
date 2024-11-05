@@ -39,6 +39,7 @@ export 'package:pdf/pdf.dart';
 
 export 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 export 'package:onesignal_flutter/onesignal_flutter.dart';
+export 'package:fl_chart/fl_chart.dart';
 
 showLoadingDialog({required BuildContext context}) {
   showDialog(
@@ -63,7 +64,7 @@ showConfirmDialog(
       confirmBtnText: 'نعم',
       cancelBtnText: 'لا',
       confirmBtnColor: Colors.green,
-      onCancelBtnTap: onCancelBtnTap ?? ()=>Navigator.pop(context),
+      onCancelBtnTap: onCancelBtnTap ?? () => Navigator.pop(context),
       onConfirmBtnTap: onConfirmBtnTap);
 }
 

@@ -88,128 +88,137 @@ class HomeScreen extends StatelessWidget {
                 ),
                 toolbarHeight: 15.h,
               ),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  EmpTitleName(
-                    paddingTop: 0.6.h,
-                    paddingRight: 2.h,
-                    textSize: 18.sp,
-                    schoolName: '${cubit.appModel.empModel?.schoolModel.name}',
-                  ),
-                  const Divider(),
-                  EmpTitleName(
-                    schoolName: 'البوكسات',
-                    paddingRight: 1.3.h,
-                  ),
-                  BlocBuilder<HomeCubit, HomeState>(
-                    builder: (context, state) {
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 1.h, horizontal: 1.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(
-                            cubit.menu
-                                .where((item) => item.category == 'box')
-                                .length,
-                            (index) {
-                              return HomeCard(
-                                // onTap: () {},
-                                onDelete: () => showConfirmDialog(
-                                  context: context,
-                                  onCancelBtnTap: () => Navigator.pop(context),
-                                  onConfirmBtnTap: () => cubit.deleteProduct(
-                                      productId: cubit.menu[index].id),
-                                ),
-                                onEdit: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditScreen(
-                                        productInfo: cubit.menu[index]),
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    EmpTitleName(
+                      paddingTop: 0.6.h,
+                      paddingRight: 2.h,
+                      textSize: 18.sp,
+                      schoolName:
+                          '${cubit.appModel.empModel?.schoolModel.name}',
+                    ),
+                    const Divider(),
+                    EmpTitleName(
+                      schoolName: 'البوكسات',
+                      paddingRight: 1.3.h,
+                    ),
+                    BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.h, horizontal: 1.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: List.generate(
+                              cubit.menu
+                                  .where((item) => item.category == 'box')
+                                  .length,
+                              (index) {
+                                return HomeCard(
+                                  // onTap: () {},
+                                  onDelete: () => showConfirmDialog(
+                                    context: context,
+                                    onCancelBtnTap: () =>
+                                        Navigator.pop(context),
+                                    onConfirmBtnTap: () => cubit.deleteProduct(
+                                        productId: cubit.menu[index].id),
                                   ),
-                                ),
-                                cal: cubit.menu[index].cal.toString(),
-                                imagePath: cubit.menu[index].imageUrl
-                                    .toString()
-                                    .trim(),
-                                productName: cubit.menu[index].foodName,
-                                price: '${cubit.menu[index].price as double}',
-                              );
-                            },
+                                  onEdit: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditScreen(
+                                          productInfo: cubit.menu[index]),
+                                    ),
+                                  ),
+                                  cal: cubit.menu[index].cal.toString(),
+                                  imagePath: cubit.menu[index].imageUrl
+                                      .toString()
+                                      .trim(),
+                                  productName: cubit.menu[index].foodName,
+                                  price: '${cubit.menu[index].price as double}',
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  EmpTitleName(
-                    schoolName: 'منتجاتي',
-                    paddingRight: 1.3.h,
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  cubit.menu
-                          .where((item) => item.category == 'product')
-                          .isNotEmpty
-                      ? BlocBuilder<HomeCubit, HomeState>(
-                          builder: (context, state) {
-                            return SizedBox(
-                              height: 38.h,
-                              width: 80.w,
-                              child: GridView.builder(
-                                itemCount: cubit.menu
-                                    .where((item) => item.category == 'product')
-                                    .length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 1.0.h,
-                                  //mainAxisSpacing: 0.0.h,
-                                  //childAspectRatio: 0.12.h,
-                                ),
-                                // padding: EdgeInsets.symmetric(
-                                //     horizontal: 4.w, vertical: 2.h),
-                                itemBuilder: (context, index) {
-                                  final filteredMenu = cubit.menu
+                        );
+                      },
+                    ),
+                    EmpTitleName(
+                      schoolName: 'منتجاتي',
+                      paddingRight: 1.3.h,
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    cubit.menu
+                            .where((item) => item.category == 'product')
+                            .isNotEmpty
+                        ? BlocBuilder<HomeCubit, HomeState>(
+                            builder: (context, state) {
+                              return SizedBox(
+                                height: 38.h,
+                                width: 80.w,
+                                child: GridView.builder(
+                                  itemCount: cubit.menu
                                       .where(
                                           (item) => item.category == 'product')
-                                      .toList();
-                                  return Center(
-                                    child: HomeCard(
-                                      productName: filteredMenu[index].foodName,
-                                      price: '${filteredMenu[index].price}',
-                                      cal: '${filteredMenu[index].cal}',
-                                      imagePath: filteredMenu[index]
-                                          .imageUrl
-                                          .toString()
-                                          .trim(),
-                                      onDelete: () => showConfirmDialog(
-                                        context: context,
-                                        onCancelBtnTap: () =>
-                                            Navigator.pop(context),
-                                        onConfirmBtnTap: () =>
-                                            cubit.deleteProduct(
-                                                productId:
-                                                    filteredMenu[index].id),
-                                      ),
-                                      onEdit: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => EditScreen(
-                                              productInfo: filteredMenu[index]),
+                                      .length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 1.0.h,
+                                    //mainAxisSpacing: 0.0.h,
+                                    //childAspectRatio: 0.12.h,
+                                  ),
+                                  // padding: EdgeInsets.symmetric(
+                                  //     horizontal: 4.w, vertical: 2.h),
+                                  itemBuilder: (context, index) {
+                                    final filteredMenu = cubit.menu
+                                        .where((item) =>
+                                            item.category == 'product')
+                                        .toList();
+                                    return Center(
+                                      child: HomeCard(
+                                        productName:
+                                            filteredMenu[index].foodName,
+                                        price: '${filteredMenu[index].price}',
+                                        cal: '${filteredMenu[index].cal}',
+                                        imagePath: filteredMenu[index]
+                                            .imageUrl
+                                            .toString()
+                                            .trim(),
+                                        onDelete: () => showConfirmDialog(
+                                          context: context,
+                                          onCancelBtnTap: () =>
+                                              Navigator.pop(context),
+                                          onConfirmBtnTap: () =>
+                                              cubit.deleteProduct(
+                                                  productId:
+                                                      filteredMenu[index].id),
+                                        ),
+                                        onEdit: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditScreen(
+                                                productInfo:
+                                                    filteredMenu[index]),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        )
-                      : const Center(child: EmptySpaceColumn(msg: 'لا يوجد منتجات'),)
-                ],
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: EmptySpaceColumn(msg: 'لا يوجد منتجات'),
+                          )
+                  ],
+                ),
               ),
             ),
           ),

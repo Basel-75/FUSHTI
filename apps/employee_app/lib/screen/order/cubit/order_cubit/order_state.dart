@@ -13,10 +13,14 @@ final class ErorState extends OrderState {
 
 final class DoneState extends OrderState {}
 
-final class LodingState extends OrderState {}
+final class SuccessState extends OrderState {
+  final String msg;
 
+  SuccessState({required this.msg});
+}
+
+final class LodingState extends OrderState {}
 
 final class NoLodingState extends OrderState {}
 
 final class QueUpdateState extends OrderState {}
-

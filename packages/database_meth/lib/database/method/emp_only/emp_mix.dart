@@ -29,7 +29,6 @@ mixin EmpMix {
   //   }
 
   Future<double> bringPreOrderLimt({required ChildModel childModel}) async {
-    
     try {
       double totalPreLimt = 0;
       final date = DateTime.now().toIso8601String().split('T')[0];
@@ -249,9 +248,6 @@ mixin EmpMix {
     }
   }
 
-
-
-
   editProduct({required FoodMenuModel product}) async {
     log('${product.toJson()}');
     try {
@@ -278,7 +274,6 @@ mixin EmpMix {
     }
   }
 
-
   addProduct({required FoodMenuModel product}) async {
     try {
       final response = await SuperMain().supabase.from('food_menu').insert({
@@ -299,12 +294,35 @@ mixin EmpMix {
     }
   }
 
-
   deleteProduct({required String productId}) async {
     try {
       await SuperMain().supabase.from('food_menu').delete().eq('id', productId);
     } catch (e) {
       log('$e');
+    }
+  }
+
+  getAllOrders() async {
+    try {
+      final response = await SuperMain().supabase.from('orders').select('*');
+
+      return response;
+    } catch (e) {
+      throw Exception("خطأ في استرجاع عدد الطلبات.");
+    }
+  }
+
+  getTotalSalesCount() async {
+    try {
+      final response = await SuperMain()
+          .supabase
+          .from('orders')
+          .select('id')
+          .eq('status', 'completed')
+          .select();
+      return response;
+    } catch (e) {
+      throw Exception("خطأ في استرجاع عدد المبيعات.");
     }
   }
 }
