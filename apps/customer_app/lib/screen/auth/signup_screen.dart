@@ -110,8 +110,7 @@ class SignupScreen extends StatelessWidget {
                                     if (value == null || value.isEmpty) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
-                                        content: Text(
-                                            'يرجى ادخال الايميل'),
+                                        content: Text('يرجى ادخال الايميل'),
                                         backgroundColor: Colors.red,
                                       ));
 
@@ -121,8 +120,7 @@ class SignupScreen extends StatelessWidget {
                                         .hasMatch(value)) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
-                                        content: Text(
-                                            'ايميل غير صالح'),
+                                        content: Text('ايميل غير صالح'),
                                         backgroundColor: Colors.red,
                                       ));
 
@@ -179,8 +177,8 @@ class SignupScreen extends StatelessWidget {
                                       if (value == null || value.isEmpty) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(const SnackBar(
-                                          content: Text(
-                                              'يرجى ادخال رقم الجوال'),
+                                          content:
+                                              Text('يرجى ادخال رقم الجوال'),
                                           backgroundColor: Colors.red,
                                         ));
                                         return "";

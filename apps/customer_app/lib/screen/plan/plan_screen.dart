@@ -27,14 +27,14 @@ class PlanScreen extends StatelessWidget {
               ));
             }
 
-            if (state is EorrPlanState) {
+            if (state is ErrorPlanState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.msg),
                 backgroundColor: Colors.red,
               ));
             }
 
-            if (state is LodingState) {
+            if (state is LoadingState) {
               showDialog(
                 context: context,
                 barrierDismissible: false,
@@ -46,7 +46,7 @@ class PlanScreen extends StatelessWidget {
               );
             }
 
-            if (state is NoLodingState) {
+            if (state is NoLoadingState) {
               Navigator.pop(context);
             }
 
@@ -54,13 +54,13 @@ class PlanScreen extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
                   return PlanCartScreen(
-                    planModel: cubit.planModelSelcted!,
+                    planModel: cubit.planModelSelected!,
                   );
                 },
               ));
             }
 
-            if (state is PlanChnageState) {
+            if (state is PlanChangeState) {
               Navigator.pop(context);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -105,7 +105,7 @@ class PlanScreen extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                log("${cubit.childModelSelcted}");
+                log("${cubit.childModelSelected}");
                 if (cubit.isThereChild()) {
                   showDialog(
                     context: context,
@@ -135,7 +135,6 @@ class PlanScreen extends StatelessWidget {
                                 height: 2.h,
                               ),
                               CustomButton(
-                                // backgroundColor: Color(0xffC8E5F5),
                                 onPressed: () {
                                   cubit.addPlan();
                                 },
@@ -244,13 +243,11 @@ class PlanScreen extends StatelessWidget {
                                     CustomRadioButton(
                                       height: 5.h,
                                       width: 30.w,
-
                                       customShape: ContinuousRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(25)),
                                       enableShape: true,
                                       elevation: 2,
-                                      //absoluteZeroSpacing: true,
                                       unSelectedColor: const Color(0xffffffff),
                                       buttonLables: List.generate(
                                         cubit.planListUi.length,
@@ -296,7 +293,7 @@ class PlanScreen extends StatelessWidget {
                                   const Spacer(
                                     flex: 2,
                                   ),
-                                  cubit.planModelSelcted != null
+                                  cubit.planModelSelected != null
                                       ? GestureDetector(
                                           child: const Icon(
                                             Icons.edit_outlined,
@@ -357,13 +354,14 @@ class PlanScreen extends StatelessWidget {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  cubit.planModelSelcted != null
+                                  cubit.planModelSelected != null
                                       ? GestureDetector(
                                           onTap: () {
                                             showConfirmDialog(
                                               context: context,
-                                              onConfirmBtnTap: () => cubit.delPlan(),);
-                                            
+                                              onConfirmBtnTap: () =>
+                                                  cubit.delPlan(),
+                                            );
                                           },
                                           child: const Icon(
                                             Icons.delete,

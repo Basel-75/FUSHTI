@@ -45,7 +45,8 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     try {
       //Delete in DB
       emit(LoadingState());
-      await SuperMain().deleteChild(id: childModel!.id,userId: childModel!.userId);
+      await SuperMain()
+          .deleteChild(id: childModel!.id, userId: childModel!.userId);
       //Delete Locale
       appModel.userModel?.childModelList.removeWhere(
         (element) => element.id == childModel!.id,
@@ -117,7 +118,7 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     if (pickedFile != null) {
       selectedImage = File(pickedFile.path);
       emit(ImagePickedState(selectedImage!));
-    } 
+    }
   }
 
   Future<void> updateChildImage({required String childId}) async {
@@ -148,7 +149,7 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     }
   }
 
-  addFundstoChild() async {
+  addFundsChild() async {
     try {
       emit(LoadingState());
 

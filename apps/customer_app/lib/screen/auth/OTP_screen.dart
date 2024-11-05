@@ -132,7 +132,9 @@ class OTPScreen extends StatelessWidget {
                           },
                           title: 'تحقق',
                         ),
-                        SizedBox(height: 17.h,),
+                        SizedBox(
+                          height: 17.h,
+                        ),
                         Row(
                           children: [
                             Image.asset(

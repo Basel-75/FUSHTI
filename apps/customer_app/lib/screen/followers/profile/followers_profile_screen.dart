@@ -105,7 +105,6 @@ class FollowersProfileScreen extends StatelessWidget {
                 ),
                 centerTitle: true,
                 flexibleSpace: Container(
-                  //height: 15.h,
                   decoration: const BoxDecoration(
                     color: Color(0xff6FBAE5),
                     borderRadius: BorderRadius.only(
@@ -142,7 +141,7 @@ class FollowersProfileScreen extends StatelessWidget {
                           height: 28.w,
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                              color:  Colors.white,
+                              color: Colors.white,
                               shape: BoxShape.circle,
                               border:
                                   Border.all(width: 0.2, color: Colors.grey)),
@@ -158,7 +157,6 @@ class FollowersProfileScreen extends StatelessWidget {
                                     children: [
                                       ImageHandler(
                                         imagePath: childInfo!.imgPath,
-
                                       )
                                     ],
                                   ),
@@ -215,7 +213,7 @@ class FollowersProfileScreen extends StatelessWidget {
                         },
                       ),
 
-                      //!status
+                      //status
                       Positioned(
                         top: 8.h,
                         left: 40.w,

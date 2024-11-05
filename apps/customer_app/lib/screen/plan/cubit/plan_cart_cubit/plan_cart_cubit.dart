@@ -19,11 +19,10 @@ class PlanCartCubit extends Cubit<PlanCartState> {
   DateTime? startDate;
   DateTime? endDate;
 
-  int dayNume = 0;
+  int dayNumbers = 0;
 
   double totalPrice = 0;
 
-// can used when you call superbase with  holidays
   List<DateTime> holidays = [
     DateTime(2024, 10, 25),
     DateTime(2024, 10, 30),
@@ -35,14 +34,14 @@ class PlanCartCubit extends Cubit<PlanCartState> {
 
   onAdd({required MealPlanItemModel mealPlanItemModel}) {
     mealPlanItemModel.quantity += 1;
-    emit(QueChnageState());
+    emit(QueChangeState());
   }
 
   onMinus({required MealPlanItemModel mealPlanItemModel}) {
     if (mealPlanItemModel.quantity != 1) {
       mealPlanItemModel.quantity -= 1;
 
-      emit(QueChnageState());
+      emit(QueChangeState());
     }
   }
 
@@ -57,15 +56,15 @@ class PlanCartCubit extends Cubit<PlanCartState> {
 
     calculateDays();
 
-    emit(DateChnageState());
+    emit(DateChangeState());
   }
 
   upDateDate() {
-    emit(DateChnageState());
+    emit(DateChangeState());
   }
 
   calculateDays() {
-    dayNume = 0;
+    dayNumbers = 0;
 
     if (startDate != null && endDate != null) {
       for (DateTime date = startDate!;
@@ -82,12 +81,12 @@ class PlanCartCubit extends Cubit<PlanCartState> {
         if (date.weekday != DateTime.saturday &&
             date.weekday != DateTime.sunday &&
             !isHoliday) {
-          dayNume++;
+          dayNumbers++;
         }
       }
     }
 
-    log("This is how many business days: $dayNume");
+    log("This is how many business days: $dayNumbers");
   }
 
   String calculateCal({required PlanModel planModel}) {
@@ -112,15 +111,15 @@ class PlanCartCubit extends Cubit<PlanCartState> {
 
   payPlan({required PlanModel planModel}) async {
     try {
-      emit(LodingState());
+      emit(LoadingState());
       log("user funds :::: ${appModel.userModel!.funds}");
-      if (dayNume == 0) {
-        emit(ErorrState(msg: "يرجى اختيا التاريخ"));
+      if (dayNumbers == 0) {
+        emit(ErrorState(msg: "يرجى اختيار التاريخ"));
         return;
       }
 
       if (appModel.userModel!.funds < totalPrice) {
-        emit(ErorrState(msg: "ليس لديك رصيد كافي"));
+        emit(ErrorState(msg: "ليس لديك رصيد كافي"));
         return;
       }
 
@@ -128,14 +127,14 @@ class PlanCartCubit extends Cubit<PlanCartState> {
           planModel: planModel,
           stratDate: startDate!,
           endDate: endDate!,
-          totalPrice: totalPrice * dayNume);
+          totalPrice: totalPrice * dayNumbers);
 
       log("user funds :::: ${appModel.userModel!.funds}");
       log("very good plan pay");
       emit(DoneState());
     } catch (er) {
       log("$er");
-      emit(ErorrState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
+      emit(ErrorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-
 import 'package:customer_app/screen/followers/edit/edit_followers_cubit/edit_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
@@ -18,10 +17,11 @@ class EditFollowersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EditFollowersCubit(childModel:  childInfo!)..initVal(),
+      create: (context) =>
+          EditFollowersCubit(childModel: childInfo!)..initVal(),
       child: Builder(builder: (context) {
         final cubit = context.read<EditFollowersCubit>();
-        
+
         return Directionality(
           textDirection: TextDirection.rtl,
           child: BlocListener<EditFollowersCubit, EditFollowersState>(
@@ -32,7 +32,7 @@ class EditFollowersScreen extends StatelessWidget {
 
               if (state is SuccessEditState) {
                 Navigator.pop(context);
-                
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
@@ -42,7 +42,7 @@ class EditFollowersScreen extends StatelessWidget {
                     backgroundColor: Colors.green,
                   ),
                 );
-                Navigator.pop(context,true);
+                Navigator.pop(context, true);
                 log("very Good Edit child");
               }
 
@@ -79,7 +79,6 @@ class EditFollowersScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   flexibleSpace: Container(
-                    //height: 15.h,
                     decoration: const BoxDecoration(
                       color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
@@ -112,7 +111,6 @@ class EditFollowersScreen extends StatelessWidget {
                               children: [
                                 ImageHandler(
                                   imagePath: childInfo!.imgPath,
-
                                 )
                               ],
                             ),
@@ -152,7 +150,6 @@ class EditFollowersScreen extends StatelessWidget {
                         label: 'المدرسة',
                         hintText: 'اختر المدرسة',
                         items: cubit.school,
-
                         onChanged: (p0) {
                           cubit.schoolCon.text = p0!.name;
                         },
@@ -176,11 +173,10 @@ class EditFollowersScreen extends StatelessWidget {
                         height: 2.h,
                       ),
                       CustomMultiSelect(
-                        initialItems: cubit.initAlergy,
-
+                        initialItems: cubit.initAllergy,
                         label: 'الحساسية',
                         hintText: 'اختر الحساسية',
-                        items: cubit.alergy,
+                        items: cubit.allergy,
                         onListChanged: (val) {
                           cubit.allgyList = val;
                         },
@@ -188,7 +184,6 @@ class EditFollowersScreen extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-
                       SizedBox(
                         height: 4.h,
                       ),

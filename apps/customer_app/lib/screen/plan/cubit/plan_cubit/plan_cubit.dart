@@ -23,25 +23,24 @@ class PlanCubit extends Cubit<PlanState> {
 
   TextEditingController planNameCOn = TextEditingController();
 
-  ChildModel? childModelSelcted;
+  ChildModel? childModelSelected;
 
-  PlanModel? planModelSelcted;
+  PlanModel? planModelSelected;
 
   clickInChild({required ChildModel childModel}) {
-    planModelSelcted = null;
+    planModelSelected = null;
     mealPlanItemLisUi.clear();
     planListUi = childModel.planList;
 
-    childModelSelcted = childModel;
+    childModelSelected = childModel;
 
     emit(ChildClickState());
   }
 
   delPlan() async {
     try {
-      emit(LodingState());
-      if (planModelSelcted == null) {
-        // emit(ErorrState(msg: msg));
+      emit(LoadingState());
+      if (planModelSelected == null) {
         return;
       }
 
@@ -49,15 +48,15 @@ class PlanCubit extends Cubit<PlanState> {
 
       if (inter) {
         log("there is inter");
-        SuperMain().delPlan(plan: planModelSelcted!);
+        SuperMain().delPlan(plan: planModelSelected!);
 
-        childModelSelcted!.planList.removeWhere(
+        childModelSelected!.planList.removeWhere(
           (element) {
-            return element.name == planModelSelcted!.name;
+            return element.name == planModelSelected!.name;
           },
         );
-        planModelSelcted = null;
-        emit(PlanChnageState(msg: "تم حذف الخطة بنجاح"));
+        planModelSelected = null;
+        emit(PlanChangeState(msg: "تم حذف الخطة بنجاح"));
       } else {
         log("there is no  inter");
         emit(NoInterState());
@@ -69,8 +68,7 @@ class PlanCubit extends Cubit<PlanState> {
 
   editPlan() async {
     try {
-      if (planModelSelcted == null) {
-        // emit(ErorrState(msg: msg));
+      if (planModelSelected == null) {
         return;
       }
 
@@ -80,26 +78,26 @@ class PlanCubit extends Cubit<PlanState> {
         log("there is inter");
 
         if (planNameCOn.text.isEmpty) {
-          emit(EorrPlanState(msg: "اضف اسم للخطة"));
+          emit(ErrorPlanState(msg: "اضف اسم للخطة"));
 
           return;
         }
 
         for (var val in planListUi) {
           if (val.name! == planNameCOn.text) {
-            emit(EorrPlanState(msg: "هناك خطة بنفس الاسم"));
+            emit(ErrorPlanState(msg: "هناك خطة بنفس الاسم"));
             return;
           }
         }
 
-        emit(LodingState());
+        emit(LoadingState());
 
-        SuperMain().editPlan(plan: planModelSelcted!, name: planNameCOn.text);
+        SuperMain().editPlan(plan: planModelSelected!, name: planNameCOn.text);
 
-        planModelSelcted!.name = planNameCOn.text;
+        planModelSelected!.name = planNameCOn.text;
 
-        emit(NoLodingState());
-        emit(PlanChnageState(msg: "تم تعديل الخطة"));
+        emit(NoLoadingState());
+        emit(PlanChangeState(msg: "تم تعديل الخطة"));
       } else {
         log("there is no  inter");
         emit(NoInterState());
@@ -114,7 +112,7 @@ class PlanCubit extends Cubit<PlanState> {
     log("${planModel.name}");
     log("${mealPlanItemLisUi.length}");
 
-    planModelSelcted = planModel;
+    planModelSelected = planModel;
     mealPlanItemLisUi.addAll(planModel.mealPlanItemLis);
 
     log("after");
@@ -135,7 +133,7 @@ class PlanCubit extends Cubit<PlanState> {
       for (int i = 0; i < mealPlanItemLisUi.length; i++) {
         if (mealPlanItemLisUi[i].id == mealPlanItemModel.id) {
           mealPlanItemLisUi.removeAt(i);
-          planModelSelcted!.mealPlanItemLis.removeAt(i);
+          planModelSelected!.mealPlanItemLis.removeAt(i);
           emit(DelItemState());
           return;
         }
@@ -152,39 +150,39 @@ class PlanCubit extends Cubit<PlanState> {
     // check if there is plan with same name
 
     if (planNameCOn.text.isEmpty) {
-      emit(EorrPlanState(msg: "اضف اسم للخطة"));
+      emit(ErrorPlanState(msg: "اضف اسم للخطة"));
 
       return;
     }
 
     for (var val in planListUi) {
       if (val.name! == planNameCOn.text) {
-        emit(EorrPlanState(msg: "هناك خطة بنفس الاسم"));
+        emit(ErrorPlanState(msg: "هناك خطة بنفس الاسم"));
         return;
       }
     }
 
     try {
-      emit(LodingState());
+      emit(LoadingState());
       final res = await SuperMain()
-          .addPlan(childId: childModelSelcted!.id, name: planNameCOn.text);
+          .addPlan(childId: childModelSelected!.id, name: planNameCOn.text);
 
-      childModelSelcted!.planList.add(PlanModel.fromJson(res));
+      childModelSelected!.planList.add(PlanModel.fromJson(res));
 
-      emit(NoLodingState());
-      emit(PlanChnageState(msg: "تم اضافة الخطة بنجاح"));
+      emit(NoLoadingState());
+      emit(PlanChangeState(msg: "تم اضافة الخطة بنجاح"));
 
       log("plan has been add");
     } catch (er) {
-      emit(NoLodingState());
-      emit(EorrPlanState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
+      emit(NoLoadingState());
+      emit(ErrorPlanState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }
 
 // check before add plan if there is child or not
   bool isThereChild() {
-    if (childModelSelcted == null) {
-      emit(EorrPlanState(msg: "اختر التابع اولا"));
+    if (childModelSelected == null) {
+      emit(ErrorPlanState(msg: "اختر التابع اولا"));
       return false;
     } else {
       return true;
@@ -192,11 +190,11 @@ class PlanCubit extends Cubit<PlanState> {
   }
 
   toCart() {
-    if (planModelSelcted == null) {
-      emit(EorrPlanState(msg: "يرجى اختيار خطة"));
+    if (planModelSelected == null) {
+      emit(ErrorPlanState(msg: "يرجى اختيار خطة"));
       return;
-    } else if (planModelSelcted!.mealPlanItemLis.isEmpty) {
-      emit(EorrPlanState(msg: "خطتك فارغة"));
+    } else if (planModelSelected!.mealPlanItemLis.isEmpty) {
+      emit(ErrorPlanState(msg: "خطتك فارغة"));
       return;
     }
 

@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -20,7 +19,7 @@ class HistoryCubit extends Cubit<HistoryState> {
   bool isOrder = true;
 
   tabClick({required String tabName}) {
-    emit(LodingState());
+    emit(LoadingState());
     if (tabName == "order") {
       isOrder = true;
     } else {
@@ -33,7 +32,7 @@ class HistoryCubit extends Cubit<HistoryState> {
   historyBring() async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
-      emit(LodingState());
+      emit(LoadingState());
 
       final res = await SuperMain().orderHistory();
 
@@ -47,8 +46,7 @@ class HistoryCubit extends Cubit<HistoryState> {
 
       emit(DoneState());
     } catch (er) {
-      emit(ErorrState(msg: '$er'));
-      
+      emit(ErrorState(msg: '$er'));
     }
   }
 }

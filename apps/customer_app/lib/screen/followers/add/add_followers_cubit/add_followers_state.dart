@@ -5,13 +5,14 @@ sealed class AddFollowersState {}
 
 final class AddFollowersInitial extends AddFollowersState {}
 
-final class DoenAddState extends AddFollowersState {}
-final class NoLodingState extends AddFollowersState {}
+final class DoneAddState extends AddFollowersState {}
 
-final class LodingState extends AddFollowersState {}
+final class NoLoadingState extends AddFollowersState {}
 
-final class ErorrState extends AddFollowersState {
+final class LoadingState extends AddFollowersState {}
+
+final class ErrorState extends AddFollowersState {
   final String msg;
 
-  ErorrState({required this.msg});
+  ErrorState({required this.msg});
 }

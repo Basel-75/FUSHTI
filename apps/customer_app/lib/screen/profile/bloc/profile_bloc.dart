@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -33,10 +32,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<CheckPaymentEvent>(checkPayment);
     on<PaymentEvent>(paymentConfig);
     on<SendMessagesEvent>(sendMessages);
-    on<UpdateImageEvent>(updateImage);
+
     on<GetUserInfoEvent>(getUserInfoMethod);
     on<UpdateProfileEvent>(updateProfileMethod);
-    on<PickImageEvent>(pickImage);
   }
 
   FutureOr<void> checkPayment(CheckPaymentEvent event, emit) async {
@@ -90,41 +88,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
     } catch (e) {
       emit(ErrorState(msg: 'حصل خطأ ما يرجى اعادة المحاولة لاحقا'));
-    }
-  }
-
-//!Remove it later if we do not want change profile image
-  FutureOr<void> updateImage(event, emit) async {
-    emit(LoadingState());
-    //Update in DB
-    try {
-      if (selectedImage == null) {
-        emit(ErrorState(msg: 'لم يتم اختيار صورة'));
-        return;
-      }
-
-      final imageUrl = await SuperMain()
-          .uploadImage(imageFile: selectedImage!, isProductImage: false);
-
-      final newProduct = await SuperMain().updateUserProfileImage(
-          id: appModel.userModel!.id, imageUrl: imageUrl);
-      //Update Locale
-      appModel.userModel!.imageUrl = imageUrl;
-      emit(SussesState(msg: 'تمت تحديث الصورة بنجاح'));
-    } catch (e) {
-      emit(ErrorState(msg: 'حدث خطأ ما يرجى المحاولة مرة اخرى'));
-    }
-  }
-
-  FutureOr<void> pickImage(event, emit) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      selectedImage = File(pickedFile.path);
-      emit(ImagePickedState(selectedImage: selectedImage!));
-    } else {
-      emit(ErrorState(msg: 'لم يتم اختيار صورة '));
     }
   }
 

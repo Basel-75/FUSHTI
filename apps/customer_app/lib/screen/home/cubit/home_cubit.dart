@@ -10,8 +10,6 @@ import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/restriction_food_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
-import 'package:get_all_pkg/helper/moyser_pay_meth.dart';
-import 'package:meta/meta.dart';
 
 part 'home_state.dart';
 
@@ -28,23 +26,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   TextEditingController priceTotal = TextEditingController();
 
-  checkOut() async {
-    try {
-      //  moyserPay
-
-      // final res = await moyserPay(priceTotal: priceTotal);
-
-      // emit(OrderConformState(paymentConfig: paymentConfig));
-    } catch (er) {
-      log("$er");
-    }
-  }
-
   initHome() {
     childModelList = appModel.userModel!.childModelList;
 
     log("there is ${childModelList.length}");
-    //log('${currentChild.schoolModel.foodMenuModelList.first.imageUrl.toString().trim()}');
+
     currentChild = childModelList.first;
     currentChild.isSelected = true;
     for (var element in currentChild.schoolModel.foodMenuModelList) {
@@ -56,7 +42,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  chnageChild(ChildModel child) {
+  changeChild(ChildModel child) {
     if (child != currentChild) {
       boxList.clear();
       productList.clear();
@@ -72,7 +58,7 @@ class HomeCubit extends Cubit<HomeState> {
         }
       }
 
-      emit(ChnageChildState());
+      emit(ChangeChildState());
     }
   }
 
@@ -87,6 +73,10 @@ class HomeCubit extends Cubit<HomeState> {
       );
 
       //update locale
+      currentChild.restrictionFood.add(RestrictionFoodModel(
+        childId: childId,
+        menuItemId: productId,
+      ));
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
           element.restrictionFood.add(RestrictionFoodModel(
@@ -106,7 +96,6 @@ class HomeCubit extends Cubit<HomeState> {
     bool result = false;
     for (var element in appModel.userModel!.childModelList) {
       for (var food in element.restrictionFood) {
-        //log('${element.toJson()}1111111');
         if (food.menuItemId == productId) {
           result = true;
         }
@@ -115,17 +104,6 @@ class HomeCubit extends Cubit<HomeState> {
     emit(CheckState());
     return result;
   }
-
-  // List<FoodMenuModel> getListByType({required String catagory,required String schoolId}) {
-
-  //   for (var element in currentChild.schoolModel.foodMenuModelList) {
-  //     if (element.category == catagory && element.schoolId==schoolId) {
-  //       foodList.add(element);
-  //       log(element.toJson().toString());
-  //     }
-  //   }
-  //   return foodList;
-  // }
 
   quickAddToCart(
       {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {

@@ -59,12 +59,12 @@ class OrderCartCubit extends Cubit<OrderCartState> {
       log("user funds :::: ${appModel.userModel!.funds}");
 
       if (appModel.userModel!.funds < totalPrice) {
-        emit(ErorrState(msg: "ليس لديك رصيد كافي"));
+        emit(ErrorState(msg: "ليس لديك رصيد كافي"));
         return;
       }
 
       if (childModel.cartList.isEmpty) {
-        emit(ErorrState(msg: "لا توجد منتجات في السلة"));
+        emit(ErrorState(msg: "لا توجد منتجات في السلة"));
 
         return;
       }
@@ -77,7 +77,7 @@ class OrderCartCubit extends Cubit<OrderCartState> {
     } catch (er) {
       log("$er");
 
-      emit(ErorrState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }
 

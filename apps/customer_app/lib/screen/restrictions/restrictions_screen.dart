@@ -40,31 +40,30 @@ class RestrictionsScreen extends StatelessWidget {
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  iconTheme: const IconThemeData(
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'الوجبات المحظورة',
-                    style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  centerTitle: true,
-                  flexibleSpace: Container(
-                    //height: 15.h,
-                    decoration: const BoxDecoration(
-                      color: Color(0xff6FBAE5),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(35),
-                        bottomRight: Radius.circular(35),
-                      ),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'الوجبات المحظورة',
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                centerTitle: true,
+                flexibleSpace: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xff6FBAE5),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35),
                     ),
                   ),
-                  toolbarHeight: 11.h,
                 ),
+                toolbarHeight: 11.h,
+              ),
               body: Column(
                 children: [
                   SizedBox(
@@ -74,42 +73,46 @@ class RestrictionsScreen extends StatelessWidget {
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 6.h),
                       child: BlocBuilder<RestrictionsCubit, RestrictionsState>(
                         builder: (context, state) {
-                          return cubit.restrictionsFood.isNotEmpty? Column(
-                              //'assets/image/boxImage.png'
-                              children: List.generate(
-                            cubit.restrictionsFood.length,
-                            (index) => RestrictionCard(
-                              productName:
-                                  cubit.foodMenuModelList[index].foodName,
-                              cal:
-                                  cubit.foodMenuModelList[index].cal.toString(),
-                              imagePath: 'assets/image/boxImage.png',
-                              price: cubit.foodMenuModelList[index].price
-                                  .toString(),
-                              onDelete: () {
-                                QuickAlert.show(
-                                    context: context,
-                                    type: QuickAlertType.confirm,
-                                    text: 'هل انت متأكد',
-                                    confirmBtnText: 'نعم',
-                                    cancelBtnText: 'لا',
-                                    confirmBtnColor: Colors.green,
-                                    onCancelBtnTap: () =>
-                                        Navigator.pop(context),
-                                    onConfirmBtnTap: () {
-                                      cubit.deleteRestrictionFood(
-                                          productId: cubit.restrictionsFood[index].menuItemId);
-                                      cubit.getRestrictionFoodList(
-                                          childId: childId);
-                                    });
-                              },
-                            ),
-                          )):const Center(child: EmptySpaceColumn(msg: 'ليس هناك اي وجبات محظورة'));
+                          return cubit.restrictionsFood.isNotEmpty
+                              ? Column(
+                                  children: List.generate(
+                                  cubit.restrictionsFood.length,
+                                  (index) => RestrictionCard(
+                                    productName:
+                                        cubit.foodMenuModelList[index].foodName,
+                                    cal: cubit.foodMenuModelList[index].cal
+                                        .toString(),
+                                    imagePath: 'assets/image/boxImage.png',
+                                    price: cubit.foodMenuModelList[index].price
+                                        .toString(),
+                                    onDelete: () {
+                                      QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.confirm,
+                                          text: 'هل انت متأكد',
+                                          confirmBtnText: 'نعم',
+                                          cancelBtnText: 'لا',
+                                          confirmBtnColor: Colors.green,
+                                          onCancelBtnTap: () =>
+                                              Navigator.pop(context),
+                                          onConfirmBtnTap: () {
+                                            cubit.deleteRestrictionFood(
+                                                productId: cubit
+                                                    .restrictionsFood[index]
+                                                    .menuItemId);
+                                            cubit.getRestrictionFoodList(
+                                                childId: childId);
+                                          });
+                                    },
+                                  ),
+                                ))
+                              : const Center(
+                                  child: EmptySpaceColumn(
+                                      msg: 'ليس هناك اي وجبات محظورة'));
                         },
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),

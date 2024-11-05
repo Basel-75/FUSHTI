@@ -2,9 +2,10 @@ import 'dart:developer';
 
 import 'package:customer_app/screen/home/cubit/home_cubit.dart';
 import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
-import 'package:customer_app/screen/pay_screen/pay_screen.dart';
+
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
+import 'package:customer_app/widget/container/home_card.dart';
 import 'package:customer_app/widget/container/show_dialog_pay_widget.dart';
 import 'package:customer_app/widget/image/image_handler.dart';
 import 'package:flutter/material.dart';
@@ -53,21 +54,6 @@ class HomeScreen extends StatelessWidget {
                         priceTotal: cubit.priceTotal,
                         onPressed: () {},
                       );
-
-                      //          Navigator.of(context).push(MaterialPageRoute(
-                      //   builder: (context) {
-                      //     return PayScreen(
-                      //       paymentConfig: state.paymentConfig,
-                      //     );
-                      //   },
-                      // )).then(
-                      //   (paymentResponse) {
-                      //     log("in pay return");
-                      //     if (paymentResponse is PaymentResponse) {
-                      //       cubit.checkOut(paymentResponse: paymentResponse);
-                      //     }
-                      //   },
-                      // );
                     },
                     child: const Icon(
                       Icons.monetization_on,
@@ -148,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                                           child: FollowersAvatar(
                                             onTap: () {
                                               log("chnageChild start");
-                                              cubit.chnageChild(
+                                              cubit.changeChild(
                                                   cubit.childModelList[index]);
                                             },
                                             childImage: cubit
@@ -269,12 +255,26 @@ class HomeScreen extends StatelessWidget {
                                                 .foodName,
                                             price:
                                                 '${cubit.currentChild.schoolModel.foodMenuModelList[index].price as double}',
-                                            onAdd: () => cubit.quickAddToCart(
-                                                childModel: cubit.currentChild,
-                                                foodMenuModel: cubit
-                                                    .currentChild
-                                                    .schoolModel
-                                                    .foodMenuModelList[index]),
+                                            onAdd: () => cubit
+                                                    .checkRestrictionsFood(
+                                                        productId: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                                index]
+                                                            .id)
+                                                ? showSnackBar(
+                                                    context: context,
+                                                    msg: 'المنتج محظور',
+                                                    isError: true)
+                                                : cubit.quickAddToCart(
+                                                    childModel:
+                                                        cubit.currentChild,
+                                                    foodMenuModel: cubit
+                                                            .currentChild
+                                                            .schoolModel
+                                                            .foodMenuModelList[
+                                                        index]),
                                           );
                                         },
                                       ),
@@ -283,9 +283,6 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            // SizedBox(
-                            //   height: 2.h,
-                            // ),
                             Text(
                               'البوكسات',
                               style: TextStyle(
@@ -355,9 +352,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       BlocBuilder<HomeCubit, HomeState>(
                         builder: (context, state) {
-                          // cubit.getListByType(
-                          //     catagory: 'product',
-                          //     schoolId: cubit.currentChild.schoolId);
                           return SizedBox(
                               height: 60.h,
                               width: 80.w,
@@ -422,118 +416,6 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-}
-
-class HomeCard extends StatelessWidget {
-  final String productName, price, cal, imagePath;
-  final Function()? onTap, onRestriction, onAdd;
-  final bool isRestriction;
-  const HomeCard({
-    super.key,
-    required this.productName,
-    required this.price,
-    required this.cal,
-    this.onTap,
-    this.onRestriction,
-    this.onAdd,
-    required this.imagePath,
-    required this.isRestriction,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40.w,
-      width: 35.w,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          InkWell(
-            onTap: onTap,
-            child: Container(
-              width: 35.w,
-              height: 35.w,
-              margin: EdgeInsets.symmetric(horizontal: 1.w),
-              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: kElevationToShadow[8]),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  Text(
-                    productName,
-                    style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800),
-                  ),
-                  SizedBox(
-                    height: 1.w,
-                  ),
-                  Text(
-                    '$price رس',
-                    style:
-                        TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        cal,
-                        style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0x50000000)),
-                      ),
-                      const Icon(LineAwesome.fire_alt_solid,
-                          color: Color(0xffEC8743))
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-              left: 12.w,
-              bottom: 28.w,
-              child: CircleAvatar(
-                backgroundColor: const Color(0x88C8E5F5),
-                child: !isRestriction
-                    ? ImageHandler(imagePath: imagePath)
-                    : ImageHandler(
-                        imagePath: imagePath,
-                        errorWidget: const Icon(Icons.no_food),
-                      ),
-              )),
-          Positioned(
-              left: 27.w,
-              bottom: 32.w,
-              child: InkWell(
-                onTap: onRestriction,
-                child: const Icon(Icons.no_food_outlined, color: Colors.red),
-              )),
-          Positioned(
-            left: 3.w,
-            bottom: 8.w,
-            child: InkWell(
-              onTap: onAdd,
-              child: Container(
-                width: 8.w,
-                height: 7.w,
-                decoration: BoxDecoration(
-                    color: const Color(0xffC9E7E7),
-                    borderRadius: BorderRadius.circular(6)),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
     );
   }
 }

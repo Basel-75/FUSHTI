@@ -18,8 +18,8 @@ class ProductCubit extends Cubit<ProductState> {
 
   TextEditingController planItemCOn = TextEditingController();
 
-   final FoodMenuModel foodMenuModel;
-   final ChildModel childModel;
+  final FoodMenuModel foodMenuModel;
+  final ChildModel childModel;
 
   addToCart(
       {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {
@@ -30,7 +30,7 @@ class ProductCubit extends Cubit<ProductState> {
       }
     }
 
-        childModel.cartList.add(
+    childModel.cartList.add(
         CartItem(childModel: childModel, foodMenuModel: foodMenuModel, que: 1));
 
     emit(DoneAddState());
@@ -39,12 +39,10 @@ class ProductCubit extends Cubit<ProductState> {
   addToPlan() async {
     log("in add plan");
     if (planItemCOn.text.isEmpty) {
-      emit(EorrState(msg: "اختر خطة"));
+      emit(ErrorState(msg: "اختر خطة"));
       return;
     }
 
-
-   
     try {
       await SuperMain().addPlanItem(
           name: planItemCOn.text,
@@ -54,7 +52,7 @@ class ProductCubit extends Cubit<ProductState> {
       emit(DoneAddState());
     } catch (er) {
       log("$er");
-      emit(EorrState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }
 }

@@ -39,7 +39,6 @@ class AuthCubit extends Cubit<AuthStatee> {
     required String? name,
     required String? phone,
   }) async {
-    // try {
     emit(LoadingState());
     if (otp.isEmpty) {
       emit(ErrorState(msg: "ادخل رمز التحقق"));
@@ -50,10 +49,5 @@ class AuthCubit extends Cubit<AuthStatee> {
         .verifyOtp(email: email, otp: otp, name: name, phone: phone);
 
     emit(SuccessState());
-    // }
-
-    // catch (er) {
-    //   emit(ErrorState(msg: er.toString()));
-    // }
   }
 }

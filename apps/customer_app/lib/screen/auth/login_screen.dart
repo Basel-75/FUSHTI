@@ -83,13 +83,9 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                      
                           Image.asset(
                             'assets/image/mainLogo2.png',
                           ),
-                          // SizedBox(
-                          //   height: 3.h,
-                          // ),
                           Text(
                             'تسجيل الدخول',
                             style: TextStyle(
@@ -114,22 +110,20 @@ class LoginScreen extends StatelessWidget {
                                 if (value == null || value.isEmpty) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
-                                    content:
-                                        Text('يرجى ادخال الايميل'),
+                                    content: Text('يرجى ادخال الايميل'),
                                     backgroundColor: Colors.red,
                                   ));
-                      
+
                                   return "";
                                 } else if (!RegExp(
                                         r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
                                     .hasMatch(value)) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
-                                    content: Text(
-                                        'ايميل غير صالح'),
+                                    content: Text('ايميل غير صالح'),
                                     backgroundColor: Colors.red,
                                   ));
-                      
+
                                   return "";
                                 }
                                 return null;
@@ -139,11 +133,6 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-                          // const CustomTextFormFelid(
-                          //   hintText: '*************',
-                          //   isPassword: true,
-                          //   label: 'كلمة السر',
-                          // ),
                           SizedBox(
                             height: 4.h,
                           ),
@@ -166,8 +155,9 @@ class LoginScreen extends StatelessWidget {
                             height: 1.h,
                           ),
                           const BrandRow(),
-                          //const Spacer(),
-                          SizedBox(height: 18.h,),
+                          SizedBox(
+                            height: 18.h,
+                          ),
                           Row(
                             children: [
                               Image.asset(

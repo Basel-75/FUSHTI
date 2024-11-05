@@ -25,8 +25,8 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
 
   List<DropDownItem> school = [];
   DropDownItem? initSchoolDrop;
-  List<DropDownItem> alergy = [];
-  List<DropDownItem> initAlergy = [];
+  List<DropDownItem> allergy = [];
+  List<DropDownItem> initAllergy = [];
 
   List<DropDownItem> allgyList = [];
 
@@ -39,7 +39,7 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
       },
     ).toList();
 
-    alergy = appModel.alergy.map(
+    allergy = appModel.alergy.map(
       (e) {
         return DropDownItem(e);
       },
@@ -52,18 +52,17 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
       (item) => item.name == childModel.schoolModel.name,
     );
 
-    initAlergy = childModel.allergy
-        .map((e) => alergy.firstWhere((item) => item.name == e))
+    initAllergy = childModel.allergy
+        .map((e) => allergy.firstWhere((item) => item.name == e))
         .toList();
-    // .cast<DropDownItem>();
 
-    allgyList = List.from(initAlergy);
+    allgyList = List.from(initAllergy);
   }
 
   editChild() async {
     log(nameCon.text);
     if (formKey.currentState!.validate()) {
-    emit(LoadingState());
+      emit(LoadingState());
       late String schoolId;
       late SchoolModel schoolModel;
 
@@ -75,16 +74,16 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
       }
       //Update in DB
       await SuperMain().editChild(
-          name: nameCon.text,
-          id: childModel.id,
-          allergy: allgyList.map(
-            (e) {
-              return e.name;
-            },
-          ).toList(),
-          childClass: classCon.text,
-          schoolId: schoolId,
-       );
+        name: nameCon.text,
+        id: childModel.id,
+        allergy: allgyList.map(
+          (e) {
+            return e.name;
+          },
+        ).toList(),
+        childClass: classCon.text,
+        schoolId: schoolId,
+      );
       //Update locale
       try {
         //sure not empty
@@ -105,10 +104,6 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
               ).toList();
 
               appModel.userModel?.childModelList[i].schoolModel = schoolModel;
-
-              // //to make sure
-              // log('${appModel.userModel?.childModelList[i].toJson()}');
-              // log('${appModel.userModel?.childModelList[i].id}|$childId');
             }
           }
         }
@@ -118,7 +113,6 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
       emit(SuccessEditState());
     } else {
       log("حدث خطأ");
-      
     }
   }
 }
