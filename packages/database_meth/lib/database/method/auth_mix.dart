@@ -23,7 +23,7 @@ mixin AuthMix on Super {
     }
   }
 
-// remove this later
+
   getUserTempData() async {
     try {
       final res = await SuperMain()

@@ -23,6 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
   late ChildModel currentChild;
   List<FoodMenuModel> boxList = [];
   List<FoodMenuModel> productList = [];
+  List<FoodMenuModel> bestProductList = [];
 
   TextEditingController priceTotal = TextEditingController();
 
@@ -46,8 +47,10 @@ class HomeCubit extends Cubit<HomeState> {
     if (child != currentChild) {
       boxList.clear();
       productList.clear();
+      bestProductList.clear();
       currentChild.isSelected = false;
       log("in if change child");
+      getBestProduct();
       currentChild = child;
       currentChild.isSelected = true;
       for (var element in currentChild.schoolModel.foodMenuModelList) {
@@ -126,5 +129,16 @@ class HomeCubit extends Cubit<HomeState> {
       element.isSelected = false;
     }
     return super.close();
+  }
+
+  getBestProduct() async {
+    try {
+      final bestProduct = await SuperMain().getBestThreeProduct();
+      for (var element in bestProduct) {
+        bestProductList.add(FoodMenuModel.fromJson(element));
+      }
+    } catch (e) {
+      log('$e');
+    }
   }
 }

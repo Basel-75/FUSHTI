@@ -6,6 +6,7 @@ class HomeCard extends StatelessWidget {
   final String productName, price, cal, imagePath;
   final Function()? onTap, onRestriction, onAdd;
   final bool isRestriction;
+  final bool withoutButton;
   const HomeCard({
     super.key,
     required this.productName,
@@ -16,6 +17,7 @@ class HomeCard extends StatelessWidget {
     this.onAdd,
     required this.imagePath,
     required this.isRestriction,
+    required this.withoutButton,
   });
 
   @override
@@ -27,7 +29,7 @@ class HomeCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           InkWell(
-            onTap: onTap,
+            onTap: withoutButton ? null : onTap,
             child: Container(
               width: 35.w,
               height: 35.w,
@@ -86,27 +88,32 @@ class HomeCard extends StatelessWidget {
           Positioned(
               left: 27.w,
               bottom: 32.w,
-              child: InkWell(
-                onTap: onRestriction,
-                child: const Icon(Icons.no_food_outlined, color: Colors.red),
-              )),
+              child: withoutButton
+                  ? Text('')
+                  : InkWell(
+                      onTap: onRestriction,
+                      child:
+                          const Icon(Icons.no_food_outlined, color: Colors.red),
+                    )),
           Positioned(
             left: 3.w,
             bottom: 8.w,
-            child: InkWell(
-              onTap: onAdd,
-              child: Container(
-                width: 8.w,
-                height: 7.w,
-                decoration: BoxDecoration(
-                    color: const Color(0xffC9E7E7),
-                    borderRadius: BorderRadius.circular(6)),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            child: withoutButton
+                ? Text('')
+                : InkWell(
+                    onTap: onAdd,
+                    child: Container(
+                      width: 8.w,
+                      height: 7.w,
+                      decoration: BoxDecoration(
+                          color: const Color(0xffC9E7E7),
+                          borderRadius: BorderRadius.circular(6)),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
           )
         ],
       ),

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-
+import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/container/profile_tile.dart';
@@ -340,7 +340,18 @@ class ProfileScreen extends StatelessWidget {
                                         context: context,
                                         onCancelBtnTap: () =>
                                             Navigator.pop(context),
-                                        onConfirmBtnTap: () {},
+                                        onConfirmBtnTap: () async {
+                                          await Supabase.instance.client.auth
+                                              .signOut();
+                                          if (context.mounted) {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginScreen(),
+                                                ));
+                                          }
+                                        },
                                       )),
                             ],
                           ),

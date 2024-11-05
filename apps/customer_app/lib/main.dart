@@ -1,3 +1,4 @@
+import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 
@@ -19,6 +20,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final session = Supabase.instance.client.auth.currentSession;
     return Sizer(
       builder: (context, orientation, screenType) => Directionality(
         textDirection: TextDirection.rtl,
@@ -32,7 +34,9 @@ class MainApp extends StatelessWidget {
                 elevatedButtonTheme: ElevatedButtonThemeData(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xffFEC87F)))),
-            home: const BottomNavigatorScreen(),
+            home: session == null
+                ? const LoginScreen()
+                : const BottomNavigatorScreen(),
           ),
         ),
       ),

@@ -1,12 +1,15 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
+import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 
 import 'package:customer_app/widget/button/custom_text_button.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/app_model.dart';
+import 'package:get_all_pkg/data/setup.dart';
 
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -60,7 +63,7 @@ class OTPScreen extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),
+                    builder: (context) => const BottomNavigatorScreen(),
                   ));
             }
           },

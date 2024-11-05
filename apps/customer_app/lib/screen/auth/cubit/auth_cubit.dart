@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_all_pkg/data/setup.dart';
 
 part 'auth_state.dart';
 
@@ -47,7 +48,9 @@ class AuthCubit extends Cubit<AuthStatee> {
 
     await SuperMain()
         .verifyOtp(email: email, otp: otp, name: name, phone: phone);
-
+    await SuperMain().getChilds();
+    await SuperMain().getChildernPlan();
+    await SuperMain().getRestrictionFood();
     emit(SuccessState());
   }
 }
