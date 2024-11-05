@@ -6,11 +6,15 @@ import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/profile_tile.dart';
+import 'package:customer_app/widget/container/show_dialog_pay_widget.dart';
+import 'package:customer_app/widget/container/suggestion_tile.dart';
 import 'package:customer_app/widget/coulmn/edit_user_profile_form.dart';
+import 'package:customer_app/widget/coulmn/empty_space_column.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
 import 'package:customer_app/widget/row/info_container_row.dart';
 import 'package:customer_app/widget/row/user_info_row.dart';
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
+import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -45,6 +49,12 @@ class ProfileScreen extends StatelessWidget {
             if (state is SussesState) {
               Navigator.pop(context);
               Navigator.pop(context);
+              showSnackBar(context: context, msg: state.msg, isError: false);
+            }
+            if (state is SussesPayState) {
+              Navigator.pop(context);
+            }
+            if (state is SussesUpdateFundsState) {
               showSnackBar(context: context, msg: state.msg, isError: false);
             }
           },
@@ -227,6 +237,61 @@ class ProfileScreen extends StatelessWidget {
                             right: 0.2.w,
                             child: Column(
                               children: [
+                                BlocBuilder<ProfileBloc, ProfileState>(
+                                  builder: (context, state) {
+                                    return ProfileTile(
+                                        title: 'شحن المحفظة',
+                                        icon: const Icon(Icons.book_outlined),
+                                        forLogout: false,
+                                        onTap: () => showDialogPayWidget(
+                                              context: context,
+                                              priceTotal: bloc.amountController,
+                                              onPressed: () async {
+                                                bloc.add(PaymentEvent());
+                                                Navigator.pop(context);
+                                                await Future.delayed(
+                                                    Duration.zero);
+                                                if (state is SussesPayState) {
+                                                  showModalBottomSheet(
+                                                      context: context,
+                                                      builder:
+                                                          (context) =>
+                                                              Container(
+                                                                width: 100.w,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              12),
+                                                                ),
+                                                                child:
+                                                                    SingleChildScrollView(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          6.w,
+                                                                      vertical:
+                                                                          2.h),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Image.asset(
+                                                                          'assets/image/mainLogo.png'),
+                                                                      CreditCard(
+                                                                          locale: Localization
+                                                                              .ar(),
+                                                                          config: state
+                                                                              .paymentConfig,
+                                                                          onPaymentResult: (PaymentResponse paymentResponse) =>
+                                                                              bloc.add(CheckPaymentEvent(paymentResponse: paymentResponse))),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ));
+                                                }
+                                              },
+                                            ));
+                                  },
+                                ),
                                 ProfileTile(
                                   title: 'الفواتير',
                                   icon: const Icon(Icons.book_outlined),
@@ -238,80 +303,23 @@ class ProfileScreen extends StatelessWidget {
                                             const HistoryScreen(),
                                       )),
                                 ),
-                                ProfileTile(
-                                  title: 'الشكاوى و الاقتراحات',
-                                  icon: const Icon(Icons.safety_divider_sharp),
-                                  forLogout: false,
-                                  onTap: () => showBottomSheet(
-                                    context: context,
-                                    builder: (context) => Container(
-                                      width: 100.w,
-                                      height: 40.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white,
-                                        boxShadow: kElevationToShadow[4],
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 4.h,
-                                          ),
-                                          Text(
-                                            'الشكاوى و الاقتراحات',
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: const Color(0xff546F66)),
-                                          ),
-                                          CustomSelect(
-                                            label: 'المدرسة',
-                                            hintText: 'اختر المدرسة',
-                                            onChanged: (p0) =>
-                                                bloc.schoolName = p0?.name,
-                                            items: bloc.appModel.schoolModelList
-                                                .map(
-                                                  (school) =>
-                                                      DropDownItem(school.name),
-                                                )
-                                                .toList(),
-                                          ),
-                                          SizedBox(
-                                            height: 2.h,
-                                          ),
-                                          Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: CustomTextFormFelid(
-                                                label: 'النص',
-                                                hintText: 'لدي مشكلة في ...',
-                                                isPassword: false,
-                                                controller:
-                                                    bloc.messageController,
-                                              )),
-                                          const Spacer(),
-                                          CustomButton(
-                                              onPressed: () => bloc
-                                                      .messageController!
-                                                      .text
-                                                      .isNotEmpty
-                                                  ? bloc.add(SendMessagesEvent(
-                                                      senderName:
-                                                          '${bloc.appModel.userModel?.name}',
-                                                      schoolId:
-                                                          '${bloc.schoolId}',
-                                                      content:
-                                                          '${bloc.messageController?.text}'))
-                                                  : showSnackBar(
-                                                      context: context,
-                                                      msg: 'رسالة فارغة',
-                                                      isError: true),
-                                              title: 'ارسال'),
-                                          SizedBox(
-                                            height: 2.h,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                SuggestionTile(
+                                  item: bloc.appModel.schoolModelList,
+                                  controller: bloc.messageController,
+                                  onPressed: () => bloc
+                                          .messageController!.text.isNotEmpty
+                                      ? bloc.add(SendMessagesEvent(
+                                          senderName:
+                                              '${bloc.appModel.userModel?.name}',
+                                          schoolId: '${bloc.schoolId}',
+                                          content:
+                                              '${bloc.messageController?.text}'))
+                                      : showSnackBar(
+                                          context: context,
+                                          msg: 'رسالة فارغة',
+                                          isError: true),
+                                  onSchoolChanged: (p0) =>
+                                      bloc.schoolName = p0?.name,
                                 ),
                                 ProfileTile(
                                   title: 'عن فسحتي',

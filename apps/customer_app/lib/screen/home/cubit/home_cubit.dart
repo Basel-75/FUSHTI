@@ -2,12 +2,15 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/restriction_food_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
+import 'package:get_all_pkg/get_all_pkg.dart';
+import 'package:get_all_pkg/helper/moyser_pay_meth.dart';
 import 'package:meta/meta.dart';
 
 part 'home_state.dart';
@@ -22,6 +25,20 @@ class HomeCubit extends Cubit<HomeState> {
   late ChildModel currentChild;
   List<FoodMenuModel> boxList = [];
   List<FoodMenuModel> productList = [];
+
+  TextEditingController priceTotal = TextEditingController();
+
+  checkOut() async {
+    try {
+      //  moyserPay
+
+      // final res = await moyserPay(priceTotal: priceTotal);
+
+      // emit(OrderConformState(paymentConfig: paymentConfig));
+    } catch (er) {
+      log("$er");
+    }
+  }
 
   initHome() {
     childModelList = appModel.userModel!.childModelList;
