@@ -22,7 +22,6 @@ class LandingPage extends StatelessWidget {
         },
         finishButtonStyle: const FinishButtonStyle(
           backgroundColor: Color(0xff6FBAE5),
-          // shape: CircleBorder(),
         ),
         background: [
           ImageSlider(

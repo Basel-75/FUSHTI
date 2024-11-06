@@ -28,14 +28,14 @@ class PlanCartScreen extends StatelessWidget {
           final cubit = context.read<PlanCartCubit>();
           return BlocListener<PlanCartCubit, PlanCartState>(
             listener: (context, state) {
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(state.msg),
                   backgroundColor: Colors.red,
                 ));
               }
 
-              if (state is LodingState) {
+              if (state is LoadingState) {
                 showLoadingDialog(context: context);
               }
 
@@ -67,7 +67,6 @@ class PlanCartScreen extends StatelessWidget {
                 ),
                 centerTitle: true,
                 flexibleSpace: Container(
-                  //height: 15.h,
                   decoration: const BoxDecoration(
                     color: Color(0xff6FBAE5),
                     borderRadius: BorderRadius.only(
@@ -90,14 +89,10 @@ class PlanCartScreen extends StatelessWidget {
                           locale: 'en_US',
                           firstDay: DateTime.now(),
                           lastDay: DateTime(2024, 12, 31),
-                          focusedDay: cubit.focusedDay, // Managed by Cubit
-
+                          focusedDay: cubit.focusedDay,
                           selectedDayPredicate: (day) {
-                            // Use this to determine which day is currently selected.
-
                             return isSameDay(cubit.focusedDay, day);
                           },
-
                           onDaySelected: (selectedDay, focusedDay) {
                             cubit.focusedDay = selectedDay;
 
@@ -105,11 +100,8 @@ class PlanCartScreen extends StatelessWidget {
 
                             cubit.upDateDate();
                           },
-                          rangeSelectionMode: RangeSelectionMode
-                              .toggledOn, // Enable range selection
-
-                          calendarFormat:
-                              CalendarFormat.week, // Show single row (week)
+                          rangeSelectionMode: RangeSelectionMode.toggledOn,
+                          calendarFormat: CalendarFormat.week,
                           startingDayOfWeek: StartingDayOfWeek.sunday,
                           onRangeSelected: (start, end, focusedDay) {
                             cubit.dateRange(
@@ -223,7 +215,7 @@ class PlanCartScreen extends StatelessWidget {
                                     startDate: formatDate(cubit.startDate) ??
                                         "غير محدد",
                                     endDate:
-                                        formatDate(cubit.endDate) ??  "غير محدد",
+                                        formatDate(cubit.endDate) ?? "غير محدد",
                                   );
                                 },
                               ),
@@ -240,7 +232,7 @@ class PlanCartScreen extends StatelessWidget {
                                   BlocBuilder<PlanCartCubit, PlanCartState>(
                                     builder: (context, state) {
                                       return Text(
-                                        '${cubit.dayNume} أيام',
+                                        '${cubit.dayNumbers} أيام',
                                         style: TextStyle(fontSize: 13.sp),
                                       );
                                     },
@@ -268,7 +260,7 @@ class PlanCartScreen extends StatelessWidget {
                       builder: (context, state) {
                         return PayPlanBottom(
                           totalPrice:
-                              '${double.parse(cubit.calculateTotal(planModel: planModel)) *cubit.dayNume}',
+                              '${double.parse(cubit.calculateTotal(planModel: planModel)) * cubit.dayNumbers}',
                           onPressed: () {
                             cubit.payPlan(planModel: planModel);
                           },

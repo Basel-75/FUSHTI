@@ -6,8 +6,8 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 import 'content_history.dart';
 
-class HistoyBodyOrderWidget extends StatelessWidget {
-  const HistoyBodyOrderWidget(
+class HistoryBodyOrderWidget extends StatelessWidget {
+  const HistoryBodyOrderWidget(
       {super.key, required this.lisOrder, this.childModel});
 
   final List<OrderModel> lisOrder;

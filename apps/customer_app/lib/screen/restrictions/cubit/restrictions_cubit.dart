@@ -30,7 +30,6 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
               (element) => element.id == food.menuItemId,
             ));
           }
-          
         }
       }
     } catch (e) {
@@ -47,7 +46,8 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
       restrictionsFood.removeWhere(
         (element) => element.menuItemId == productId,
       );
-      emit(SuccessDeleteState(msg: 'تم ازالة الوجبة من الوجبات المحظورة بنجاح'));
+      emit(
+          SuccessDeleteState(msg: 'تم ازالة الوجبة من الوجبات المحظورة بنجاح'));
     } catch (e) {
       log('$e');
       emit(ErrorState(msg: 'حدث خطأ ما يرجى اعادة المحاولة لاحقا'));

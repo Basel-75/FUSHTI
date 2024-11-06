@@ -7,10 +7,6 @@ class GetUserInfoEvent extends ProfileEvent {}
 
 class UpdateProfileEvent extends ProfileEvent {}
 
-class PickImageEvent extends ProfileEvent {}
-
-class UpdateImageEvent extends ProfileEvent {}
-
 class PaymentEvent extends ProfileEvent {}
 
 class CheckPaymentEvent extends ProfileEvent {

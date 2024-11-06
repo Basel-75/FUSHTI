@@ -5,13 +5,12 @@ sealed class FollowerOrderPlanState {}
 
 final class FollowerOrderPlanInitial extends FollowerOrderPlanState {}
 
-
-final class ErorrState extends FollowerOrderPlanState {
+final class ErrorState extends FollowerOrderPlanState {
   final String msg;
 
-  ErorrState({required this.msg});
+  ErrorState({required this.msg});
 }
 
 final class DoneState extends FollowerOrderPlanState {}
 
-final class LodingState extends FollowerOrderPlanState {}
+final class LoadingState extends FollowerOrderPlanState {}

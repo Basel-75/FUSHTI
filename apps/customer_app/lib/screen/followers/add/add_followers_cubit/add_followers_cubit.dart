@@ -43,10 +43,10 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
 
   addChild() async {
     log(fundsCon.text);
-    emit(LodingState());
+    emit(LoadingState());
     if (formKey.currentState!.validate()) {
       if (appModel.userModel!.funds < double.parse(fundsCon.text)) {
-        emit(ErorrState(
+        emit(ErrorState(
             msg: "لا تمتلك رصيد رصيدك : ${appModel.userModel!.funds}"));
         return;
       }
@@ -81,10 +81,10 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
       appModel.userModel!.numberFollowers += 1;
       appModel.userModel!.childModelList.add(tempChild);
 
-      emit(DoenAddState());
+      emit(DoneAddState());
     } else {
       log("not good vaild");
-      emit(NoLodingState());
+      emit(NoLoadingState());
     }
   }
 }

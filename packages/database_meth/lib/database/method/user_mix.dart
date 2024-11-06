@@ -75,7 +75,6 @@ mixin UserMix {
           .single();
       UserModel user = UserModel.fromJson(response);
       return user;
-      log('${user.toJson()}');
     } catch (e) {
       log('$e');
     }
@@ -122,6 +121,16 @@ mixin UserMix {
           .select()
           .eq('school_id', schoolId);
       log('$res');
+      return res;
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+  getBestThreeProduct() async {
+    try {
+      final res =
+          await SuperMain().supabase.rpc('get_top_three_products').select();
       return res;
     } catch (e) {
       log('$e');

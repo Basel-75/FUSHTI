@@ -30,11 +30,8 @@ mixin HistoryNowOrderMix {
       // .not("dates_taken", "eq", {todayDate});
       // print(res);
 
-      final res = await SuperMain().supabase.rpc("get_active_meal_plans",params: {
-
-        "p_child_id" : childModel.id,
-        "p_today" : todayDate
-      });
+      final res = await SuperMain().supabase.rpc("get_active_meal_plans",
+          params: {"p_child_id": childModel.id, "p_today": todayDate});
 
       for (var plan in res) {
         final tempPlan = PlanModel.fromJson(plan);
@@ -135,25 +132,32 @@ mixin HistoryNowOrderMix {
             "p_order_id": val["record_id"]
           });
 
-          final childTemp = ChildModel.fromJson(orderRes["child"]);
+          log('orderRes: $orderRes');
 
-          final orederTemp = OrderModel.fromJson(orderRes["orders"][0]);
+          if (orderRes != null &&
+              orderRes["child"] != null &&
+              orderRes["orders"] != null) {
+            final childTemp = ChildModel.fromJson(orderRes["child"]);
+            final orederTemp = OrderModel.fromJson(orderRes["orders"][0]);
 
-          List<OrderItemModel> orderItemLis = [];
+            List<OrderItemModel> orderItemLis = [];
 
-          for (var val in orderRes["orders"][0]["order_items"]) {
-            final orderItemTemp = OrderItemModel.fromJson(val);
+            for (var item in orderRes["orders"][0]["order_items"]) {
+              final orderItemTemp = OrderItemModel.fromJson(item);
 
-            orderItemTemp.foodMenuModel =
-                FoodMenuModel.fromJson(val["food_menu"]);
+              if (item["food_menu"] != null) {
+                orderItemTemp.foodMenuModel =
+                    FoodMenuModel.fromJson(item["food_menu"]);
+              }
 
-            orderItemLis.add(orderItemTemp);
+              orderItemLis.add(orderItemTemp);
+            }
+            orederTemp.orderItemModelLis.addAll(orderItemLis);
+            orederTemp.childModel = childTemp;
+
+            lis.add(HistoryOrderModel(
+                childModel: childTemp, orderModel: orederTemp));
           }
-          orederTemp.orderItemModelLis.addAll(orderItemLis);
-          orederTemp.childModel = childTemp;
-
-          lis.add(
-              HistoryOrderModel(childModel: childTemp, orderModel: orederTemp));
         }
         //  ----------------------------- for order handle if the history is plan -------------------------------
         else {
@@ -163,32 +167,38 @@ mixin HistoryNowOrderMix {
                 "p_meal_plan_id": val["record_id"]
               });
 
-          final planTemp = PlanModel.fromJson(planRes["meal_plans"][0]);
-          final tempChild = ChildModel.fromJson(planRes["child"]);
+          log('planRes: $planRes');
 
-          final List<MealPlanItemModel> tmeMealLis = [];
+          if (planRes != null &&
+              planRes["meal_plans"] != null &&
+              planRes["child"] != null) {
+            final planTemp = PlanModel.fromJson(planRes["meal_plans"][0]);
+            final tempChild = ChildModel.fromJson(planRes["child"]);
 
-          for (var val in planRes["meal_plans"][0]["meal_plan_items"]) {
-            final meal = MealPlanItemModel.fromJson(val);
-            final food = FoodMenuModel.fromJson(val["food_menu"]);
+            final List<MealPlanItemModel> tmeMealLis = [];
 
-            meal.foodMenuModel = food;
+            for (var item in planRes["meal_plans"][0]["meal_plan_items"]) {
+              final meal = MealPlanItemModel.fromJson(item);
+              if (item["food_menu"] != null) {
+                final food = FoodMenuModel.fromJson(item["food_menu"]);
+                meal.foodMenuModel = food;
+              }
 
-            tmeMealLis.add(meal);
+              tmeMealLis.add(meal);
+            }
+
+            planTemp.mealPlanItemLis.addAll(tmeMealLis);
+            planTemp.childModel = tempChild;
+
+            lis.add(
+                HistoryOrderModel(childModel: tempChild, planModel: planTemp));
           }
-
-          planTemp.mealPlanItemLis.addAll(tmeMealLis);
-          planTemp.childModel = tempChild;
-
-          lis.add(
-              HistoryOrderModel(childModel: tempChild, planModel: planTemp));
         }
       }
 
       return lis;
     } catch (er) {
-      log("$er");
-
+      log("Error in orderHistory: $er");
       rethrow;
     }
   }

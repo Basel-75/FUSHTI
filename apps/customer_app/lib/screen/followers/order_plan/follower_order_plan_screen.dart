@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
-
 import 'package:customer_app/widget/history_widget/histoy_body_order_widget.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_plan_widgetd.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -15,10 +15,6 @@ class FollowerOrderPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //replace it with Bloc
-
-    //replace it with Bloc order.length
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: BlocProvider(
@@ -30,13 +26,13 @@ class FollowerOrderPlanScreen extends StatelessWidget {
 
           return BlocListener<FollowerOrderPlanCubit, FollowerOrderPlanState>(
             listener: (context, state) {
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 showSnackBar(context: context, msg: state.msg, isError: true);
               }
 
-              if (state is LodingState) {
-                log("in lodaing");
+              if (state is LoadingState) {
+                log("in loading");
                 showLoadingDialog(context: context);
               }
 
@@ -60,7 +56,6 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   flexibleSpace: Container(
-                    //height: 15.h,
                     decoration: const BoxDecoration(
                       color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
@@ -110,41 +105,17 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                               FollowerOrderPlanState>(
                             builder: (context, state) {
                               return cubit.isOrder == true
-                                  ? HistoyBodyOrderWidget(
+                                  ? HistoryBodyOrderWidget(
                                       childModel: cubit.childModel,
                                       lisOrder: cubit.lisOrder)
-                                  : HistoyBodyPlanWidgetd(
+                                  : HistoryBodyPlanWidget(
                                       childModel: cubit.childModel,
                                       planLis: cubit.planLis);
                             },
                           )),
                     ],
                   ),
-                )
-                // : Center(
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Image.asset('assets/image/history_img.png'),
-                //         SizedBox(
-                //           height: 2.h,
-                //         ),
-                //         const Text(
-                //           "ليس لديك طلبات :(",
-                //           style: TextStyle(
-                //               fontSize: 18,
-                //               fontWeight: FontWeight.bold,
-                //               fontFamily: 'Rosarivo',
-                //               color: Colors.black),
-                //         ),
-                //         CustomButton(onPressed: () {}, title: 'اطلب الأن'),
-                //         SizedBox(
-                //           height: 15.h,
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                ),
+                )),
           );
         }),
       ),

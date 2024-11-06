@@ -5,12 +5,6 @@ sealed class ProfileState {}
 
 final class ProfileInitial extends ProfileState {}
 
-final class ImagePickedState extends ProfileState {
-  final File selectedImage;
-
-  ImagePickedState({required this.selectedImage});
-}
-
 class ProfileLoadedState extends ProfileState {
   final String? userName;
   final String? phoneNum;

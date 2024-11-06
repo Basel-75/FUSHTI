@@ -1,4 +1,3 @@
-
 import 'package:customer_app/screen/followers/add/add_followers_screen.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/screen/followers/profile/followers_profile_screen.dart';
@@ -108,9 +107,6 @@ class FollowersScreen extends StatelessWidget {
                                                     ),
                                                   )).then(
                                                 (value) {
-                                                  // cubit.appModel =
-                                                  //     getIt.get<AppModel>();
-
                                                   if (value != null) {
                                                     if (value) {
                                                       cubit.refreshPage();
@@ -126,8 +122,7 @@ class FollowersScreen extends StatelessWidget {
                                           }),
                                     ),
                                   )
-                                  .toList()
-                              )
+                                  .toList())
                         ],
                       );
                     },

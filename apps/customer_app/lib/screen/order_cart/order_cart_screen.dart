@@ -26,14 +26,14 @@ class OrderCartScreen extends StatelessWidget {
           cubit.childModel = childModel!;
           return BlocListener<OrderCartCubit, OrderCartState>(
             listener: (context, state) {
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(state.msg),
                   backgroundColor: Colors.red,
                 ));
               }
 
-              if (state is LodingState) {
+              if (state is LoadingState) {
                 showLoadingDialog(context: context);
               }
 
@@ -66,7 +66,6 @@ class OrderCartScreen extends StatelessWidget {
                 ),
                 centerTitle: true,
                 flexibleSpace: Container(
-                  //height: 15.h,
                   decoration: const BoxDecoration(
                     color: Color(0xff6FBAE5),
                     borderRadius: BorderRadius.only(
@@ -159,7 +158,6 @@ class OrderCartScreen extends StatelessWidget {
                               SizedBox(
                                 height: 1.h,
                               ),
-                              //coulmn for order
                               BlocBuilder<OrderCartCubit, OrderCartState>(
                                 builder: (context, state) {
                                   return Column(
@@ -178,11 +176,9 @@ class OrderCartScreen extends StatelessWidget {
                               SizedBox(
                                 height: 2.h,
                               ),
-
                               SizedBox(
                                 height: 2.h,
                               ),
-
                               BlocBuilder<OrderCartCubit, OrderCartState>(
                                 builder: (context, state) {
                                   return CalRow(

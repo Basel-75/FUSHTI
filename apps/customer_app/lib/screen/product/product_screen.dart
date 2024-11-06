@@ -50,7 +50,7 @@ class ProductScreen extends StatelessWidget {
                 ));
               }
 
-              if (state is EorrState) {
+              if (state is ErrorState) {
                 Navigator.of(context).pop();
 
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -62,29 +62,13 @@ class ProductScreen extends StatelessWidget {
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.white,
-
-                // flexibleSpace: Container(
-                //   decoration: const BoxDecoration(
-                //     gradient: LinearGradient(
-                //       colors: [Color(0xffFFFFFF), Color(0xffE0D1BB)],
-                //       begin: Alignment.bottomCenter,
-                //       end: Alignment.topCenter,
-                //     ),
-                //   ),
-                // ),
               ),
               body: Column(
                 children: [
                   Container(
                     width: 100.w,
                     //height: 44.h,
-                    decoration: const BoxDecoration(
-                        // gradient: LinearGradient(
-                        //   colors: [Color(0xffFFFFFF), Color(0xffE0D1BB)],
-                        //   begin: Alignment.topCenter,
-                        //   end: Alignment.bottomCenter,
-                        // ),
-                        ),
+                    decoration: const BoxDecoration(),
                     child: Column(
                       children: [
                         Image.asset(
@@ -94,11 +78,7 @@ class ProductScreen extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(horizontal: 1.w),
                           child: const Row(
-                            children: [
-                              // BoxItemContainer(
-                              //   itemName: 'ليز',
-                              //   imagePath: 'assets/image/lez.png',
-                            ],
+                            children: [],
                           ),
                         ),
                       ],
@@ -198,7 +178,8 @@ class ProductScreen extends StatelessWidget {
                                                     CustomButton(
                                                         fontsize: 15.sp,
                                                         backgroundColor:
-                                                            const Color(0xffC8E5F5),
+                                                            const Color(
+                                                                0xffC8E5F5),
                                                         fixedSize:
                                                             Size(32.w, 6.h),
                                                         onPressed: () {
@@ -212,7 +193,8 @@ class ProductScreen extends StatelessWidget {
                                                     CustomButton(
                                                         fontsize: 15.sp,
                                                         backgroundColor:
-                                                            const Color(0xffA3E9BF),
+                                                            const Color(
+                                                                0xffA3E9BF),
                                                         fixedSize:
                                                             Size(34.w, 6.h),
                                                         onPressed: () {

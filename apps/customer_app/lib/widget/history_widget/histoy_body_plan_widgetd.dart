@@ -6,8 +6,8 @@ import 'package:get_all_pkg/get_all_pkg.dart';
 
 import 'content_history.dart';
 
-class HistoyBodyPlanWidgetd extends StatelessWidget {
-  const HistoyBodyPlanWidgetd(
+class HistoryBodyPlanWidget extends StatelessWidget {
+  const HistoryBodyPlanWidget(
       {super.key, required this.planLis, this.childModel});
 
   final List<PlanModel> planLis;

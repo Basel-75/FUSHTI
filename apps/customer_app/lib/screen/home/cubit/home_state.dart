@@ -5,7 +5,7 @@ sealed class HomeState {}
 
 final class HomeInitial extends HomeState {}
 
-final class ChnageChildState extends HomeState {}
+final class ChangeChildState extends HomeState {}
 
 final class LoadingState extends HomeState {}
 

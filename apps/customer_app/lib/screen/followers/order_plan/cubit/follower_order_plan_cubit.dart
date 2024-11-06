@@ -25,7 +25,7 @@ class FollowerOrderPlanCubit extends Cubit<FollowerOrderPlanState> {
   bool isOrder = true;
 
   tabClick({required String tabName}) {
-    emit(LodingState());
+    emit(LoadingState());
     if (tabName == "order") {
       isOrder = true;
     } else {
@@ -38,7 +38,7 @@ class FollowerOrderPlanCubit extends Cubit<FollowerOrderPlanState> {
   historyBring() async {
     try {
       await Future.delayed(Duration.zero);
-      emit(LodingState());
+      emit(LoadingState());
 
       lisOrder = await SuperMain().bringOrder(childModel: childModel);
 

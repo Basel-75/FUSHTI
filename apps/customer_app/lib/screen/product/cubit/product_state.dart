@@ -9,8 +9,8 @@ final class CartThereState extends ProductState {}
 
 final class DoneAddState extends ProductState {}
 
-final class EorrState extends ProductState {
+final class ErrorState extends ProductState {
   final String msg;
 
-  EorrState({required this.msg});
+  ErrorState({required this.msg});
 }

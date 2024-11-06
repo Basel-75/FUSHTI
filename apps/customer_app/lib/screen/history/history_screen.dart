@@ -11,10 +11,6 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //replace it with Bloc
-
-    //replace it with Bloc order.length
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: BlocProvider(
@@ -24,13 +20,13 @@ class HistoryScreen extends StatelessWidget {
 
           return BlocListener<HistoryCubit, HistoryState>(
             listener: (context, state) {
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 showSnackBar(context: context, msg: state.msg, isError: true);
               }
 
-              if (state is LodingState) {
-                log("in lodaing");
+              if (state is LoadingState) {
+                log("in loading");
                 showLoadingDialog(context: context);
               }
 
@@ -54,7 +50,6 @@ class HistoryScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   flexibleSpace: Container(
-                    //height: 15.h,
                     decoration: const BoxDecoration(
                       color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
@@ -103,39 +98,15 @@ class HistoryScreen extends StatelessWidget {
                           child: BlocBuilder<HistoryCubit, HistoryState>(
                             builder: (context, state) {
                               return cubit.isOrder == true
-                                  ? HistoyBodyOrderWidget(
+                                  ? HistoryBodyOrderWidget(
                                       lisOrder: cubit.lisOrder)
-                                  : HistoyBodyPlanWidgetd(
+                                  : HistoryBodyPlanWidget(
                                       planLis: cubit.planLis);
                             },
                           )),
                     ],
                   ),
-                )
-                // : Center(
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Image.asset('assets/image/history_img.png'),
-                //         SizedBox(
-                //           height: 2.h,
-                //         ),
-                //         const Text(
-                //           "ليس لديك طلبات :(",
-                //           style: TextStyle(
-                //               fontSize: 18,
-                //               fontWeight: FontWeight.bold,
-                //               fontFamily: 'Rosarivo',
-                //               color: Colors.black),
-                //         ),
-                //         CustomButton(onPressed: () {}, title: 'اطلب الأن'),
-                //         SizedBox(
-                //           height: 15.h,
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                ),
+                )),
           );
         }),
       ),

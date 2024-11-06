@@ -1,4 +1,3 @@
-
 import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
@@ -22,23 +21,21 @@ class AddFollowersScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: BlocListener<AddFollowersCubit, AddFollowersState>(
             listener: (context, state) {
-              if (state is LodingState) {
+              if (state is LoadingState) {
                 showLoadingDialog(context: context);
               }
 
-              if (state is DoenAddState) {
+              if (state is DoneAddState) {
                 Navigator.pop(context);
 
                 Navigator.pop(context, true);
-
-                
               }
 
-              if (state is NoLodingState) {
+              if (state is NoLoadingState) {
                 Navigator.pop(context);
               }
 
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
@@ -67,7 +64,6 @@ class AddFollowersScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   flexibleSpace: Container(
-                    //height: 15.h,
                     decoration: const BoxDecoration(
                       color: Color(0xff6FBAE5),
                       borderRadius: BorderRadius.only(
@@ -86,7 +82,6 @@ class AddFollowersScreen extends StatelessWidget {
                         SizedBox(
                           height: 7.h,
                         ),
-
                         CustomTextFormFelid(
                             validator: (val) {
                               if (val == null || val.isEmpty) {

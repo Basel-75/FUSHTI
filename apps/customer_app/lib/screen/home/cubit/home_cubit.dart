@@ -10,8 +10,6 @@ import 'package:get_all_pkg/data/model/food_menu_model.dart';
 import 'package:get_all_pkg/data/model/restriction_food_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
-import 'package:get_all_pkg/helper/moyser_pay_meth.dart';
-import 'package:meta/meta.dart';
 
 part 'home_state.dart';
 
@@ -25,54 +23,62 @@ class HomeCubit extends Cubit<HomeState> {
   late ChildModel currentChild;
   List<FoodMenuModel> boxList = [];
   List<FoodMenuModel> productList = [];
+  List<FoodMenuModel> bestProductList = [];
 
   TextEditingController priceTotal = TextEditingController();
-
-  checkOut() async {
-    try {
-      //  moyserPay
-
-      // final res = await moyserPay(priceTotal: priceTotal);
-
-      // emit(OrderConformState(paymentConfig: paymentConfig));
-    } catch (er) {
-      log("$er");
-    }
-  }
 
   initHome() {
     childModelList = appModel.userModel!.childModelList;
 
     log("there is ${childModelList.length}");
-    //log('${currentChild.schoolModel.foodMenuModelList.first.imageUrl.toString().trim()}');
+
     currentChild = childModelList.first;
     currentChild.isSelected = true;
     for (var element in currentChild.schoolModel.foodMenuModelList) {
-      if (element.category == 'box') {
+      bool hasAllergy = element.allergy != null
+          ? element.allergy!
+              .any((allergy) => currentChild.allergy.contains(allergy))
+          : false;
+      if ((element.category == 'box' || element.category == 'بوكس') &&
+          !hasAllergy) {
         boxList.add(element);
-      } else {
+      } else if ((element.category == 'product' ||
+              element.category == 'منتج') &&
+          !hasAllergy) {
         productList.add(element);
       }
     }
   }
 
-  chnageChild(ChildModel child) {
+  changeChild(ChildModel child) {
     if (child != currentChild) {
       boxList.clear();
       productList.clear();
+      bestProductList.clear();
       currentChild.isSelected = false;
       log("in if change child");
+      getBestProduct();
       currentChild = child;
       currentChild.isSelected = true;
+      log(currentChild.allergy.toString());
       for (var element in currentChild.schoolModel.foodMenuModelList) {
-        if (element.category == 'box') {
+        log(element.allergy.toString());
+
+        bool hasAllergy = element.allergy != null
+            ? element.allergy!
+                .any((allergy) => currentChild.allergy.contains(allergy))
+            : false;
+        if ((element.category == 'box' || element.category == 'بوكس') &&
+            !hasAllergy) {
           boxList.add(element);
-        } else {
+        } else if ((element.category == 'product' ||
+                element.category == 'منتج') &&
+            !hasAllergy) {
           productList.add(element);
         }
       }
 
-      emit(ChnageChildState());
+      emit(ChangeChildState());
     }
   }
 
@@ -87,6 +93,10 @@ class HomeCubit extends Cubit<HomeState> {
       );
 
       //update locale
+      currentChild.restrictionFood.add(RestrictionFoodModel(
+        childId: childId,
+        menuItemId: productId,
+      ));
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
           element.restrictionFood.add(RestrictionFoodModel(
@@ -106,7 +116,6 @@ class HomeCubit extends Cubit<HomeState> {
     bool result = false;
     for (var element in appModel.userModel!.childModelList) {
       for (var food in element.restrictionFood) {
-        //log('${element.toJson()}1111111');
         if (food.menuItemId == productId) {
           result = true;
         }
@@ -115,17 +124,6 @@ class HomeCubit extends Cubit<HomeState> {
     emit(CheckState());
     return result;
   }
-
-  // List<FoodMenuModel> getListByType({required String catagory,required String schoolId}) {
-
-  //   for (var element in currentChild.schoolModel.foodMenuModelList) {
-  //     if (element.category == catagory && element.schoolId==schoolId) {
-  //       foodList.add(element);
-  //       log(element.toJson().toString());
-  //     }
-  //   }
-  //   return foodList;
-  // }
 
   quickAddToCart(
       {required ChildModel childModel, required FoodMenuModel foodMenuModel}) {
@@ -148,5 +146,16 @@ class HomeCubit extends Cubit<HomeState> {
       element.isSelected = false;
     }
     return super.close();
+  }
+
+  getBestProduct() async {
+    try {
+      final bestProduct = await SuperMain().getBestThreeProduct();
+      for (var element in bestProduct) {
+        bestProductList.add(FoodMenuModel.fromJson(element));
+      }
+    } catch (e) {
+      log('$e');
+    }
   }
 }
