@@ -45,8 +45,10 @@ dependencies:
   flutter_advanced_switch: ^3.1.0
   onesignal_flutter: ^5.2.6
   dio: ^5.7.0
+
   fl_chart: ^0.69.0
-  
+  moyasar: ^2.0.13
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

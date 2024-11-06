@@ -11,6 +11,14 @@ class PickImageEvent extends ProfileEvent {}
 
 class UpdateImageEvent extends ProfileEvent {}
 
+class PaymentEvent extends ProfileEvent {}
+
+class CheckPaymentEvent extends ProfileEvent {
+  final PaymentResponse paymentResponse;
+
+  CheckPaymentEvent({required this.paymentResponse});
+}
+
 class SendMessagesEvent extends ProfileEvent {
   final String senderName, schoolId, content;
 

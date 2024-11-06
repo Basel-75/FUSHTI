@@ -81,6 +81,23 @@ mixin UserMix {
     }
   }
 
+  updateFunds(
+      {required String userId,
+      required double funds,
+      required double oldFund}) async {
+    try {
+      final res = await SuperMain()
+          .supabase
+          .from('users')
+          .update({'funds': funds + oldFund})
+          .eq('id', userId)
+          .select();
+      log('$res');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
   sendSuggestion(
       {required String senderName,
       required String content,
