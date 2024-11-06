@@ -11,9 +11,15 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   AppModel appModel = getIt.get<AppModel>();
+  List<FoodMenuModel> boxItems = [];
   List<FoodMenuModel> menu =
       getIt.get<AppModel>().empModel!.schoolModel.foodMenuModelList;
   HomeCubit() : super(HomeInitial());
+
+  filterBoxItems() {
+    boxItems = menu.where((item) => item.category == 'بوكس').toList();
+    emit(HomeInitial()); // تحديث الحالة وإعلام الواجهة بالتغيير
+  }
 
   deleteProduct({required String productId}) async {
     try {
@@ -30,6 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
       log('$e');
     }
   }
+
   refreshProducts() {
     emit(HomeInitial()); // Emit initial state to trigger a rebuild
   }

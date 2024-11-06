@@ -17,7 +17,7 @@ class CardStorage extends StatelessWidget {
 
   final String name;
 
-  final String image;
+  final String? image;
   final void Function()? onTap;
   final ValueNotifier<bool>? controller;
   final void Function(dynamic)? onChanged;
@@ -43,8 +43,8 @@ class CardStorage extends StatelessWidget {
           ],
         ),
         child: ListTile(
-            leading: Image.asset(
-              image,
+            leading: Image.network(
+              image ?? 'assets/image/mainLogo.png',
             ),
             title: Text(
               name,
