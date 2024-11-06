@@ -35,9 +35,16 @@ class HomeCubit extends Cubit<HomeState> {
     currentChild = childModelList.first;
     currentChild.isSelected = true;
     for (var element in currentChild.schoolModel.foodMenuModelList) {
-      if (element.category == 'box') {
+      bool hasAllergy = element.allergy != null
+          ? element.allergy!
+              .any((allergy) => currentChild.allergy.contains(allergy))
+          : false;
+      if ((element.category == 'box' || element.category == 'بوكس') &&
+          !hasAllergy) {
         boxList.add(element);
-      } else {
+      } else if ((element.category == 'product' ||
+              element.category == 'منتج') &&
+          !hasAllergy) {
         productList.add(element);
       }
     }
@@ -53,10 +60,20 @@ class HomeCubit extends Cubit<HomeState> {
       getBestProduct();
       currentChild = child;
       currentChild.isSelected = true;
+      log(currentChild.allergy.toString());
       for (var element in currentChild.schoolModel.foodMenuModelList) {
-        if (element.category == 'box') {
+        log(element.allergy.toString());
+
+        bool hasAllergy = element.allergy != null
+            ? element.allergy!
+                .any((allergy) => currentChild.allergy.contains(allergy))
+            : false;
+        if ((element.category == 'box' || element.category == 'بوكس') &&
+            !hasAllergy) {
           boxList.add(element);
-        } else {
+        } else if ((element.category == 'product' ||
+                element.category == 'منتج') &&
+            !hasAllergy) {
           productList.add(element);
         }
       }

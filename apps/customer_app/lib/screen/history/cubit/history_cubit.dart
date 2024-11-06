@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -31,21 +33,27 @@ class HistoryCubit extends Cubit<HistoryState> {
 
   historyBring() async {
     try {
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future.delayed(Duration.zero);
       emit(LoadingState());
 
       final res = await SuperMain().orderHistory();
 
       for (var val in res) {
+        log('OrderModel: ${val.orderModel?.toJson()}');
+        log('PlanModel: ${val.planModel?.toJson()}');
+
         if (val.orderModel != null) {
           lisOrder.add(val.orderModel!);
         } else if (val.planModel != null) {
           planLis.add(val.planModel!);
+        } else {
+          log('Both orderModel and planModel are null for this entry.');
         }
       }
 
       emit(DoneState());
     } catch (er) {
+      log('Error in historyBring: $er');
       emit(ErrorState(msg: '$er'));
     }
   }
