@@ -17,19 +17,20 @@ class HomeScreen extends StatelessWidget {
       create: (context) => HomeCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<HomeCubit>();
+        cubit.filterBoxItems();
         return BlocListener<HomeCubit, HomeState>(
           listener: (context, state) {
             if (state is LoadingState) {
               if (state.shouldRefresh) {
-        // Call a method to refresh the product list
-        context.read<HomeCubit>().refreshProducts();
-      }
+                // Call a method to refresh the product list
+                context.read<HomeCubit>().refreshProducts();
+              }
               showLoadingDialog(context: context);
             }
             if (state is SuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-              
+
               showSnackBar(context: context, msg: state.msg, isError: false);
             }
             if (state is ErrorState) {
@@ -118,11 +119,7 @@ class HomeScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: List.generate(
-                              cubit.menu
-                                  .where((item) =>
-                                      item.category == 'box' ||
-                                      item.category == 'بوكس')
-                                  .length,
+                              cubit.boxItems.length,
                               (index) {
                                 return HomeCard(
                                   // onTap: () {},
@@ -140,12 +137,13 @@ class HomeScreen extends StatelessWidget {
                                           productInfo: cubit.menu[index]),
                                     ),
                                   ),
-                                  cal: cubit.menu[index].cal.toString(),
-                                  imagePath: cubit.menu[index].imageUrl
+                                  cal: cubit.boxItems[index].cal.toString(),
+                                  imagePath: cubit.boxItems[index].imageUrl
                                       .toString()
                                       .trim(),
-                                  productName: cubit.menu[index].foodName,
-                                  price: '${cubit.menu[index].price as double}',
+                                  productName: cubit.boxItems[index].foodName,
+                                  price:
+                                      '${cubit.boxItems[index].price as double}',
                                 );
                               },
                             ),

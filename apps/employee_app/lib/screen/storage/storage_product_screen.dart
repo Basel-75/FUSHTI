@@ -139,7 +139,8 @@ class StorageScreen extends StatelessWidget {
                                 log('Item is out of stock');
                               }
                             },
-                            image: "assets/image/egg.png",
+                            image: cubit
+                                .schoolModel.foodMenuModelList[index].imageUrl!,
                             name: cubit
                                 .schoolModel.foodMenuModelList[index].foodName,
                           );
