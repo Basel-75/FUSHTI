@@ -1,6 +1,7 @@
 import 'package:customer_app/screen/auth/login_screen.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
+import 'package:database_meth/database/super_main.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/setup.dart';
