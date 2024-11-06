@@ -20,11 +20,16 @@ class HomeScreen extends StatelessWidget {
         return BlocListener<HomeCubit, HomeState>(
           listener: (context, state) {
             if (state is LoadingState) {
+              if (state.shouldRefresh) {
+        // Call a method to refresh the product list
+        context.read<HomeCubit>().refreshProducts();
+      }
               showLoadingDialog(context: context);
             }
             if (state is SuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
+              
               showSnackBar(context: context, msg: state.msg, isError: false);
             }
             if (state is ErrorState) {
@@ -114,7 +119,9 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: List.generate(
                               cubit.menu
-                                  .where((item) => item.category == 'box')
+                                  .where((item) =>
+                                      item.category == 'box' ||
+                                      item.category == 'بوكس')
                                   .length,
                               (index) {
                                 return HomeCard(
@@ -154,7 +161,9 @@ class HomeScreen extends StatelessWidget {
                       height: 1.h,
                     ),
                     cubit.menu
-                            .where((item) => item.category == 'product')
+                            .where((item) =>
+                                item.category == 'product' ||
+                                item.category == 'منتج')
                             .isNotEmpty
                         ? BlocBuilder<HomeCubit, HomeState>(
                             builder: (context, state) {
@@ -163,22 +172,20 @@ class HomeScreen extends StatelessWidget {
                                 width: 80.w,
                                 child: GridView.builder(
                                   itemCount: cubit.menu
-                                      .where(
-                                          (item) => item.category == 'product')
+                                      .where((item) =>
+                                          item.category == 'product' ||
+                                          item.category == 'منتج')
                                       .length,
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 1.0.h,
-                                    //mainAxisSpacing: 0.0.h,
-                                    //childAspectRatio: 0.12.h,
                                   ),
-                                  // padding: EdgeInsets.symmetric(
-                                  //     horizontal: 4.w, vertical: 2.h),
                                   itemBuilder: (context, index) {
                                     final filteredMenu = cubit.menu
                                         .where((item) =>
-                                            item.category == 'product')
+                                            item.category == 'product' ||
+                                            item.category == 'منتج')
                                         .toList();
                                     return Center(
                                       child: HomeCard(

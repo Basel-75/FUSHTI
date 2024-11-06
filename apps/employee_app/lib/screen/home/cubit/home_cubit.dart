@@ -30,4 +30,7 @@ class HomeCubit extends Cubit<HomeState> {
       log('$e');
     }
   }
+  refreshProducts() {
+    emit(HomeInitial()); // Emit initial state to trigger a rebuild
+  }
 }

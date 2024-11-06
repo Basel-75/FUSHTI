@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -37,14 +38,15 @@ class AddCubit extends Cubit<EditState> {
 
   Future<void> addNewProduct(FoodMenuModel product) async {
     emit(LoadingState());
-   //add in DB
+    //add in DB
     try {
       if (selectedImage == null) {
         emit(ErrorState(msg: 'لم يتم اختيار صورة'));
         return;
       }
 
-      final imageUrl = await SuperMain().uploadImage(imageFile: selectedImage!,isProductImage: true);
+      final imageUrl = await SuperMain()
+          .uploadImage(imageFile: selectedImage!, isProductImage: true);
       final updatedProduct = FoodMenuModel(
         id: '',
         schoolId: appModel.empModel!.schoolId,
@@ -61,14 +63,19 @@ class AddCubit extends Cubit<EditState> {
         ).toList(),
         imageUrl: imageUrl,
       );
-      final newProduct= await SuperMain().addProduct(product: updatedProduct);
+      final newProduct = await SuperMain().addProduct(product: updatedProduct);
       //Add Locale
-      appModel.empModel?.schoolModel.foodMenuModelList.add(FoodMenuModel.fromJson(newProduct));
+      log('$newProduct');
+      log('=====');
+      log('${appModel.empModel?.schoolModel.foodMenuModelList.last}');
+      appModel.empModel?.schoolModel.foodMenuModelList
+          .add(FoodMenuModel.fromJson(newProduct));
       emit(SussesState(msg: 'تمت اضافة المنتج بنجاح'));
     } catch (e) {
-      emit(ErrorState(msg: 'حدث خطأ ما يرجى المحاولة مرة اخرى'));
+      emit(ErrorState(msg: '$e حدث خطأ ما يرجى المحاولة مرة اخرى'));
     }
   }
+
   @override
   Future<void> close() {
     foodNameController.clear();
