@@ -5,12 +5,16 @@ sealed class HomeState {}
 
 final class HomeInitial extends HomeState {}
 
-final class LoadingState extends HomeState {}
+final class LoadingState extends HomeState {
+  final bool shouldRefresh;
+
+  LoadingState({this.shouldRefresh = false});
+}
 
 final class SuccessState extends HomeState {
   final String msg;
-
-  SuccessState({required this.msg});
+  final bool shouldRefresh;
+  SuccessState({required this.msg, this.shouldRefresh = false});
 }
 
 final class ErrorState extends HomeState {

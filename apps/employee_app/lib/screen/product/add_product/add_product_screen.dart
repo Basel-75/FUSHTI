@@ -147,8 +147,12 @@ class AddProductScreen extends StatelessWidget {
                           DropDownItem('none'),
                           DropDownItem('بوكس'),
                           DropDownItem('منتج'),
+                          DropDownItem('product'),
                         ],
-                        onChanged: (p0) {},
+                        onChanged: (val) {
+                          cubit.category = val?.name ?? 'test';
+                          log('${val?.name}');
+                        },
                       ),
                       SizedBox(
                         height: 3.h,
@@ -160,7 +164,7 @@ class AddProductScreen extends StatelessWidget {
                           }
                           return null;
                         },
-                        //controller:
+                        controller: cubit.descriptionController,
                         label: 'وصف المنتج',
                         hintText: 'أكتب وصفًا للمنتج...',
                         containerSize: 84.w,
@@ -250,7 +254,7 @@ class AddProductScreen extends StatelessWidget {
                                   price: num.tryParse(
                                           cubit.priceController.text) ??
                                       0,
-                                  category: 'none',
+                                  category: cubit.category,
                                   available: true,
                                   cal: int.tryParse(cubit.calController.text) ??
                                       0,

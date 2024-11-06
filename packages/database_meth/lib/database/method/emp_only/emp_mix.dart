@@ -289,8 +289,13 @@ mixin EmpMix {
       }).select();
 
       log('$response');
+      if (response != null && response.isNotEmpty) {
+        return response[0]; // Return the first item if response is a list
+      }
+      return null;
     } catch (e) {
       log('$e');
+      return null;
     }
   }
 
