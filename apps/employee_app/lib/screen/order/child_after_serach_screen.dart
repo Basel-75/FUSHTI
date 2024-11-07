@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_app/screen/order/cubit/child_serch_cubit/child_serch_cubit.dart';
 import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/widget/coulmn/empty_space_column.dart';
@@ -27,9 +25,7 @@ class ChildAfterSerachScreen extends StatelessWidget {
           final cubit = context.read<ChildSearchCubit>();
           return BlocListener<ChildSearchCubit, ChildSearchState>(
             listener: (context, state) {
-              log("in state");
               if (state is LoadingState) {
-                log("in Loding");
                 showLoadingDialog(context: context);
               }
               if (state is SuccessState) {
@@ -70,25 +66,32 @@ class ChildAfterSerachScreen extends StatelessWidget {
                         ),
                         BlocBuilder<ChildSearchCubit, ChildSearchState>(
                           builder: (context, state) {
-                            return cubit.childLis.isNotEmpty? Column(
-                              children: cubit.childLis
-                                  .map(
-                                    (child) => Padding(
-                                      padding: EdgeInsets.only(bottom: 3.h),
-                                      child: ChildCard(
-                                        childModel: child,
-                                        onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderScreen(childModel: child),
+                            return cubit.childLis.isNotEmpty
+                                ? Column(
+                                    children: cubit.childLis
+                                        .map(
+                                          (child) => Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 3.h),
+                                            child: ChildCard(
+                                              childModel: child,
+                                              onTap: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderScreen(
+                                                          childModel: child),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
+                                        )
+                                        .toList(),
                                   )
-                                  .toList(),
-                            ):const Center(child: EmptySpaceColumn(msg: 'لا يوجد طالب بهذا الاسم'),);
+                                : const Center(
+                                    child: EmptySpaceColumn(
+                                        msg: 'لا يوجد طالب بهذا الاسم'),
+                                  );
                           },
                         ),
                       ],

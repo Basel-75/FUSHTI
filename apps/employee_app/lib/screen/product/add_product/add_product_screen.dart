@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_app/component/drop_down_item.dart';
 import 'package:employee_app/screen/product/add_product/cubit/add_cubit.dart';
 import 'package:employee_app/widget/button/custome_button.dart';
@@ -136,7 +134,6 @@ class AddProductScreen extends StatelessWidget {
                           items: cubit.allergy,
                           onListChanged: (val) {
                             cubit.allergyList = val;
-                            log('$val');
                           },
                         ),
                         SizedBox(
@@ -153,7 +150,6 @@ class AddProductScreen extends StatelessWidget {
                           ],
                           onChanged: (val) {
                             cubit.category = val?.name ?? 'test';
-                            log('${val?.name}');
                           },
                         ),
                         SizedBox(

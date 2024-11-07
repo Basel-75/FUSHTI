@@ -22,7 +22,6 @@ class HomeScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is LoadingState) {
               if (state.shouldRefresh) {
-                // Call a method to refresh the product list
                 context.read<HomeCubit>().refreshProducts();
               }
               showLoadingDialog(context: context);

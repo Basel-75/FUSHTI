@@ -15,13 +15,6 @@ class ScanCubit extends Cubit<ScanState> {
   TextEditingController childNameCon = TextEditingController();
   TextEditingController childClassCon = TextEditingController();
 
-  // getchild() async {
-  //   final res = await SuperMain()
-  //       .getChildById(childId: "d89d5dd5-5487-4065-9116-9d1bfe271000");
-
-  //   childModel = ChildModel.fromJson(res);
-  // }
-
   bool checkTheCOn() {
     if (childNameCon.text.isEmpty) {
       emit(ErorState(msg: "يرجى ادخال اسم الطالب"));

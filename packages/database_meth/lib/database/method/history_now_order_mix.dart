@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -20,15 +18,6 @@ mixin HistoryNowOrderMix {
           DateTime.now().toUtc().toIso8601String().split('T').first;
 
       final List<PlanModel> lis = [];
-
-      // final res = await SuperMain()
-      //     .supabase
-      //     .from("meal_plans")
-      //     .select()
-      //     .eq("child_id", childModel.id)
-      //     .gte("end_date", todayDate)
-      // .not("dates_taken", "eq", {todayDate});
-      // print(res);
 
       final res = await SuperMain().supabase.rpc("get_active_meal_plans",
           params: {"p_child_id": childModel.id, "p_today": todayDate});
@@ -61,7 +50,6 @@ mixin HistoryNowOrderMix {
 
       return lis;
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }
@@ -104,7 +92,6 @@ mixin HistoryNowOrderMix {
 
       return lis;
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }
@@ -131,8 +118,6 @@ mixin HistoryNowOrderMix {
             "p_child_id": val["child_id"],
             "p_order_id": val["record_id"]
           });
-
-          log('orderRes: $orderRes');
 
           if (orderRes != null &&
               orderRes["child"] != null &&
@@ -167,8 +152,6 @@ mixin HistoryNowOrderMix {
                 "p_meal_plan_id": val["record_id"]
               });
 
-          log('planRes: $planRes');
-
           if (planRes != null &&
               planRes["meal_plans"] != null &&
               planRes["child"] != null) {
@@ -198,7 +181,6 @@ mixin HistoryNowOrderMix {
 
       return lis;
     } catch (er) {
-      log("Error in orderHistory: $er");
       rethrow;
     }
   }

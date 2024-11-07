@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -18,21 +16,15 @@ class ChildSearchCubit extends Cubit<ChildSearchState> {
 
   getChilds() async {
     await Future.delayed(const Duration(milliseconds: 300));
-    log("in getChilds");
-    emit(LoadingState());
 
-    log("name is :::: $childName");
-    log("class is :::: $childClass");
+    emit(LoadingState());
 
     try {
       childLis = await SuperMain()
           .getAllChildernSerch(name: childName, childClass: childClass);
 
-      log(" chidl lis :::::  $childLis");
-
       emit(SuccessState());
     } catch (er) {
-      log("$er");
       emit(ErrorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }

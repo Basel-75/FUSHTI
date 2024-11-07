@@ -1,3 +1,4 @@
+import 'package:employee_app/widget/image/image_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -43,9 +44,9 @@ class CardStorage extends StatelessWidget {
           ],
         ),
         child: ListTile(
-            leading: Image.network(
-              image ?? 'assets/image/mainLogo.png',
-            ),
+            leading: SizedBox(
+              width: 15.w,
+              child: ImageHandler(imagePath: '$image')),
             title: Text(
               name,
               textAlign: TextAlign.right,

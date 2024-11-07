@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -65,9 +64,6 @@ class AddCubit extends Cubit<EditState> {
       );
       final newProduct = await SuperMain().addProduct(product: updatedProduct);
       //Add Locale
-      log('$newProduct');
-      log('=====');
-      log('${appModel.empModel?.schoolModel.foodMenuModelList.last}');
       appModel.empModel?.schoolModel.foodMenuModelList
           .add(FoodMenuModel.fromJson(newProduct));
       emit(SussesState(msg: 'تمت اضافة المنتج بنجاح'));

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -34,9 +33,6 @@ class StatisticsCubit extends Cubit<StatisticsState> {
       emit(LoadingState());
       orders = await SuperMain().getAllOrders();
 
-      // emit(OrdersState(
-      //   order: orderCount,
-      // ));
       emit(DoneState());
     } catch (e) {
       emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة مرة اخرى'));
@@ -48,7 +44,6 @@ class StatisticsCubit extends Cubit<StatisticsState> {
       emit(LoadingState());
       salesCount = await SuperMain().getTotalSalesCount();
 
-      
       getTotalPrice();
       emit(DoneState());
     } catch (e) {
@@ -57,4 +52,3 @@ class StatisticsCubit extends Cubit<StatisticsState> {
     }
   }
 }
-//getAmountMoney

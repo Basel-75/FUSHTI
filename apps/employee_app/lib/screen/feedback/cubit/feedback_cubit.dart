@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -18,16 +16,13 @@ class FeedbackCubit extends Cubit<FeedbackState> {
     try {
       emit(LoadingState());
       final res = await SuperMain().getSuggestion(schoolId: schoolId);
-      log('1111111111111111');
-      log('${res.runtimeType}');
+
       for (var element in res) {
         messages.add(FeedbackModel.fromJson(element));
-        log(element.toString());
       }
 
       emit(SuccessState());
     } catch (e) {
-      log('$e');
       emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة مرة اخرى'));
     }
   }

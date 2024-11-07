@@ -24,13 +24,13 @@ class FeedbackModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["id"] = id;
-    _data["created_at"] = createdAt;
-    _data["sender_name"] = senderName;
-    _data["school_id"] = schoolId;
-    _data["message"] = message;
-    _data["is_read"] = isRead;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["created_at"] = createdAt;
+    data["sender_name"] = senderName;
+    data["school_id"] = schoolId;
+    data["message"] = message;
+    data["is_read"] = isRead;
+    return data;
   }
 }

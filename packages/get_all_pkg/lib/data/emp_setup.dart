@@ -9,8 +9,6 @@ Future<void> empSetup() async {
 
   await SuperMain().getEmpUser();
 
-  print(getIt.get<AppModel>().empModel);
-
   if (getIt.get<AppModel>().empModel != null) {
     await SuperMain().getEmpSchool();
   }
