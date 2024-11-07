@@ -23,8 +23,6 @@ class AppModel {
 
   saveUser(UserModel newUser) {
     userModel = newUser;
-
-    log("${userModel!.toJson()}");
   }
 
   Future<void> saveAuth({required UserModel userData}) async {
