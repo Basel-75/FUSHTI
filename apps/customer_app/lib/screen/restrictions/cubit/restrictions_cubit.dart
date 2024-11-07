@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -17,9 +15,7 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
   RestrictionsCubit() : super(RestrictionsInitial());
 
   getRestrictionFoodList({required String childId}) {
-    for (var element in restrictionsFood) {
-      log('${element.toJson()}');
-    }
+    for (var element in restrictionsFood) {}
     try {
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
@@ -32,9 +28,7 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
           }
         }
       }
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   deleteRestrictionFood({required String productId}) async {
@@ -49,7 +43,6 @@ class RestrictionsCubit extends Cubit<RestrictionsState> {
       emit(
           SuccessDeleteState(msg: 'تم ازالة الوجبة من الوجبات المحظورة بنجاح'));
     } catch (e) {
-      log('$e');
       emit(ErrorState(msg: 'حدث خطأ ما يرجى اعادة المحاولة لاحقا'));
     }
   }

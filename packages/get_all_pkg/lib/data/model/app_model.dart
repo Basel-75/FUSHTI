@@ -1,12 +1,7 @@
-import 'dart:developer';
-
-import 'package:get_all_pkg/data/model/cart_item.dart';
 import 'package:get_all_pkg/data/model/emp_model.dart';
 import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/model/user_model.dart';
-import 'package:get_all_pkg/data/setup.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class AppModel {
   final box = GetStorage();

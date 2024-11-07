@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/storage/cubit/storage_cubit.dart';
@@ -35,7 +33,6 @@ class StorageScreen extends StatelessWidget {
               }
               if (state is DoneState) {
                 Navigator.pop(context);
-                log("very good update adv of food");
               }
 
               if (state is ErrorState) {
@@ -134,10 +131,7 @@ class StorageScreen extends StatelessWidget {
                                   foodModel: cubit
                                       .schoolModel.foodMenuModelList[index]);
                               if (value == true) {
-                                log('Item is available');
-                              } else {
-                                log('Item is out of stock');
-                              }
+                              } else {}
                             },
                             image: cubit
                                 .schoolModel.foodMenuModelList[index].imageUrl!,

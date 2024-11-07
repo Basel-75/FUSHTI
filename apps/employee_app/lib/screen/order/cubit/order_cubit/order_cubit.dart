@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:employee_app/component/drop_down_item.dart';
@@ -70,14 +68,13 @@ class OrderCubit extends Cubit<OrderState> {
       required String childId,
       required String customerId}) async {
     try {
-      emit(LodingState());
-      await Onesignal().pushNote(msg: '$status', userId: customerId);
+      emit(LoadingState());
+      await Onesignal().pushNote(msg: status, userId: customerId);
       //msg: 'Hi your order is $status', userId: customerId
-      emit(NoLodingState());
+      emit(NoLoadingState());
       //getChildOrder();
     } catch (er) {
-      log("$er");
-      emit(ErorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
+      emit(ErrorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
 
       if (plan != null) {
         for (var val in plan!.mealPlanItemLis) {
@@ -89,12 +86,12 @@ class OrderCubit extends Cubit<OrderState> {
       }
     } finally {
       emit(
-          NoLodingState()); // Ensure loading state is removed, even in case of an error
+          NoLoadingState()); // Ensure loading state is removed, even in case of an error
     }
   }
 
   addFromDrop({required List<DropDownItem> dropList}) {
-    emit(LodingState());
+    emit(LoadingState());
     dailyLimitTotal = 0;
     if (dropList.isEmpty) {
       scanLis.clear();
@@ -125,7 +122,6 @@ class OrderCubit extends Cubit<OrderState> {
     for (var val in dropList) {
       for (var food in appModel.empModel!.schoolModel.foodMenuModelList) {
         if (val.name == food.foodName) {
-          log("in check add form drop in if");
           dailyLimitTotal += food.price;
           // temp varible so the two list share same refence will help when we up or down the que in the ui
           final temp = OrderItemModel(
@@ -143,9 +139,8 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   getAllCHildOrder() async {
-    log(DateTime.now().toIso8601String().split('T')[0]);
     await Future.delayed(const Duration(milliseconds: 300));
-    emit(LodingState());
+    emit(LoadingState());
     try {
       scanLis.clear();
       orderLis.clear();
@@ -192,27 +187,22 @@ class OrderCubit extends Cubit<OrderState> {
         }
       }
 
-      log("this scan list lenth ${scanLis.length}");
-
       emit(DoneState());
     } catch (er) {
-      log("$er");
-
-      emit(ErorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
       rethrow;
     }
   }
 
   checkOut() async {
-    log("  check this  ${selctFoodOrder?.orderItemModelLis.length}");
-    emit(LodingState());
+    emit(LoadingState());
     if (dailyLimitTotal + preDailyLimitTotal > childModel.dailyLimits) {
-      emit(ErorState(msg: "قيمة الطلب اكبر من الحد اليومي"));
+      emit(ErrorState(msg: "قيمة الطلب اكبر من الحد اليومي"));
       return;
     }
 
     if (childModel.funds < dailyLimitTotal) {
-      emit(ErorState(msg: "الرصيد غير كافي لاتمام الطلب"));
+      emit(ErrorState(msg: "الرصيد غير كافي لاتمام الطلب"));
       return;
     }
 
@@ -231,11 +221,10 @@ class OrderCubit extends Cubit<OrderState> {
       emit(SuccessState(msg: 'تم تسليم الطلب بنجاح'));
       emit(DoneState());
     } catch (er) {
-      log("$er");
-      emit(ErorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
+      emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     } finally {
       emit(
-          NoLodingState()); // Ensure loading state is removed, even in case of an error
+          NoLoadingState()); // Ensure loading state is removed, even in case of an error
     }
   }
 }

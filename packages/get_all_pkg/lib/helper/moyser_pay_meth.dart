@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 Future<PaymentConfig?> moyserPay({required double priceTotal}) async {
@@ -13,12 +11,8 @@ Future<PaymentConfig?> moyserPay({required double priceTotal}) async {
       creditCard: CreditCardConfig(saveCard: true, manual: false),
     );
 
-    // emit(OrderConformState(paymentConfig: paymentConfig));
-
     return paymentConfig;
   } catch (er) {
-    log(" ::: moyserPay     $er");
-
     return null;
   }
 }

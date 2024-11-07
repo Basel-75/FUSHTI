@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -33,11 +31,10 @@ class HomeCubit extends Cubit<HomeState> {
       emit(SuccessState(msg: 'تم حذف المنتج بنجاح'));
     } catch (e) {
       emit(ErrorState(msg: 'تعذر حذف المنتج حاول مرة اخرى'));
-      log('$e');
     }
   }
 
   refreshProducts() {
-    emit(HomeInitial()); // Emit initial state to trigger a rebuild
+    emit(HomeInitial());
   }
 }

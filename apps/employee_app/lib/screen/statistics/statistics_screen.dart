@@ -26,9 +26,7 @@ class StatisticsScreen extends StatelessWidget {
               Navigator.pop(context);
               showSnackBar(context: context, msg: state.msg, isError: true);
             }
-            if (state is DoneState) {
-              //Navigator.pop(context);
-            }
+            if (state is DoneState) {}
           },
           child: Directionality(
             textDirection: TextDirection.rtl,

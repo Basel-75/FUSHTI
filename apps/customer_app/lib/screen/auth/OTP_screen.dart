@@ -1,15 +1,10 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
-import 'package:customer_app/screen/home/home_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 
 import 'package:customer_app/widget/button/custom_text_button.dart';
 
 import 'package:flutter/material.dart';
-import 'package:get_all_pkg/data/model/app_model.dart';
-import 'package:get_all_pkg/data/setup.dart';
 
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -59,7 +54,6 @@ class OTPScreen extends StatelessWidget {
             if (state is SuccessState) {
               Navigator.pop(context);
 
-              log("very good otp");
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -107,7 +101,6 @@ class OTPScreen extends StatelessWidget {
                           length: 6,
                           onChanged: (value) {
                             cubit.otp = value;
-                            log("the otp is ${cubit.otp}");
                           },
                           defaultPinTheme: PinTheme(
                               width: 56,

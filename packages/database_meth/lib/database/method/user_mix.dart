@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -16,9 +14,7 @@ mixin UserMix {
         "daily_limit": limtFunds,
         "is_open_day": isOpen,
       }).eq("id", childModel.id);
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   addfundsChild({required double funds, required ChildModel childModel}) async {
@@ -30,7 +26,6 @@ mixin UserMix {
       await SuperMain().supabase.rpc("child_incrment_funds",
           params: {"p_user_id": childModel.id, "p_amount": funds});
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }
@@ -44,9 +39,7 @@ mixin UserMix {
           .update({'name': name, 'phone': phone})
           .eq('id', id)
           .select();
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   updateUserProfileImage({required String id, required String imageUrl}) async {
@@ -59,10 +52,7 @@ mixin UserMix {
           })
           .eq('id', id)
           .select();
-      log('$test');
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   getUser({required String id}) async {
@@ -75,9 +65,7 @@ mixin UserMix {
           .single();
       UserModel user = UserModel.fromJson(response);
       return user;
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   updateFunds(
@@ -91,10 +79,7 @@ mixin UserMix {
           .update({'funds': funds + oldFund})
           .eq('id', userId)
           .select();
-      log('$res');
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   sendSuggestion(
@@ -107,10 +92,7 @@ mixin UserMix {
         'school_id': schoolId,
         'message': content
       }).select();
-      log('$res');
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   getSuggestion({required String schoolId}) async {
@@ -120,11 +102,9 @@ mixin UserMix {
           .from('help_center')
           .select()
           .eq('school_id', schoolId);
-      log('$res');
+
       return res;
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   getBestThreeProduct() async {
@@ -132,8 +112,6 @@ mixin UserMix {
       final res =
           await SuperMain().supabase.rpc('get_top_three_products').select();
       return res;
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 }

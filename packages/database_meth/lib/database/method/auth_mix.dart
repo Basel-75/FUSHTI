@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:database_meth/database/super.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -18,11 +16,8 @@ mixin AuthMix on Super {
           .eq("id", "29cb5287-4c69-47fb-ac68-5cf71de183b5");
 
       getIt.get<AppModel>().empModel = EmpModel.fromJson(res[0]);
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
-
 
   getUserTempData() async {
     try {
@@ -33,19 +28,14 @@ mixin AuthMix on Super {
           .eq("id", "35d625c6-a6b1-4089-a638-f87c776aab2b");
 
       getIt.get<AppModel>().userModel = UserModel.fromJson(res[0]);
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   createUser({required String email}) async {
     try {
       // log("${phone}");
       await supabase.auth.signInWithOtp(email: email);
-    } catch (er) {
-      log("$er");
-      throw "$er";
-    }
+    } catch (er) {}
   }
 
   verifyOtp(
@@ -58,35 +48,15 @@ mixin AuthMix on Super {
         .verifyOTP(type: OtpType.email, email: email, token: otp);
 
     if (name != null && phone != null) {
-      log("in if");
       final user = await supabase.from('users').insert(
           {"name": name, 'auth_id': auth.user!.id, "phone": phone}).select();
 
-      // final user = UserModel(
-      //     customerId: customer[0]['customer_id'],
-      //     email: auth.user!.email!,
-      //     firstName: customer[0]['first_name'],
-      //     lastName: customer[0]['last_name']);
-
-      // authLocator.get<AuthLayer>().saveAuth(userData: user);
       getIt.get<AppModel>().saveUser(UserModel.fromJson(user[0]));
     } else {
-      log("in else");
       final user =
           await supabase.from('users').select().eq('auth_id', auth.user!.id);
 
-      // final user = UserModel(
-      //     customerId: customer[0]['customer_id'],
-      //     email: auth.user!.email!,
-      //     firstName: customer[0]['first_name'],
-      //     lastName: customer[0]['last_name']);
-
       getIt.get<AppModel>().saveUser(UserModel.fromJson(user[0]));
     }
-    // }
-
-    //  catch (er) {
-    //   throw "$er";
-    // }
   }
 }

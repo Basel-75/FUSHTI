@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -76,7 +75,6 @@ class EditCubit extends Cubit<EditState> {
               ).toList(),
         imageUrl: imageUrl.isEmpty ? product.imageUrl : imageUrl,
       );
-      log('${updatedProduct.toJson()}');
 
       //Add Locale
       appModel.empModel?.schoolModel.foodMenuModelList.where(

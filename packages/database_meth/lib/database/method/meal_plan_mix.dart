@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -9,22 +7,15 @@ import 'package:get_all_pkg/data/model/plan_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
 
 mixin MealPlanMix {
-
-  editPlan({required PlanModel plan , required String name}) async{
-
+  editPlan({required PlanModel plan, required String name}) async {
     try {
       await SuperMain()
           .supabase
           .from("meal_plan_templates")
-          .update({
-            "name" : name
-          })
-          .eq("id", plan.id);
-    } catch (er) {
-      log("$er");
-    }
-
+          .update({"name": name}).eq("id", plan.id);
+    } catch (er) {}
   }
+
   delPlan({required PlanModel plan}) async {
     try {
       await SuperMain()
@@ -32,9 +23,7 @@ mixin MealPlanMix {
           .from("meal_plan_templates")
           .delete()
           .eq("id", plan.id);
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   payForPlan(
@@ -70,9 +59,7 @@ mixin MealPlanMix {
           "quantity": val.quantity
         }).select();
       }
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   getChildernPlan() async {
@@ -115,14 +102,7 @@ mixin MealPlanMix {
           child.planList.add(plan);
         }
       }
-
-      // log("${appModel.userModel!.childModelList[0].planList.length}");
-      // log("${appModel.userModel!.childModelList[0].planList[0].toJson()}");
-      // log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis.length}");
-      // log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].toJson()}");
-      // log("${appModel.userModel!.childModelList[0].planList[0].mealPlanItemLis[0].foodMenuModel.toJson()}");
     } catch (er) {
-      log("-------------------- $er");
       rethrow;
     }
   }
@@ -130,10 +110,7 @@ mixin MealPlanMix {
   delMealItem({required String id}) async {
     try {
       await SuperMain().supabase.rpc("del_mel_item", params: {"row_id": id});
-      log("very good del");
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   Future<Map<String, dynamic>> addPlan({
@@ -141,17 +118,6 @@ mixin MealPlanMix {
     required String name,
   }) async {
     try {
-      // final response = await SuperMain().supabase.rpc(
-      //   'add_meal_plan_template',
-      //   params: {
-      //     '_child_id': childId,
-      //     '_name': name,
-      //     '_start_date': DateTime.now().toIso8601String(),
-      //     '_end_date': DateTime.now().toIso8601String(),
-      //     '_total_meals': 0,
-      //   },
-      // );
-
       final res =
           await SuperMain().supabase.from("meal_plan_templates").insert({
         "child_id": childId,
@@ -161,12 +127,8 @@ mixin MealPlanMix {
         "total_meals": 0
       }).select();
 
-      log("${res[0]}");
-
       return res[0];
     } catch (er) {
-      log("$er");
-
       throw "";
     }
   }
@@ -206,7 +168,6 @@ mixin MealPlanMix {
 
       plan.mealPlanItemLis.add(temp);
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }

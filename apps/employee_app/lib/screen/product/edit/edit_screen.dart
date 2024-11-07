@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_app/component/drop_down_item.dart';
 
 import 'package:employee_app/screen/product/edit/cubit/edit_cubit.dart';
@@ -23,7 +21,7 @@ class EditScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final cubit = context.read<EditCubit>();
         cubit.productInfo = productInfo;
-        log('${productInfo.toJson()}');
+
         return BlocListener<EditCubit, EditState>(
           listener: (context, state) {
             if (state is LoadingState) {
@@ -161,7 +159,6 @@ class EditScreen extends StatelessWidget {
                           items: cubit.allergy,
                           onListChanged: (val) {
                             cubit.allergyList = val;
-                            log('$val');
                           },
                         ),
                         SizedBox(

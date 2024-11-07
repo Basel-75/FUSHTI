@@ -1,8 +1,6 @@
 library database_meth;
 
-import 'dart:developer';
 
-import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 export 'package:database_meth/database/super.dart';

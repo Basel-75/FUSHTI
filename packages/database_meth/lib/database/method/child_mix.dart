@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
@@ -17,15 +15,12 @@ mixin ChildMix {
     List<ChildModel> lis = [];
     try {
       if (childClass == null) {
-        log("in class is null");
         res = await SuperMain()
             .supabase
             .from('followers')
             .select('*, school(id,name, adders, contact_number)')
             .like('name', '%$name%')
             .eq("school_id", appModel.empModel!.schoolId);
-
-        log("is there data ${res}");
 
         for (var val in res) {
           final temp = ChildModel.fromJson(val);
@@ -34,7 +29,6 @@ mixin ChildMix {
           lis.add(temp);
         }
       } else {
-        log("in class not null null");
         res = await SuperMain()
             .supabase
             .from('followers')
@@ -42,8 +36,6 @@ mixin ChildMix {
             .like('name', '%$name%')
             .eq('class', childClass)
             .eq("school_id", appModel.empModel!.schoolId);
-
-        log("is there data ${res}");
 
         for (var val in res) {
           final temp = ChildModel.fromJson(val);
@@ -55,7 +47,6 @@ mixin ChildMix {
 
       return lis;
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }
@@ -70,8 +61,7 @@ mixin ChildMix {
 
       return res[0];
     } catch (er) {
-      log("$er");
-      throw "there was eorr";
+      rethrow;
     }
   }
 
@@ -108,13 +98,7 @@ mixin ChildMix {
           val.schoolModel.foodMenuModelList.add(FoodMenuModel.fromJson(food));
         }
       }
-
-      // log("${appModel.userModel!.childModelList[0].toJson()}");
-      // log("${appModel.userModel!.childModelList[0].schoolModel.toJson()}");
-      // log("${appModel.userModel!.childModelList[0].schoolModel.foodMenuModelList[0].toJson()}");
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   Future<Map<String, dynamic>> addChild(
@@ -142,7 +126,6 @@ mixin ChildMix {
 
       return res[0];
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }
@@ -169,9 +152,7 @@ mixin ChildMix {
           .select();
 
       print(res);
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   deleteChild({required String id, required String userId}) async {
@@ -181,9 +162,7 @@ mixin ChildMix {
       await await SuperMain().supabase.rpc('decremnt_followers', params: {
         'user_id': userId,
       });
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 
   updateFollowersImage(
@@ -193,9 +172,6 @@ mixin ChildMix {
           .supabase
           .from('followers')
           .update({'img_path': imageUrl}).eq('id', childId);
-      log('$response');
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 }

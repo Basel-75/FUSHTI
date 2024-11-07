@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -46,10 +44,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
   }
 
   dateRange({required DateTime? start, required DateTime? end, required day}) {
-    log(" here start  $start");
-    log(" here end  $end");
-
-    focusedDay = day; //
+    focusedDay = day;
 
     startDate = start;
     endDate = end;
@@ -85,8 +80,6 @@ class PlanCartCubit extends Cubit<PlanCartState> {
         }
       }
     }
-
-    log("This is how many business days: $dayNumbers");
   }
 
   String calculateCal({required PlanModel planModel}) {
@@ -112,7 +105,7 @@ class PlanCartCubit extends Cubit<PlanCartState> {
   payPlan({required PlanModel planModel}) async {
     try {
       emit(LoadingState());
-      log("user funds :::: ${appModel.userModel!.funds}");
+
       if (dayNumbers == 0) {
         emit(ErrorState(msg: "يرجى اختيار التاريخ"));
         return;
@@ -129,11 +122,8 @@ class PlanCartCubit extends Cubit<PlanCartState> {
           endDate: endDate!,
           totalPrice: totalPrice * dayNumbers);
 
-      log("user funds :::: ${appModel.userModel!.funds}");
-      log("very good plan pay");
       emit(DoneState());
     } catch (er) {
-      log("$er");
       emit(ErrorState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));
     }
   }

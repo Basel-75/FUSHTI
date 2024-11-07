@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:employee_app/screen/feedback/cubit/feedback_cubit.dart';
 import 'package:employee_app/widget/container/card_feedback.dart';
-import 'package:employee_app/widget/coulmn/empty_space_column.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -21,12 +19,9 @@ class FeedBackScreen extends StatelessWidget {
               showLoadingDialog(context: context);
             }
             if (state is ErrorState) {
-              //Navigator.pop(context);
               showSnackBar(context: context, msg: state.msg, isError: true);
             }
-            if (state is SuccessState) {
-              //Navigator.pop(context);
-            }
+            if (state is SuccessState) {}
           },
           child: Directionality(
               textDirection: TextDirection.rtl,

@@ -3,7 +3,6 @@ library get_all_pkg;
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 import 'package:get_all_pkg/widget/loading_widget.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 export 'package:figma_squircle/figma_squircle.dart';
 export 'package:sizer/sizer.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';

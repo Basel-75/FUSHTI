@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:database_meth/database/super_main.dart';
 import 'package:database_meth/database_meth.dart';

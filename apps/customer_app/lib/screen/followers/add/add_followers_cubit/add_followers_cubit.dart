@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -42,7 +40,6 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
   }
 
   addChild() async {
-    log(fundsCon.text);
     emit(LoadingState());
     if (formKey.currentState!.validate()) {
       if (appModel.userModel!.funds < double.parse(fundsCon.text)) {
@@ -83,7 +80,6 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
 
       emit(DoneAddState());
     } else {
-      log("not good vaild");
       emit(NoLoadingState());
     }
   }

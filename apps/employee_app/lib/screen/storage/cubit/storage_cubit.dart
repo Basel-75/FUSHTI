@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
@@ -19,10 +17,6 @@ class StorageCubit extends Cubit<StorageState> {
 
   List<FoodMenuModel> foodAdvChangeList = [];
 
-  // inilval(){
-
-  // }
-
   onAdvChange({required FoodMenuModel foodModel}) {
     if (!foodAdvChangeList.contains(foodModel)) {
       foodModel.available = !foodModel.available;
@@ -33,15 +27,13 @@ class StorageCubit extends Cubit<StorageState> {
   updateAdv() async {
     try {
       emit(LoadingState());
-      log("${foodAdvChangeList.length}");
+
       await SuperMain().chnageFoodAdv(foodAdvChangeList: foodAdvChangeList);
 
       foodAdvChangeList.clear();
 
       emit(DoneState());
     } catch (er) {
-      log("$er");
-
       emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }

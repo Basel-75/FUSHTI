@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_app/screen/order/child_after_serach_screen.dart';
 import 'package:employee_app/screen/order/order_screen.dart';
 import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
@@ -149,15 +147,12 @@ class BottomNavigatorScreen extends StatelessWidget {
                                             );
 
                                             if (result.rawContent.isNotEmpty) {
-                                              //change it to take the value from database later
-                                              //result.rawContent = "d89d5dd5-5487-4065-9116-9d1bfe271000";
                                               final childIdFromBarcode =
                                                   result.rawContent;
-                                              log(childIdFromBarcode);
-                                              log('=======');
+
                                               await cubit.getChild(
                                                   id: childIdFromBarcode);
-                                              log('${cubit.childModel}');
+
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(

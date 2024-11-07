@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -46,7 +44,6 @@ class FollowerOrderPlanCubit extends Cubit<FollowerOrderPlanState> {
 
       emit(DoneState());
     } catch (er) {
-      log("$er");
       rethrow;
     }
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class LoadingWidget extends StatelessWidget {

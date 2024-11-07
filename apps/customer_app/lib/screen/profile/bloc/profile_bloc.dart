@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'dart:io';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +92,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   FutureOr<void> updateProfileMethod(event, emit) async {
-    log('${usernameController.text}|${phoneNumController.text}');
     final inter = await CheckIntent().checkInternetConnection();
     if (inter) {
       emit(LoadingState());

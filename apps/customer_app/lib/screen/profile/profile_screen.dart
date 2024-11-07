@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/auth/login_screen.dart';
-import 'package:customer_app/screen/history/history_screen.dart';
 import 'package:customer_app/screen/profile/bloc/profile_bloc.dart';
 import 'package:customer_app/widget/container/profile_tile.dart';
 import 'package:customer_app/widget/container/show_dialog_pay_widget.dart';
@@ -19,6 +16,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       final bloc = context.read<ProfileBloc>();
+      bloc.add(GetUserInfoEvent());
       return BlocListener<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ErrorState) {
@@ -35,7 +33,6 @@ class ProfileScreen extends StatelessWidget {
             showLoadingDialog(context: context);
           }
           if (state is ProfileUpdatedState) {
-            log("iam lis");
             bloc.add(GetUserInfoEvent());
           }
           if (state is SussesState) {
@@ -290,17 +287,17 @@ class ProfileScreen extends StatelessWidget {
                                               ));
                                 },
                               ),
-                              ProfileTile(
-                                title: 'الفواتير',
-                                icon: const Icon(Icons.book_outlined),
-                                forLogout: false,
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HistoryScreen(),
-                                    )),
-                              ),
+                              // ProfileTile(
+                              //   title: 'الفواتير',
+                              //   icon: const Icon(Icons.book_outlined),
+                              //   forLogout: false,
+                              //   onTap: () => Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             const HistoryScreen(),
+                              //       )),
+                              // ),
                               SuggestionTile(
                                 item: bloc.appModel.schoolModelList,
                                 controller: bloc.messageController,

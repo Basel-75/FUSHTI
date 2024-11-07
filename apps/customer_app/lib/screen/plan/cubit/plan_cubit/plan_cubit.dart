@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +45,6 @@ class PlanCubit extends Cubit<PlanState> {
       final inter = await CheckIntent().checkInternetConnection();
 
       if (inter) {
-        log("there is inter");
         SuperMain().delPlan(plan: planModelSelected!);
 
         childModelSelected!.planList.removeWhere(
@@ -58,12 +55,9 @@ class PlanCubit extends Cubit<PlanState> {
         planModelSelected = null;
         emit(PlanChangeState(msg: "تم حذف الخطة بنجاح"));
       } else {
-        log("there is no  inter");
         emit(NoInterState());
       }
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   editPlan() async {
@@ -75,8 +69,6 @@ class PlanCubit extends Cubit<PlanState> {
       final inter = await CheckIntent().checkInternetConnection();
 
       if (inter) {
-        log("there is inter");
-
         if (planNameCOn.text.isEmpty) {
           emit(ErrorPlanState(msg: "اضف اسم للخطة"));
 
@@ -99,35 +91,24 @@ class PlanCubit extends Cubit<PlanState> {
         emit(NoLoadingState());
         emit(PlanChangeState(msg: "تم تعديل الخطة"));
       } else {
-        log("there is no  inter");
         emit(NoInterState());
       }
-    } catch (er) {
-      log("$er");
-    }
+    } catch (er) {}
   }
 
   clickPlanState({required PlanModel planModel}) {
     mealPlanItemLisUi.clear();
-    log("${planModel.name}");
-    log("${mealPlanItemLisUi.length}");
 
     planModelSelected = planModel;
     mealPlanItemLisUi.addAll(planModel.mealPlanItemLis);
-
-    log("after");
-    log("${mealPlanItemLisUi.length}");
 
     emit(PlanClickState());
   }
 
   delPlanItem({required MealPlanItemModel mealPlanItemModel}) async {
-    log("in del method");
-
     final inter = await CheckIntent().checkInternetConnection();
 
     if (inter) {
-      log("there is inter");
       SuperMain().delMealItem(id: mealPlanItemModel.id);
 
       for (int i = 0; i < mealPlanItemLisUi.length; i++) {
@@ -139,14 +120,11 @@ class PlanCubit extends Cubit<PlanState> {
         }
       }
     } else {
-      log("there is no  inter");
       emit(NoInterState());
     }
   }
 
   addPlan() async {
-    log("in add plan");
-
     // check if there is plan with same name
 
     if (planNameCOn.text.isEmpty) {
@@ -171,8 +149,6 @@ class PlanCubit extends Cubit<PlanState> {
 
       emit(NoLoadingState());
       emit(PlanChangeState(msg: "تم اضافة الخطة بنجاح"));
-
-      log("plan has been add");
     } catch (er) {
       emit(NoLoadingState());
       emit(ErrorPlanState(msg: "حصل خطأ ما يرجى المحاولة لاحقا"));

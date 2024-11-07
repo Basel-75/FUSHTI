@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_app/screen/order/cubit/order_cubit/order_cubit.dart';
 
 import 'package:employee_app/widget/button/custome_button.dart';
@@ -26,15 +24,11 @@ class OrderScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final cubit = context.read<OrderCubit>();
 
-        log("why iam here ----------------------------------------------");
-
-        // cubit.getAllCHildOrder();
-
         return Directionality(
           textDirection: TextDirection.rtl,
           child: BlocListener<OrderCubit, OrderState>(
             listener: (context, state) {
-              if (state is ErorState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
@@ -46,8 +40,7 @@ class OrderScreen extends StatelessWidget {
                 ));
               }
 
-              if (state is LodingState) {
-                log("in loding");
+              if (state is LoadingState) {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -100,24 +93,16 @@ class OrderScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 4.h),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: ImageHandler(
-                        imagePath: cubit.childModel.imgPath,
-                        errorWidget: Image.asset(
-                          "assets/image/mainLogo.png",
-                          height: 17.h,
-                          width: 40.w,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                      // Image.network(
-                      //         cubit.childModel.imgPath,
-                      //         width: 40.w,
-                      //         height: 17.h,
-                      //         fit: BoxFit.cover,
-                      //       )
-                      ,
-                    ),
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: ImageHandler(
+                          imagePath: cubit.childModel.imgPath,
+                          errorWidget: Image.asset(
+                            "assets/image/mainLogo.png",
+                            height: 17.h,
+                            width: 40.w,
+                            fit: BoxFit.cover,
+                          ),
+                        )),
                     SizedBox(height: 1.h),
                     Text(
                       cubit.childModel.name,
