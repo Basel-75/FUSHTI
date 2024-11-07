@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/plan/cubit/plan_cart_cubit/plan_cart_cubit.dart';
 import 'package:customer_app/widget/container/add_plan_card.dart';
@@ -96,8 +94,6 @@ class PlanCartScreen extends StatelessWidget {
                           onDaySelected: (selectedDay, focusedDay) {
                             cubit.focusedDay = selectedDay;
 
-                            log("${cubit.focusedDay}");
-
                             cubit.upDateDate();
                           },
                           rangeSelectionMode: RangeSelectionMode.toggledOn,
@@ -189,7 +185,7 @@ class PlanCartScreen extends StatelessWidget {
                               SizedBox(
                                 height: 1.h,
                               ),
-                              //coulmn for order
+                              //column for order
                               BlocBuilder<PlanCartCubit, PlanCartState>(
                                 builder: (context, state) {
                                   return Column(

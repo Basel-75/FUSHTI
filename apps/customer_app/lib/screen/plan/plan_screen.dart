@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/plan/cubit/plan_cubit/plan_cubit.dart';
 import 'package:customer_app/screen/plan/plan_cart_screen.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
@@ -105,7 +103,6 @@ class PlanScreen extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                log("${cubit.childModelSelected}");
                 if (cubit.isThereChild()) {
                   showDialog(
                     context: context,
@@ -214,8 +211,6 @@ class PlanScreen extends StatelessWidget {
                                           textStyle:
                                               TextStyle(fontSize: 16.sp)),
                                       radioButtonValue: (value) {
-                                        log("$value");
-
                                         cubit.clickInChild(childModel: value);
                                       },
                                       selectedColor: const Color.fromARGB(
@@ -267,8 +262,6 @@ class PlanScreen extends StatelessWidget {
                                           textStyle:
                                               TextStyle(fontSize: 16.sp)),
                                       radioButtonValue: (value) {
-                                        log("$value");
-
                                         cubit.clickPlanState(planModel: value);
                                       },
                                       selectedColor: const Color.fromARGB(
@@ -300,8 +293,6 @@ class PlanScreen extends StatelessWidget {
                                             color: Color(0xffA3E9BF),
                                           ),
                                           onTap: () {
-                                            log("in edit ");
-
                                             showDialog(
                                               context: context,
                                               builder: (context) {

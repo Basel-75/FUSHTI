@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/followers/edit/edit_followers_cubit/edit_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
@@ -43,7 +41,6 @@ class EditFollowersScreen extends StatelessWidget {
                   ),
                 );
                 Navigator.pop(context, true);
-                log("very Good Edit child");
               }
 
               if (state is UnLoadingState) {
@@ -138,12 +135,9 @@ class EditFollowersScreen extends StatelessWidget {
                       CustomSelect(
                         initSchoolDrop: cubit.initSchoolDrop,
                         validator: (val) {
-                          log("got to shcoll");
                           if (cubit.schoolCon.text.isEmpty) {
-                            log("not on  shcoll");
                             return "يرجى اختيار المدرسة";
                           }
-                          log("iam to shcoll");
 
                           return null;
                         },

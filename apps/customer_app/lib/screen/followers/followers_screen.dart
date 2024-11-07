@@ -15,6 +15,7 @@ class FollowersScreen extends StatelessWidget {
       create: (context) => FollowersProfileCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<FollowersProfileCubit>();
+        cubit.refreshPage();
         return BlocListener<FollowersProfileCubit, FollowersProfileState>(
           listener: (context, state) {
             if (state is LoadingState) {

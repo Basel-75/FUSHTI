@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:database_meth/database/super_main.dart';
@@ -60,7 +58,6 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
   }
 
   editChild() async {
-    log(nameCon.text);
     if (formKey.currentState!.validate()) {
       emit(LoadingState());
       late String schoolId;
@@ -107,12 +104,8 @@ class EditFollowersCubit extends Cubit<EditFollowersState> {
             }
           }
         }
-      } catch (e) {
-        log('$e');
-      }
+      } catch (e) {}
       emit(SuccessEditState());
-    } else {
-      log("حدث خطأ");
-    }
+    } else {}
   }
 }

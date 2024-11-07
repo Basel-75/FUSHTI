@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
@@ -37,7 +35,6 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   addToPlan() async {
-    log("in add plan");
     if (planItemCOn.text.isEmpty) {
       emit(ErrorState(msg: "اختر خطة"));
       return;
@@ -51,7 +48,6 @@ class ProductCubit extends Cubit<ProductState> {
 
       emit(DoneAddState());
     } catch (er) {
-      log("$er");
       emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }

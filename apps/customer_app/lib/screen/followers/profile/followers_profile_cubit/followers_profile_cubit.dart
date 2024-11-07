@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/widgets.dart';
@@ -29,15 +28,13 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
   final ChildModel? childModel;
   countTotal({required String id}) {
     for (var i in appModel.userModel!.childModelList) {
-      log('${i.planList}');
       for (var j in i.planList) {
-        log('${j.toJson()}');
         totalMealsInPlan += j.totalMeals;
       }
     }
   }
 
-  refreshPage() {
+  refreshPage() async {
     emit(FollowersProfileInitial());
   }
 
@@ -132,10 +129,10 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
 
       final imageUrl = await SuperMain()
           .uploadImage(imageFile: selectedImage!, isProductImage: false);
-      log(imageUrl);
+
       final updateImageResponse = await SuperMain()
           .updateFollowersImage(childId: childId, imageUrl: imageUrl);
-      log('$updateImageResponse');
+
       //Update Locale
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
@@ -144,7 +141,6 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
       }
       emit(SuccessUpdateImageState(msg: 'تم تحديث صورة التابع بنجاح'));
     } catch (e) {
-      log('$e');
       emit(ErrorUpdateImageState(msg: 'حدث خطأ ما يرجى المحاولة مرة اخرى'));
     }
   }
@@ -153,11 +149,7 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
     try {
       emit(LoadingState());
 
-      log("user id is ${appModel.userModel!.id}");
-
       if (formKey.currentState!.validate()) {
-        log("very good valid");
-        log("user funds is ${appModel.userModel!.funds}");
         if (appModel.userModel!.funds >= double.parse(fundsCon.text)) {
           await SuperMain().addfundsChild(
               childModel: childModel!, funds: double.parse(fundsCon.text));
@@ -174,7 +166,6 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
       }
       emit(ErrorState(msg: "ادخل رقم"));
     } catch (er) {
-      log("$er");
       emit(ErrorState(msg: "حصل خطأ"));
       rethrow;
     }
@@ -183,8 +174,6 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
   updateOpenDay() async {
     try {
       emit(LoadingState());
-
-      log("is open or not  $initialValueRaido");
 
       if (formKey.currentState!.validate()) {
         await SuperMain().updateChildOpenDay(
@@ -202,15 +191,12 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
       }
       emit(ErrorState(msg: "ادخل رقم"));
     } catch (er) {
-      log("$er");
       emit(ErrorState(msg: "حصل خطأ"));
     }
   }
 
   getRestrictionFoodList({required String childId}) {
-    for (var element in restrictionsFood) {
-      log('${element.toJson()}');
-    }
+    for (var element in restrictionsFood) {}
     try {
       for (var element in appModel.userModel!.childModelList) {
         if (element.id == childId) {
@@ -223,8 +209,6 @@ class FollowersProfileCubit extends Cubit<FollowersProfileState> {
           }
         }
       }
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:customer_app/screen/home/cubit/home_cubit.dart';
 import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
@@ -8,7 +7,6 @@ import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
 import 'package:customer_app/widget/container/home_card.dart';
 import 'package:customer_app/widget/container/show_dialog_pay_widget.dart';
-import 'package:customer_app/widget/image/image_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -29,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(initialPage: _currentPage);
 
-    _timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer timer) {
       if (_currentPage < 3 - 1) {
         _currentPage++;
       } else {
@@ -38,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         curve: Curves.easeIn,
       );
     });
@@ -171,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           padding: const EdgeInsets.all(8),
                                           child: FollowersAvatar(
                                             onTap: () {
-                                              log("chnageChild start");
                                               cubit.changeChild(
                                                   cubit.childModelList[index]);
                                             },
@@ -208,14 +205,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             BlocBuilder<HomeCubit, HomeState>(
                               builder: (context, state) {
-                                return Container(
+                                return GlassContainer(
                                   height: 22.h,
-                                  //padding: EdgeInsets.symmetric(vertical: 2.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white,
-                                    //boxShadow: kElevationToShadow[2]
+                                  borderRadius: BorderRadius.circular(12),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0.40),
+                                      Colors.white.withOpacity(0.10)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                   ),
+                                  borderGradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0.60),
+                                      Colors.white.withOpacity(0.10),
+                                      Colors.lightBlueAccent.withOpacity(0.05),
+                                      Colors.lightBlueAccent.withOpacity(0.6)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    stops: const [0.0, 0.39, 0.40, 1.0],
+                                  ),
+                                  blur: 15.0,
+                                  borderWidth: 1.5,
+                                  elevation: 3.0,
+                                  isFrostedGlass: true,
+                                  shadowColor: Colors.black.withOpacity(0.20),
+                                  alignment: Alignment.center,
+                                  frostedOpacity: 0.12,
                                   child: PageView.builder(
                                     controller: _pageController,
                                     itemCount: cubit.bestProductList.length,
@@ -284,21 +302,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         cubit.currentChild,
                                                     foodMenuModel: e,
                                                   ),
-                                          onRestriction: () =>
-                                              cubit.addToRestrictionsFood(
-                                            childId: cubit.currentChild.id,
-                                            productId: e.id,
-                                          ),
-                                          onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProductScreen(
-                                                foodMenuModel: e,
-                                                childModel: cubit.currentChild,
-                                              ),
-                                            ),
-                                          ),
+                                          onRestriction: isRestr
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور مسبقا',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () =>
+                                                  cubit.addToRestrictionsFood(
+                                                    childId:
+                                                        cubit.currentChild.id,
+                                                    productId: e.id,
+                                                  ),
+                                          onTap: isRestr
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور ',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductScreen(
+                                                        foodMenuModel: e,
+                                                        childModel:
+                                                            cubit.currentChild,
+                                                      ),
+                                                    ),
+                                                  ),
                                         );
                                       },
                                     ).toList(),
@@ -367,21 +407,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         cubit.currentChild,
                                                     foodMenuModel: product,
                                                   ),
-                                          onRestriction: () =>
-                                              cubit.addToRestrictionsFood(
-                                            childId: cubit.currentChild.id,
-                                            productId: product.id,
-                                          ),
-                                          onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProductScreen(
-                                                foodMenuModel: product,
-                                                childModel: cubit.currentChild,
-                                              ),
-                                            ),
-                                          ),
+                                          onRestriction: isRestricted
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور مسبقا',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () =>
+                                                  cubit.addToRestrictionsFood(
+                                                    childId:
+                                                        cubit.currentChild.id,
+                                                    productId: product.id,
+                                                  ),
+                                          onTap: isRestricted
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور ',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductScreen(
+                                                        foodMenuModel: product,
+                                                        childModel:
+                                                            cubit.currentChild,
+                                                      ),
+                                                    ),
+                                                  ),
                                         );
                                       },
                                     )

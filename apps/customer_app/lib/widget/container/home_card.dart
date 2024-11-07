@@ -89,7 +89,7 @@ class HomeCard extends StatelessWidget {
               left: 27.w,
               bottom: 32.w,
               child: withoutButton
-                  ? Text('')
+                  ? const Text('')
                   : InkWell(
                       onTap: onRestriction,
                       child:
@@ -99,7 +99,7 @@ class HomeCard extends StatelessWidget {
             left: 3.w,
             bottom: 8.w,
             child: withoutButton
-                ? Text('')
+                ? const Text('')
                 : InkWell(
                     onTap: onAdd,
                     child: Container(

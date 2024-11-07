@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/bottomnavigator/bottom_navigator_screen.dart';
 import 'package:customer_app/screen/followers/order_plan/follower_order_plan_screen.dart';
@@ -291,7 +289,6 @@ class FollowersProfileScreen extends StatelessWidget {
                             cubit.initialValueRaido =
                                 cubit.childModel!.isOpenDay;
 
-                            log("hmm is isoen  ${cubit.initialValueRaido}");
                             onManageOpenDays(context, cubit);
                           },
                           onPressPlanAndOrder: () => Navigator.of(context)

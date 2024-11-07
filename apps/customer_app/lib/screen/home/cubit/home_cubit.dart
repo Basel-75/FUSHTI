@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
@@ -30,8 +28,6 @@ class HomeCubit extends Cubit<HomeState> {
   initHome() {
     childModelList = appModel.userModel!.childModelList;
 
-    log("there is ${childModelList.length}");
-
     currentChild = childModelList.first;
     currentChild.isSelected = true;
     for (var element in currentChild.schoolModel.foodMenuModelList) {
@@ -56,14 +52,12 @@ class HomeCubit extends Cubit<HomeState> {
       productList.clear();
       bestProductList.clear();
       currentChild.isSelected = false;
-      log("in if change child");
+
       getBestProduct();
       currentChild = child;
       currentChild.isSelected = true;
-      log(currentChild.allergy.toString());
-      for (var element in currentChild.schoolModel.foodMenuModelList) {
-        log(element.allergy.toString());
 
+      for (var element in currentChild.schoolModel.foodMenuModelList) {
         bool hasAllergy = element.allergy != null
             ? element.allergy!
                 .any((allergy) => currentChild.allergy.contains(allergy))
@@ -108,7 +102,6 @@ class HomeCubit extends Cubit<HomeState> {
       emit(SussesState(msg: 'تم حظر المنتج بنجاح'));
     } catch (e) {
       emit(ErrorState(msg: 'حدث خطأ ما يرجى المحاولة لاحقا'));
-      log('$e');
     }
   }
 
@@ -154,8 +147,6 @@ class HomeCubit extends Cubit<HomeState> {
       for (var element in bestProduct) {
         bestProductList.add(FoodMenuModel.fromJson(element));
       }
-    } catch (e) {
-      log('$e');
-    }
+    } catch (e) {}
   }
 }

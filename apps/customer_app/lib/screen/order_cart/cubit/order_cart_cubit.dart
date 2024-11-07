@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 
@@ -56,8 +54,6 @@ class OrderCartCubit extends Cubit<OrderCartState> {
 
   payPlan() async {
     try {
-      log("user funds :::: ${appModel.userModel!.funds}");
-
       if (appModel.userModel!.funds < totalPrice) {
         emit(ErrorState(msg: "ليس لديك رصيد كافي"));
         return;
@@ -72,11 +68,8 @@ class OrderCartCubit extends Cubit<OrderCartState> {
       await SuperMain()
           .payForOrder(totalPrice: totalPrice, childModel: childModel);
 
-      log("user funds :::: ${appModel.userModel!.funds}");
-      log("very good order pay");
+      emit(DoneState());
     } catch (er) {
-      log("$er");
-
       emit(ErrorState(msg: 'حصل خطأ ما يرجى المحاولة لاحقا'));
     }
   }

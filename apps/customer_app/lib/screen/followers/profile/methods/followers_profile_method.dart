@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/followers/profile/followers_profile_cubit/followers_profile_cubit.dart';
 import 'package:customer_app/widget/container/fonds_info_dailog.dart';
 import 'package:customer_app/widget/container/open_days_bottomsheet.dart';
@@ -85,12 +83,9 @@ Future<dynamic> onAddFunds(BuildContext context, FollowersProfileCubit cubit) {
           },
           controller: cubit.fundsCon,
           cancelOnPressed: () {
-            log("in caneel of page");
             Navigator.pop(context);
           },
           okOnPressed: () {
-            log("in ok of page");
-
             cubit.addFundsChild();
           },
         ),

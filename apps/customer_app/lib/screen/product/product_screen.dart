@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:customer_app/screen/product/cubit/product_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/container/product_small_container.dart';
 import 'package:customer_app/widget/coulmn/product_info_column.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
+import 'package:customer_app/widget/image/image_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/food_menu_model.dart';
@@ -27,7 +26,7 @@ class ProductScreen extends StatelessWidget {
       create: (context) => ProductCubit(foodMenuModel, childModel),
       child: Builder(builder: (context) {
         final cubit = context.read<ProductCubit>();
-        log('${childModel.toJson()}|${foodMenuModel.toJson()}');
+
         return Directionality(
           textDirection: TextDirection.rtl,
           child: BlocListener<ProductCubit, ProductState>(
@@ -71,9 +70,7 @@ class ProductScreen extends StatelessWidget {
                     decoration: const BoxDecoration(),
                     child: Column(
                       children: [
-                        Image.asset(
-                          'assets/image/boxImage.png',
-                        ),
+                        ImageHandler(imagePath: '${foodMenuModel.imageUrl}'),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(horizontal: 1.w),
@@ -150,8 +147,6 @@ class ProductScreen extends StatelessWidget {
                                                 ),
                                                 CustomSelect(
                                                     onChanged: (p0) {
-                                                      log("$p0");
-
                                                       cubit.planItemCOn.text =
                                                           p0!.name;
                                                     },

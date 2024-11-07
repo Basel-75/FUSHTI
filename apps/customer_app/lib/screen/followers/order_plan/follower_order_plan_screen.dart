@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:customer_app/screen/followers/order_plan/cubit/follower_order_plan_cubit.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_order_widget.dart';
 import 'package:customer_app/widget/history_widget/histoy_body_plan_widgetd.dart';
@@ -32,13 +30,11 @@ class FollowerOrderPlanScreen extends StatelessWidget {
               }
 
               if (state is LoadingState) {
-                log("in loading");
                 showLoadingDialog(context: context);
               }
 
               if (state is DoneState) {
                 Navigator.pop(context);
-                log("very good history");
               }
             },
             child: Scaffold(
@@ -91,7 +87,6 @@ class FollowerOrderPlanScreen extends StatelessWidget {
                                   const Color.fromARGB(56, 12, 154, 236),
                               defaultSelected: "order",
                               radioButtonValue: (p0) {
-                                log(p0);
                                 cubit.tabClick(tabName: p0);
                               },
                             )
