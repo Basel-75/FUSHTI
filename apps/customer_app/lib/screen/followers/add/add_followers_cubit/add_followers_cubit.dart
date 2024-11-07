@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:customer_app/component/drop_down_item.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_all_pkg/data/model/app_model.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
+import 'package:get_all_pkg/data/model/school_model.dart';
 import 'package:get_all_pkg/data/setup.dart';
-import 'package:meta/meta.dart';
 
 part 'add_followers_state.dart';
 
@@ -41,18 +40,25 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
   }
 
   addChild() async {
-    log("${fundsCon.text}");
-    emit(LodingState());
+    emit(LoadingState());
     if (formKey.currentState!.validate()) {
+      if (appModel.userModel!.funds < double.parse(fundsCon.text)) {
+        emit(ErrorState(
+            msg: "لا تمتلك رصيد رصيدك : ${appModel.userModel!.funds}"));
+        return;
+      }
       late String schoolId;
+
+      late SchoolModel schoolModel;
 
       for (var val in appModel.schoolModelList) {
         if (val.name == schoolCon.text) {
           schoolId = val.id;
+          schoolModel = val;
         }
       }
 
-      await SuperMain().addChild(
+      final res = await SuperMain().addChild(
           name: nameCon.text,
           userId: appModel.userModel!.id,
           allergy: allgyList.map(
@@ -65,10 +71,16 @@ class AddFollowersCubit extends Cubit<AddFollowersState> {
           schoolId: schoolId,
           funds: double.parse(fundsCon.text));
 
-      emit(DoenAddState());
+      final tempChild = ChildModel.fromJson(res);
+
+      tempChild.schoolModel = schoolModel;
+
+      appModel.userModel!.numberFollowers += 1;
+      appModel.userModel!.childModelList.add(tempChild);
+
+      emit(DoneAddState());
     } else {
-      log("not good vaild");
-      emit(NoLodingState());
+      emit(NoLoadingState());
     }
   }
 }

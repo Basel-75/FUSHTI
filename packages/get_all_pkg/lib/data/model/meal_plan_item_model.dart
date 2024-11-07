@@ -4,7 +4,7 @@ class MealPlanItemModel {
   final String id;
   final String mealPlanId;
   final String menuItemId;
-  final int quantity;
+   int quantity;
   late final FoodMenuModel foodMenuModel;
 
   MealPlanItemModel({

@@ -8,15 +8,16 @@ class UserModel {
   String phone;
   String authId;
   List<ChildModel> childModelList = [];
+  String? imageUrl;
 
-  UserModel({
-    required this.id,
-    required this.name,
-    required this.funds,
-    required this.numberFollowers,
-    required this.authId,
-    required this.phone,
-  });
+  UserModel(
+      {required this.id,
+      required this.name,
+      required this.funds,
+      required this.numberFollowers,
+      required this.authId,
+      required this.phone,
+      this.imageUrl});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -26,6 +27,7 @@ class UserModel {
       numberFollowers: json['number_followers'],
       authId: json['auth_id'],
       phone: json['phone'],
+      imageUrl: json['image_url'],
     );
   }
 
@@ -36,6 +38,7 @@ class UserModel {
       'funds': funds,
       'number_followers': numberFollowers,
       'phone': phone,
+      'image_url': imageUrl,
     };
   }
 
@@ -47,6 +50,7 @@ class UserModel {
     String? phone,
     String? authId,
     List<ChildModel>? childModelList,
+    String? imageUrl,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -55,6 +59,7 @@ class UserModel {
       numberFollowers: numberFollowers ?? this.numberFollowers,
       phone: phone ?? this.phone,
       authId: authId ?? this.authId,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 }

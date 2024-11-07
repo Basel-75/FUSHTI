@@ -9,11 +9,11 @@ class CustomTextFormFelid extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final TextDirection? textDirection;
-  final double containerSize;
-  final double paddingRightSide;
-  final double paddingLeftSide;
-  final bool hasIcon;
-  final Icon iconText;
+  final double width;
+  final double? paddingRightSide;
+  final double? paddingLeftSide;
+
+  final Icon? iconText;
   const CustomTextFormFelid({
     this.validator,
     super.key,
@@ -24,17 +24,17 @@ class CustomTextFormFelid extends StatelessWidget {
     required this.isPassword,
     this.keyboardType,
     this.textDirection,
-    required this.containerSize,
-    required this.paddingRightSide,
-    required this.paddingLeftSide,
-    required this.hasIcon,
-    required this.iconText,
+    required this.width,
+    this.paddingRightSide,
+    this.paddingLeftSide,
+    this.iconText,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: paddingLeftSide, right: paddingRightSide),
+      padding: EdgeInsets.only(
+          left: paddingLeftSide ?? 8.w, right: paddingRightSide ?? 8.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,15 +49,15 @@ class CustomTextFormFelid extends StatelessWidget {
             height: 1.h,
           ),
           Container(
-            width: containerSize,
+            width: width,
             decoration: BoxDecoration(
-              color: backgroundColor ?? const Color(0xFFf5f6e1),
+              color: backgroundColor ?? const Color(0xffF6FAFD),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 4),
+                  spreadRadius: 0.2,
+                  blurRadius: 2,
+                  offset: const Offset(0, 2),
                 ),
               ],
               borderRadius: BorderRadius.circular(8),
@@ -69,12 +69,18 @@ class CustomTextFormFelid extends StatelessWidget {
               controller: controller,
               keyboardType: keyboardType,
               decoration: InputDecoration(
-                  prefixIcon: hasIcon != false ? iconText : null,
-                  hintStyle: const TextStyle(color: Color(0xffB9B9B9)),
-                  hintText: hintText,
-                  hintTextDirection: TextDirection.rtl,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8))),
+                hintStyle: const TextStyle(color: Color(0xffB9B9B9)),
+                hintText: hintText,
+                hintTextDirection: TextDirection.rtl,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                      color: Colors.grey
+                          .withOpacity(0.2)), // Border color when enabled
+                ),
+              ),
             ),
           )
         ],

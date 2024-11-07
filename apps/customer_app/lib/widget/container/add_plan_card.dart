@@ -58,7 +58,7 @@ class AddPlanCard extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: const Color(0xffBA9773),
+                        color: const Color(0xffC8E5F5),
                       ),
                       child: const Icon(Iconsax.add_outline),
                     ),
@@ -80,7 +80,7 @@ class AddPlanCard extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: const Color(0xffB5C18E),
+                        color: const Color(0xffC8E5F5),
                       ),
                       child: const Icon(Iconsax.minus_outline),
                     ),
@@ -107,6 +107,7 @@ class AddPlanCard extends StatelessWidget {
                     isForCal: false,
                     amount: price,
                     isCallWithText: false,
+                    withAmountText: true,
                   ),
                   SizedBox(
                     width: 1.w,
@@ -115,6 +116,7 @@ class AddPlanCard extends StatelessWidget {
                     isForCal: true,
                     amount: cal,
                     isCallWithText: false,
+                    withAmountText: false,
                   ),
                 ],
               ),

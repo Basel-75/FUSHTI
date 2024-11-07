@@ -7,11 +7,15 @@ class ProfileSmallContainer extends StatelessWidget {
   final Color? backgroundColor;
   final Function()? onTap;
   final EdgeInsetsGeometry? margin;
+  final Color? titleColor;
   const ProfileSmallContainer({
     super.key,
     this.title,
     required this.number,
-    this.backgroundColor, this.onTap, this.margin,
+    this.backgroundColor,
+    this.onTap,
+    this.margin,
+    this.titleColor,
   });
 
   @override
@@ -19,32 +23,39 @@ class ProfileSmallContainer extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         margin: margin,
         width: 30.w,
-        height: 10.h,
+        height: 9.h,
         decoration: BoxDecoration(
-            color: backgroundColor ?? Colors.white,
+            color: backgroundColor ?? const Color(0x54FDE1B9),
             borderRadius: BorderRadius.circular(11),
-            boxShadow: kElevationToShadow[4],
+            //boxShadow: kElevationToShadow[4],
             border: Border.all(width: 0.2, color: Colors.grey)),
         child: title != null
             ? Column(
                 children: [
                   Text(
                     title!,
-                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: titleColor ?? const Color(0xff546F66)),
                   ),
                   Text(
                     number,
-                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
                   ),
                 ],
               )
             : Center(
                 child: Text(
                   number,
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff546F66)),
                 ),
               ),
       ),

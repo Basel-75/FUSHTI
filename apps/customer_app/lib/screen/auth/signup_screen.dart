@@ -71,151 +71,164 @@ class SignupScreen extends StatelessWidget {
                       constraints: BoxConstraints(
                         minHeight: constraints.maxHeight,
                       ),
-                      child: IntrinsicHeight(
-                        child: Column(
-                          children: [
-                            Row(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/image/auth_header1.png',
+                              ),
+                              const Spacer(),
+                              Image.asset(
+                                'assets/image/auth_header2.png',
+                              ),
+                            ],
+                          ),
+                          Image.asset(
+                            'assets/image/mainLogo.png',
+                          ),
+                          SizedBox(
+                            height: 3.h,
+                          ),
+                          Text(
+                            'تسجيل',
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xff103C37)),
+                          ),
+                          SizedBox(
+                            height: 3.h,
+                          ),
+                          Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Column(
                               children: [
-                                Image.asset(
-                                  'assets/image/auth_header1.png',
+                                CustomTextFormFelid(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                        content: Text('يرجى ادخال الايميل'),
+                                        backgroundColor: Colors.red,
+                                      ));
+
+                                      return "";
+                                    } else if (!RegExp(
+                                            r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                                        .hasMatch(value)) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                        content: Text('ايميل غير صالح'),
+                                        backgroundColor: Colors.red,
+                                      ));
+
+                                      return "";
+                                    }
+                                    return null;
+                                  },
+                                  backgroundColor: const Color(0xffF6FAFD),
+                                  hintText: 'example@gmail.com',
+                                  keyboardType: TextInputType.emailAddress,
+                                  isPassword: false,
+                                  label: 'الايميل',
+                                  controller: cubit.emailCon,
                                 ),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/image/auth_header2.png',
+                                SizedBox(
+                                  height: 2.h,
                                 ),
+                                CustomTextFormFelid(
+                                    backgroundColor: const Color(0xffF6FAFD),
+                                    controller: cubit.nameCon,
+                                    hintText: 'فهد',
+                                    isPassword: false,
+                                    label: 'الاسم',
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text('يرجى ادخال الاسم'),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                        return "";
+                                      } else if (RegExp(r'[0-9]')
+                                          .hasMatch(value)) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text(
+                                              'الاسم لا يمكن ان يحتوي على ارقام'),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                        return "";
+                                      }
+                                      return null;
+                                    }),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                CustomTextFormFelid(
+                                    backgroundColor: const Color(0xffF6FAFD),
+                                    controller: cubit.phoneCon,
+                                    hintText: '0512345678',
+                                    isPassword: false,
+                                    label: 'رقم الجوال',
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content:
+                                              Text('يرجى ادخال رقم الجوال'),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                        return "";
+                                      } else if (!RegExp(r'^05[0-9]{8}$')
+                                          .hasMatch(value)) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text(
+                                              'رقم الهاتف يجب ان يبدأ ب 05'),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                        return "";
+                                      }
+                                      return null;
+                                    }),
                               ],
                             ),
-                            Image.asset(
-                              'assets/image/logo.png',
-                            ),
-                            const Text(
-                              'تسجيل',
-                              style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xff103C37)),
-                            ),
-                            CustomTextFormFelid(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content:
-                                        Text('Please enter an email address'),
-                                    backgroundColor: Colors.red,
-                                  ));
-
-                                  return "";
-                                } else if (!RegExp(
-                                        r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                                    .hasMatch(value)) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text(
-                                        'Please enter a valid email address'),
-                                    backgroundColor: Colors.red,
-                                  ));
-
-                                  return "";
-                                }
-                                return null;
-                              },
-                              hintText: 'example@gmail.com',
-                              keyboardType: TextInputType.emailAddress,
-                              isPassword: false,
-                              label: 'الايميل',
-                              controller: cubit.emailCon,
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            CustomTextFormFelid(
-                                controller: cubit.nameCon,
-                                hintText: 'مثال : باسل العلوي',
-                                isPassword: false,
-                                label: 'الاسم',
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text('Please enter a name'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                    return "";
-                                  } else if (RegExp(r'[0-9]').hasMatch(value)) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content:
-                                          Text('Name cannot contain numbers'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                    return "";
-                                  }
-                                  return null;
-                                }),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            CustomTextFormFelid(
-                                controller: cubit.phoneCon,
-                                hintText: '0512345678',
-                                isPassword: false,
-                                label: 'رقم الجوال',
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content:
-                                          Text('Please enter a phone number'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                    return "";
-                                  } else if (!RegExp(r'^05[0-9]{8}$')
-                                      .hasMatch(value)) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text(
-                                          'Please enter a valid Saudi phone number starting with 05'),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                    return "";
-                                  }
-                                  return null;
-                                }),
-                            SizedBox(
-                              height: 4.h,
-                            ),
-                            CustomButton(
-                              onPressed: () {
-                                cubit.singup();
-                              },
-                              title: 'تسجيل حساب',
-                            ),
-                            CustomTextButton(
-                              buttonTitle: 'تسجيل دخول',
-                              question: 'هل لديك حساب؟',
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            const BrandRow(),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/image/auth_bottom1.png',
-                                ),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/image/auth_bottom2.png',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          CustomButton(
+                            onPressed: () {
+                              cubit.singup();
+                            },
+                            title: 'تسجيل حساب',
+                          ),
+                          CustomTextButton(
+                            buttonTitle: 'تسجيل دخول',
+                            question: 'هل لديك حساب؟',
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          const BrandRow(),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/image/auth_bottom1.png',
+                              ),
+                              const Spacer(),
+                              Image.asset(
+                                'assets/image/auth_bottom2.png',
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   );

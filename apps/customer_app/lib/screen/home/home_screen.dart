@@ -1,17 +1,53 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:customer_app/screen/home/cubit/home_cubit.dart';
+import 'package:customer_app/screen/order_cart/order_cart_screen.dart';
+
 import 'package:customer_app/screen/product/product_screen.dart';
 import 'package:customer_app/widget/avatar/followers_avatar.dart';
 import 'package:customer_app/widget/container/home_card.dart';
-import 'package:customer_app/widget/container/screen_header.dart';
-import 'package:customer_app/widget/coulmn/child_avatar.dart';
-import 'package:customer_app/widget/row/app_bar_row_button.dart';
+import 'package:customer_app/widget/container/show_dialog_pay_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late PageController _pageController;
+  late Timer _timer;
+  int _currentPage = 0;
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentPage);
+
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer timer) {
+      if (_currentPage < 3 - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(seconds: 2),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,265 +56,408 @@ class HomeScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final cubit = context.read<HomeCubit>();
         cubit.initHome();
-        return Scaffold(
-          body: Directionality(
-            textDirection: TextDirection.rtl,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        cubit.getBestProduct();
+        return BlocListener<HomeCubit, HomeState>(
+          listener: (context, state) {
+            if (state is DoneAddState) {
+              showSnackBar(context: context, msg: state.msg, isError: false);
+            }
+            if (state is LoadingState) {
+              showLoadingDialog(context: context);
+            }
+            if (state is SussesState) {
+              Navigator.pop(context);
+
+              showSnackBar(context: context, msg: state.msg, isError: false);
+            }
+            if (state is ErrorState) {
+              Navigator.pop(context);
+
+              showSnackBar(context: context, msg: state.msg, isError: true);
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              leadingWidth: 20.w,
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BlocBuilder<HomeCubit, HomeState>(
-                    builder: (context, state) {
-                      return ScreenHeader(
-                        childSchollName: cubit.currentChild.schoolModel.name,
-                        funds: cubit.appModel.userModel!.funds.toString(),
-                        inHomeScreen: true,
-                        parentName: cubit.appModel.userModel!.name,
-                        //title use if isHomeScreen = false
-                        title: '',
+                  GestureDetector(
+                    onTap: () {
+                      showDialogPayWidget(
+                        context: context,
+                        priceTotal: cubit.priceTotal,
+                        onPressed: () {},
                       );
                     },
-                  ),
-                  //?=========Header End================
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'التابعين',
-                          style: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.w500),
-                        ),
-                        BlocBuilder<HomeCubit, HomeState>(
-                          builder: (context, state) {
-                            return SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: List.generate(
-                                  cubit.childModelList.length,
-                                  (index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: FollowersAvatar(
-                                        onTap: () {
-                                          log("chnageChild start");
-                                          cubit.chnageChild(
-                                              cubit.childModelList[index]);
-                                        },
-                                        childImage: 'assets/image/kid1.png',
-                                        childName:
-                                            cubit.childModelList[index].name,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Text(
-                          'الأفضل مبيعا',
-                          style: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold),
-                        ),
-                        BlocBuilder<HomeCubit, HomeState>(
-                          builder: (context, state) {
-                            return SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.symmetric(vertical: 1.h),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: List.generate(
-                                  cubit.currentChild.schoolModel
-                                      .foodMenuModelList.length,
-                                  (index) {
-                                    return HomeCard(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) {
-                                            return ProductScreen(
-                                              childModel: cubit.currentChild,
-                                              foodMenuModel: cubit
-                                                  .currentChild
-                                                  .schoolModel
-                                                  .foodMenuModelList[index],
-                                            );
-                                          },
-                                        ));
-                                      },
-                                      cal: cubit.currentChild.schoolModel
-                                          .foodMenuModelList[index].cal,
-                                      imagePath: 'assets/image/lez.png',
-                                      itemName: cubit.currentChild.schoolModel
-                                          .foodMenuModelList[index].foodName,
-                                      price: cubit
-                                          .currentChild
-                                          .schoolModel
-                                          .foodMenuModelList[index]
-                                          .price as double,
-                                      rate: '4.8',
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        const Text(
-                          'أقسامنا',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffe7c7c5)),
-                                  child:
-                                      Image.asset('assets/image/breakfast.png'),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffe7c7c5)),
-                                  child: Image.asset('assets/image/launch.png'),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: 129,
-                                  height: 75,
-                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: const Color(0xffd7bf9c)),
-                                  child: Image.asset('assets/image/snack.png'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        const Text(
-                          'البوكسات',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(vertical: 1.h),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              HomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'بوكس السعادة',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                              HomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'بوكس التغذية',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                              HomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'بوكس المفرحات',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                              HomeCard(
-                                cal: 30,
-                                imagePath: 'assets/image/lez.png',
-                                itemName: 'ليز',
-                                price: 2,
-                                rate: '4.8',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    child: const Icon(
+                      Icons.monetization_on,
+                      color: Colors.white,
                     ),
                   ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  const Text(
-                    'الوجبات',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(vertical: 1.h),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        HomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                        HomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                        HomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                        HomeCard(
-                          cal: 30,
-                          imagePath: 'assets/image/lez.png',
-                          itemName: 'ليز',
-                          price: 2,
-                          rate: '4.8',
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
+                  Text(
+                    '${cubit.appModel.userModel?.funds.toString()} رس',
+                    style: const TextStyle(color: Colors.white),
+                    textDirection: TextDirection.rtl,
                   ),
                 ],
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              OrderCartScreen(childModel: cubit.currentChild),
+                        )),
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    )),
+              ],
+              title: Image.asset('assets/image/mainLogo.png'),
+              centerTitle: true,
+              flexibleSpace: Container(
+                decoration: const ShapeDecoration(
+                  shape: SmoothRectangleBorder(
+                      borderRadius: SmoothBorderRadius.only(
+                    bottomLeft:
+                        SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                    bottomRight:
+                        SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                  )),
+                  color: Color(0xff6FBAE5),
+                ),
+              ),
+              toolbarHeight: 15.h,
+            ),
+            body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: SingleChildScrollView(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(horizontal: 4.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'التابعين',
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff546F66)),
+                            ),
+                            BlocBuilder<HomeCubit, HomeState>(
+                              builder: (context, state) {
+                                return SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: List.generate(
+                                      cubit.childModelList.length,
+                                      (index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: FollowersAvatar(
+                                            onTap: () {
+                                              cubit.changeChild(
+                                                  cubit.childModelList[index]);
+                                            },
+                                            childImage: cubit
+                                                .childModelList[index].imgPath,
+                                            textColor: cubit
+                                                        .childModelList[index]
+                                                        .isSelected ==
+                                                    true
+                                                ? Colors.green
+                                                : Colors.black,
+                                            childName: cubit
+                                                .childModelList[index].name,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Text(
+                              'الأفضل مبيعا',
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xff546F66)),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            BlocBuilder<HomeCubit, HomeState>(
+                              builder: (context, state) {
+                                return GlassContainer(
+                                  height: 22.h,
+                                  borderRadius: BorderRadius.circular(12),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0.40),
+                                      Colors.white.withOpacity(0.10)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderGradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0.60),
+                                      Colors.white.withOpacity(0.10),
+                                      Colors.lightBlueAccent.withOpacity(0.05),
+                                      Colors.lightBlueAccent.withOpacity(0.6)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    stops: const [0.0, 0.39, 0.40, 1.0],
+                                  ),
+                                  blur: 15.0,
+                                  borderWidth: 1.5,
+                                  elevation: 3.0,
+                                  isFrostedGlass: true,
+                                  shadowColor: Colors.black.withOpacity(0.20),
+                                  alignment: Alignment.center,
+                                  frostedOpacity: 0.12,
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    itemCount: cubit.bestProductList.length,
+                                    itemBuilder: (context, index) {
+                                      final product =
+                                          cubit.bestProductList[index];
+                                      return Center(
+                                        child: HomeCard(
+                                          // Values
+                                          withoutButton: true,
+                                          productName: product.foodName,
+                                          price: product.price.toString(),
+                                          cal: product.cal.toString(),
+                                          imagePath: '${product.imageUrl}',
+                                          isRestriction: false,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              'البوكسات',
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xff546F66)),
+                            ),
+                            BlocBuilder<HomeCubit, HomeState>(
+                              builder: (context, state) {
+                                return SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  padding: EdgeInsets.symmetric(vertical: 1.h),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: cubit.boxList.map(
+                                      (e) {
+                                        final isRestr =
+                                            cubit.checkRestrictionsFood(
+                                                productId: e.id);
+
+                                        return HomeCard(
+                                          // Values
+                                          withoutButton: false,
+                                          isRestriction: isRestr,
+                                          productName: e.foodName,
+                                          price: '${e.price}',
+                                          cal: '${e.cal}',
+                                          imagePath: '${e.imageUrl}',
+                                          // Functions
+                                          onAdd: isRestr
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg:
+                                                          'لا يمكن اضافة منتج محظور الى السلة',
+                                                      isError: true,
+                                                    );
+                                                  })
+                                              : () => cubit.quickAddToCart(
+                                                    childModel:
+                                                        cubit.currentChild,
+                                                    foodMenuModel: e,
+                                                  ),
+                                          onRestriction: isRestr
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور مسبقا',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () =>
+                                                  cubit.addToRestrictionsFood(
+                                                    childId:
+                                                        cubit.currentChild.id,
+                                                    productId: e.id,
+                                                  ),
+                                          onTap: isRestr
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور ',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductScreen(
+                                                        foodMenuModel: e,
+                                                        childModel:
+                                                            cubit.currentChild,
+                                                      ),
+                                                    ),
+                                                  ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 4.w),
+                        child: Text(
+                          'الوجبات',
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xff546F66)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      BlocBuilder<HomeCubit, HomeState>(
+                        builder: (context, state) {
+                          return SizedBox(
+                              height: 60.h,
+                              width: 80.w,
+                              child: cubit.productList.isNotEmpty
+                                  ? GridView.builder(
+                                      itemCount: cubit.productList.length,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 2.0.h,
+                                        mainAxisSpacing: 1.0.h,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        final product =
+                                            cubit.productList[index];
+                                        final isRestricted =
+                                            cubit.checkRestrictionsFood(
+                                                productId: product.id);
+
+                                        return HomeCard(
+                                          // Value
+                                          withoutButton: false,
+                                          isRestriction: isRestricted,
+                                          productName: product.foodName,
+                                          price: '${product.price}',
+                                          cal: '${product.cal}',
+                                          imagePath: '${product.imageUrl}',
+                                          // Function
+                                          onAdd: isRestricted
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                        context: context,
+                                                        msg:
+                                                            'لا يمكن اضافة منتج محظور الى السلة',
+                                                        isError: true);
+                                                  })
+                                              : () => cubit.quickAddToCart(
+                                                    childModel:
+                                                        cubit.currentChild,
+                                                    foodMenuModel: product,
+                                                  ),
+                                          onRestriction: isRestricted
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور مسبقا',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () =>
+                                                  cubit.addToRestrictionsFood(
+                                                    childId:
+                                                        cubit.currentChild.id,
+                                                    productId: product.id,
+                                                  ),
+                                          onTap: isRestricted
+                                              ? () => SchedulerBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    showSnackBar(
+                                                      context: context,
+                                                      msg: 'المنتج محظور ',
+                                                      isError: false,
+                                                    );
+                                                  })
+                                              : () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductScreen(
+                                                        foodMenuModel: product,
+                                                        childModel:
+                                                            cubit.currentChild,
+                                                      ),
+                                                    ),
+                                                  ),
+                                        );
+                                      },
+                                    )
+                                  : const Center(
+                                      child: Text('لا توجد وجبات ):'),
+                                    ));
+                        },
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:customer_app/widget/image/image_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -26,13 +27,13 @@ class ChildCard extends StatelessWidget {
               width: 33.w,
               height: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Image.asset(
-                "assets/image/child_img.png",
-                fit: BoxFit.fill,
-              ),
+              child:ImageHandler(imagePath: childModel.imgPath,errorWidget: Image.asset(
+                "assets/image/mainLogo.png",
+                fit: BoxFit.fitHeight,
+              ),) 
             ),
             Expanded(
               child: Padding(
@@ -78,7 +79,7 @@ class ChildCard extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: onPressedQR,
-                    icon: Icon(Iconsax.scan_barcode_outline)),
+                    icon: const Icon(Iconsax.scan_barcode_outline)),
               ],
             ),
           ],

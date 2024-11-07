@@ -23,19 +23,19 @@ class InfoContainerRow extends StatelessWidget {
           title: titleOne,
           number: numOne,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         ProfileSmallContainer(
           title: titleTow,
           number: numTow,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         ProfileSmallContainer(
           title: titleThree,
-          number: numThree,
+          number: '$numThree رس',
         ),
       ],
     );

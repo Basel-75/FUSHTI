@@ -5,12 +5,13 @@ class FollowersAvatar extends StatelessWidget {
   final String childName;
   final String childImage;
   final Function()? onTap;
-  const FollowersAvatar({
-    super.key,
-    required this.onTap,
-    required this.childName,
-    required this.childImage,
-  });
+  final Color? textColor;
+  const FollowersAvatar(
+      {super.key,
+      required this.onTap,
+      required this.childName,
+      required this.childImage,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class FollowersAvatar extends StatelessWidget {
       child: ChildAvatar(
         childName: childName,
         imagePath: childImage,
+        textColor: textColor,
       ),
     );
   }

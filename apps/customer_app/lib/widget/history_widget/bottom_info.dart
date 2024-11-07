@@ -7,9 +7,15 @@ class BottomHistoryInfo extends StatelessWidget {
     super.key,
     required this.totalPrice,
     required this.name,
+    this.endPlan,
+    this.startPlan,
+    required this.isForPlan,
   });
-  final int totalPrice;
+  final String totalPrice;
   final String name;
+  final String? startPlan;
+  final String? endPlan;
+  final bool isForPlan;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,9 +26,11 @@ class BottomHistoryInfo extends StatelessWidget {
           height: 2,
         ),
         TextWithTowDirection(
+          startPlan: startPlan,
+          endPlan: endPlan,
           isRightClickable: false,
           onPressed: () {},
-          leftText: 'السعر الكلي $totalPrice',
+          leftText:isForPlan?'' :'السعر الكلي $totalPrice',
           leftTextColor: Colors.black,
           leftTextSize: 18,
           rightText: 'الاسم: $name',

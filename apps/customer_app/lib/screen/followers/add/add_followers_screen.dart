@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:customer_app/component/drop_down_item.dart';
-import 'package:customer_app/main.dart';
-import 'package:customer_app/screen/auth/cubit/auth_cubit.dart';
 import 'package:customer_app/screen/followers/add/add_followers_cubit/add_followers_cubit.dart';
 import 'package:customer_app/widget/button/custom_button.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_multi_select.dart';
 import 'package:customer_app/widget/dropDownMenu/custom_select.dart';
-import 'package:customer_app/widget/imagePicker/select_image_widget.dart';
+
 import 'package:customer_app/widget/textFormFeild/custom_text_form_felid.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -26,29 +21,21 @@ class AddFollowersScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: BlocListener<AddFollowersCubit, AddFollowersState>(
             listener: (context, state) {
-              if (state is LodingState) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                );
+              if (state is LoadingState) {
+                showLoadingDialog(context: context);
               }
 
-              if (state is DoenAddState) {
+              if (state is DoneAddState) {
                 Navigator.pop(context);
 
-                log("very Good add child");
+                Navigator.pop(context, true);
               }
 
-              if (state is NoLodingState) {
+              if (state is NoLoadingState) {
                 Navigator.pop(context);
               }
 
-              if (state is ErorrState) {
+              if (state is ErrorState) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
@@ -64,54 +51,48 @@ class AddFollowersScreen extends StatelessWidget {
               key: cubit.formKey,
               child: Scaffold(
                 appBar: AppBar(
-                  title: const Text(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white,
+                  ),
+                  title: Text(
                     'اضافة تابع',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   centerTitle: true,
-                  actions: [
-                    Image.asset('assets/image/homeicon.png'),
-                    SizedBox(
-                      width: 2.h,
-                    )
-                  ],
                   flexibleSpace: Container(
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        )),
+                      color: Color(0xff6FBAE5),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                    ),
                   ),
+                  toolbarHeight: 11.h,
                 ),
                 body: SingleChildScrollView(
                   child: Directionality(
-                    textDirection: TextDirection.ltr,
+                    textDirection: TextDirection.rtl,
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 6.h,
-                        ),
-                        SelectImageWidget(
-                          onDelete: () {
-                            log('message');
-                          },
-                          onTapInCamera: () {},
+                          height: 7.h,
                         ),
                         CustomTextFormFelid(
                             validator: (val) {
                               if (val == null || val.isEmpty) {
-                                return 'Name cannot be empty';
+                                return 'اضف اسم';
                               }
                               if (RegExp(r'[0-9]').hasMatch(val)) {
-                                return 'Name cannot contain numbers';
+                                return 'الاسم يحتوي على ارقام';
                               }
                               return null;
                             },
+                            backgroundColor: const Color(0xffF6FAFD),
                             controller: cubit.nameCon,
                             label: 'الاسم',
                             hintText: 'باسل العلوي',
@@ -121,15 +102,13 @@ class AddFollowersScreen extends StatelessWidget {
                         ),
                         CustomSelect(
                           validator: (val) {
-                            log("got to shcoll");
                             if (cubit.schoolCon.text.isEmpty) {
-                              log("not on  shcoll");
-                              return "pls give school";
+                              return "اختر مدرسة";
                             }
-                            log("iam to shcoll");
 
                             return null;
                           },
+                          backgroundColor: const Color(0xffF6FAFD),
                           label: 'المدرسة',
                           hintText: 'اختر المدرسة',
                           items: cubit.school,
@@ -143,10 +122,11 @@ class AddFollowersScreen extends StatelessWidget {
                         CustomTextFormFelid(
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return 'Class name cannot be empty';
+                              return 'اضف صف';
                             }
                             return null;
                           },
+                          backgroundColor: const Color(0xffF6FAFD),
                           controller: cubit.classCon,
                           label: 'الفصل',
                           hintText: '2ب',
@@ -156,6 +136,7 @@ class AddFollowersScreen extends StatelessWidget {
                           height: 2.h,
                         ),
                         CustomMultiSelect(
+                          backgroundColor: const Color(0xffF6FAFD),
                           label: 'الحساسية',
                           hintText: 'اختر الحساسية',
                           items: cubit.alergy,
@@ -169,13 +150,14 @@ class AddFollowersScreen extends StatelessWidget {
                         CustomTextFormFelid(
                           validator: (val) {
                             if (val == null || val.isEmpty) {
-                              return 'Amount cannot be empty';
+                              return 'اضف مصروف ';
                             }
                             if (double.tryParse(val) == null) {
-                              return 'Please enter a valid number';
+                              return 'ادخل رقم صحيح';
                             }
                             return null;
                           },
+                          backgroundColor: const Color(0xffF6FAFD),
                           label: 'المصروف',
                           hintText: '25',
                           isPassword: false,

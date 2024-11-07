@@ -1,6 +1,5 @@
-import 'dart:developer';
 
-import 'package:employee_app/widget/appbar_emp_header.dart';
+import 'package:employee_app/screen/feedback/cubit/feedback_cubit.dart';
 import 'package:employee_app/widget/container/card_feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -10,99 +9,67 @@ class FeedBackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> data = [
-      {
-        'name': '1عمار اللقماني',
-        'description': 'برنت, برنت, لوقر لوقر, 100% لوجيك',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '2محمد الزهراني',
-        'description': 'تطبيقكم ممتاز ولكن يحتاج الى مصممين احسنتم',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '3عبدالله الحربي',
-        'description':
-            'مبرمج تطبيقاتيسميىريسىرمسنىرنسيىمرنىسنيىرمنسيىرمنسيىرمىسيمرىسسويىؤسيترىنيرتىستينرىيستنرنيىرنتىيسنترىسيتنرىنيسترىنتيىرتنسيرىتنيرنتنميرىمنيسىرنمسيىنمرىمن',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '4عمار اللقماني',
-        'description': 'برنت, برنت, لوقر لوقر, 100% لوجيك',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '5محمد الزهراني',
-        'description': 'تطبيقكم ممتاز ولكن يحتاج الى مصممين احسنتم',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '6عبدالله الحربي',
-        'description':
-            'مبرمج تطبيقاتيسميىريسىرمسنىرنسيىمرنىسنيىرمنسيىرمنسيىرمىسيمرىسسويىؤسيترىنيرتىستينرىيستنرنيىرنتىيسنترىسيتنرىنيسترىنتيىرتنسيرىتنيرنتنميرىمنيسىرنمسيىنمرىمن',
-        'image': 'assets/image/userprofile.png',
-      },
-      //
-      {
-        'name': '7عمار اللقماني',
-        'description': 'برنت, برنت, لوقر لوقر, 100% لوجيك',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '8محمد الزهراني',
-        'description': 'تطبيقكم ممتاز ولكن يحتاج الى مصممين احسنتم',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '9عبدالله الحربي',
-        'description':
-            'مبرمج تطبيقاتيسميىريسىرمسنىرنسيىمرنىسنيىرمنسيىرمنسيىرمىسيمرىسسويىؤسيترىنيرتىستينرىيستنرنيىرنتىيسنترىسيتنرىنيسترىنتيىرتنسيرىتنيرنتنميرىمنيسىرنمسيىنمرىمن',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '10عمار اللقماني',
-        'description': 'برنت, برنت, لوقر لوقر, 100% لوجيك',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '11محمد الزهراني',
-        'description': 'تطبيقكم ممتاز ولكن يحتاج الى مصممين احسنتم',
-        'image': 'assets/image/userprofile.png',
-      },
-      {
-        'name': '12عبدالله الحربي',
-        'description':
-            'مبرمج تطبيقاتيسميىريسىرمسنىرنسيىمرنىسنيىرمنسيىرمنسيىرمىسيمرىسسويىؤسيترىنيرتىستينرىيستنرنيىرنتىيسنترىسيتنرىنيسترىنتيىرتنسيرىتنيرنتنميرىمنيسىرنمسيىنمرىمن',
-        'image': 'assets/image/userprofile.png',
-      },
-    ];
-    return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(19.h),
-              child: AppBar(
-                flexibleSpace: EmployeeHeader(
-                  isTitle: true,
-                  title: 'الأقتراحات والشكاوى',
-                  textSize: 20.sp,
-                ),
-              ),
-            ),
-            body: ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  var feedBack = data[index];
-
-                  return CartFeedBack(
-                    description: feedBack['description'],
-                    image: feedBack['image'],
-                    name: feedBack['name'],
-                    onTap: () {
-                      log('feedBack ${feedBack['name']} Deleted');
-                    },
-                  );
-                })));
+    return BlocProvider(
+      create: (context) => FeedbackCubit()..displayFeedback(),
+      child: Builder(builder: (context) {
+        final cubit = context.read<FeedbackCubit>();
+        return BlocListener<FeedbackCubit, FeedbackState>(
+          listener: (context, state) {
+            if (state is LoadingState) {
+              showLoadingDialog(context: context);
+            }
+            if (state is ErrorState) {
+              showSnackBar(context: context, msg: state.msg, isError: true);
+            }
+            if (state is SuccessState) {}
+          },
+          child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.transparent,
+                    iconTheme: const IconThemeData(
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      'الشكاوى و الاقتراحات',
+                      style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    centerTitle: true,
+                    flexibleSpace: Container(
+                      //height: 15.h,
+                      decoration: const BoxDecoration(
+                        color: Color(0xff6FBAE5),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(35),
+                          bottomRight: Radius.circular(35),
+                        ),
+                      ),
+                    ),
+                    toolbarHeight: 11.h,
+                  ),
+                  body: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(vertical: 2.h),
+                    child: BlocBuilder<FeedbackCubit, FeedbackState>(
+                      builder: (context, state) {
+                        return Column(
+                          children: cubit.messages
+                              .map(
+                                (e) => CartFeedBack(
+                                    name: '${e.senderName}',
+                                    description: '${e.message}',
+                                    image: 'assets/image/mainLogo.png'),
+                              )
+                              .toList(),
+                        );
+                      },
+                    ),
+                  ))),
+        );
+      }),
+    );
   }
 }

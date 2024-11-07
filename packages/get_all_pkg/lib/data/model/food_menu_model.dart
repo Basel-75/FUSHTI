@@ -5,9 +5,10 @@ class FoodMenuModel {
   final String? description;
   final num price;
   final String category;
-  final bool available;
+   bool available;
   final int cal;
   final List<String>? allergy;
+  final String? imageUrl; // Add this field
 
   FoodMenuModel({
     required this.id,
@@ -19,6 +20,7 @@ class FoodMenuModel {
     required this.available,
     required this.cal,
     required this.allergy,
+    this.imageUrl, // Add this field
   });
 
   factory FoodMenuModel.fromJson(Map<String, dynamic> json) {
@@ -31,7 +33,10 @@ class FoodMenuModel {
       category: json['category'],
       available: json['available'],
       cal: json['cal'],
-      allergy: (json['allergy']),
+
+      allergy: (json['allergy'] as List<dynamic>?)?.cast<String>(),
+      imageUrl: json['image_url'], // Add this field
+
     );
   }
 
@@ -46,6 +51,7 @@ class FoodMenuModel {
       'available': available,
       'cal': cal,
       'allergy': allergy,
+      'image_url': imageUrl, // Add this field
     };
   }
 }

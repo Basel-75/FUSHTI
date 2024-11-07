@@ -1,17 +1,20 @@
 import 'package:customer_app/widget/row/app_bar_row_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
 class ScreenHeader extends StatelessWidget {
   final String parentName, title, funds, childSchollName;
   final bool inHomeScreen;
+
+  final ChildModel? childModel;
   const ScreenHeader({
     super.key,
     required this.funds,
     required this.childSchollName,
     required this.parentName,
     required this.title,
-    required this.inHomeScreen,
+    required this.inHomeScreen,  this.childModel,
   });
 
   @override
@@ -59,7 +62,9 @@ class ScreenHeader extends StatelessWidget {
                     )
                   : const SizedBox(),
               const Spacer(),
+              // here erorr
               AppBarRowButton(
+                childModel: childModel,
                 walletAmount: funds,
               ),
             ],

@@ -1,6 +1,6 @@
-import 'package:customer_app/widget/button/custom_button.dart';
-import 'package:customer_app/widget/history_widget/bottom_info.dart';
-import 'package:customer_app/widget/history_widget/content_history.dart';
+import 'package:customer_app/screen/history/cubit/history_cubit.dart';
+import 'package:customer_app/widget/history_widget/histoy_body_order_widget.dart';
+import 'package:customer_app/widget/history_widget/histoy_body_plan_widgetd.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
 
@@ -9,170 +9,102 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //replace it with Bloc
-    List<Map<String, dynamic>> products = [
-      {
-        'image': 'assets/image/egg.png',
-        'history': '2024-2-10',
-        'name': 'بكس السعادة',
-        'numberOfCal': 2,
-        'quantity': 5,
-        'price': 213
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'history': '2024-2-10',
-        'name': 'بكس السعادة',
-        'numberOfCal': 100,
-        'quantity': 4,
-        'price': 342
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'history': '2024-2-10',
-        'name': 'بكس السعادة',
-        'numberOfCal': 54,
-        'quantity': 3,
-        'price': 123
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'history': '2024-2-10',
-        'name': 'بكس السعادة',
-        'numberOfCal': 22,
-        'quantity': 1,
-        'price': 123
-      },
-    ];
-    //replace it with Bloc order.length
-    const int orderNum = 3;
-
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'سجل الطلبات',
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
-            ),
-            centerTitle: true,
-            actions: [
-              Image.asset('assets/image/homeicon.png'),
-              SizedBox(
-                width: 2.h,
-              )
-            ],
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xffFEFEFD), Color(0xffE0D1BB)],
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  )),
-            ),
-          ),
-          body: orderNum != 0
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.h),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: orderNum,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          const Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              //change it
+      child: BlocProvider(
+        create: (context) => HistoryCubit()..historyBring(),
+        child: Builder(builder: (context) {
+          final cubit = context.read<HistoryCubit>();
 
-                              '2024-2-10',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          Container(
-                            width: 94.w,
-                            decoration: BoxDecoration(
-                                boxShadow: kElevationToShadow[2],
-                                borderRadius: BorderRadius.circular(10),
-                                color: const Color(0xffffffff)),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 1.7.h, vertical: 4.w),
-                              child: Column(
-                                children: [
-                                  ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: products.length,
-                                    itemBuilder: (context, index) {
-                                      var product = products[index];
-                                      return Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ContentHistory(
-                                            isBill: false,
-                                            image: product['image'],
-                                            foodName: product['name'],
-                                            numberOfCal: product['numberOfCal'],
-                                            quantity: product['quantity'],
-                                            price: product['price'],
-                                          ),
-                                          SizedBox(
-                                              height:
-                                                  index < products.length - 1
-                                                      ? 2.h
-                                                      : 0),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: 2.h,
-                                  ),
-                                  const BottomHistoryInfo(
-                                    totalPrice: 222,
-                                    name: "احد محسن",
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ))
-              : Center(
+          return BlocListener<HistoryCubit, HistoryState>(
+            listener: (context, state) {
+              if (state is ErrorState) {
+                Navigator.pop(context);
+                showSnackBar(context: context, msg: state.msg, isError: true);
+              }
+
+              if (state is LoadingState) {
+                showLoadingDialog(context: context);
+              }
+
+              if (state is DoneState) {
+                Navigator.pop(context);
+              }
+            },
+            child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  iconTheme: const IconThemeData(
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'الفواتير',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  centerTitle: true,
+                  flexibleSpace: Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xff6FBAE5),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                    ),
+                  ),
+                  toolbarHeight: 11.h,
+                ),
+                body: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/image/history_img.png'),
-                      SizedBox(
-                        height: 2.h,
+                      Padding(
+                        padding: EdgeInsets.only(top: 3.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CustomRadioButton(
+                              buttonTextStyle: ButtonTextStyle(
+                                  selectedColor: Colors.black,
+                                  unSelectedColor: Colors.black,
+                                  textStyle: TextStyle(fontSize: 16.sp)),
+                              enableShape: true,
+                              elevation: 2,
+                              customShape: ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              buttonLables: const ["خطة", "طلبات"],
+                              buttonValues: const ["plan", "order"],
+                              unSelectedColor: const Color(0xffffffff),
+                              unSelectedBorderColor: Colors.grey,
+                              selectedColor:
+                                  const Color.fromARGB(56, 12, 154, 236),
+                              defaultSelected: "order",
+                              radioButtonValue: (p0) {
+                                cubit.tabClick(tabName: p0);
+                              },
+                            )
+                          ],
+                        ),
                       ),
-                      const Text(
-                        "ليس لديك طلبات :(",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Rosarivo',
-                            color: Colors.black),
-                      ),
-                      CustomButton(onPressed: () {}, title: 'اطلب الأن'),
-                      SizedBox(
-                        height: 15.h,
-                      )
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 2.w, vertical: 2.h),
+                          child: BlocBuilder<HistoryCubit, HistoryState>(
+                            builder: (context, state) {
+                              return cubit.isOrder == true
+                                  ? HistoryBodyOrderWidget(
+                                      lisOrder: cubit.lisOrder)
+                                  : HistoryBodyPlanWidget(
+                                      planLis: cubit.planLis);
+                            },
+                          )),
                     ],
                   ),
                 )),
+          );
+        }),
+      ),
     );
   }
 }

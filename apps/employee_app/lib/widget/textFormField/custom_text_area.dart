@@ -40,13 +40,13 @@ class CustomTextArea extends StatelessWidget {
           Container(
             width: containerSize,
             decoration: BoxDecoration(
-              color: backgroundColor ?? const Color(0xFFf5f6e1),
+              color: backgroundColor ?? const Color(0xffF6FAFD),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 4),
+                  spreadRadius: 0.2,
+                  blurRadius: 2,
+                  offset: const Offset(0, 2),
                 ),
               ],
               borderRadius: BorderRadius.circular(8),
@@ -62,8 +62,13 @@ class CustomTextArea extends StatelessWidget {
                 hintStyle: const TextStyle(color: Color(0xffB9B9B9)),
                 hintText: hintText,
                 hintTextDirection: TextDirection.rtl,
-                border: OutlineInputBorder(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                      color: Colors.grey
+                          .withOpacity(0.2)), // Border color when enabled
                 ),
               ),
             ),

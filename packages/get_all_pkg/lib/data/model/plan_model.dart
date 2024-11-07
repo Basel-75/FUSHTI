@@ -1,3 +1,4 @@
+import 'package:get_all_pkg/data/model/child_model.dart';
 import 'package:get_all_pkg/data/model/meal_plan_item_model.dart';
 
 class PlanModel {
@@ -7,9 +8,15 @@ class PlanModel {
   final String endDate;
   final int totalMeals;
   final String? status;
-  final String? name;
+   String? name;
+   num totalPrice;
 
   final List<MealPlanItemModel> mealPlanItemLis = [];
+
+  final List<String> datesTaken;
+  final String createDate;
+
+  ChildModel? childModel;
 
   PlanModel({
     required this.id,
@@ -18,7 +25,10 @@ class PlanModel {
     required this.endDate,
     required this.totalMeals,
     required this.status,
-    required this.name
+    required this.name,
+    required this.datesTaken,
+    required this.createDate,
+    required this.totalPrice,
   });
 
   factory PlanModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +40,11 @@ class PlanModel {
       totalMeals: json['total_meals'],
       status: json['status'],
       name: json['name'],
+      datesTaken: json['dates_taken'] != null
+          ? List<String>.from(json['dates_taken'])
+          : [],
+      createDate: json["create_date"],
+      totalPrice: json["total_price"]
     );
   }
 
@@ -41,6 +56,9 @@ class PlanModel {
       'end_date': endDate,
       'total_meals': totalMeals,
       'status': status,
+      "dates_taken": datesTaken,
+      "create_date": createDate,
+      "total_price" : totalPrice
     };
   }
 }

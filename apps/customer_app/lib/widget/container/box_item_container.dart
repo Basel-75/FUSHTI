@@ -42,7 +42,7 @@ class BoxItemContainer extends StatelessWidget {
             itemName,
             style: TextStyle(fontSize: 16.sp, overflow: TextOverflow.ellipsis),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );

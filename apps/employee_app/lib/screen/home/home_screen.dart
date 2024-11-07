@@ -1,9 +1,9 @@
-import 'dart:developer';
-
-import 'package:employee_app/screen/add_product/add_product_screen.dart';
+import 'package:employee_app/screen/product/add_product/add_product_screen.dart';
 import 'package:employee_app/screen/feedback/feedback_screen.dart';
-import 'package:employee_app/widget/appbar_emp_header.dart';
-import 'package:employee_app/widget/container/card_home_product.dart';
+import 'package:employee_app/screen/home/cubit/home_cubit.dart';
+import 'package:employee_app/screen/product/edit/edit_screen.dart';
+import 'package:employee_app/widget/container/home_card.dart';
+import 'package:employee_app/widget/coulmn/empty_space_column.dart';
 import 'package:employee_app/widget/textTitle/title_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get_all_pkg/get_all_pkg.dart';
@@ -13,149 +13,221 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> products = [
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'حلويات المراعي',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'عصير البرتقال',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'ساندوتش',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'حلويات المراعي',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'حلويات المراعي',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'عصير البرتقال',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'ساندوتش',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-      {
-        'image': 'assets/image/egg.png',
-        'name': 'حلويات المراعي',
-        'rating': '4.8/5',
-        'price': 18,
-        'calories': 30,
-      },
-    ];
+    return BlocProvider(
+      create: (context) => HomeCubit(),
+      child: Builder(builder: (context) {
+        final cubit = context.read<HomeCubit>();
+        cubit.filterBoxItems();
+        return BlocListener<HomeCubit, HomeState>(
+          listener: (context, state) {
+            if (state is LoadingState) {
+              if (state.shouldRefresh) {
+                context.read<HomeCubit>().refreshProducts();
+              }
+              showLoadingDialog(context: context);
+            }
+            if (state is SuccessState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xffFDCB6A),
-          tooltip: 'Increment',
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-              return const AddProductScreen();
-            }));
+              showSnackBar(context: context, msg: state.msg, isError: false);
+            }
+            if (state is ErrorState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              showSnackBar(context: context, msg: state.msg, isError: true);
+            }
           },
-          child: const Icon(Icons.add, color: Colors.white, size: 28),
-        ),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(19.h),
-          child: AppBar(
-            leading: IconButton(
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Scaffold(
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.startFloat,
+              floatingActionButton: FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: const Color(0xffC9E7E7),
+                tooltip: 'add Saving',
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (builder) {
-                    return const FeedBackScreen();
+                    return const AddProductScreen();
                   }));
                 },
-                icon: const Icon(Icons.chat_outlined)),
-            flexibleSpace: EmployeeHeader(
-              isTitle: false,
-              title: 'اضافة منتج',
-              textSize: 20.sp,
+                child: const Icon(Icons.add, color: Colors.white, size: 28),
+              ),
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (builder) {
+                        return const FeedBackScreen();
+                      }));
+                    },
+                    icon: const Icon(
+                      Bootstrap.chat_text_fill,
+                      color: Colors.white,
+                    )),
+                actions: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        BoxIcons.bx_log_out,
+                        color: Colors.white,
+                        size: 3.5.h,
+                      ))
+                ],
+                title: Image.asset('assets/image/mainLogo.png'),
+                centerTitle: true,
+                flexibleSpace: Container(
+                  decoration: const ShapeDecoration(
+                    shape: SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius.only(
+                      bottomLeft:
+                          SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                      bottomRight:
+                          SmoothRadius(cornerRadius: 50, cornerSmoothing: 0.1),
+                    )),
+                    color: Color(0xff6FBAE5),
+                  ),
+                ),
+                toolbarHeight: 15.h,
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    EmpTitleName(
+                      paddingTop: 0.6.h,
+                      paddingRight: 2.h,
+                      textSize: 18.sp,
+                      schoolName:
+                          '${cubit.appModel.empModel?.schoolModel.name}',
+                    ),
+                    const Divider(),
+                    EmpTitleName(
+                      schoolName: 'البوكسات',
+                      paddingRight: 1.3.h,
+                    ),
+                    BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.h, horizontal: 1.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: List.generate(
+                              cubit.boxItems.length,
+                              (index) {
+                                return HomeCard(
+                                  // onTap: () {},
+                                  onDelete: () => showConfirmDialog(
+                                    context: context,
+                                    onCancelBtnTap: () =>
+                                        Navigator.pop(context),
+                                    onConfirmBtnTap: () => cubit.deleteProduct(
+                                        productId: cubit.menu[index].id),
+                                  ),
+                                  onEdit: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditScreen(
+                                          productInfo: cubit.menu[index]),
+                                    ),
+                                  ),
+                                  cal: cubit.boxItems[index].cal.toString(),
+                                  imagePath: cubit.boxItems[index].imageUrl
+                                      .toString()
+                                      .trim(),
+                                  productName: cubit.boxItems[index].foodName,
+                                  price:
+                                      '${cubit.boxItems[index].price as double}',
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    EmpTitleName(
+                      schoolName: 'منتجاتي',
+                      paddingRight: 1.3.h,
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    cubit.menu
+                            .where((item) =>
+                                item.category == 'product' ||
+                                item.category == 'منتج')
+                            .isNotEmpty
+                        ? BlocBuilder<HomeCubit, HomeState>(
+                            builder: (context, state) {
+                              return SizedBox(
+                                height: 38.h,
+                                width: 80.w,
+                                child: GridView.builder(
+                                  itemCount: cubit.menu
+                                      .where((item) =>
+                                          item.category == 'product' ||
+                                          item.category == 'منتج')
+                                      .length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 1.0.h,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    final filteredMenu = cubit.menu
+                                        .where((item) =>
+                                            item.category == 'product' ||
+                                            item.category == 'منتج')
+                                        .toList();
+                                    return Center(
+                                      child: HomeCard(
+                                        productName:
+                                            filteredMenu[index].foodName,
+                                        price: '${filteredMenu[index].price}',
+                                        cal: '${filteredMenu[index].cal}',
+                                        imagePath: filteredMenu[index]
+                                            .imageUrl
+                                            .toString()
+                                            .trim(),
+                                        onDelete: () => showConfirmDialog(
+                                          context: context,
+                                          onCancelBtnTap: () =>
+                                              Navigator.pop(context),
+                                          onConfirmBtnTap: () =>
+                                              cubit.deleteProduct(
+                                                  productId:
+                                                      filteredMenu[index].id),
+                                        ),
+                                        onEdit: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditScreen(
+                                                productInfo:
+                                                    filteredMenu[index]),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: EmptySpaceColumn(msg: 'لا يوجد منتجات'),
+                          )
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-        body: Column(
-          children: [
-            EmpTitleName(
-              paddingTop: 0.6.h,
-              paddingRight: 2.h,
-              textSize: 18.sp,
-              schoolName: 'كافتيريا الثانوية السابعة للبنات',
-            ),
-            const Divider(),
-            Image.asset('assets/image/emp_home_img.png'),
-            EmpTitleName(
-              paddingTop: 0.h,
-              paddingRight: 4.h,
-              textSize: 20.sp,
-              schoolName: 'منتجاتي',
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 1.0.h,
-                mainAxisSpacing: 1.0.h,
-                childAspectRatio: 0.12.h,
-                padding: EdgeInsets.all(3.h),
-                children: List.generate(products.length, (index) {
-                  var product = products[index];
-                  return ProductCards(
-                    deleteButton: () {
-                      log('delete done');
-                    },
-                    editButton: () {
-                      log('edit done');
-                    },
-                    onTap: () {
-                      log('${products[index]}');
-                    },
-                    image: product['image'],
-                    name: product['name'],
-                    rating: product['rating'],
-                    calories: product['calories'],
-                    price: product['price'],
-                    sizeBorder: 0.9,
-                    borderColor: Colors.black26,
-                  );
-                }),
-              ),
-            )
-          ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_all_pkg/get_all_pkg.dart';
 
 class TextWithTowDirection extends StatelessWidget {
   const TextWithTowDirection({
@@ -14,7 +15,12 @@ class TextWithTowDirection extends StatelessWidget {
     required this.mainAxisAlignment,
     required this.isRightClickable,
     this.onPressed,
+    this.endPlan,
+    this.startPlan,
   });
+
+  final String? startPlan;
+  final String? endPlan;
 
   final String leftText;
   final String rightText;
@@ -29,33 +35,73 @@ class TextWithTowDirection extends StatelessWidget {
   final Function()? onPressed;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: mainAxisAlignment,
+    
+    return Column(
+      // crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          leftText,
-          style: TextStyle(
-              fontSize: leftTextSize,
-              color: leftTextColor,
-              fontFamily: leftFontFamily),
+        Row(
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            Text(
+              leftText,
+              style: TextStyle(
+                  fontSize: leftTextSize,
+                  color: leftTextColor,
+                  fontFamily: leftFontFamily),
+            ),
+            isRightClickable
+                ? TextButton(
+                    onPressed: onPressed,
+                    child: Text(
+                      rightText,
+                      style: TextStyle(
+                          fontSize: rightTextSize,
+                          color: rightTextColor,
+                          fontFamily: rightFontFamily),
+                    ))
+                : Text(
+                    rightText,
+                    style: TextStyle(
+                        fontSize: rightTextSize,
+                        color: rightTextColor,
+                        fontFamily: rightFontFamily),
+                  )
+          ],
         ),
-        isRightClickable
-            ? TextButton(
-                onPressed: onPressed,
-                child: Text(
-                  rightText,
-                  style: TextStyle(
-                      fontSize: rightTextSize,
-                      color: rightTextColor,
-                      fontFamily: rightFontFamily),
-                ))
-            : Text(
-                rightText,
-                style: TextStyle(
-                    fontSize: rightTextSize,
-                    color: rightTextColor,
-                    fontFamily: rightFontFamily),
+        SizedBox(height: 1.h,),
+        startPlan != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "تاريخ البداية",
+                        style: TextStyle(color: Colors.black.withOpacity(0.40), fontSize: 17.sp),
+                      ),
+                       SizedBox(height: 1.h,),
+                      Text(
+                        startPlan ?? "",
+                        style: TextStyle(color: Colors.black, fontSize: 17.sp),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "تاريخ النهاية",
+                        style: TextStyle(color: Colors.black.withOpacity(0.40), fontSize: 17.sp),
+                      ),
+                       SizedBox(height: 1.h,),
+                      Text(
+                        endPlan ?? "",
+                        style: TextStyle(color: Colors.black, fontSize: 17.sp),
+                      ),
+                    ],
+                  )
+                ],
               )
+            : const SizedBox()
       ],
     );
   }

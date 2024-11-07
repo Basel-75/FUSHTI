@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:database_meth/database/super_main.dart';
 import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 
 part 'auth_state.dart';
 
@@ -23,7 +20,6 @@ class AuthCubit extends Cubit<AuthStatee> {
     try {
       emit(LoadingState());
       if (formKey.currentState!.validate()) {
-        log("${phoneCon.text}");
         await SuperMain().createUser(email: emailCon.text);
 
         emit(SuccessState());
@@ -40,21 +36,17 @@ class AuthCubit extends Cubit<AuthStatee> {
     required String? name,
     required String? phone,
   }) async {
-    // try {
     emit(LoadingState());
     if (otp.isEmpty) {
-      emit(ErrorState(msg: "enter otp first"));
+      emit(ErrorState(msg: "ادخل رمز التحقق"));
       return;
     }
 
     await SuperMain()
         .verifyOtp(email: email, otp: otp, name: name, phone: phone);
-
+    await SuperMain().getChilds();
+    await SuperMain().getChildernPlan();
+    await SuperMain().getRestrictionFood();
     emit(SuccessState());
-    // }
-
-    // catch (er) {
-    //   emit(ErrorState(msg: er.toString()));
-    // }
   }
 }
