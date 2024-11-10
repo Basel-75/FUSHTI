@@ -36,123 +36,8 @@ The goal of this project is to provide parents with an intuitive solution for tr
 - **Moyasar**: For processing payments within the app.
 - **Supabase**: For database management and backend services.
 - **Figma**: For UI/UX design.
-  
-## Screens 📱
-Here is a list of the main screens implemented in the project:
 
-### Parent App Screens 👨‍👩‍👧‍👦 
-- **Home Screen**:
-
-![alt text](apps/customer_app/assets/readme/userHome.png)
-
-- **viewProduct Screen**:
-
-![alt text](apps/customer_app/assets/readme/viewProduct.png)
-
-- **plan Screen**:
-
-![alt text](apps/customer_app/assets/readme/planScreen_img.png)
-
-- **follower Screen**:
-
-![alt text](apps/customer_app/assets/readme/followerScreen_img.png)
-
-- **barCodeFollowe Screen**:
-
-![alt text](apps/customer_app/assets/readme/barCodeFollowe_img.png)
-
-- **profileFollower Screen**:
-
-![alt text](apps/customer_app/assets/readme/profileFollower_img.png)
-
-- **followerOrder Screen**:
-
-![alt text](apps/customer_app/assets/readme/followerOrder_img.png)
-
-- **addFunds**:
-
-![alt text](apps/customer_app/assets/readme/addFunds_img.png)
-
-
-- **activeOpenDays**:
-
-![alt text](apps/customer_app/assets/readme/activeOpenDays_img.png)
-
-- **followerBanFoods Screen**:
-
-![alt text](apps/customer_app/assets/readme/followerBanFoods_img.png)
-
-- **profileUser Screen**:
-
-![alt text](apps/customer_app/assets/readme/profileUser_img.png)
-
-- **payment Screen**:
-
-![alt text](apps/customer_app/assets/readme/payment_img.png)
-
-- **feedBack Screen**:
-
-![alt text](apps/customer_app/assets/readme/feedBack_img.png)
-
-- **logoutDialog**:
-
-![alt text](apps/customer_app/assets/readme/logoutDailog_img.png)
-
-- **updateProfile**:
-
-![alt text](apps/customer_app/assets/readme/updateProfile_img.png)
-
-- **cart Screen**:
-
-![alt text](apps/customer_app/assets/readme/cart_img.png)
-
-- **checkPayment Screen**:
-
-![alt text](apps/customer_app/assets/readme/checkPayment_img.png)
-
-- **aboutUs**:
-
-![alt text](apps/customer_app/assets/readme/aboutUs_img.png)
-
-- **Video Screen**:
-
-![alt text](apps/customer_app/assets/readme/parentVideoApp.gif)
-
-### Cafeteria App Screens 🍽️ 
-- **Home Screen**:
-
-![alt text](apps/employee_app/assets/readme/employeeHome_img.png)
-
-- **updateProduct Screen**:
-
-![alt text](apps/employee_app/assets/readme/updateProduct_img.png)
-
-- **addProduct Screen**:
-
-![alt text](apps/employee_app/assets/readme/addProduct_img.png)
-
-- **staticits Screen**:
-
-![alt text](apps/employee_app/assets/readme/staticits_img.png)
-
-- **storage Screen**:
-
-![alt text](apps/employee_app/assets/readme/storage_img.png)
-
-- **Video**:
-
-![alt text](apps/employee_app/assets/readme/employeeVideo_App.gif)
-
-## Figma File 🎨
-You can access the design file here:  
-[Figma Design File](https://www.figma.com/design/q8xYGXrPJw1TEFjKJ359Ix/Untitled?node-id=0-1&t=aSr6TUsRh0F9NQuL-1)
-
-## Team Members 👥
-This project was developed by the following team members:
-- **[Basel](https://github.com/Basel-75)** - Developer
-- **[Anas Aljuhani](https://github.com/Anas-Aljuhani)** - Developer
-- **[Ammar](https://github.com/Ammarx9)** - Developer
-## Install
+  ## Install
 To install and run this project locally, follow these steps:
 
 1. 1. Clone the repository: 
@@ -177,3 +62,54 @@ To install and run this project locally, follow these steps:
 6. Run the app on an emulator or connected device: 
    ```bash
    flutter run
+   
+## Screens 📱
+Here is a list of the main screens implemented in the project:
+
+### Parent App Screens 👨‍👩‍👧‍👦 
+
+![alt text](apps/customer_app/assets/readme/userHome.png)
+![alt text](apps/customer_app/assets/readme/viewProduct.png)
+![alt text](apps/customer_app/assets/readme/planScreen_img.png)
+![alt text](apps/customer_app/assets/readme/followerScreen_img.png)
+![alt text](apps/customer_app/assets/readme/barCodeFollowe_img.png)
+![alt text](apps/customer_app/assets/readme/profileFollower_img.png)
+![alt text](apps/customer_app/assets/readme/followerOrder_img.png)
+![alt text](apps/customer_app/assets/readme/addFunds_img.png)
+![alt text](apps/customer_app/assets/readme/activeOpenDays_img.png)
+![alt text](apps/customer_app/assets/readme/followerBanFoods_img.png)
+![alt text](apps/customer_app/assets/readme/profileUser_img.png)
+![alt text](apps/customer_app/assets/readme/payment_img.png)
+![alt text](apps/customer_app/assets/readme/feedBack_img.png)
+![alt text](apps/customer_app/assets/readme/logoutDailog_img.png)
+![alt text](apps/customer_app/assets/readme/updateProfile_img.png)
+![alt text](apps/customer_app/assets/readme/cart_img.png)
+![alt text](apps/customer_app/assets/readme/checkPayment_img.png)
+![alt text](apps/customer_app/assets/readme/aboutUs_img.png)
+
+- **Video**:
+
+![alt text](apps/customer_app/assets/readme/parentVideoApp.gif)
+
+### Cafeteria App Screens 🍽️ 
+
+![alt text](apps/employee_app/assets/readme/employeeHome_img.png)
+![alt text](apps/employee_app/assets/readme/updateProduct_img.png)
+![alt text](apps/employee_app/assets/readme/addProduct_img.png)
+![alt text](apps/employee_app/assets/readme/staticits_img.png)
+![alt text](apps/employee_app/assets/readme/storage_img.png)
+
+- **Video**:
+
+![alt text](apps/employee_app/assets/readme/employeeVideo_App.gif)
+
+## Figma File 🎨
+You can access the design file here:  
+[Figma Design File](https://www.figma.com/design/q8xYGXrPJw1TEFjKJ359Ix/Untitled?node-id=0-1&t=aSr6TUsRh0F9NQuL-1)
+
+## Team Members 👥
+This project was developed by the following team members:
+- **[Basel](https://github.com/Basel-75)**
+- **[Anas Aljuhani](https://github.com/Anas-Aljuhani)**
+- **[Ammar](https://github.com/Ammarx9)**
+
